@@ -134,3 +134,32 @@ def verify_character_blend(blend, expected_sha256, report, *, binary="blender", 
     if result.get("status") != "PASS" or result.get("source_sha256") != expected_sha256:
         raise RuntimeError("Character reopen proof mismatch")
     return result
+
+
+def separate_character_materials(blend, output, report, *, binary="blender", timeout=180):
+    """Material separation is reversible in a NEW project, not semantic classification."""
+    source, target, receipt = Path(blend), Path(output), Path(report)
+    if not source.is_file() or source.suffix.lower() != ".blend":
+        raise ValueError("existing character .blend required")
+    if target.suffix.lower() != ".blend" or receipt.suffix.lower() != ".json":
+        raise ValueError("new Blender project and JSON report required")
+    if target.resolve() == source.resolve() or target.exists() or receipt.exists():
+        raise FileExistsError("preserve source and refuse overwrite")
+    if not shutil.which(str(binary)):
+        raise RuntimeError("Blender unavailable")
+    script = Path(__file__).resolve().parent.parent / "bridge" / "blender_character_separate.py"
+    try:
+        process = subprocess.run([str(binary), "--background", "--factory-startup", "--python",
+                                  str(script), "--", str(source.resolve()), str(target.resolve()),
+                                  str(receipt.resolve())], capture_output=True, text=True, timeout=timeout)
+    except subprocess.TimeoutExpired as error:
+        raise RuntimeError("Character material separation timed out") from error
+    if process.returncode or not receipt.is_file():
+        raise RuntimeError("Blender character separation failed: " +
+                           (process.stderr + process.stdout)[-500:])
+    result = json.loads(receipt.read_text(encoding="utf-8"))
+    if (result.get("status") != "PASS" or not target.is_file() or target.stat().st_size < 1000
+            or result.get("triangle_count_before") != result.get("triangle_count_after")
+            or result.get("separated_mesh_objects", 0) < result.get("source_mesh_objects", 1)):
+        raise RuntimeError("Material-separated character project failed validation")
+    return result

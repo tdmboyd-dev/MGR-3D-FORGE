@@ -178,6 +178,11 @@ def main(argv=None):
     readiness=sub.add_parser("character-readiness",help="audit independent GLB meshes, materials and structural skin readiness")
     readiness.add_argument("--source",type=Path,required=True)
     readiness.add_argument("--out",type=Path,required=True)
+    separate=sub.add_parser("character-separate",help="save a NEW material-separated Blender character without rewriting the original")
+    separate.add_argument("--blend",type=Path,required=True)
+    separate.add_argument("--out",type=Path,required=True)
+    separate.add_argument("--report",type=Path,required=True)
+    separate.add_argument("--binary",default="blender")
     live_blender=sub.add_parser("blender-live-scene",help="turn verified edited world into an actual individually editable Blender project")
     live_blender.add_argument("--world",type=Path,required=True,help="materialized edited world directory")
     live_blender.add_argument("--blend",type=Path,required=True,help="new Blender project file")
@@ -324,6 +329,11 @@ def main(argv=None):
     if args.action == "character-readiness":
         from .character_readiness import write_character_readiness
         print(json.dumps(write_character_readiness(args.source,args.out),indent=2))
+        return 0
+    if args.action == "character-separate":
+        from .character_intake import separate_character_materials
+        print(json.dumps(separate_character_materials(args.blend,args.out,args.report,
+                                                      binary=args.binary),indent=2))
         return 0
     if args.action == "blender-live-scene":
         print(json.dumps(create_live_blender_scene(args.world,args.blend,args.report,binary=args.binary),indent=2))
