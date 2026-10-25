@@ -22,6 +22,7 @@ def compile_director_reel(reel, *, fps=24, transition="cut"):
         timeline.append({"shot_id":shot["id"],"subject_id":shot.get("subject_id"),
                          "start_frame":start,"end_frame":end,
                          "camera":list(shot["camera"]),
+                         "camera_end":list(shot.get("camera_end",shot["camera"])),
                          "look_at":list(shot["look_at"]),
                          "focal_length_mm":50 if transition=="cut" else 35,
                          "motion":transition,

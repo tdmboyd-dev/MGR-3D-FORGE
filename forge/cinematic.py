@@ -22,10 +22,18 @@ def camera_tour(world, *, altitude=18.0):
         # real Blender renders then showed an unhelpful close-up of its roof.
         horizontal=max(24,1.6*lot_size,2*max(building["size"][0],building["size"][2]))
         height_above=max(max_world_height+16,altitude,height+horizontal*.7)
-        shots.append({"id": f"shot-{idx:04d}", "subject_id": building["id"],
-                      "camera": [round(x-horizontal, 4), round(height_above, 4), round(z-horizontal, 4)],
+        camera_start=[round(x-horizontal,4),round(height_above,4),round(z-horizontal,4)]
+        shot={"id": f"shot-{idx:04d}", "subject_id": building["id"],
+                      "camera": camera_start,
                       "look_at": [x, round(height/2,4), z],
-                      "hold_seconds": 2.0})
+                      "hold_seconds": 2.0}
+        if idx % 2 == 1:
+            # A deterministic lateral dolly without changing identity of the
+            # subject; the other shots remain genuinely locked-off.
+            shot["camera_end"]=[round(x-.78*horizontal,4),round(height_above,4),
+                                round(z-1.12*horizontal,4)]
+            shot["movement"]="smooth-dolly"
+        shots.append(shot)
     return {"schema": "mgr.forge.camera-tour.v1", "axis": "Y_UP",
             "mode": "native-3d-keyframes", "shots": shots,
             "requires_generated_video": False, "requires_paid_api": False}

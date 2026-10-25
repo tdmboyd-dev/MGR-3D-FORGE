@@ -53,13 +53,24 @@ def main():
         camera.keyframe_insert(data_path="location",frame=cursor)
         camera.keyframe_insert(data_path="rotation_euler",frame=cursor)
         stop=cursor+max(2,round(shot["hold_seconds"]*fps))-1
+        end_point=xyz_to_blender(shot.get("camera_end",shot["camera"]))
+        camera.location=end_point
+        camera.rotation_euler=(look-end_point).to_track_quat("-Z","Y").to_euler()
         camera.keyframe_insert(data_path="location",frame=stop)
         camera.keyframe_insert(data_path="rotation_euler",frame=stop)
+        if camera.animation_data and camera.animation_data.action:
+            # Bezier handles create eased motion between keyed endpoints.
+            # Two keys with same transform stay locked off.
+            action=camera.animation_data.action
+            for curve in getattr(action,"fcurves",[]):
+                for point in curve.keyframe_points:
+                    point.interpolation="BEZIER"
         marker=scene.timeline_markers.new(f"MGR_{shot['id']}",frame=cursor)
         marker.camera=camera
         frames.append({"shot":shot["id"],"frame":cursor,"last_frame":stop,
                        "camera":camera.name,"lens_mm":camera_data.lens,
-                       "direction":"cut with held subject framing"})
+                       "motion_m":round((end_point-point).length,6),
+                       "direction":"smooth-dolly" if (end_point-point).length>.01 else "locked-off"})
         if index==0:
             scene.camera=camera
         cursor=stop+1
@@ -99,12 +110,13 @@ def main():
             "blender_version":bpy.app.version_string, "mood":mood,
             "keyframes":frames,"camera_count":len(frames),
             "camera_cut_markers":len(scene.timeline_markers),"light_count":1,
+            "moving_shots":sum(shot["motion_m"]>.01 for shot in frames),
             "mesh_count":len(imported),"frame_end":scene.frame_end,
             "render_engine":"CYCLES","render_device":"CPU",
             "render_bytes":Path(image).stat().st_size if Path(image).exists() else 0,
             "blend_bytes":Path(blend).stat().st_size if Path(blend).exists() else 0,
             "limitations":["8-sample CPU render is proof of pipeline, not final cinematic quality",
-                           "timeline cuts and held frames only; interactive camera player and directed moving shots remain open"]}
+                           "simple eased dolly and cut markers; tracking rigs, physical collision/velocity QA and live camera player remain open"]}
     Path(receipt).write_text(json.dumps(result,indent=2,sort_keys=True)+"\n",encoding="utf-8")
     if result["status"]!="PASS":
         raise RuntimeError("cinematic render missing")

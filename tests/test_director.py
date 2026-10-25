@@ -2,6 +2,9 @@ import math
 import unittest
 
 from forge.director import compile_director_reel, ease_fraction, sample_motion
+from forge.blender_bridge import blender_director_inspect_command
+from pathlib import Path
+import tempfile
 
 
 REEL={"shots":[
@@ -50,6 +53,25 @@ class NativeDirectorTests(unittest.TestCase):
             sample_motion([0,0,0],[1,2,3],samples=1)
         with self.assertRaises(ValueError):
             ease_fraction(float("nan"))
+
+    def test_directed_camera_dolly_has_movement_and_correct_timeline(self):
+        reel={"shots":[{**REEL["shots"][0],"camera_end":[25,20,15],"movement":"smooth-dolly"}]}
+        result=compile_director_reel(reel)
+        self.assertEqual(result["shots"][0]["camera_end"],[25,20,15])
+
+    def test_invalid_dolly_rejected(self):
+        shot={**REEL["shots"][0],"camera_end":[30,20,15],"movement":"smooth-dolly"}
+        with self.assertRaises(ValueError):
+            compile_director_reel({"shots":[shot]})
+
+    def test_blender_director_command_requires_real_scene(self):
+        with tempfile.TemporaryDirectory() as directory:
+            blend=Path(directory)/"actual.blend"
+            blend.write_bytes(b"placeholder")
+            command=blender_director_inspect_command("blender",blend,Path(directory)/"out.json")
+            self.assertIn("blender_director_inspect.py"," ".join(command))
+            with self.assertRaises(ValueError):
+                blender_director_inspect_command("blender",Path(directory)/"missing.blend",Path(directory)/"out.json")
 
 
 if __name__=="__main__":

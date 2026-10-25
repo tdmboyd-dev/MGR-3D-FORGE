@@ -14,6 +14,7 @@ POSE_RENDER=Path(__file__).resolve().parent.parent/"bridge"/"blender_pose_render
 POSE_INSPECT=Path(__file__).resolve().parent.parent/"bridge"/"blender_pose_inspect.py"
 CINEMATIC=Path(__file__).resolve().parent.parent/"bridge"/"blender_cinematic.py"
 MATERIAL_INSPECT=Path(__file__).resolve().parent.parent/"bridge"/"blender_material_inspect.py"
+DIRECTOR_INSPECT=Path(__file__).resolve().parent.parent/"bridge"/"blender_director_inspect.py"
 
 
 def blender_command(blender_binary,source,report):
@@ -125,3 +126,12 @@ def blender_material_inspect_command(blender_binary, glb, report):
         raise FileNotFoundError("Blender material inspector missing")
     return [str(blender_binary),"--background","--factory-startup","--python",
             str(MATERIAL_INSPECT),"--",str(Path(glb).resolve()),str(Path(report).resolve())]
+
+
+def blender_director_inspect_command(blender_binary, blend, report):
+    if not Path(blend).is_file() or Path(blend).suffix.lower()!=".blend":
+        raise ValueError("existing Blender director project required")
+    if Path(report).suffix.lower()!=".json":
+        raise ValueError("JSON director receipt required")
+    return [str(blender_binary),"--background","--factory-startup","--python",
+            str(DIRECTOR_INSPECT),"--",str(Path(blend).resolve()),str(Path(report).resolve())]
