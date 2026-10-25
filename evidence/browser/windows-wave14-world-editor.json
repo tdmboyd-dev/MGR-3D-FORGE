@@ -10,10 +10,11 @@
   "observed": [
     "Actual WebGL2 3D scene with buildings, roads and ground rendered in Chrome",
     "Right-hand editor presents building selection, editable X/Z/height/material, download, reset and import controls",
-    "Windows Python unittest discovery completed with exit code 0 (223 tests)"
+    "Windows Python unittest discovery completed with exit code 0 (223 tests)",
+    "Automated Chrome CDP test completed with exit code 0: runtime boot, building height change, localStorage persistence, downloaded JSON file content check, JSON file import restore and reset restore"
   ],
   "not_verified": [
-    "Physical clicks, form change handlers, localStorage persistence, browser import/export download",
+    "Physical manual clicks and opening the edited GLB in a separate rendering engine",
     "Camera keyboard navigation and sustained frame-rate measurements",
     "High-fidelity production visual quality"
   ]
