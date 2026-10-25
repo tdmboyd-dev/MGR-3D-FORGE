@@ -1,0 +1,49 @@
+{
+  "blend_bytes": 101473,
+  "blender_version": "5.2.2 LTS",
+  "camera_count": 3,
+  "camera_cut_markers": 3,
+  "frame_end": 144,
+  "keyframes": [
+    {
+      "camera": "MGR_Shot_Camera_0000",
+      "direction": "locked-off",
+      "frame": 1,
+      "last_frame": 48,
+      "lens_mm": 50,
+      "motion_m": 0,
+      "shot": "shot-0000"
+    },
+    {
+      "camera": "MGR_Shot_Camera_0001",
+      "direction": "smooth-dolly",
+      "frame": 49,
+      "last_frame": 96,
+      "lens_mm": 50,
+      "motion_m": 7.21726,
+      "shot": "shot-0001"
+    },
+    {
+      "camera": "MGR_Shot_Camera_0002",
+      "direction": "locked-off",
+      "frame": 97,
+      "last_frame": 144,
+      "lens_mm": 50,
+      "motion_m": 0,
+      "shot": "shot-0002"
+    }
+  ],
+  "light_count": 1,
+  "limitations": [
+    "8-sample CPU render is proof of pipeline, not final cinematic quality",
+    "simple eased dolly and cut markers; tracking rigs, physical collision/velocity QA and live camera player remain open"
+  ],
+  "mesh_count": 1,
+  "mood": "golden-hour",
+  "moving_shots": 1,
+  "render_bytes": 249746,
+  "render_device": "CPU",
+  "render_engine": "CYCLES",
+  "schema": "mgr.forge.cinematic-materialization.v1",
+  "status": "PASS"
+}
