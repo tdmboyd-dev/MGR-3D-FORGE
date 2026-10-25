@@ -1,5 +1,14 @@
 # MGR 3D Forge — Progress and Evidence Log
 
+## 2026-10-25 — User corrected Pinokio reference to God's Eye View
+
+- Kept F32 Model Dock from Pinokio because it has separate native value for optional local model orchestration.
+- Located canonical upstream `bilawalsidhu/gods-eye-view`; read official README/license. Code is MIT but third-party feeds and bundled assets are **not** blanket MIT and include commercial restrictions.
+- Added F33 Spatial Eyes. Implemented `forge/perception.py` to report known-generated-building distances, camera visibility and blockers, with explicit evidence type and *not real-world verified* labels. CLI emits `spatial_overview.json`.
+- Research-to-native contract in `research/GODS-EYE-VIEW-NATIVE-INTAKE.md`. Future camera/HUD, live evidence adapters and multi-photo reconstruction remain open.
+- Expanded register to 33 areas. **47/47 tests passed** after new spatial visibility tests. No external data feeds, GPU inference or API charges.
+- Owner clarified the goal is **native imaginative world creation**, not replicating God's Eye View. Added `forge/interiors.py` with original designed two-room interiors per building, real exportable `interiors.glb` and explicit `interiors.json` provenance. This is invented geometry, not a claim to know a building's unseen real interior. Test suite expanded to **49/49 passing**.
+
 ## 2026-10-25 — LOD, repair and two MGR-native research extensions
 
 - Added coarse, **building-only** LOD1 mesh and deterministic world building chunk partition (`forge/streaming.py`), exported `world_lod1.glb` and `chunks.json`. This excludes terrain/roads and is preparation for streaming, **not a complete renderable LOD scene or live streamer**. Example 10-building LOD1: 120 triangles versus 372 triangles in the full original scene (different contents, so not an apples-to-apples optimization benchmark).

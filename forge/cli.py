@@ -15,6 +15,8 @@ from .world import graph_for_world
 from .preview import render_world_svg
 from .streaming import chunk_world, simple_building_lod
 from .cinematic import camera_tour
+from .perception import scene_overview
+from .interiors import generate_interiors
 
 
 def build(spec: WorldSpec, output: Path):
@@ -41,6 +43,12 @@ def build(spec: WorldSpec, output: Path):
         json.dumps(chunks, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     (output / "camera_tour.json").write_text(
         json.dumps(camera_tour(manifest), indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    (output / "spatial_overview.json").write_text(
+        json.dumps(scene_overview(manifest), indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    interior_meshes, interior_plan = generate_interiors(manifest)
+    (output / "interiors.glb").write_bytes(export_glb(interior_meshes, name=f"{spec.name} Interiors"))
+    (output / "interiors.json").write_text(
+        json.dumps(interior_plan, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     lod1_payload = export_glb(simple_building_lod(manifest), name=f"{spec.name} LOD1")
     (output / "world_lod1.glb").write_bytes(lod1_payload)
     manifest["quality"] = qc
@@ -50,7 +58,8 @@ def build(spec: WorldSpec, output: Path):
     manifest["additional_artifacts"] = {
         "obj": "world.obj", "mtl": "world.mtl", "road_graph": "navigation.json",
         "preview": "preview.svg", "chunks": "chunks.json", "lod1": "world_lod1.glb",
-        "camera_tour": "camera_tour.json"}
+        "camera_tour": "camera_tour.json", "spatial_overview": "spatial_overview.json",
+        "interiors": "interiors.glb", "interior_plan": "interiors.json"}
     manifest["lod1_quality"] = inspect_glb(lod1_payload)
     manifest["execution"] = {"compute": "CPU", "external_api_calls": 0,
                              "model_inference": False, "blender_verified": False,

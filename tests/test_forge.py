@@ -21,6 +21,8 @@ from forge.streaming import chunk_world, simple_building_lod, lod_for_distance
 from forge.cinematic import camera_tour, interpolate_shots
 from forge.recipes import ModelRecipe, inspect_recipe
 from forge.meshqa import analyze_mesh, remove_bad_triangles
+from forge.perception import scene_overview
+from forge.interiors import generate_interiors
 
 
 class ForgeTests(unittest.TestCase):
@@ -101,6 +103,9 @@ class ForgeTests(unittest.TestCase):
             self.assertTrue((Path(temp) / "world_lod1.glb").is_file())
             self.assertTrue((Path(temp) / "chunks.json").is_file())
             self.assertTrue((Path(temp) / "camera_tour.json").is_file())
+            self.assertTrue((Path(temp) / "spatial_overview.json").is_file())
+            self.assertTrue((Path(temp) / "interiors.glb").is_file())
+            self.assertTrue((Path(temp) / "interiors.json").is_file())
             self.assertEqual(manifest["execution"]["external_api_calls"], 0)
             self.assertFalse(manifest["execution"]["blender_verified"])
             saved = json.loads((Path(temp) / "manifest.json").read_text())
@@ -203,6 +208,46 @@ class ForgeTests(unittest.TestCase):
         mesh = Mesh(positions=[float("nan"),0,0], normals=[0,1,0], indices=[])
         with self.assertRaises(ValueError):
             remove_bad_triangles(mesh)
+
+    def test_spatial_overview_evidence_labels(self):
+        _, world = create_neighborhood(WorldSpec())
+        result = scene_overview(world, camera=(0,100,0))
+        self.assertEqual(len(result["observations"]), len(world["buildings"]))
+        self.assertTrue(all(o["evidence"] == "generated-scene-geometry"
+                            and o["real_world_verified"] is False for o in result["observations"]))
+        self.assertEqual(result, scene_overview(world, camera=(0,100,0)))
+
+    def test_spatial_overview_detects_occlusion(self):
+        _, world = create_neighborhood(WorldSpec(rows=2, columns=2, buildings=4))
+        left = {"id":"near", "center":[0,0,0], "size":[4,10,4], "lot":[0,0]}
+        right = {"id":"far", "center":[0,0,12], "size":[4,10,4], "lot":[0,1]}
+        world["buildings"] = [left,right]
+        result = scene_overview(world, camera=(0,3,-10))
+        far = next(o for o in result["observations"] if o["id"] == "far")
+        self.assertFalse(far["visible_center"])
+        self.assertEqual(far["occluded_by"], ["near"])
+
+    def test_spatial_overview_rejects_nonfinite_camera(self):
+        _, world = create_neighborhood(WorldSpec())
+        with self.assertRaises(ValueError):
+            scene_overview(world, camera=(float("inf"), 1, 1))
+
+    def test_interior_mesh_and_provenance(self):
+        _, world = create_neighborhood(WorldSpec())
+        meshes, plan = generate_interiors(world)
+        self.assertEqual(len(plan["room_sets"]), 10)
+        self.assertEqual(sum(item["count"] for item in plan["room_sets"]), 20)
+        self.assertTrue(all(not item["reference_observed"] and not item["owner_approved"]
+                            for item in plan["room_sets"]))
+        self.assertTrue(all(analyze_mesh(mesh)["passed"] for mesh in meshes))
+        self.assertTrue(inspect_glb(export_glb(meshes))["valid"])
+
+    def test_interior_geometry_deterministic(self):
+        _, world = create_neighborhood(WorldSpec())
+        first, plan1 = generate_interiors(world)
+        second, plan2 = generate_interiors(world)
+        self.assertEqual(export_glb(first), export_glb(second))
+        self.assertEqual(plan1,plan2)
 
     def test_character_missing_hand(self):
         landmarks = {name: [0, i, 0] for i, name in enumerate((

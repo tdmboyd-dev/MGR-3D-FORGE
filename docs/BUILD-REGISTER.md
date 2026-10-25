@@ -7,7 +7,7 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F01 | Intent -> typed project & brief | SPECIFIED | PROTOTYPE TESTED | P0 | input schema | Limited count-only offline parser, not general intent |
 | F02 | Scene/asset dependency graph | SPECIFIED | PARTIAL: tested DAG | P0 | F01 | Stable topo-sort/cycle checks; full scene graph pending |
 | F03 | CPU procedural terrain/roads | SOURCED | PARTIAL: roads, TESTED | P0 | F02, Blender | Terrain, curves and engine import absent |
-| F04 | Parametric buildings/rooms | SOURCED | PARTIAL: massing, TESTED | P0 | F03 | 1,000-lot test passes; rooms absent |
+| F04 | Parametric buildings/rooms | SOURCED | PARTIAL: massing + two-room hypothesis TESTED | P0 | F03 | 1,000-lot test + interior GLB; real architecture/edits pending |
 | F05 | Asset store and provenance | SPECIFIED | PROTOTYPE TESTED | P0 | asset schema | Hash/dedupe/tamper tests pass; durable transactional backend pending |
 | F06 | GLB import/export + QA | SPECIFIED | PARTIAL: export, TESTED | P0 | Blender version | Internal structure test passes; independent import/export pending |
 | F07 | Local model adapter contract | SPECIFIED | NOT STARTED | P0 | F02, license gates | Mock + two providers |
@@ -36,8 +36,9 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F30 | Benchmark/quality ledger | SPECIFIED | PROTOTYPE TESTED | P0 | metric spec | Reproducible test/manifest; quality against Blender targets pending |
 | F31 | Native World Flight (Scroll-World inspired) | SOURCED | PARTIAL: keyframe plan TESTED | P1 | F16,F17 | 3D camera paths exported; actual scroll player pending |
 | F32 | Forge Model Dock (Pinokio inspired) | SOURCED | PARTIAL: recipe inspection TESTED | P1 | F07,F22,F29 | Fail-closed manifest; sandboxed installs and model launch pending |
+| F33 | Spatial Eyes (God's Eye View inspired) | SOURCED | PARTIAL: geometry visibility TESTED | P1 | F16,F17,F20 | Known-object occlusion and evidence labels; HUD and external/reconstruction layers pending |
 
-**Scope expansion:** 30 original tracked items plus F31 and F32 = **32**. Synapse is an unresolved research intake, **not** a counted capability until its upstream is verified. See `research/SCROLL-SYNAPSE-PINOKIO-INTAKE.md`.
+**Scope expansion:** 30 original tracked items plus F31 (World Flight), F32 (Model Dock) and F33 (Spatial Eyes) = **33**. Synapse is an unresolved research intake, **not** a counted capability until its upstream is verified. See `research/SCROLL-SYNAPSE-PINOKIO-INTAKE.md` and `research/GODS-EYE-VIEW-NATIVE-INTAKE.md`.
 
 ## Definition of production completeness
 

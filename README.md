@@ -24,7 +24,7 @@ python3 -m forge.cli build --prompt "Create 25 buildings and streets" --out arti
 python3 -m forge.cli inspect artifacts/prompt-25/world.glb
 ```
 
-Each build now creates nine files: `world.glb`, `world.obj`, `world.mtl`, `world_lod1.glb`, `navigation.json`, `chunks.json`, `camera_tour.json`, `preview.svg`, and `manifest.json`. It can partition buildings into chunks, export a simplified LOD1 mesh, and plan editable 3D camera keyframes. These are static exports, **not** live streaming, camera playback or external Blender/game-engine verification. The SVG is a projected preview of the scene plan, not a render of the GLB. The road graph supports simple pathfinding and box collisions. Prompts are **limited** count-based requests, and buildings are basic blocks without interiors or animation.
+Each build now creates twelve files: `world.glb`, `world.obj`, `world.mtl`, `world_lod1.glb`, `navigation.json`, `chunks.json`, `camera_tour.json`, `spatial_overview.json`, `interiors.glb`, `interiors.json`, `preview.svg`, and `manifest.json`. It can partition buildings into chunks, export a building-only LOD1 mesh, plan editable 3D camera keyframes, report scene-object visibility and generate a separate simple two-room interior hypothesis for each building. These are static exports, **not** live streaming, image-to-3D reconstruction, camera playback or external Blender/game-engine verification. Invented interiors are explicitly **not known real-world interiors**. The SVG is a projected preview of the scene plan, not a render of the GLB. The road graph supports simple pathfinding and box collisions. Prompts are **limited** count-based requests; buildings and rooms are basic shapes without a production-quality architecture or animation pipeline.
 
 Code lives under `forge/`, tests under `tests/`; [implementation evidence](docs/IMPLEMENTATION-EVIDENCE.md) explains exact results and limitations.
 
@@ -35,6 +35,7 @@ Code lives under `forge/`, tests under `tests/`; [implementation evidence](docs/
 | [ARCHITECTURE.md](docs/ARCHITECTURE.md) | Owners, modules, data contracts, pipeline, integrations |
 | [RESEARCH-REGISTER.md](research/RESEARCH-REGISTER.md) | Source-linked model/research comparisons and evidence disposition |
 | [SCROLL-SYNAPSE-PINOKIO-INTAKE.md](research/SCROLL-SYNAPSE-PINOKIO-INTAKE.md) | New source research, licenses, MGR F31/F32 decisions and unresolved Synapse identity |
+| [GODS-EYE-VIEW-NATIVE-INTAKE.md](research/GODS-EYE-VIEW-NATIVE-INTAKE.md) | Canonical God’s Eye View analysis, third-party data license risks, F33 Spatial Eyes plan |
 | [DEEP-DIVE-NATIVE-CPU.md](research/DEEP-DIVE-NATIVE-CPU.md) | 16-field native procedural research packet |
 | [DEEP-DIVE-IMAGE-TO-3D.md](research/DEEP-DIVE-IMAGE-TO-3D.md) | 16-field TripoSR, TripoSG and TRELLIS.2 packets |
 | [DEEP-DIVE-WORLDS-PARTS.md](research/DEEP-DIVE-WORLDS-PARTS.md) | 16-field world/parts/rig research packets |
