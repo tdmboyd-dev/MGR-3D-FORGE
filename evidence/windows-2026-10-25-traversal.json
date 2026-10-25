@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-25",
+  "device": "owner-authorized Windows PC",
+  "tested_commit": "c0db6fe065419ea42dc6579efc22ac7cc5606f14",
+  "python_tests": {"ran": 97, "passed": 97, "status": "PASS"},
+  "road_rehearsal": {
+    "status": "PASS_OFFLINE_ROAD_GRAPH",
+    "source": "same procedurally generated 10-building world verified in Blender pipeline",
+    "from_building": "building-000-001",
+    "to_building": "building-003-003",
+    "travel_distance_m": 120.0,
+    "samples": 321,
+    "building_collisions": 0
+  },
+  "limitations": [
+    "No game engine or navmesh was tested.",
+    "Path is a generated road-centerline route, not door-to-door character navigation.",
+    "The sample positions simulate a simple agent, not a rendered animated character."
+  ]
+}

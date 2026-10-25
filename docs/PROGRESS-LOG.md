@@ -13,6 +13,7 @@
 - Added `bridge/blender_rig.py`: 16 independently imported mannequin parts rigidly attached to an 11-bone armature, saved as editable `.blend` with machine-readable assignment receipt. Blender runtime acceptance pending. Rigid parenting is explicitly **not normalized vertex skin weights**.
 - Windows reality check after GitHub commit `cf8b9a2`: **94/94 tests PASS**; Blender 5.2.2 imported all 16 separate GLB parts, built an 11-bone armature, saved a **120,608-byte** editable `.blend`, then reopened it successfully with **16 meshes and one armature**. Actual project preserved in `evidence/blender/modular-rig-example.blend`; proof receipt in `evidence/blender/windows-2026-10-25-rig.json`. This is an early rigid assembly, not deformable skinning.
 - Added F40 MGR World Logic starter `forge/traversal.py`: sampled agent movement along known road graph, building contact rejection and explicit time/sample budgets; CLI emits an offline traversal receipt. **97/97 local tests PASS**. This is not an engine navmesh or real character gameplay.
+- Pulled the exact GitHub `c0db6fe` onto Time's PC. **97/97 Windows Python tests PASS.** CLI road travel from `building-000-001` to `building-003-003`: **120 meters**, **321 sample frames**, zero building intersections in generated geometry. Evidence: `evidence/windows-2026-10-25-traversal.json`.
 
 ## 2026-10-25 — Larger build wave: scene facts, visual pixels, recoverable jobs, continuity
 
