@@ -10,8 +10,9 @@ import json
 from pathlib import Path
 import re
 import secrets
+import subprocess
 import threading
-from urllib.parse import unquote, urlparse
+from urllib.parse import urlparse
 
 from .image_relief import export_image_relief
 from .live_blender import create_live_blender_scene
@@ -46,6 +47,27 @@ class ForgeWorkstation:
         make_world_flight(self.world, output)
         self.page = output.read_text(encoding="utf-8").replace(
             "<body>", f'<body><script>window.MGR_FORGE_STUDIO_TOKEN={json.dumps(self.token)};</script>', 1)
+
+    @staticmethod
+    def _write_job_state(job, state):
+        """Persist atomic, bounded job receipts across a local Studio restart."""
+        temporary = job / "blender-state.tmp"
+        final = job / "blender-state.json"
+        temporary.write_text(json.dumps(state, sort_keys=True), encoding="utf-8")
+        temporary.replace(final)
+
+    @staticmethod
+    def _read_job_state(job):
+        path = job / "blender-state.json"
+        if path.is_symlink() or not path.is_file() or path.stat().st_size > 4096:
+            return None
+        try:
+            state = json.loads(path.read_text(encoding="utf-8"))
+        except (ValueError, UnicodeError):
+            return None
+        if not isinstance(state, dict) or state.get("status") not in ("RUNNING", "PASS", "FAILED"):
+            return None
+        return state
 
     def create_job(self):
         while True:
@@ -111,11 +133,21 @@ class ForgeWorkstation:
                         return {"status": "PASS", "job_id": job_id,
                                 "blend_url": f"/files/{job_id}/scene.blend",
                                 "editable_buildings": proof["editable_buildings"]}
+                if state is None:
+                    state = self._read_job_state(job)
+                    if state and state["status"] == "RUNNING":
+                        # Process-local workers cannot survive a Studio restart.
+                        state = {"status": "FAILED", "job_id": job_id,
+                                 "error": "Previous Blender job was interrupted; start a new edited-world job"}
+                        self._write_job_state(job, state)
+                    if state:
+                        self.blender_jobs[job_id] = state
                 if route == "/api/blender" and state is None:
-                    self.blender_jobs[job_id] = {"status": "RUNNING", "job_id": job_id}
+                    state = {"status": "RUNNING", "job_id": job_id}
+                    self._write_job_state(job, state)
+                    self.blender_jobs[job_id] = state
                     thread = threading.Thread(target=self._build_blender_job, args=(job_id, job), daemon=True)
                     thread.start()
-                    state = self.blender_jobs[job_id]
                 return state or {"status": "NOT_STARTED", "job_id": job_id}
         raise ValueError("unknown studio command")
 
@@ -126,9 +158,10 @@ class ForgeWorkstation:
             result = {"status": "PASS", "job_id": job_id,
                       "blend_url": f"/files/{job_id}/scene.blend",
                       "editable_buildings": proof["editable_buildings"]}
-        except (ValueError, RuntimeError, FileExistsError, OSError) as error:
+        except (ValueError, RuntimeError, FileExistsError, OSError, subprocess.TimeoutExpired) as error:
             result = {"status": "FAILED", "job_id": job_id, "error": str(error)[:500]}
         with self.blender_lock:
+            self._write_job_state(job, result)
             self.blender_jobs[job_id] = result
 
 

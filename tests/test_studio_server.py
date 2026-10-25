@@ -205,6 +205,40 @@ class StudioServerTests(unittest.TestCase):
         code, _, _ = self.fetch("/api/blender-status", {"job_id": job}, token=False)
         self.assertEqual(code, 403)
 
+    def test_blender_job_receipt_persists_between_sessions(self):
+        job = self._edited_job()
+        folder = self.studio.valid_job(job)
+        result = {"status": "FAILED", "job_id": job, "error": "Blender binary missing"}
+        self.studio._write_job_state(folder, result)
+        recovered = ForgeWorkstation(self.world, self.studio.workspace)
+        self.assertEqual(recovered.command("/api/blender-status", {"job_id": job}), result)
+
+    def test_interrupted_blender_job_is_recovered_as_failure(self):
+        job = self._edited_job()
+        folder = self.studio.valid_job(job)
+        self.studio._write_job_state(folder, {"status": "RUNNING", "job_id": job})
+        recovered = ForgeWorkstation(self.world, self.studio.workspace)
+        result = recovered.command("/api/blender-status", {"job_id": job})
+        self.assertEqual(result["status"], "FAILED")
+        self.assertIn("interrupted", result["error"])
+        self.assertEqual(recovered._read_job_state(folder), result)
+
+    def test_invalid_receipt_does_not_crash_recovery(self):
+        job = self._edited_job()
+        folder = self.studio.valid_job(job)
+        (folder / "blender-state.json").write_text("{broken", encoding="utf-8")
+        recovered = ForgeWorkstation(self.world, self.studio.workspace)
+        self.assertEqual(recovered.command("/api/blender-status", {"job_id": job})["status"],
+                         "NOT_STARTED")
+
+    def test_job_state_replaces_file_without_extra_files(self):
+        job = self._edited_job()
+        folder = self.studio.valid_job(job)
+        self.studio._write_job_state(folder, {"status": "RUNNING", "job_id": job})
+        self.studio._write_job_state(folder, {"status": "FAILED", "job_id": job, "error": "stopped"})
+        self.assertEqual(self.studio._read_job_state(folder)["status"], "FAILED")
+        self.assertFalse((folder / "blender-state.tmp").exists())
+
 
 if __name__ == "__main__":
     unittest.main()

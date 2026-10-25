@@ -290,3 +290,10 @@ The initial historical snapshot has been superseded by the current live inventor
 - **Windows creation proof:** Chrome submitted a 16×16 PNG and a browser-edited world via the actual localhost service. Both real GLB download links appeared. Blender generated an actual editable 10-building `.blend` within the same job. The initial browser acceptance capped the wait too tightly, so Studio now starts a background Blender job and the real-browser acceptance waits up to three minutes; full download-button verification is being rechecked.
 - **Final connected browser proof PASS:** The revised real Chrome CDP chain completed with exit code 0 in **106.29 seconds**. All six checks passed, including actual HTTP GET/200 of the Blender `.blend`, relief `.glb`, edited world `.glb` and editor `.html`. Reproducible evidence: `evidence/browser/windows-wave20-local-studio.json`. This is a native Windows loopback workflow, not a hosted public studio.
 
+## 2026-10-25 — Persistent Blender job receipts and interruption recovery (F97 follow-on)
+
+- Blender job transitions now write bounded atomic `blender-state.json` receipts inside their job directory. A newly started local Studio can recover success/failure receipts, and reports any orphaned `RUNNING` record as an interrupted job instead of claiming that a vanished worker is still running.
+- A Blender subprocess timeout now produces a visible failed-job result. Repeated clicks within the live process continue to share one worker, rather than launching duplicate conversions.
+- Four additional HTTP-backed tests exercise recovered failure, interrupted-worker recovery, invalid receipt isolation and atomic file replacement. **321 local unit tests PASS** (23 network/socket tests skipped under Linux sandbox restrictions); Windows HTTP acceptance pending for these new cases.
+- This addresses process-restart truthfulness; it does **not** make Blender jobs independently resumable after process termination. Full durable background worker orchestration remains open.
+
