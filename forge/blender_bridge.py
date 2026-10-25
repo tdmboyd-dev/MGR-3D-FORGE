@@ -7,6 +7,7 @@ import subprocess
 
 
 PROBE=Path(__file__).resolve().parent.parent/"bridge"/"blender_probe.py"
+RENDER=Path(__file__).resolve().parent.parent/"bridge"/"blender_render.py"
 
 
 def blender_command(blender_binary,source,report):
@@ -31,3 +32,15 @@ def verify_blender(source,report,*,blender_binary="blender",timeout_seconds=120)
     if data.get("status")!="PASS" or data.get("triangles",0)<=0:
         raise RuntimeError("Blender verification receipt is invalid")
     return data
+
+
+def blender_render_command(blender_binary,source,image,report):
+    if not Path(source).is_file() or Path(source).suffix.lower()!=".glb":
+        raise ValueError("a real GLB path is required")
+    if Path(image).suffix.lower()!=".png":
+        raise ValueError("render output must be PNG")
+    if not RENDER.is_file():
+        raise FileNotFoundError("Blender render script missing")
+    return [str(blender_binary),"--background","--factory-startup",
+            "--python",str(RENDER),"--",str(Path(source).resolve()),
+            str(Path(image).resolve()),str(Path(report).resolve())]

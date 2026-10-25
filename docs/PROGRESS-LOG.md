@@ -1,8 +1,26 @@
 # MGR 3D Forge — Progress and Evidence Log
 
+**This is a historical sequence, not the current status page.** The canonical current status is `docs/WHAT-WE-HAVE.md` plus `docs/IMPLEMENTATION-EVIDENCE.md`. Superseded historical claims are retained only as dated checkpoints.
+
+## 2026-10-25 — MGR-native canon and Windows Blender import proof
+
+- Centralized MGR naming/ownership in `docs/MGR-NATIVE-CANON.md`. External technical reference details segregated under `research/external-provenance/`, not used as MGR feature names or product definitions.
+- On Time's connected Windows PC: Blender **5.2.2 LTS** verified; Python **3.14.8**; Git **2.56.0**. Cloned the latest Forge main commit to a unique temporary validation folder, with no existing user files replaced.
+- Windows native test suite: **64/64 pass**.
+- Windows Forge generated world and generic T/A mannequins with **16 modular parts** each; both anatomy checks pass.
+- Real Blender 5.2.2 headless GLB imports: `world.glb` **372 triangles PASS**, `interiors.glb` **1,200 PASS**, `parks.glb` **504 PASS**, T mannequin **204 PASS**, A mannequin **204 PASS**; every receipt written on Windows.
+- These prove real Blender import and geometry presence, **not** rendered image quality, skin weights, morphs, animation deformability, likeness approval or game-engine acceptance.
+
+### Actual Blender image render and visual correction
+
+- Added `bridge/blender_render.py` and `blender-render` CLI command to frame GLB content and render PNG with Blender's Workbench engine, creating a JSON receipt.
+- Ran real Blender 5.2.2 Windows Workbench renders: procedural world preview **PASS** (285,421-byte PNG), T-pose modular mannequin **PASS** (initial 261,030-byte PNG).
+- Visual inspection spotted unwanted center overlap in the mannequin coat. Changed the MGR coat mesh to two independent front panels and regenerated the character. **Fixed T-pose render PASS** (261,975-byte PNG); visually inspected: hands in frame, both forearms present, coat no longer obscures center shirt.
+- The mannequin is a deliberately basic geometric test subject, **not Tevin's likeness**. Rendering proves the pipeline and exposed a correctable defect, not character-art acceptance.
+
 ## 2026-10-25 — Larger connected build cycle: character, adapters, Blender probe, greenery
 
-- Locked universal inspiration interpretation in `docs/EXTERNAL-INSPIRATION-RULE.md` and `AGENTS.md`: every external project yields original MGR-native creative possibilities; never restrict Forge to the upstream feature or claim unobserved reality is known.
+- Locked MGR creative sovereignty in `docs/MGR-NATIVE-CANON.md` and `AGENTS.md`: all Forge capability identities are owned MGR creation contracts.
 - Added generic fully enclosed 3D proxy mannequin, left/right arms, visible hands, hair, detachable coat, shirt, chain, pants/legs and boots (`forge/character.py`), 16 independent parts, T and A poses. **Not Tevin's approved identity.** Actual CLI T/A builds both passed.
 - Added `forge/animation.py`: bone-length-preserving T→A→T landmark samples, currently **metadata only, no rig weights or deforming mesh**.
 - Added `forge/adapters.py`: swappable contract, functioning CPU-world adapter and explicit not-installed neural adapter. Mock remote choice tested against budget+approval. **No real neural model integrated**.
@@ -14,24 +32,23 @@
 - Suite **64/64 pass**. No GitHub Actions run, no paid APIs, GPU inference or networked third-party script execution.
 - Remaining gates: real Blender import/render, approved Tevin body/face, skinning, exact asset separation, neural model runtime + licensing, interactive studio, external Creation OS/MGR-ONE consumer integration, game-engine benchmarks and owner acceptance.
 
-## 2026-10-25 — User corrected Pinokio reference to God's Eye View
+## 2026-10-25 — MGR Spatial Eyes and Beyond Imagery
 
-- Kept F32 Model Dock from Pinokio because it has separate native value for optional local model orchestration.
-- Located canonical upstream `bilawalsidhu/gods-eye-view`; read official README/license. Code is MIT but third-party feeds and bundled assets are **not** blanket MIT and include commercial restrictions.
+- Retained F32 MGR Model Dock because local-model sovereignty is a native creative requirement.
+- External data/license restrictions were recorded in the separate provenance ledger; no outside spatial dataset copied into Forge.
 - Added F33 Spatial Eyes. Implemented `forge/perception.py` to report known-generated-building distances, camera visibility and blockers, with explicit evidence type and *not real-world verified* labels. CLI emits `spatial_overview.json`.
-- Research-to-native contract in `research/GODS-EYE-VIEW-NATIVE-INTAKE.md`. Future camera/HUD, live evidence adapters and multi-photo reconstruction remain open.
+- MGR Spatial Eyes research and build contract are tracked as F33; future camera/HUD and multi-photo reconstruction remain open.
 - Expanded register to 33 areas. **47/47 tests passed** after new spatial visibility tests. No external data feeds, GPU inference or API charges.
-- Owner clarified the goal is **native imaginative world creation**, not replicating God's Eye View. Added `forge/interiors.py` with original designed two-room interiors per building, real exportable `interiors.glb` and explicit `interiors.json` provenance. This is invented geometry, not a claim to know a building's unseen real interior. Test suite expanded to **49/49 passing**.
+- Owner clarified the goal is **MGR-native imaginative world creation**. Added `forge/interiors.py` with original two-room designs per building and an explicit uncertainty ledger. Test suite expanded to **49/49 passing**.
 
 ## 2026-10-25 — LOD, repair and two MGR-native research extensions
 
 - Added coarse, **building-only** LOD1 mesh and deterministic world building chunk partition (`forge/streaming.py`), exported `world_lod1.glb` and `chunks.json`. This excludes terrain/roads and is preparation for streaming, **not a complete renderable LOD scene or live streamer**. Example 10-building LOD1: 120 triangles versus 372 triangles in the full original scene (different contents, so not an apples-to-apples optimization benchmark).
 - Tightened `WorldSpec` against nonfinite dimensions.
-- Added actual-3D-coordinate camera tour keyframes and interpolation (`forge/cinematic.py`, `camera_tour.json`) inspired by Scroll-World's flight concept but independent of its image/video pipeline.
-- Added security-first model recipe schema and offline readiness assessment (`forge/recipes.py`), inspired by Pinokio's local launcher concept; no installation or execution yet.
+- Added MGR World Flight 3D-coordinate camera keyframes and interpolation (`forge/cinematic.py`, `camera_tour.json`).
+- Added MGR Model Dock security-first recipe schema and offline readiness assessment (`forge/recipes.py`); no installation or execution yet.
 - Added mesh triangle corruption/degeneracy inspection and conservative cleanup (`forge/meshqa.py`), not retopology.
-- Reviewed primary upstream Scroll-World/Pinokio READMEs and licenses; researched the ambiguous Synapse name; documented exact native value and caveats in `research/SCROLL-SYNAPSE-PINOKIO-INTAKE.md`.
-- Register expanded from 30 to **32** with F31/F32; Synapse is not counted until uniquely identified.
+- External licensing evidence was isolated to `research/external-provenance/`. Original 30 MGR areas expanded to 32 at this checkpoint.
 - **44/44 unit tests passed**. No GPU, model inference, unreviewed downloaded scripts or paid APIs used.
 
 ## 2026-10-25 — World graph and multi-export build increment
@@ -58,7 +75,7 @@
 - `python3 -m unittest discover -v`: **17/17 pass**. Initial test fixture for anatomy identity was invalid; corrected to plausible symmetric landmarks and reran green.
 - `python3 -m forge.cli build --prompt "Create 25 buildings and streets" --out artifacts/prompt-25`: **25 buildings, 756 triangles, QA PASS**, real GLB output, no external APIs/model inference. SHA-256 `46738a68b153bc8c1e168fb1ea047c294c73db67fcf40a136d4ff705ee16e81d`.
 - `python3 -m forge.cli inspect artifacts/prompt-25/world.glb`: internal inspection **valid=true**, one mesh, six primitives, 1,512 vertices, 756 triangles, six materials.
-- CLI, tests and manifest are reproducible. No Blender, external GLB importer, target game engine, approved Tevin base or GPU model runtime available for integration proof; those gates remain open.
+- At that earlier checkpoint, only internal GLB tests had been run. The subsequent Windows Blender import verification is recorded at the top of this log.
 
 **Proof classification:** local CPU prototype and unit tests verified; independent application import, visual appearance, interactive worlds, advanced text-to-3D, character production, licenses and cross-repo integration **not verified**.
 
@@ -73,22 +90,4 @@
 - **No code for a working 3D engine written. No local models installed or benchmarked. No repo consumer integrations tested. No expenses incurred.**
 - External source tree audits, full candidate code inspection, 16-field packets, actual hardware test, model licenses and owner acceptance remain OPEN.
 
-## Status snapshot (honest categorical, not percentages)
-
-| Domain | Evidence | Status |
-|---|---|---|
-| Repo ownership | GitHub get_repo | VERIFIED |
-| Vision and native capability description | GitHub docs | DOCUMENTED |
-| Architectural direction | source-linked research | SPECIFIED, NOT BUILT |
-| Candidate research | official docs/repo/papers | SOURCED; not exhaustive |
-| CPU-only world prototype | generator + GLB + 17-test suite | WORKING PROTOTYPE, internally tested |
-| Character preservation | synthetic landmark suite, no Tevin base | PARTIAL; production NOT STARTED |
-| Model runtime proof | no compute | NOT STARTED |
-| Blender bridge | no runtime | NOT STARTED |
-| Creation OS / Tevin integrations | repos not inspected | NOT STARTED |
-| Commercial license clearance | preliminary warnings | BLOCKED pending exact review |
-| Owner approval | absent | PENDING |
-
-## Next action
-
-Audit target runtime and connected owner repos, then implement the smallest CPU-only scene production vertical slice and gather measured evidence. Add research receipts without silently upgrading implementation status.
+The initial historical snapshot has been superseded by the current live inventory in `docs/WHAT-WE-HAVE.md`; Git history preserves its original wording if needed for audit.

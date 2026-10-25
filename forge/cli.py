@@ -18,7 +18,7 @@ from .cinematic import camera_tour
 from .perception import scene_overview
 from .interiors import generate_interiors
 from .character import build_mannequin
-from .blender_bridge import verify_blender
+from .blender_bridge import verify_blender, blender_render_command
 from .environment import generate_parks, ENVIRONMENT_MATERIALS
 from .receipt import file_receipt, verify_bundle
 
@@ -101,6 +101,11 @@ def main(argv=None):
     blender.add_argument("path",type=Path)
     blender.add_argument("--report",type=Path,required=True)
     blender.add_argument("--binary",default="blender")
+    render=sub.add_parser("blender-render",help="render real Blender workbench QA PNG")
+    render.add_argument("path",type=Path)
+    render.add_argument("--image",type=Path,required=True)
+    render.add_argument("--report",type=Path,required=True)
+    render.add_argument("--binary",default="blender")
     bundle=sub.add_parser("verify-bundle",help="verify artifact hashes in world build folder")
     bundle.add_argument("directory",type=Path)
     args = parser.parse_args(argv)
@@ -115,6 +120,14 @@ def main(argv=None):
         return 0
     if args.action == "blender-verify":
         print(json.dumps(verify_blender(args.path,args.report,blender_binary=args.binary),indent=2))
+        return 0
+    if args.action == "blender-render":
+        import subprocess
+        command=blender_render_command(args.binary,args.path,args.image,args.report)
+        result=subprocess.run(command,timeout=180,check=False)
+        if result.returncode:
+            raise RuntimeError(f"Blender render failed with exit code {result.returncode}")
+        print(json.dumps({"status":"PASS","image":str(args.image.resolve())},indent=2))
         return 0
     if args.action == "verify-bundle":
         print(json.dumps(verify_bundle(args.directory),indent=2))

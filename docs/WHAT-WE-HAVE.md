@@ -1,96 +1,49 @@
-# MGR 3D Forge — What We Have vs What We Need
+# MGR 3D FORGE — Current Native Inventory
 
-**Truth as of 2026-10-25.** This describes the repository and the proposed product separately.
+**Updated 2026-10-25. Owner: Money Grind Religion Corp. Canon: `docs/MGR-NATIVE-CANON.md`.** This is a current status document, not the historical creation baseline.
 
-## What EXISTS today in this GitHub repository
+## What MGR owns and can run now
 
-1. README: canonical project identity, mission, rules and navigation.
-2. Product Bible: complete proposed user experience, 20 native innovation concepts, inputs, outputs, Tevin/world workflows.
-3. Architecture: component ownership, typed contracts, model adapters, CPU procedural path, provenance, security and integrations.
-4. Decisions: owner-confirmed repository, proposed design choices and unresolved owner/runtime decisions.
-5. Build Register: 30 independent work areas, research/code status, dependencies and priorities.
-6. Acceptance Plan: actual tests for CPU world generation, Tevin character, model inference and scene export.
-7. Progress Log: dated evidence and honest implementation status.
-8. Research Register: 25 technologies/research candidates with source links, maturity notes and disposition.
-9. Hardware & Cost: CPU/GPU feasibility, real cost accounting and benchmark framework.
-10. License Risk: separate code/weight/model/dataset/output rights and blocked Tencent commercial adoption.
-11. Native CPU deep dive: 16-field packet for deterministic procedural geometry.
-12. Image-to-3D deep dive: 16-field packets for TripoSR, TripoSG and TRELLIS.2.
-13. Worlds & Parts deep dive: 16-field packets for HY-World 2.0, WorldClaw/WorldGen, Hunyuan3D-Part and UniRig.
+| MGR capability | Native implementation | Verified proof | Production gap |
+|---|---|---|---|
+| MGR CPU World Creator | Typed seed-based neighborhood, streets, building massing | 10/100/1000 local benchmark; unit tests; real Blender world GLB import PASS | Real terrain, architectural detail, textures, world quality |
+| MGR Scene Blueprint | Deterministic grid graph, routes, basic collision and output manifests | Unit tests + exported JSON | Navmesh, runtime physics, persistent editing |
+| MGR Beyond Imagery | Separate two-room interior hypotheses | GLB 1,200 triangles imported in Blender 5.2.2 | Truthful reconstruction from approved multiple references, rich interiors |
+| MGR Environment Forge | Basic procedural parks, trees and path | Parks GLB 504 triangles imported in Blender | Natural assets, biomes, physics, textures |
+| MGR Character Fabric | Anonymous T/A mannequin, full arms and hands, 16 separately exported parts | Both character GLBs 204 triangles each imported in Blender; landmark tests PASS | Real owner-approved Tevin likeness, fingers/facial detail, proper clothing |
+| MGR Motion Blueprint | Bone-length-preserving T→A→T landmark samples | Pose validation tests | Actual skinned rig, weights, deformation, animation playback |
+| MGR World Flight | World-coordinate camera keyframes | Deterministic tests + JSON output | Playback controller, world walkthrough |
+| MGR Spatial Eyes | Known-object center ray occlusion, distances and evidence labels | Geometry test suite + JSON output | Visual scene comprehension and 3D reconstruction |
+| MGR Model Dock | Offline recipe schema, CPU adapter, license/spend guards | Mock/CPU adapter tests | Real installed licensed neural models and isolated execution |
+| MGR Asset Vault | Hash-based local dedupe and rights metadata | Tamper/provenance tests | Multiuser DB, revisions, search |
+| MGR Geometry QA | Degenerate/bad index checks and conservative cleanup | Mesh tests | Watertight repair, retopo, UV validation |
+| MGR Delivery Bundle | GLB, OBJ, MTL, LOD1, parks, interiors, scene and camera JSON, preview SVG | 13-file hash manifest, SHA verification, Blender import of core GLBs | Engine/film pipeline, full interoperability and rendered visual QA |
+| MGR Build Ledger | 33-area register, provenance, 64 automated tests, benchmark receipts | Windows 64/64 tests + Linux runner 64/64 | Production CI, cross-engine/render/owner acceptance |
 
-Everything above is on main as versioned markdown. This is **research and specification**, not functional product code.
+## Exact Blender environment and measured Windows receipts
 
-## What Forge is intended to CREATE
+- User-owned device: **Time**, connected through authorized Desktop Commander; test clone in isolated Windows Temp folder. No existing user project overwritten.
+- Blender executable: `C:\Program Files\Blender Foundation\Blender 5.2\blender.exe`; actual version **5.2.2 LTS**.
+- Windows Python **3.14.8**. Test suite **64/64 PASS**.
+- Actual headless import receipts: `world.glb` **372 triangles**, `interiors.glb` **1,200**, `parks.glb` **504**, anonymous T and A mannequins **204 each**; all returned Blender **PASS**.
+- Real import verification is complete for those five GLB samples; render aesthetics, topology quality, skinning and interactive workflow acceptance remain **unverified**.
 
-### Characters
-- Original base characters or a carefully preserved reconstruction from approved reference files.
-- Identity-locked head/body/skin/hair representation; fully visible, proportionate limbs, hands and fingers.
-- Modular coat, shirts, pants, boots, chains, rings and accessories with correct attachment points.
-- T/A-pose, control rig, skin weights, basic animation clips and quality receipts.
-- Game/film/web-ready exports based on target requirements; not one universal format that magically suits all.
+## What is still open
 
-### Props and vehicles
-- Buildings, furniture, equipment, weapons only where policy permits, wearable accessories, vehicles and fantasy architecture from deterministic/procedural/AI inputs.
-- Meshes, materials, UVs, variations, scale, collision proxies and reusable library entries.
+1. Owner-approved Tevin source/reference privately, precise character identity, detachable *actual* wardrobe, rig and animation.
+2. Blender rendered-image visual acceptance, topology/UV/material improvements, deformation tests and `.blend` project output.
+3. Real model inference, commercial weights/license approvals, GPU/CPU resource planning, image/video-to-3D reconstruction.
+4. Full interactive Forge Studio: prompt editing, project browser, scene editor, asset library and in-world walkthrough.
+5. Full region terrain, world streaming, detail levels with equivalent scene contents, collisions and engines.
+6. MGR Creation OS, MGR-ONE/Tevin and Create Loco capability interface audit and integration.
+7. Multiuser security, durable worker queue, provider installers, full benchmark/quality comparisons and owner acceptance.
 
-### Environments and worlds
-- Terrain, water bodies, foliage, roads, neighborhoods, rooms, landmarks, multi-region maps, fantasy/metaverse locations.
-- Consistent world coordinate plan, named landmarks, traversal graph, performance budget, LOD/streaming.
-- Playable behavior only after connection to an actual game/runtime physics/navigation system.
-- Scene-from-photos/video reconstruction as an optional, separately licensed/heavy-compute capability.
+## Source-of-truth precedence
 
-### Operations
-- Asset reuse/deduplication, provenance, cost decisions, method selection, quality tests, repair loops and human approval.
-- Versioned scene files and GLB/FBX/USD/etc exports as supported and independently verified.
-- Open model adapters that can be upgraded/replaced without rewriting consumer products.
+- Product ownership and identity: `docs/MGR-NATIVE-CANON.md`.
+- Product ambition and module boundaries: `docs/PRODUCT-BIBLE.md`, `docs/ARCHITECTURE.md`.
+- Measured status and blockers: `docs/BUILD-REGISTER.md`, `docs/IMPLEMENTATION-EVIDENCE.md`, this file.
+- Historical logs: `docs/PROGRESS-LOG.md` (dated entries may be superseded).
+- Technical external code/data licensing: `research/external-provenance/` only; external projects **do not name or define MGR capabilities**.
 
-## What is NOT here yet
-
-- No working UI, scene planner, inference server or Blender plugin.
-- No actual characters/worlds generated by Forge.
-- No installed or verified open-weight checkpoints.
-- No local CPU/GPU benchmark or proof of a 10x improvement.
-- No linked Creation OS, Create Loco, Tevin/MGR-ONE or iKickItz integration.
-- No license approval for restricted third-party weights.
-- No connection to Time's Windows PC hardware or private base asset in this repo.
-- No production CI; no GitHub Actions consumed for this baseline.
-
-## Exact necessities before a credible native prototype
-
-### Mandatory
-- A target Blender version/runtime and project machine or permitted worker.
-- Typed input/scene/asset/character/quality contracts.
-- CPU procedural builder for terrain, roads, buildings, layouts.
-- Asset import/export validation with actual GLB roundtrip.
-- Geometry tests and reproducible evidence artifacts.
-- Private location for owner-approved character references.
-- Model license gate and spend approvals.
-
-### Conditional
-- NVIDIA GPU for some high-fidelity models (8GB+ TripoSG, 24GB+ TRELLIS.2).
-- High-VRAM GPU or rented worker for complex textured inference / HY worlds.
-- Game engine chosen for collision, navigation, real-time streaming and interactive world acceptance.
-- Storage, job scheduler and access control if multi-user/product deployment becomes in scope.
-
-### Not necessary for phase-one
-- Train a foundation model from scratch.
-- Buy an expensive GPU before proving CPU procedural capabilities.
-- Subscribe to Tripo or Hyper3D.
-- Duplicate MGR Agents routers/queues/approval systems.
-- Build an entire game engine.
-
-## Three independent progress lines
-
-- **Research/source:** Strategic research collected and documented; deep code/license/source and measured runtime audits remain.
-- **Implementation/tests:** 0/30 Forge capabilities implemented/tested in product.
-- **Integration/owner acceptance:** 0 verified; source projects and canonical Tevin asset have not been inspected in this task.
-
-## Next work that offers the fastest proof
-
-1. Audit the actual machine and Blender install, plus user-owned Creation OS and Tevin repos.
-2. Implement CPU-only seeded ten-building neighborhood: prompt->WorldSpec->Blender->GLB; validate.
-3. Run TripoSR CPU experiment, collect honest timings, then choose model pipeline based on GPU budget.
-4. Design anatomical/identity checks against privately supplied approved Tevin base; construct modular rigged character test.
-5. Compare accepted outcomes vs paid tools under equal constraints, then decide whether fine-tuning or deeper novel model research is worth it.
-
-**Owner-facing verdict:** We have a substantial, durable blueprint and evidence baseline. We do not yet have the 3D creation product. No completion percentage should hide that distinction.
+**Honest verdict:** MGR Forge has working, tested native 3D prototypes with five actual Blender 5.2.2 import proofs. The full production creation platform, photorealistic content and owner-approved Tevin remain unfinished.

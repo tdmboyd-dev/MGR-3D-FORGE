@@ -9,7 +9,7 @@ Date: 2026-10-25. This page distinguishes working code from future intent.
 | Bounded prompt | `forge/planner.py` | Parses simple building counts and caps oversized requests | `test_bounded_prompt_planner`, `test_planner_refuses_unbounded_request` | Freeform scene understanding |
 | Typed project input | `forge/spec.py` | Validated rows, columns, buildings, seed, lot sizes | `test_spec_rejects_*` | Full scene/character schema |
 | Procedural street scene | `forge/geometry.py` | Creates street meshes and colored massing buildings | `test_world_qa`, `test_large_world_no_missing_lots` | Landscape, interiors, doors, roads beyond grids |
-| Native 3D export | `forge/glb.py` | Produces GLB 2.0 with normals, indices and PBR colors | `test_glb_export_roundtrip`, corruption checks | Blender/Unreal/Unity independent import verification |
+| Native 3D export | `forge/glb.py` | Produces GLB 2.0 with normals, indices and PBR colors | Internal tests + five actual Blender 5.2.2 imports PASS | Engine (Unreal/Unity) and render/roundtrip acceptance |
 | Reproducibility | `forge/geometry.py` | Same seed yields identical output | `test_seed_deterministic` | Persistent multi-stage workflows |
 | Asset memory | `forge/assets.py` | SHA deduplication and provenance; tamper detection | `test_asset_registry_*`, `test_asset_provenance_required` | Search, version history and approvals |
 | Character guard | `forge/quality.py` | Checks missing landmarks, symmetry and identity proportions | `test_character_*` | Mesh/rig/pose analysis; real Tevin inputs |
@@ -30,7 +30,7 @@ Date: 2026-10-25. This page distinguishes working code from future intent.
 | Detachable generic character | `forge/character.py` | T/A full-arm/hand proxy with 16 parts; exports whole and each part in GLB | `test_generic_character_*`, `test_character_exports_*` | Tevin likeness, real garment segmentation, rigging, visual review |
 | Kinematic pose samples | `forge/animation.py` | T-A-T bone-length-preserving editable landmarks over time | `test_pose_track_*`, `test_a_pose_*` | Skinned mesh weights/deformation and playback |
 | Native provider contract | `forge/adapters.py` | Selects executable approved offline CPU generator, rejects absent or unapproved neural/provider work | `test_adapter_*` | Real model engines, GPU workers, quality comparisons |
-| Blender import probe | `bridge/blender_probe.py`, `forge/blender_bridge.py` | Actual bpy GLB import, triangle/mesh count receipt when Blender installed | `test_blender_bridge_*` only tests construction/unavailable gate | **Real Blender execution not run** in this environment |
+| Blender import probe | `bridge/blender_probe.py`, `forge/blender_bridge.py` | Actual bpy GLB import, triangle/mesh count receipt | Windows Blender 5.2.2 **five PASS** receipts under `evidence/blender/` | Render appearance, edit/re-export and skin/animation testing |
 | Park/foliage props | `forge/environment.py` | Generated trees/trunks on empty lots with distinct materials | `test_parks_*` | Natural tree topology, biomes, asset instancing and collisions |
 | Bundle integrity | `forge/receipt.py` | Hash/size receipts for all 13 world output artifacts, detects tampering | `test_world_bundle_*` | Signed provenance, cross-consumer receipts |
 | CPU benchmark | `forge/benchmark.py` | Reproduces 10/100/1000 building scene generation + GLB export measurements | `test_benchmark_*` and local measured run | Independent runtime/quality/performance comparisons |
@@ -43,7 +43,7 @@ python3 -m forge.cli build --prompt "Create 25 buildings and streets" --out arti
 python3 -m forge.cli inspect artifacts/prompt-25/world.glb
 ```
 
-Observed result: **64/64 tests passed** in the latest suite. The 25-building run produced 756 triangles and a structurally valid GLB with 1,512 vertices, six primitives and six materials. The example-spec world produces 10 buildings, 372 triangles, and now also exports 18 trees in 6 parks as a separate 504-triangle GLB. The generic T/A character has 16 detachable parts and passed anatomy/geometry tests. Interior meshes export separately. No Blender executable is installed in the current runner; importing models in a real application remains open. Internal structural checks are not proof of game-ready visuals.
+Observed result: **64/64 tests passed** on Linux and separately on Time's Windows PC. Actual Blender 5.2.2 headless imports of the example world (372 triangles), interiors (1,200), parks (504), generic T pose (204) and A pose (204) returned PASS. Hashes and Blender receipts are at `evidence/blender/windows-2026-10-25.json`. The generic T/A character has 16 detachable parts and passed anatomy tests. Blender imports are genuine independent interoperability proof for those five files, but **not visual, editing, rigging or game-engine acceptance**.
 
 ## CPU benchmark receipts (this runner, not broad performance promises)
 
@@ -59,15 +59,15 @@ Measured under CPython 3.12.14, x86_64. This excludes expensive Blender import, 
 
 ## Limits and honesty
 
-- This is a **real, simple 3D procedural mesh generator**, not an AI neural text-to-3D engine. It does not match Tripo, Hyper3D or neural world-generator visual quality yet.
+- This is a **real, simple MGR procedural 3D mesh generator**, not yet a photorealistic neural text-to-3D production engine.
 - Running on CPU with standard Python proves **this specific procedural path needs no GPU**. It does not prove neural high-quality image-to-3D inference is GPU-free.
-- The tests inspect geometry and file structure, **not commercial readiness**, rigging, user-facing design or external interoperability.
+- The unit tests inspect geometry and file structure. Five Blender imports independently check some interoperability, **not commercial readiness**, visual fidelity, rigging, or full editor use.
 - No model weights, paid credentials or unapproved references were copied to the repository. The approved Tevin base remains a missing input for identity-grade output.
-- Only partial progress on the 30 tracked work areas is claimed. Every other area remains open in `BUILD-REGISTER.md`.
+- Only partial progress on the **33 MGR-native** tracked work areas is claimed. Every other area remains open in `BUILD-REGISTER.md`.
 
 ## Next acceptance gates
 
-1. Independently render GLB in Blender or glTF validator and save exact screenshots/validator receipt.
+1. Visually render the successfully imported GLBs in Blender; inspect full-frame limbs, outward normals, materials and editable object structure; test re-export.
 2. Build editable component/room generators and a region dependency graph; stress-test export and collision.
 3. Add versioned job persistence, cancellation, approval, asset reuse and licensed model adapters.
 4. Ingest owner-approved Tevin base privately; compare anatomy, detachable wardrobe and animation deformation.

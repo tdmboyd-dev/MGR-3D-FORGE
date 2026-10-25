@@ -9,7 +9,7 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F03 | CPU procedural terrain/roads | SOURCED | PARTIAL: roads, TESTED | P0 | F02, Blender | Terrain, curves and engine import absent |
 | F04 | Parametric buildings/rooms | SOURCED | PARTIAL: massing + two-room hypothesis TESTED | P0 | F03 | 1,000-lot test + interior GLB; real architecture/edits pending |
 | F05 | Asset store and provenance | SPECIFIED | PROTOTYPE TESTED | P0 | asset schema | Hash/dedupe/tamper tests pass; durable transactional backend pending |
-| F06 | GLB import/export + QA | SPECIFIED | PARTIAL: export, Blender probe READY UNRUN | P0 | Blender version | Internal structure checks; bpy import probe written, Blender missing |
+| F06 | GLB import/export + QA | SPECIFIED | PARTIAL: five Blender imports VERIFIED | P0 | Blender version | Windows 5.2.2 world/interiors/parks/T/A imported; edit/re-export/visual pending |
 | F07 | Local model adapter contract | SPECIFIED | PARTIAL: local+unavailable adapter selection TESTED | P0 | F02, license gates | CPU adapter runs; remote approval simulated, real models absent |
 | F08 | CPU TripoSR prototype | SOURCED | NOT STARTED | P0 | runtime resources | Timed 3 asset benchmark |
 | F09 | Character DNA measurements | SPECIFIED | PROTOTYPE TESTED | P0 | approved Tevin base | Synthetic proportion comparison only; Tevin not captured |
@@ -31,14 +31,14 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F25 | Creation OS integration | BLOCKED: repo audit | NOT STARTED | P1 | canonical ownership | Integration contract |
 | F26 | Create Loco integration | BLOCKED: repo audit | NOT STARTED | P2 | consumer needs | Screenshot-to-scene |
 | F27 | Tevin/MGR-ONE integration | BLOCKED: repo audit | NOT STARTED | P1 | canonical base | Owner-approved character |
-| F28 | Cross-engine export pack | SPECIFIED | PARTIAL: OBJ/MTL + GLB exported | P1 | targets known | External Blender/Unity/Unreal import still unverified |
+| F28 | Cross-engine export pack | SPECIFIED | PARTIAL: GLB Blender import VERIFIED | P1 | targets known | GLB Blender 5.2.2 PASS; OBJ and other engines unverified |
 | F29 | License/provenance gate | SOURCED | PARTIAL: license ID gate TESTED | P0 | model legal review | Unknown-license approval enforced; legal clearance still open |
 | F30 | Benchmark/quality ledger | SPECIFIED | PARTIAL: measured CPU + integrity ledger TESTED | P0 | metric spec | 10/100/1000 benchmark and all-file SHA; GPU/Blender comparisons pending |
-| F31 | Native World Flight (Scroll-World inspired) | SOURCED | PARTIAL: keyframe plan TESTED | P1 | F16,F17 | 3D camera paths exported; actual scroll player pending |
-| F32 | Forge Model Dock (Pinokio inspired) | SOURCED | PARTIAL: recipe inspection TESTED | P1 | F07,F22,F29 | Fail-closed manifest; sandboxed installs and model launch pending |
-| F33 | Spatial Eyes (God's Eye View inspired) | SOURCED | PARTIAL: geometry visibility TESTED | P1 | F16,F17,F20 | Known-object occlusion and evidence labels; HUD and external/reconstruction layers pending |
+| F31 | MGR World Flight | SPECIFIED | PARTIAL: keyframe plan TESTED | P1 | F16,F17 | MGR 3D camera paths exported; actual camera player pending |
+| F32 | MGR Model Dock | SPECIFIED | PARTIAL: recipe inspection TESTED | P1 | F07,F22,F29 | MGR model manifest; sandboxed installs and model launch pending |
+| F33 | MGR Spatial Eyes | SPECIFIED | PARTIAL: geometry visibility TESTED | P1 | F16,F17,F20 | MGR-authored world occlusion and evidence labels; HUD and reconstruction pending |
 
-**Scope expansion:** 30 original tracked items plus F31 (World Flight), F32 (Model Dock) and F33 (Spatial Eyes) = **33**. Synapse is an unresolved research intake, **not** a counted capability until its upstream is verified. See `research/SCROLL-SYNAPSE-PINOKIO-INTAKE.md` and `research/GODS-EYE-VIEW-NATIVE-INTAKE.md`.
+**Scope:** 33 MGR-native areas: original 30 plus F31 MGR World Flight, F32 MGR Model Dock, F33 MGR Spatial Eyes. Unverified research candidates do not automatically become product requirements. Third-party source attributions live solely under `research/external-provenance/` where necessary.
 
 ## Definition of production completeness
 

@@ -1,4 +1,4 @@
-# God's Eye View — verified MGR-native intake (2026-10-25)
+# External spatial data/license reference ledger B — 2026-10-25
 
 ## Canonical source and rights
 

@@ -1,4 +1,4 @@
-# External inspiration review — 2026-10-25
+# External code/license reference ledger A — 2026-10-25
 
 These are optional architecture inspirations. Do **not** copy vendor code into Forge without per-file license checks, preserve required notices if copying, and do **not** execute unreviewed third-party install scripts.
 

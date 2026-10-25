@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-25",
+  "device": "owner-authorized Windows PC",
+  "blender": "5.2.2 LTS",
+  "engine": "BLENDER_WORKBENCH",
+  "execution": "actual Blender background-mode GLB import and PNG render",
+  "runs": [
+    {
+      "name": "MGR procedural world",
+      "artifact": "evidence/blender/world-preview.png",
+      "bytes": 285421,
+      "status": "PASS"
+    },
+    {
+      "name": "MGR modular T-pose mannequin, corrected coat",
+      "artifact": "evidence/blender/character-preview-fixed.png",
+      "bytes": 261975,
+      "status": "PASS",
+      "visual_review": "both arms and hands visible, front coat panels separated, shirt visible"
+    }
+  ],
+  "limitations": [
+    "The modular geometric mannequin is not approved Tevin likeness or final art.",
+    "No deforming skin rig, facial likeness or motion render was tested.",
+    "One preview angle cannot establish all-angle mesh quality or collision safety.",
+    "Screenshots are proof of local rendering, not commercial quality certification."
+  ]
+}

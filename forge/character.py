@@ -58,7 +58,12 @@ def mannequin(pose="T"):
     add("hair",1,"box",0,1.84,0,0.27,0.08,0.26)
     add("torso",0,"box",0,0.92,0,0.56,0.60,0.31)
     add("shirt",2,"box",0,0.99,0,0.59,0.57,0.34)
-    add("coat",3,"box",0,0.96,-0.025,0.64,0.67,0.39)
+    # Separate coat side panels intentionally reveal the shirt without
+    # overlapping near-coplanar chest surfaces (avoids workbench z-fighting).
+    coat=Mesh()
+    coat.box(-0.245,0.91,-0.025,0.15,0.74,0.40)
+    coat.box(0.245,0.91,-0.025,0.15,0.74,0.40)
+    parts["coat"]=(3,coat)
     chain = Mesh()
     chain.beam((-0.16,1.44,-0.24),(0,1.31,-0.25),0.022)
     chain.beam((0,1.31,-0.25),(0.16,1.44,-0.24),0.022)

@@ -2,7 +2,7 @@
 
 - The repo is the single GitHub-backed source of truth. Keep `main` current after local verification; avoid expensive GitHub Actions for routine tests.
 - Read `README.md`, `docs/PRODUCT-BIBLE.md`, `docs/BUILD-REGISTER.md`, `docs/PROGRESS-LOG.md`, `docs/IMPLEMENTATION-EVIDENCE.md`, `research/RESEARCH-REGISTER.md` before expanding scope.
-- Read `docs/EXTERNAL-INSPIRATION-RULE.md`: every outside repo/model is a springboard for new MGR-native abilities, not a copy request or feature ceiling. Provenance/license and evidence rules still apply.
+- Read `docs/MGR-NATIVE-CANON.md` first. Every MGR capability, status and public-facing description is native; external research references are segregated to `research/external-provenance/` for legal/technical traceability only.
 - Never label a researched idea built, or a unit-tested prototype production-ready. Track research maturity and code maturity separately. Never claim a 10x uplift without benchmark evidence.
 - Use reproducible commands; document exact tested paths/results. Run `python3 -m unittest discover -v` after each change.
 - No secrets, owner-private Tevin image/model references, paid model weights, or API tokens in this public repository.

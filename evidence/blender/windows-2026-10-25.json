@@ -1,0 +1,24 @@
+{
+  "schema": "mgr.forge.external-import.v1",
+  "owner_platform": "Windows",
+  "application": "Blender",
+  "blender_version": "5.2.2 LTS",
+  "python_version": "3.14.8",
+  "git_ref": "66499f67188700f9155c2ce005259401350d2069",
+  "test_suite": {"passed": 64, "failed": 0},
+  "method": "headless Blender glTF importer via bridge/blender_probe.py",
+  "artifacts": [
+    {"name": "world/world.glb", "sha256": "cdabd4726126fb6c18b73717db26a9e018266c865820e4e2d92349b6f0b2fb5e", "imported_mesh_objects": 1, "triangles": 372, "status": "PASS"},
+    {"name": "world/interiors.glb", "sha256": "16fba69d1aa0bee6607ff5af3def2f67b95e2f26e58975ff3a8a84a3fc099991", "imported_mesh_objects": 1, "triangles": 1200, "status": "PASS"},
+    {"name": "world/parks.glb", "sha256": "c7654657ffb5df6f634503da1a1df10b67c333aafa042c1b141d63bc903f1bf1", "imported_mesh_objects": 1, "triangles": 504, "status": "PASS"},
+    {"name": "character-t/mannequin.glb", "sha256": "dd02a41d9de5bf78ba1eb1e7fc6443f74b42fbfaf96e0fdcc602b98f596ac839", "imported_mesh_objects": 1, "triangles": 204, "status": "PASS"},
+    {"name": "character-a/mannequin.glb", "sha256": "d68719513824da8f2962e838acae65fa56a7d7e1c4399d44ef0758259af5bfc5", "imported_mesh_objects": 1, "triangles": 204, "status": "PASS"}
+  ],
+  "limitations": [
+    "Not a rendered visual appearance acceptance",
+    "Not a rig/deformation test",
+    "Not a Blender edit/re-export roundtrip test",
+    "No game-engine import acceptance",
+    "Generic anonymous character, not owner-approved Tevin"
+  ]
+}

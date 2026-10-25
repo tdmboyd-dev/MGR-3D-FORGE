@@ -1,8 +1,4 @@
-"""MGR Forge Model Dock — safe declarative recipe inspection, never execution.
-
-Inspired by Pinokio's inspectable application recipes. Intentionally not a
-Pinokio JSON parser or a shell-command executor.
-"""
+"""MGR Forge Model Dock — MGR-native safe model recipe inspection, never execution."""
 
 from dataclasses import dataclass, asdict
 import re

@@ -27,7 +27,7 @@ from forge.character import mannequin, build_mannequin, CHARACTER_MATERIALS
 from forge.animation import arm_pose_clip, pose_landmarks
 from forge.adapters import (AdapterCapabilities, ProceduralWorldAdapter,
                             UnavailableNeuralAdapter, select_adapter)
-from forge.blender_bridge import blender_command, verify_blender
+from forge.blender_bridge import blender_command, verify_blender, blender_render_command
 from forge.benchmark import run_benchmark
 from forge.environment import generate_parks, ENVIRONMENT_MATERIALS
 from forge.receipt import verify_bundle
@@ -351,6 +351,8 @@ class ForgeTests(unittest.TestCase):
             self.assertIn("--python",command)
             with self.assertRaises(RuntimeError):
                 verify_blender(source,Path(temp)/"report.json",blender_binary="nonexistent-blender-mgr-test")
+            render=blender_render_command("blender",source,Path(temp)/"preview.png",Path(temp)/"preview.json")
+            self.assertIn("blender_render.py",render[4])
 
     def test_character_missing_hand(self):
         landmarks = {name: [0, i, 0] for i, name in enumerate((

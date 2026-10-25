@@ -13,6 +13,8 @@ Build an MGR-owned, prompt-driven 3D creation platform for **characters, editabl
 
 ## Start here
 
+**MGR-NATIVE OWNERSHIP:** `docs/MGR-NATIVE-CANON.md` governs all product naming, documentation and capabilities. Third-party source citations are separated from MGR's original creation specification.
+
 ### Run the working native prototype
 
 Requires Python 3.10+ only; no GPU, packages, account, key or paid API.
@@ -30,7 +32,7 @@ python3 -m forge.benchmark --out artifacts/benchmark.json
 python3 -m forge.cli blender-verify artifacts/prompt-25/world.glb --report artifacts/blender-report.json
 ```
 
-Each world build creates fourteen files: `world.glb`, `world.obj`, `world.mtl`, `world_lod1.glb`, `navigation.json`, `chunks.json`, `camera_tour.json`, `spatial_overview.json`, `interiors.glb`, `interiors.json`, `parks.glb`, `parks.json`, `preview.svg`, and `manifest.json`. The manifest has SHA-256 receipts for the other 13 outputs. `character` separately creates a **generic** T/A-pose mannequin, 16 detachable GLB parts and an editable bone-length-checked pose track. None of this is Tevin's verified likeness or a production deforming rig. Worlds include static chunks, a building-only LOD1, editable camera keyframes, simple parks and invented two-room interior hypotheses. These exports are **not** live streaming, image-to-3D reconstruction, camera playback, or independently verified Blender/game-engine rendering. Invented rooms are explicitly not observed reality. The SVG previews scene-plan projection, not the imported GLB. The road graph supports pathfinding and box collisions. Prompts are **limited** count-based requests; architecture remains blocky rather than cinematic final-quality.
+Each world build creates fourteen files: `world.glb`, `world.obj`, `world.mtl`, `world_lod1.glb`, `navigation.json`, `chunks.json`, `camera_tour.json`, `spatial_overview.json`, `interiors.glb`, `interiors.json`, `parks.glb`, `parks.json`, `preview.svg`, and `manifest.json`. The manifest has SHA-256 receipts for the other 13 outputs. `character` separately creates a **generic** T/A-pose mannequin, 16 detachable GLB parts and an editable bone-length-checked pose track. None of this is Tevin's verified likeness or a production deforming rig. Worlds include static chunks, a building-only LOD1, editable camera keyframes, simple parks and invented two-room interior hypotheses. **Five GLB imports actually passed Blender 5.2.2 on Time's Windows PC**; this does **not** yet prove rendered appearance, animation deformation or game-engine acceptance. Invented rooms are explicitly not observed reality. The SVG previews scene-plan projection, not the imported GLB. The road graph supports pathfinding and box collisions. Prompts are **limited** count-based requests; architecture remains blocky rather than cinematic final-quality.
 
 Code lives under `forge/`, tests under `tests/`; [implementation evidence](docs/IMPLEMENTATION-EVIDENCE.md) explains exact results and limitations.
 
@@ -40,9 +42,8 @@ Code lives under `forge/`, tests under `tests/`; [implementation evidence](docs/
 | [PRODUCT-BIBLE.md](docs/PRODUCT-BIBLE.md) | Complete intended product, capabilities, MGR-native ideas, use cases and limits |
 | [ARCHITECTURE.md](docs/ARCHITECTURE.md) | Owners, modules, data contracts, pipeline, integrations |
 | [RESEARCH-REGISTER.md](research/RESEARCH-REGISTER.md) | Source-linked model/research comparisons and evidence disposition |
-| [SCROLL-SYNAPSE-PINOKIO-INTAKE.md](research/SCROLL-SYNAPSE-PINOKIO-INTAKE.md) | New source research, licenses, MGR F31/F32 decisions and unresolved Synapse identity |
-| [EXTERNAL-INSPIRATION-RULE.md](docs/EXTERNAL-INSPIRATION-RULE.md) | Standing rule: turn any external idea into an original MGR-native capability, never blindly clone it |
-| [GODS-EYE-VIEW-NATIVE-INTAKE.md](research/GODS-EYE-VIEW-NATIVE-INTAKE.md) | Canonical God’s Eye View analysis, third-party data license risks, F33 Spatial Eyes plan |
+| [MGR-NATIVE-CANON.md](docs/MGR-NATIVE-CANON.md) | Ownership, feature identity, creative sovereignty and source-of-truth precedence |
+| [External provenance ledger](research/external-provenance/) | Isolated licensing and audit references only; not product definitions |
 | [DEEP-DIVE-NATIVE-CPU.md](research/DEEP-DIVE-NATIVE-CPU.md) | 16-field native procedural research packet |
 | [DEEP-DIVE-IMAGE-TO-3D.md](research/DEEP-DIVE-IMAGE-TO-3D.md) | 16-field TripoSR, TripoSG and TRELLIS.2 packets |
 | [DEEP-DIVE-WORLDS-PARTS.md](research/DEEP-DIVE-WORLDS-PARTS.md) | 16-field world/parts/rig research packets |
@@ -52,6 +53,7 @@ Code lives under `forge/`, tests under `tests/`; [implementation evidence](docs/
 | [BUILD-REGISTER.md](docs/BUILD-REGISTER.md) | Owned capabilities, current status, dependencies, next actions |
 | [DECISIONS.md](docs/DECISIONS.md) | Locked and pending architectural decisions |
 | [PROGRESS-LOG.md](docs/PROGRESS-LOG.md) | Audit trail, research updates, open issues |
+| [Blender Windows verification](evidence/blender/windows-2026-10-25.json) | Actual Windows 5.2.2 GLB import receipts and artifact hashes |
 
 ## Rules
 
@@ -68,9 +70,9 @@ Code lives under `forge/`, tests under `tests/`; [implementation evidence](docs/
 
 ## Current truth
 
-- GitHub repository exists and was empty when this research baseline was added.
-- Research baseline is preserved and a functioning CPU procedural GLB exporter, bounded prompt planner, quality checks, character-landmark validation and hashed asset registry now exist.
-- The world generator is a prototype, not a full 3D engine. There is no Blender bridge, neural text/image-to-3D model, production integration, cross-engine proof or measured 10× improvement yet.
+- MGR Forge owns a working CPU procedural GLB exporter, bounded planner, 16-part generic T/A mannequin, scene intelligence, environment/interior meshes, geometry QA, license/cost gates and artifact receipts.
+- On Windows, **64/64 tests passed**, and **five GLB imports passed Blender 5.2.2 LTS**. Reproducible evidence is preserved under `evidence/blender/`.
+- The engine remains a prototype: Blender import works for tested assets, but there is no neural text/image-to-3D model, photorealistic production scene, approved Tevin likeness, complete runtime integration or measured 10× competitor improvement yet.
 - The external Creation OS / Create Loco / MGR-ONE source-of-truth mapping must be verified before integration.
 
 ## Intended future structure (long-term; current working code lives in `forge/`)
