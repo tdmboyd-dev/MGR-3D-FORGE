@@ -304,3 +304,9 @@ The initial historical snapshot has been superseded by the current live inventor
 - Project intentionally records `engine_import_verified=false` until a real Godot execution can prove import, rendering, collision, and material results. No game-engine installation, credentials, or paid API used.
 - **Actual Windows verification PASS:** 335/335 Python tests completed in **142.775 seconds**, process exit 0, no skips. Chrome CDP completed the extended **7/7 connected creation checks**, including actual download of the generated Godot ZIP, revised world GLB and editable Blender `.blend`, process exit 0 in **144.94 seconds**. See `evidence/browser/windows-wave21-godot-handoff.json`. Tests ran concurrently on the same device, increasing wall time relative to isolated earlier suites. The Godot receiving engine is not installed in the accessible Windows PATH, so no import/play claim is made.
 
+## 2026-10-25 — Character candidate admission and editable Blender handoff (F99–F100)
+
+- Added `character-intake` CLI to take an existing real `.glb` candidate, inspect independent geometry/hierarchy/skin/animation/morph evidence, record the original SHA and preserve original bytes in a new dedicated output folder. It never generates a likeness, fabricates skin weights, or claims clothing/hair are separate when the source is merged.
+- Added `character-blender` fixed-script CLI and `bridge/blender_character_intake.py` for actual Blender import → editable original-mesh project `.blend` → evidence receipt, with source-SHA verification, no arbitrary user Python and no overwrite.
+- Added 13 negative/adversarial tests for corrupt files, missing source, fake identity, unrigged warning, expected bounds, size caps, tampering, nonexistent Blender, suffix validation, CLI and preservation. **348 Python tests PASS locally**, with 26 HTTP tests skipped by socket-restricted Linux. Actual connected Windows Blender acceptance required before labeling F100 VERIFIED.
+

@@ -10,6 +10,11 @@ python -m forge.cli serve-studio --world path/to/world --workspace path/to/dedic
 # Portable game-engine project after building or editing the world:
 python -m forge.cli godot-handoff --world path/to/world --out path/to/new-godot-project
 # Open the output directory in Godot 4; receiving-engine proof is still required.
+
+# Preserve an existing source character GLB before making any changes:
+python -m forge.cli character-intake --source path/to/character.glb --out path/to/new-intake
+# Import that admitted source into an individually editable Blender .blend:
+python -m forge.cli character-blender --candidate path/to/new-intake --blend path/to/new-character.blend --report path/to/new-character-proof.json --binary blender
 ```
 
 Open the `http://127.0.0.1:PORT/` address printed in your terminal on the same computer. Port `0` lets Windows select an available port automatically. The service binds **only** to loopback and generates a fresh session token; it does not grant access to arbitrary directories or execute free-form code.

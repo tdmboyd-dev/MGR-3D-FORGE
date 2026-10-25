@@ -162,6 +162,14 @@ def main(argv=None):
     engine=sub.add_parser("godot-handoff",help="package verified Forge world for Godot 4 with collision bodies and camera")
     engine.add_argument("--world",type=Path,required=True)
     engine.add_argument("--out",type=Path,required=True,help="new Godot project directory")
+    intake=sub.add_parser("character-intake",help="inspect and preserve a real GLB character candidate")
+    intake.add_argument("--source",type=Path,required=True)
+    intake.add_argument("--out",type=Path,required=True)
+    intake_blender=sub.add_parser("character-blender",help="import an admitted model as an editable Blender project")
+    intake_blender.add_argument("--candidate",type=Path,required=True)
+    intake_blender.add_argument("--blend",type=Path,required=True)
+    intake_blender.add_argument("--report",type=Path,required=True)
+    intake_blender.add_argument("--binary",default="blender")
     live_blender=sub.add_parser("blender-live-scene",help="turn verified edited world into an actual individually editable Blender project")
     live_blender.add_argument("--world",type=Path,required=True,help="materialized edited world directory")
     live_blender.add_argument("--blend",type=Path,required=True,help="new Blender project file")
@@ -292,6 +300,14 @@ def main(argv=None):
     if args.action == "godot-handoff":
         from .engine_handoff import export_godot_project
         print(json.dumps(export_godot_project(args.world,args.out),indent=2))
+        return 0
+    if args.action == "character-intake":
+        from .character_intake import admit_candidate
+        print(json.dumps(admit_candidate(args.source,args.out),indent=2))
+        return 0
+    if args.action == "character-blender":
+        from .character_intake import create_character_blend
+        print(json.dumps(create_character_blend(args.candidate,args.blend,args.report,binary=args.binary),indent=2))
         return 0
     if args.action == "blender-live-scene":
         print(json.dumps(create_live_blender_scene(args.world,args.blend,args.report,binary=args.binary),indent=2))
