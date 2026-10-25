@@ -8,6 +8,9 @@
 - Added image comparison tolerant of translation/scale and optional 90° **image-plane** rotation, with explicit `identity_proven=false` for silhouette similarity. Rotation of a 3D camera, altered 3D body pose and different models of one person remain unproven from images alone.
 - Added `forge/pipeline.py` and CLI: build a new native world in an empty directory, optionally run actual Blender GLB import/render, record stage evidence, and optionally compare a fixed-camera baseline. No overwriting existing job output.
 - Fixed a half-pixel mask normalization issue caught by new rotation tests. Local suite **93/93 PASS**. The actual Windows pipeline integration test remains pending at this checkpoint.
+- On Time's actual Windows PC, pulled GitHub commit `5e05be7` and verified **93/93 unit tests PASS**. Ran two independent end-to-end CLI pipeline jobs: 10 buildings / 372 triangles / GLB import PASS / Blender render PASS. Second job compared rendered RGB against the first: **MAE 0.0 PASS** even though PNG file SHA differed (nondeterministic metadata/encoding). This establishes stable visible pixel output under the tested render settings, not semantic equality across different poses.
+- Added pose-neutral template hashes to generic T/A mannequin export manifests; shared base confirms **same procedural source template** despite different pose, not an approved real person. New local suite **94/94 PASS**.
+- Added `bridge/blender_rig.py`: 16 independently imported mannequin parts rigidly attached to an 11-bone armature, saved as editable `.blend` with machine-readable assignment receipt. Blender runtime acceptance pending. Rigid parenting is explicitly **not normalized vertex skin weights**.
 
 ## 2026-10-25 — Larger build wave: scene facts, visual pixels, recoverable jobs, continuity
 

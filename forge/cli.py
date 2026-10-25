@@ -21,7 +21,7 @@ from .visualqa import compare_pngs
 from .view_identity import compare_view_silhouettes, compare_asset_views, AssetView
 from .interiors import generate_interiors
 from .character import build_mannequin
-from .blender_bridge import verify_blender, blender_render_command, blender_facts_command
+from .blender_bridge import verify_blender, blender_render_command, blender_facts_command, blender_rig_command
 from .environment import generate_parks, ENVIRONMENT_MATERIALS
 from .receipt import file_receipt, verify_bundle
 
@@ -116,6 +116,11 @@ def main(argv=None):
     facts.add_argument("path",type=Path)
     facts.add_argument("--report",type=Path,required=True)
     facts.add_argument("--binary",default="blender")
+    rig=sub.add_parser("blender-rig",help="assemble modular T mannequin as Blender armature project")
+    rig.add_argument("character_folder",type=Path)
+    rig.add_argument("--blend",type=Path,required=True)
+    rig.add_argument("--report",type=Path,required=True)
+    rig.add_argument("--binary",default="blender")
     bundle=sub.add_parser("verify-bundle",help="verify artifact hashes in world build folder")
     bundle.add_argument("directory",type=Path)
     visual=sub.add_parser("compare-renders",help="compare fixed-camera RGB PNG frames")
@@ -166,6 +171,18 @@ def main(argv=None):
         if report.get("status")!="PASS":
             raise RuntimeError("Blender scene facts receipt invalid")
         print(json.dumps({"status":"PASS","objects":len(report["objects"])},indent=2))
+        return 0
+    if args.action == "blender-rig":
+        import subprocess
+        command=blender_rig_command(args.binary,args.character_folder,args.blend,args.report)
+        result=subprocess.run(command,timeout=180,check=False)
+        if result.returncode:
+            raise RuntimeError(f"Blender modular rig assembly failed with exit code {result.returncode}")
+        report=json.loads(args.report.read_text(encoding="utf-8"))
+        if report.get("status")!="PASS" or report.get("mesh_parts",0)<1:
+            raise RuntimeError("Blender modular rig receipt invalid")
+        print(json.dumps({"status":"PASS","parts":report["mesh_parts"],
+                          "bones":len(report["bones"])},indent=2))
         return 0
     if args.action == "verify-bundle":
         print(json.dumps(verify_bundle(args.directory),indent=2))

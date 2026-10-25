@@ -5,6 +5,7 @@ NOT a scan, generated likeness, likeness-approved Tevin, or production rig.
 
 import json
 import math
+from hashlib import sha256
 from pathlib import Path
 
 from .geometry import Mesh
@@ -91,6 +92,12 @@ def build_mannequin(output,pose="T"):
     parts,landmarks,quality=mannequin(pose)
     payload=export_glb(_assemble(parts), name=f"MGR Anonymous {pose}-pose",
                        materials=CHARACTER_MATERIALS)
+    # The same neutral template is the identity anchor for both procedural
+    # poses. It proves template lineage, NOT an owner's real-world likeness.
+    rest_parts,_,_=mannequin("T")
+    neutral_payload=export_glb(_assemble(rest_parts),name="MGR Anonymous Neutral Template",
+                               materials=CHARACTER_MATERIALS)
+    rest_hash=sha256(neutral_payload).hexdigest()
     (output/"mannequin.glb").write_bytes(payload)
     part_dir=output/"parts"
     part_dir.mkdir(exist_ok=True)
@@ -100,6 +107,10 @@ def build_mannequin(output,pose="T"):
             partial,name=name,materials=CHARACTER_MATERIALS))
     manifest={"schema":"mgr.forge.character-proxy.v1", "pose":pose,
               "owner_approved":False,"tevin_identity_verified":False,
+              "asset_view":{"asset_id":"mgr-anonymous-mannequin-v1",
+                            "canonical_asset_sha256":rest_hash,
+                            "rest_mesh_sha256":rest_hash,
+                            "pose_id":pose,"camera_id":None},
               "editable_parts":sorted(parts),"landmarks":landmarks,
               "quality":quality,"glb_quality":inspect_glb(payload),
               "status":"generic procedural mannequin, not likeness/rig verified"}

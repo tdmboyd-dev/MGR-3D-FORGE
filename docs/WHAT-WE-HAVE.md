@@ -11,6 +11,7 @@
 | MGR Beyond Imagery | Separate two-room interior hypotheses | GLB 1,200 triangles imported in Blender 5.2.2 | Truthful reconstruction from approved multiple references, rich interiors |
 | MGR Environment Forge | Basic procedural parks, trees and path | Parks GLB 504 triangles imported in Blender | Natural assets, biomes, physics, textures |
 | MGR Character Fabric | Anonymous T/A mannequin, full arms and hands, 16 separately exported parts | Both character GLBs 204 triangles each imported in Blender; landmark tests PASS | Real owner-approved Tevin likeness, fingers/facial detail, proper clothing |
+| MGR Rig Intelligence | Blender armature assembly script with 11 named bones and separate rigid part assignments | Script command and T/A neutral template tests locally | Actual Windows `.blend` rig proof pending; true deforming skin weights, joint QA and animation |
 | MGR Motion Blueprint | Bone-length-preserving T→A→T landmark samples | Pose validation tests | Actual skinned rig, weights, deformation, animation playback |
 | MGR World Flight | World-coordinate camera keyframes | Deterministic tests + JSON output | Playback controller, world walkthrough |
 | MGR Spatial Eyes | Known-object center ray occlusion, distances and evidence labels | Geometry test suite + JSON output | Visual scene comprehension and 3D reconstruction |
@@ -24,7 +25,7 @@
 | MGR Asset Vault | Hash-based local dedupe and rights metadata | Tamper/provenance tests | Multiuser DB, revisions, search |
 | MGR Geometry QA | Degenerate/bad index checks and conservative cleanup | Mesh tests | Watertight repair, retopo, UV validation |
 | MGR Delivery Bundle | GLB, OBJ, MTL, LOD1, parks, interiors, scene facts/camera JSON, preview SVG | 14-file hash manifest, SHA verification, Blender import of core GLBs | Engine/film pipeline, full interoperability and rendered visual QA |
-| MGR Build Ledger | 43-area native register, provenance, 93 current local tests, benchmark receipts | Previous Windows **85/85**; current Linux **93/93** PASS | Current Windows rerun, production CI, cross-engine/render/owner acceptance |
+| MGR Build Ledger | 43-area native register, provenance, 94 current local tests, benchmark receipts | Windows **93/93** and Linux **94/94**; pipeline Windows PASS | Latest Windows rig/test rerun, production CI, cross-engine/render/owner acceptance |
 
 ## Exact Blender environment and measured Windows receipts
 

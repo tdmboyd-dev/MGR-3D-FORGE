@@ -3,6 +3,7 @@ import tempfile
 import unittest
 
 from forge.view_identity import AssetView, compare_asset_views, compare_view_silhouettes
+from forge.character import build_mannequin
 from tests.test_visualqa import png_bytes
 
 
@@ -30,6 +31,14 @@ class ViewIdentityTests(unittest.TestCase):
         self.assertEqual(report["verdict"],"SAME_VERIFIED_SOURCE_ASSET")
         self.assertTrue(report["different_pose"])
         self.assertTrue(report["different_camera"])
+
+    def test_two_real_procedural_pose_exports_share_neutral_template(self):
+        first=build_mannequin(self.root/"T", "T")
+        second=build_mannequin(self.root/"A", "A")
+        report=compare_asset_views(AssetView(**first["asset_view"]),AssetView(**second["asset_view"]))
+        self.assertEqual(report["verdict"],"SAME_VERIFIED_SOURCE_ASSET")
+        self.assertTrue(report["different_pose"])
+        self.assertFalse(first["tevin_identity_verified"])
 
     def test_same_name_different_source_is_not_proof_of_character_difference(self):
         a=AssetView("character-1","a"*64,None)

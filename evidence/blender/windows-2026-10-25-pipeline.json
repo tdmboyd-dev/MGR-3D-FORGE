@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-25",
+  "device": "owner-authorized Windows PC",
+  "blender": "5.2.2 LTS",
+  "git_commit_tested": "5e05be72aea02a23fddf4f79cf25dc87d21b16ff",
+  "windows_tests": {"ran": 93, "passed": 93, "status": "PASS"},
+  "first_pipeline": {
+    "status": "PASS_NO_VISUAL_BASELINE",
+    "buildings": 10,
+    "triangles": 372,
+    "world_glb_sha256": "46aa9815cb37e3b984a80528b51f32e72bf33c5784313fa3d657f9e0ffa4b746",
+    "blender_import": "PASS",
+    "blender_render": "PASS",
+    "render_png_sha256": "15e6412005eb538f7b3cf6330b0ddbf9861ac187ec851c362ca7719dc6f2bffe",
+    "render_bytes": 285421,
+    "silhouette_bbox": [160, 340, 739, 634]
+  },
+  "second_pipeline": {
+    "status": "PASS_WITH_VISUAL_BASELINE",
+    "buildings": 10,
+    "triangles": 372,
+    "world_glb_sha256": "46aa9815cb37e3b984a80528b51f32e72bf33c5784313fa3d657f9e0ffa4b746",
+    "blender_import": "PASS",
+    "blender_render": "PASS",
+    "render_png_sha256": "d83246c83bba350f228d7290c10648b677c12531dd423b976075e7ae5e47367e",
+    "render_bytes": 285421,
+    "baseline_rgb_mae": 0.0,
+    "baseline_status": "PASS"
+  },
+  "interpretation": "The PNG file hashes differ while decoded RGB pixels are identical. Proven reproducible visual output at the same camera/settings; this does not prove pose-invariant visual identity or production art quality.",
+  "limitations": [
+    "Procedural CPU world with a fixed GLB pipeline; not AI-generated game world quality.",
+    "No neural image understanding or automated Blender semantic repair was tested.",
+    "Camera and materials were identical between runs; no arbitrary camera rotation tested."
+  ]
+}
