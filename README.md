@@ -75,7 +75,8 @@ Code lives under `forge/`, tests under `tests/`; [implementation evidence](docs/
 - MGR Forge owns a working CPU procedural GLB exporter, bounded planner, 16-part generic T/A mannequin, scene intelligence, environment/interior meshes, geometry QA, license/cost gates and artifact receipts.
 - On Windows, **64/64 tests passed**, and **five GLB imports passed Blender 5.2.2 LTS**. Reproducible evidence is preserved under `evidence/blender/`.
 - Native register covers **43 capabilities**; the implementation plan is `research/MGR-CREATION-INTELLIGENCE-HOWTO.md`.
-- Current development wave: **85/85 tests passing on both Linux and Time's Windows PC**. F34 generated-world facts now ship in bundles, F35 measurable PNG comparison, F36 recoverable workspace edits, F42 integrity-checked creation memory and F43 bounded repair-loop coordination have partial implementations. The full visual intelligence, isolated code runner, advanced rig and interactive world are still open.
+- Prior verified development wave: **85/85 tests passed on both Linux and Time's Windows PC**. F34 generated-world facts, F35 measurable PNG comparison, F36 recoverable workspace edits, F42 integrity-checked creation memory and F43 bounded repair coordination have partial implementations. The full visual intelligence, isolated code runner, advanced rig and interactive world remain open.
+- New wave in progress: **93/93 latest local tests** with conservative cross-view identity rules and a `pipeline` command. These new paths still require Windows Blender end-to-end verification before being labeled independent-app verified.
 - The engine remains a prototype: Blender import works for tested assets, but there is no neural text/image-to-3D model, photorealistic production scene, approved Tevin likeness, complete runtime integration or measured 10× competitor improvement yet.
 - The external Creation OS / Create Loco / MGR-ONE source-of-truth mapping must be verified before integration.
 

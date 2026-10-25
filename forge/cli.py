@@ -18,6 +18,7 @@ from .cinematic import camera_tour
 from .perception import scene_overview
 from .consciousness import scene_facts
 from .visualqa import compare_pngs
+from .view_identity import compare_view_silhouettes, compare_asset_views, AssetView
 from .interiors import generate_interiors
 from .character import build_mannequin
 from .blender_bridge import verify_blender, blender_render_command, blender_facts_command
@@ -121,6 +122,19 @@ def main(argv=None):
     visual.add_argument("reference",type=Path)
     visual.add_argument("candidate",type=Path)
     visual.add_argument("--threshold",type=float,default=0)
+    views=sub.add_parser("compare-views",help="translation/quarter-turn aware appearance check; not identity proof")
+    views.add_argument("reference",type=Path)
+    views.add_argument("candidate",type=Path)
+    views.add_argument("--acceptance-iou",type=float,default=0.92)
+    identity=sub.add_parser("compare-asset-identity",help="compare trusted asset and neutral-mesh SHA receipts")
+    identity.add_argument("reference",type=Path,help="AssetView JSON")
+    identity.add_argument("candidate",type=Path,help="AssetView JSON")
+    flow=sub.add_parser("pipeline",help="build world and optionally verify/render in real Blender")
+    flow.add_argument("--out",type=Path,required=True)
+    flow.add_argument("--blender-binary",default=None)
+    flow.add_argument("--baseline",type=Path)
+    flow.add_argument("--visual-threshold",type=float,default=0.0)
+    flow.add_argument("--buildings",type=int,default=10)
     args = parser.parse_args(argv)
     if args.action == "inspect":
         print(json.dumps(inspect_glb(args.path.read_bytes()), indent=2))
@@ -161,6 +175,24 @@ def main(argv=None):
                             max_mean_absolute_error=args.threshold)
         print(json.dumps(report,indent=2))
         return 0 if report["pass"] else 2
+    if args.action == "compare-views":
+        report=compare_view_silhouettes(args.reference,args.candidate,
+                     acceptance_iou=args.acceptance_iou)
+        print(json.dumps(report,indent=2))
+        return 0 if report["verdict"]=="APPEARANCE_CONSISTENT" else 2
+    if args.action == "compare-asset-identity":
+        first=AssetView(**json.loads(args.reference.read_text(encoding="utf-8")))
+        second=AssetView(**json.loads(args.candidate.read_text(encoding="utf-8")))
+        report=compare_asset_views(first,second)
+        print(json.dumps(report,indent=2))
+        return 0 if report["verdict"]=="SAME_VERIFIED_SOURCE_ASSET" else 2
+    if args.action == "pipeline":
+        from .pipeline import run_pipeline
+        result=run_pipeline(WorldSpec(buildings=args.buildings),args.out,
+                  blender_binary=args.blender_binary,visual_baseline=args.baseline,
+                  visual_mae_threshold=args.visual_threshold)
+        print(json.dumps(result,indent=2))
+        return 0 if result["overall"].startswith("PASS") or result["overall"]=="PARTIAL_CPU_ONLY" else 2
     if args.spec and args.prompt:
         parser.error("choose either --spec or --prompt")
     base = (WorldSpec.from_json(args.spec).as_dict() if args.spec else

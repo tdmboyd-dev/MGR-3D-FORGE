@@ -2,6 +2,13 @@
 
 **This is a historical sequence, not the current status page.** The canonical current status is `docs/WHAT-WE-HAVE.md` plus `docs/IMPLEMENTATION-EVIDENCE.md`. Superseded historical claims are retained only as dated checkpoints.
 
+## 2026-10-25 — Cross-view honesty and integrated creation pipeline
+
+- Added `forge/view_identity.py`: cryptographic identity comparison for approved canonical/rest-mesh assets across different recorded camera/pose states, carefully distinguishing same verified **source asset** from merely matching filenames or appearances.
+- Added image comparison tolerant of translation/scale and optional 90° **image-plane** rotation, with explicit `identity_proven=false` for silhouette similarity. Rotation of a 3D camera, altered 3D body pose and different models of one person remain unproven from images alone.
+- Added `forge/pipeline.py` and CLI: build a new native world in an empty directory, optionally run actual Blender GLB import/render, record stage evidence, and optionally compare a fixed-camera baseline. No overwriting existing job output.
+- Fixed a half-pixel mask normalization issue caught by new rotation tests. Local suite **93/93 PASS**. The actual Windows pipeline integration test remains pending at this checkpoint.
+
 ## 2026-10-25 — Larger build wave: scene facts, visual pixels, recoverable jobs, continuity
 
 - Built MGR Code Architect starter (`forge/code_architect.py`): preview scoped multi-file text edits, enforce old-file SHA preconditions, block traversal/symlink paths, size/file budgets, atomic replacement and collision-aware rollback. **Not an OS sandbox or arbitrary Python/shell code runner.**

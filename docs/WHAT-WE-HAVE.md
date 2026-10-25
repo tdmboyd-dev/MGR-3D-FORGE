@@ -15,15 +15,16 @@
 | MGR World Flight | World-coordinate camera keyframes | Deterministic tests + JSON output | Playback controller, world walkthrough |
 | MGR Spatial Eyes | Known-object center ray occlusion, distances and evidence labels | Geometry test suite + JSON output | Visual scene comprehension and 3D reconstruction |
 | MGR Scene Consciousness | Authored-object dimensional inventory and road-route facts, exported `scene_facts.json` | Deterministic and negative unit tests | Full Blender scene semantics, door portals, actual visual understanding |
-| MGR Visual Judge | Exact 8-bit PNG decode, RGB image delta, silhouette occupancy | Synthetic image tests; real Blender preview images already saved separately | Semantic visual diagnosis, camera calibration, production render thresholds |
+| MGR Visual Judge | PNG/pixel comparison, translation/90° image-plane silhouette tolerance and provenance-based asset-view identity | Synthetic shifted/rotated tests; actual Blender PNG equality/difference receipts | Arbitrary 3D camera views and moving poses cannot be proven from a single image; semantic visual diagnosis pending |
 | MGR Code Architect | Scoped multi-file text changes, digest preconditions and recoverable rollback | Multi-file, traversal, symlink, size, stale-change and rollback tests | OS-level isolation and safe arbitrary code execution, job UI and approvals |
 | MGR Creation Memory | Integrity-chained identity revisions and property locks | Lock, stale write and tamper tests | Authenticated owner approvals, concurrent DB, consumer replay |
 | MGR Self-Repair Studio | Bounded repair proposals, trusted validation and automatic rollback | Synthetic fail→revert→pass and exhaustion tests | Vision-led diagnosis, Blender edit strategies and isolated execution |
+| MGR Creation Pipeline | Fresh-workspace world build, optional actual Blender import/render, visual baseline and stage receipts | CPU path automated tests | Latest integrated pipeline still needs actual Windows Blender end-to-end run and visual acceptance |
 | MGR Model Dock | Offline recipe schema, CPU adapter, license/spend guards | Mock/CPU adapter tests | Real installed licensed neural models and isolated execution |
 | MGR Asset Vault | Hash-based local dedupe and rights metadata | Tamper/provenance tests | Multiuser DB, revisions, search |
 | MGR Geometry QA | Degenerate/bad index checks and conservative cleanup | Mesh tests | Watertight repair, retopo, UV validation |
 | MGR Delivery Bundle | GLB, OBJ, MTL, LOD1, parks, interiors, scene facts/camera JSON, preview SVG | 14-file hash manifest, SHA verification, Blender import of core GLBs | Engine/film pipeline, full interoperability and rendered visual QA |
-| MGR Build Ledger | 43-area native register, provenance, 85 current tests, benchmark receipts | Windows **85/85** and Linux **85/85** PASS | Production CI, cross-engine/render/owner acceptance |
+| MGR Build Ledger | 43-area native register, provenance, 93 current local tests, benchmark receipts | Previous Windows **85/85**; current Linux **93/93** PASS | Current Windows rerun, production CI, cross-engine/render/owner acceptance |
 
 ## Exact Blender environment and measured Windows receipts
 
