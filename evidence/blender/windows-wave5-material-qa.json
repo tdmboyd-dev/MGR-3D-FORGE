@@ -1,0 +1,68 @@
+{
+  "blender_version": "5.2.2 LTS",
+  "count": 5,
+  "errors": [],
+  "limitations": [
+    "Principled socket inspection, not full shader graph or texture fidelity",
+    "does not prove photorealism or appearance under another engine"
+  ],
+  "materials": [
+    {
+      "base_color": [
+        0.10499999672174454,
+        0.10999999940395355,
+        0.14000000059604645,
+        1
+      ],
+      "metallic": 0,
+      "name": "asphalt",
+      "roughness": 0.949999988079071
+    },
+    {
+      "base_color": [
+        0.11999999731779099,
+        0.3100000023841858,
+        0.47999998927116394,
+        1
+      ],
+      "metallic": 0.6700000166893005,
+      "name": "building-blue",
+      "roughness": 0.36000001430511475
+    },
+    {
+      "base_color": [
+        0.550000011920929,
+        0.5400000214576721,
+        0.5099999904632568,
+        1
+      ],
+      "metallic": 0,
+      "name": "building-stone",
+      "roughness": 0.8399999737739563
+    },
+    {
+      "base_color": [
+        0.1899999976158142,
+        0.36000001430511475,
+        0.2199999988079071,
+        1
+      ],
+      "metallic": 0,
+      "name": "grass",
+      "roughness": 0.8999999761581421
+    },
+    {
+      "base_color": [
+        0.12999999523162842,
+        0.12999999523162842,
+        0.1599999964237213,
+        1
+      ],
+      "metallic": 0,
+      "name": "roof",
+      "roughness": 0.8999999761581421
+    }
+  ],
+  "schema": "mgr.forge.material-guardian.v1",
+  "status": "PASS"
+}

@@ -1,0 +1,32 @@
+{
+  "blend_bytes": 100097,
+  "blender_version": "5.2.2 LTS",
+  "camera_count": 1,
+  "frame_end": 144,
+  "keyframes": [
+    {
+      "frame": 1,
+      "shot": "shot-0000"
+    },
+    {
+      "frame": 49,
+      "shot": "shot-0001"
+    },
+    {
+      "frame": 97,
+      "shot": "shot-0002"
+    }
+  ],
+  "light_count": 1,
+  "limitations": [
+    "8-sample CPU render is proof of pipeline, not final cinematic quality",
+    "no interactive camera player or semantic shot composition"
+  ],
+  "mesh_count": 1,
+  "mood": "golden-hour",
+  "render_bytes": 252649,
+  "render_device": "CPU",
+  "render_engine": "CYCLES",
+  "schema": "mgr.forge.cinematic-materialization.v1",
+  "status": "PASS"
+}

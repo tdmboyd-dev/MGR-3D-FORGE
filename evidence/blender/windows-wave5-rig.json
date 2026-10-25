@@ -1,0 +1,50 @@
+{
+  "animation_motion_m": 0.428282,
+  "attachments": {
+    "chain": "torso",
+    "coat": "torso",
+    "hair": "head",
+    "head": "head",
+    "left_boot": "left_leg",
+    "left_elbow_sleeve": "left_upper_arm",
+    "left_forearm": "left_forearm",
+    "left_hand": "left_hand",
+    "left_leg": "left_leg",
+    "left_pant_leg": "left_leg",
+    "left_upper_arm": "left_upper_arm",
+    "right_boot": "right_leg",
+    "right_elbow_sleeve": "right_upper_arm",
+    "right_forearm": "right_forearm",
+    "right_hand": "right_hand",
+    "right_leg": "right_leg",
+    "right_pant_leg": "right_leg",
+    "right_upper_arm": "right_upper_arm",
+    "shirt": "torso",
+    "torso": "torso"
+  },
+  "blend_file": "wave5-rig.blend",
+  "blender_version": "5.2.2 LTS",
+  "bones": [
+    "head",
+    "left_forearm",
+    "left_hand",
+    "left_leg",
+    "left_upper_arm",
+    "right_forearm",
+    "right_hand",
+    "right_leg",
+    "right_upper_arm",
+    "root",
+    "torso"
+  ],
+  "dual_bone_weight_vertices": 48,
+  "limitations": [
+    "two-bone elbow sleeve interpolation only; rest of mesh remains rigid single-bone weights",
+    "only hand-motion smoke test, no full pose deformation acceptance",
+    "generic mannequin only, not approved Tevin likeness"
+  ],
+  "mesh_parts": 20,
+  "rig_mode": "skin",
+  "schema": "mgr.forge.modular-armature.v1",
+  "status": "PASS"
+}

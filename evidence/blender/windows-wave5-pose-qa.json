@@ -1,0 +1,26 @@
+{
+  "blender_version": "5.2.2 LTS",
+  "errors": [],
+  "frames": [
+    {
+      "bone_count": 11,
+      "frame": 1,
+      "joint_max_gap_m": 0,
+      "skinned_part_count": 20
+    },
+    {
+      "bone_count": 11,
+      "frame": 12,
+      "joint_max_gap_m": 0,
+      "skinned_part_count": 20
+    }
+  ],
+  "limitations": [
+    "bone-chain continuity does not verify watertight mesh seams",
+    "1.0 single-bone weights are rigid segments, not smooth skin deformation",
+    "does not establish human identity or artistic quality"
+  ],
+  "maximum_hand_motion_m": 0.427002,
+  "schema": "mgr.forge.pose-guardian.v1",
+  "status": "PASS"
+}
