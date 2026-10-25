@@ -28,6 +28,7 @@ from .receipt import file_receipt, verify_bundle
 from .materials import MGR_MATERIAL_PRESETS
 from .shot_design import validate_shot_reel, lighting_recipe, validate_camera_clearance
 from .fx import create_magic_effect, export_effect_glb
+from .scene_layers import compose_scene_layers
 
 
 def build(spec: WorldSpec, output: Path):
@@ -130,6 +131,9 @@ def main(argv=None):
     spatial.add_argument("--height",type=float,default=2.0)
     studio=sub.add_parser("studio-proof",help="run ten native studio-quality validation contracts; not a film render")
     studio.add_argument("--out",type=Path,required=True)
+    layers=sub.add_parser("compose-scene",help="compose owned MGR scene layers into a deterministic receipt")
+    layers.add_argument("--layers",type=Path,required=True,help="JSON object with ordered layers list")
+    layers.add_argument("--out",type=Path,required=True,help="new receipt file; never overwrites")
     blender = sub.add_parser("blender-verify",help="run actual Blender GLB import verification if installed")
     blender.add_argument("path",type=Path)
     blender.add_argument("--report",type=Path,required=True)
@@ -227,6 +231,19 @@ def main(argv=None):
     args = parser.parse_args(argv)
     if args.action == "inspect":
         print(json.dumps(inspect_glb(args.path.read_bytes()), indent=2))
+        return 0
+    if args.action == "compose-scene":
+        if args.out.exists():
+            raise FileExistsError("composed scene receipt already exists")
+        payload=json.loads(args.layers.read_text(encoding="utf-8"))
+        if not isinstance(payload,dict) or set(payload)!={"layers"}:
+            raise ValueError("input must contain only ordered layers")
+        result=compose_scene_layers(payload["layers"])
+        args.out.parent.mkdir(parents=True,exist_ok=True)
+        with args.out.open("x",encoding="utf-8") as output:
+            output.write(json.dumps(result,indent=2,sort_keys=True)+"\n")
+        print(json.dumps({"status":"PASS","objects":len(result["objects"]),
+                          "sha256":result["sha256"],"receipt":str(args.out)},indent=2))
         return 0
     if args.action == "spatial-proof":
         from .spatial_truth import camera_project,pixel_to_ray,slice_mesh_at_height,triangulate_parallel_views,triangulate_oriented_views

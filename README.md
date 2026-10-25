@@ -27,6 +27,7 @@ python3 -m forge.cli build --spec examples/neighborhood.json --out artifacts/exa
 python3 -m forge.cli build --prompt "Create 25 buildings and streets" --out artifacts/prompt-25
 python3 -m forge.cli inspect artifacts/prompt-25/world.glb
 python3 -m forge.cli studio-proof --out artifacts/studio-proof.json
+python3 -m forge.cli compose-scene --layers examples/layered-scene.json --out artifacts/composed-scene.json
 python3 -m forge.cli blender-studio-witness --blend artifacts/studio-scene.blend --image artifacts/studio-scene.png --report artifacts/studio-scene.json
 python3 -m forge.cli verify-bundle artifacts/prompt-25
 python3 -m forge.cli character --pose T --out artifacts/generic-t

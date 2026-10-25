@@ -1,0 +1,7 @@
+{
+  "layers": [
+    {"id": "world-base", "objects": {"/world/tower": {"kind": "mesh", "material": "stone", "visible": true}, "/world/trees": {"kind": "collection", "visible": true}}},
+    {"id": "director-evening", "objects": {"/world/tower": {"material": "moonlit-stone"}, "/world/sky": {"kind": "environment", "metadata": {"mood": "moonlight"}}}},
+    {"id": "art-final", "objects": {"/world/trees": null}}
+  ]
+}

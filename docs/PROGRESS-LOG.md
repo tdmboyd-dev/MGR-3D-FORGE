@@ -4,7 +4,8 @@
 
 - Added 24 additional open-engine/physics/AI/world research families in `research/OPEN-SYSTEMS-RESEARCH-QUEUE.md`, separate from the 20 foundational domains and the 24 studio/academic source families. Inspected selected first-party source/rights pages; not every module, model, talk or paper. Tracked exact access/rights in `research/external-provenance/OPEN-SYSTEMS-SOURCES.md`.
 - Implemented `forge/scene_layers.py` field-level scene layering, deterministic hashing and author attribution, explicit deletion and reintroduction, bounds/NaN/path validation, and five tests in `tests/test_scene_layers.py`. **A native authoring prototype; not OpenUSD implementation or film renderer.**
-- `python3 -m unittest discover -q`: **192/192 PASS Linux**. New Windows regression and cross-engine import remain unverified. Prior Windows Blender 5.2.2 real studio scene render is evidenced by `evidence/blender/windows-wave12-studio-witness.json`.
+- New CLI `compose-scene --layers examples/layered-scene.json --out ...` accepts owner-authored JSON, generates an evidence receipt and refuses overwrite. Added real fixture and two more CLI tests.
+- `python3 -m unittest discover -q`: **194/194 PASS Linux**. New Windows regression and cross-engine import remain unverified. Prior Windows Blender 5.2.2 real studio scene render is evidenced by `evidence/blender/windows-wave12-studio-witness.json`.
 - Native register expanded F82–F86; only F82 is scoped CPU-implemented. F83–F86 queued with explicit independent runtime acceptance.
 
 ## 2026-10-25 — 24 external source families + ten studio-quality native test contracts

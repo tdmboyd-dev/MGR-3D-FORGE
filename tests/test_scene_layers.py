@@ -1,6 +1,10 @@
 import unittest
+import json
+import tempfile
+from pathlib import Path
 
 from forge.scene_layers import compose_scene_layers
+from forge.cli import main
 
 
 class SceneLayerTests(unittest.TestCase):
@@ -46,6 +50,25 @@ class SceneLayerTests(unittest.TestCase):
     def test_nested_unknown_fields_rejected(self):
         with self.assertRaises(ValueError):
             compose_scene_layers([{"id": "x", "objects": {"/r": {"kind": "mesh", "script": "code"}}}])
+
+    def test_cli_materializes_receipt_and_refuses_overwrite(self):
+        with tempfile.TemporaryDirectory() as root:
+            path=Path(root)
+            source=path/"layers.json"
+            result=path/"scene.json"
+            source.write_text(json.dumps({"layers":[self.base]}),encoding="utf-8")
+            self.assertEqual(main(["compose-scene","--layers",str(source),"--out",str(result)]),0)
+            self.assertEqual(json.loads(result.read_text(encoding="utf-8"))["objects"]["/world/rock"]["kind"],"mesh")
+            with self.assertRaises(FileExistsError):
+                main(["compose-scene","--layers",str(source),"--out",str(result)])
+
+    def test_cli_rejects_unexpected_input_envelope(self):
+        with tempfile.TemporaryDirectory() as root:
+            path=Path(root)
+            source=path/"layers.json"
+            source.write_text(json.dumps({"layers":[self.base],"dangerous":True}),encoding="utf-8")
+            with self.assertRaises(ValueError):
+                main(["compose-scene","--layers",str(source),"--out",str(path/"scene.json")])
 
 
 if __name__ == "__main__":
