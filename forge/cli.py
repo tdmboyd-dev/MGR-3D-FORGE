@@ -1,0 +1,71 @@
+"""Offline CLI: python -m forge.cli build --out /path/to/output."""
+
+import argparse
+import hashlib
+import json
+from pathlib import Path
+
+from .geometry import create_neighborhood
+from .glb import export_glb, inspect_glb
+from .quality import validate_neighborhood
+from .planner import plan_neighborhood
+from .spec import WorldSpec
+
+
+def build(spec: WorldSpec, output: Path):
+    output.mkdir(parents=True, exist_ok=True)
+    meshes, manifest = create_neighborhood(spec)
+    qc = validate_neighborhood(manifest)
+    if not qc["passed"]:
+        raise RuntimeError(f"scene QA failed: {qc['errors']}")
+    payload = export_glb(meshes, name=spec.name)
+    glb_qc = inspect_glb(payload)
+    glb_path = output / "world.glb"
+    manifest_path = output / "manifest.json"
+    glb_path.write_bytes(payload)
+    manifest["quality"] = qc
+    manifest["glb_quality"] = glb_qc
+    manifest["artifact"] = {"path": "world.glb", "sha256": hashlib.sha256(payload).hexdigest(),
+                            "bytes": len(payload)}
+    manifest["execution"] = {"compute": "CPU", "external_api_calls": 0,
+                             "model_inference": False, "blender_verified": False,
+                             "independent_engine_import_verified": False}
+    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return manifest
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description="MGR Forge: deterministic, GPU-free 3D neighborhood")
+    sub = parser.add_subparsers(dest="action", required=True)
+    create = sub.add_parser("build", help="generate real GLB geometry + manifest")
+    create.add_argument("--spec", type=Path, help="optional WorldSpec JSON")
+    create.add_argument("--out", type=Path, required=True, help="output directory")
+    create.add_argument("--seed", type=int, help="override seed")
+    create.add_argument("--buildings", type=int, help="override building count")
+    create.add_argument("--columns", type=int, help="override columns")
+    create.add_argument("--rows", type=int, help="override rows")
+    create.add_argument("--prompt", type=str, help="limited offline prompt, e.g. 'build 10 houses'")
+    inspect = sub.add_parser("inspect", help="check a GLB for structural validity")
+    inspect.add_argument("path", type=Path)
+    args = parser.parse_args(argv)
+    if args.action == "inspect":
+        print(json.dumps(inspect_glb(args.path.read_bytes()), indent=2))
+        return 0
+    if args.spec and args.prompt:
+        parser.error("choose either --spec or --prompt")
+    base = (WorldSpec.from_json(args.spec).as_dict() if args.spec else
+            plan_neighborhood(args.prompt).spec.as_dict() if args.prompt else
+            WorldSpec().as_dict())
+    for key in ("seed", "buildings", "columns", "rows"):
+        value = getattr(args, key)
+        if value is not None:
+            base[key] = value
+    result = build(WorldSpec(**base), args.out)
+    print(json.dumps({"output": str(args.out.resolve()), "buildings": len(result["buildings"]),
+                      "triangles": result["triangle_count"], "sha256": result["artifact"]["sha256"],
+                      "quality": "PASS" if result["quality"]["passed"] else "FAIL"}, indent=2))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -1,5 +1,18 @@
 # MGR 3D Forge — Progress and Evidence Log
 
+## 2026-10-25 — First native code vertical slice
+
+- Built Python-standard-library GPU-free 3D neighborhood mesh generation, material grouping, GLB 2.0 binary writing and internal structural inspection (`forge/geometry.py`, `forge/glb.py`).
+- Added seed-based reproducibility, bounded typed world specs and an explicitly limited English-count prompt planner (`forge/spec.py`, `forge/planner.py`).
+- Added synthetic character landmarks, missing-hand and limb-symmetry tests, relative-proportion drift checks (`forge/quality.py`). These **do not** create a Tevin 3D character or rig.
+- Added a content-addressed asset registry with ownership/license metadata and integrity detection (`forge/assets.py`). This is an early local store, not a production database.
+- `python3 -m unittest discover -v`: **17/17 pass**. Initial test fixture for anatomy identity was invalid; corrected to plausible symmetric landmarks and reran green.
+- `python3 -m forge.cli build --prompt "Create 25 buildings and streets" --out artifacts/prompt-25`: **25 buildings, 756 triangles, QA PASS**, real GLB output, no external APIs/model inference. SHA-256 `46738a68b153bc8c1e168fb1ea047c294c73db67fcf40a136d4ff705ee16e81d`.
+- `python3 -m forge.cli inspect artifacts/prompt-25/world.glb`: internal inspection **valid=true**, one mesh, six primitives, 1,512 vertices, 756 triangles, six materials.
+- CLI, tests and manifest are reproducible. No Blender, external GLB importer, target game engine, approved Tevin base or GPU model runtime available for integration proof; those gates remain open.
+
+**Proof classification:** local CPU prototype and unit tests verified; independent application import, visual appearance, interactive worlds, advanced text-to-3D, character production, licenses and cross-repo integration **not verified**.
+
 ## 2026-10-25 — GitHub repository designated
 
 - Owner supplied https://github.com/tdmboyd-dev/MGR-3D-FORGE and requested everything preserved with full research, native inventory and exact build needs.
@@ -19,8 +32,8 @@
 | Vision and native capability description | GitHub docs | DOCUMENTED |
 | Architectural direction | source-linked research | SPECIFIED, NOT BUILT |
 | Candidate research | official docs/repo/papers | SOURCED; not exhaustive |
-| CPU-only world prototype | none | NOT STARTED |
-| Character preservation | owner base not supplied this task | NOT STARTED |
+| CPU-only world prototype | generator + GLB + 17-test suite | WORKING PROTOTYPE, internally tested |
+| Character preservation | synthetic landmark suite, no Tevin base | PARTIAL; production NOT STARTED |
 | Model runtime proof | no compute | NOT STARTED |
 | Blender bridge | no runtime | NOT STARTED |
 | Creation OS / Tevin integrations | repos not inspected | NOT STARTED |

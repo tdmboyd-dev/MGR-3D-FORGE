@@ -2,7 +2,7 @@
 
 **Owner:** Money Grind Religion (MGR) / Timebeunus Boyd  
 **Canonical repository:** https://github.com/tdmboyd-dev/MGR-3D-FORGE  
-**Project status:** Research and architecture specification; implementation has **not** begun.  
+**Project status:** Active build. First GPU-free world-generation vertical slice implemented and tested; full production platform remains unfinished.  
 **Last researched:** 2026-10-25
 
 ## Mission
@@ -12,6 +12,21 @@ Build an MGR-owned, prompt-driven 3D creation platform for **characters, editabl
 **North star:** Describe a character or world in ordinary language; Forge plans it, creates/reuses the pieces, assembles them in a real 3D scene, checks them, repairs known defects, and exports owned, editable assets.
 
 ## Start here
+
+### Run the working native prototype
+
+Requires Python 3.10+ only; no GPU, packages, account, key or paid API.
+
+```bash
+python3 -m unittest discover -v
+python3 -m forge.cli build --spec examples/neighborhood.json --out artifacts/example
+python3 -m forge.cli build --prompt "Create 25 buildings and streets" --out artifacts/prompt-25
+python3 -m forge.cli inspect artifacts/prompt-25/world.glb
+```
+
+Each build creates a real binary `world.glb` mesh and a `manifest.json` with seed, building positions, file hash, geometry counts, and quality results. This prototype can plan a **limited** count-based neighborhood prompt; it is not a general text-to-3D model. Current materials are simple PBR colors and buildings are basic massing blocks, not detailed interiors. The GLB is internally validated but has **not** been imported and rendered in Blender or a game engine here.
+
+Code lives under `forge/`, tests under `tests/`; [implementation evidence](docs/IMPLEMENTATION-EVIDENCE.md) explains exact results and limitations.
 
 | Read | Purpose |
 |---|---|
@@ -45,11 +60,11 @@ Build an MGR-owned, prompt-driven 3D creation platform for **characters, editabl
 ## Current truth
 
 - GitHub repository exists and was empty when this research baseline was added.
-- This commit records the vision, candidate research, decisions, scope, risks, and executable acceptance plan.
-- No 3D engine, Blender bridge, generated model, production integration, hardware benchmark or 10× improvement is claimed complete.
+- Research baseline is preserved and a functioning CPU procedural GLB exporter, bounded prompt planner, quality checks, character-landmark validation and hashed asset registry now exist.
+- The world generator is a prototype, not a full 3D engine. There is no Blender bridge, neural text/image-to-3D model, production integration, cross-engine proof or measured 10× improvement yet.
 - The external Creation OS / Create Loco / MGR-ONE source-of-truth mapping must be verified before integration.
 
-## Intended future structure
+## Intended future structure (long-term; current working code lives in `forge/`)
 
 ```text
 apps/                 # user-facing Forge studio / job inspector (future)
