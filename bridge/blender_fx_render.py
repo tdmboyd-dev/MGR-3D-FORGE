@@ -68,9 +68,8 @@ def main():
     scene.view_settings.view_transform="Standard"
     # Blender 5.2 compositor glare is a node-based, optional optical effect;
     # it is not equivalent to physically simulated atmosphere or volumes.
-    scene.use_nodes=True
-    comp=scene.node_tree
-    comp.nodes.clear()
+    comp=bpy.data.node_groups.new("MGR_FX_Optical_Glow", "CompositorNodeTree")
+    scene.compositing_node_group=comp
     render_layers=comp.nodes.new("CompositorNodeRLayers")
     glare=comp.nodes.new("CompositorNodeGlare")
     glare.glare_type="FOG_GLOW"

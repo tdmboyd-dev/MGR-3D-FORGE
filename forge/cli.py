@@ -374,8 +374,9 @@ def main(argv=None):
             raise FileExistsError("FX proof output already exists")
         cmd=blender_fx_render_command(args.binary,args.glb,args.image,args.report)
         result=subprocess.run(cmd,timeout=600,capture_output=True,text=True,check=False)
-        if result.returncode:
-            raise RuntimeError(f"Blender FX render failed ({result.returncode}): {result.stderr[-600:] or result.stdout[-600:]}")
+        if result.returncode or not args.report.is_file() or not args.image.is_file():
+            details=(result.stderr+"\n"+result.stdout).strip()
+            raise RuntimeError(f"Blender FX render failed ({result.returncode}; missing receipt/image): {details[-1800:]}")
         receipt=json.loads(args.report.read_text(encoding="utf-8"))
         if receipt.get("status")!="PASS" or not receipt.get("emission_socket_colors"):
             raise RuntimeError("FX Blender emission receipt invalid")
