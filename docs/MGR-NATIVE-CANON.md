@@ -2,6 +2,14 @@
 
 **Owner rule (2026-10-25): Every product capability, specification, headline, status, module and documentation entry must have an MGR-native identity and purpose.** Other projects may inform private research, but they do not define our features or product limits. MGR Forge owns original source code created here, its design contracts and generated outputs, subject to third-party dependencies and user-provided asset rights.
 
+## Locked owner execution policy — hands-off Forge workspace
+
+**Approved operating mode:** autonomous, continuous research → design → code → build → test → visual-check → fix → re-test → document **inside an explicitly designated MGR Forge worktree and its disposable job directories**. Routine in-scope file edits, temporary generated assets, local Blender executions, repeat tests and bounded retries do not require a separate prompt at each checkpoint. The runner must preserve checkpoints, changesets, failure evidence and the ability to revert an individual job; pass/fail claims require actual receipts. Do not treat this policy as an authorization to ignore platform/tool permissions.
+
+**Hard boundaries:** no access to secrets beyond task-scoped approved credentials; no personal files or unrelated repo changes outside authorized roots; no destructive actions to existing user assets or broad filesystem trees; no permission/authentication changes; no exposing credentials; no paid or unapproved network services; no executing unreviewed remote install scripts. Each of these requires its own appropriate authorization. Refusal/permission errors must be reported, never bypassed.
+
+**Implementation contract:** task manifest declares workspace roots, exact action scope, tool allowlist, network policy, time/cost ceiling, expected files and rollback strategy. Generated code runs as a scoped subprocess rather than an unrestricted machine-wide agent. Within that scope, the system should proceed without recurring confirmation dialogs. Current code only implements pieces of this policy; F36 tracks the full runner.
+
 ## MGR's creation method
 
 Every technology investigation returns to this native system:

@@ -15,6 +15,8 @@ Build an MGR-owned, prompt-driven 3D creation platform for **characters, editabl
 
 **MGR-NATIVE OWNERSHIP:** `docs/MGR-NATIVE-CANON.md` governs all product naming, documentation and capabilities. Third-party source citations are separated from MGR's original creation specification.
 
+**OWNER-LOCKED AUTONOMY:** Build, test, repair and rerun hands-off inside an approved Forge worktree; keep personal files, secrets, destructive changes and external spend behind separate authorization. See the canon for exact boundaries. The full enforcement runner remains queued as F36.
+
 ### Run the working native prototype
 
 Requires Python 3.10+ only; no GPU, packages, account, key or paid API.
@@ -72,6 +74,7 @@ Code lives under `forge/`, tests under `tests/`; [implementation evidence](docs/
 
 - MGR Forge owns a working CPU procedural GLB exporter, bounded planner, 16-part generic T/A mannequin, scene intelligence, environment/interior meshes, geometry QA, license/cost gates and artifact receipts.
 - On Windows, **64/64 tests passed**, and **five GLB imports passed Blender 5.2.2 LTS**. Reproducible evidence is preserved under `evidence/blender/`.
+- Latest local suite: **71/71 passing**. Native register covers **43 capabilities**; F34 geometry-fact queries are implemented as a partial starter, F35–F43 remain queued. Detailed work plan: `research/MGR-CREATION-INTELLIGENCE-HOWTO.md`.
 - The engine remains a prototype: Blender import works for tested assets, but there is no neural text/image-to-3D model, photorealistic production scene, approved Tevin likeness, complete runtime integration or measured 10× competitor improvement yet.
 - The external Creation OS / Create Loco / MGR-ONE source-of-truth mapping must be verified before integration.
 

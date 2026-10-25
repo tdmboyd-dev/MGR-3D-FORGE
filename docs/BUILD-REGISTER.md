@@ -37,8 +37,18 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F31 | MGR World Flight | SPECIFIED | PARTIAL: keyframe plan TESTED | P1 | F16,F17 | MGR 3D camera paths exported; actual camera player pending |
 | F32 | MGR Model Dock | SPECIFIED | PARTIAL: recipe inspection TESTED | P1 | F07,F22,F29 | MGR model manifest; sandboxed installs and model launch pending |
 | F33 | MGR Spatial Eyes | SPECIFIED | PARTIAL: geometry visibility TESTED | P1 | F16,F17,F20 | MGR-authored world occlusion and evidence labels; HUD and reconstruction pending |
+| F34 | MGR Scene Consciousness | SPECIFIED | PARTIAL: generated-world facts and qualified road queries TESTED | P0 | F02,F05,F16,F33 | `forge/consciousness.py`; Blender object/portal semantics and image vision pending |
+| F35 | MGR Visual Judge | QUEUED | NOT STARTED | P0 | F06,F30,F34 | Golden-view render comparison and bounded visual defect reporting |
+| F36 | MGR Code Architect | QUEUED | NOT STARTED | P0 | F22,F23,F29 | Task-scoped coding runner with dry-run, audit, rollback and allowlisted tools |
+| F37 | MGR Anatomy Guardian Plus | QUEUED | NOT STARTED | P0 | F09,F10,F35 | 3D proportion and deforming-pose inspections |
+| F38 | MGR Fabric Intelligence | QUEUED | NOT STARTED | P1 | F11,F12,F13 | Separable fitted garments, intersections and motion QA |
+| F39 | MGR Rig Intelligence | QUEUED | NOT STARTED | P0 | F09,F12,F37 | Exportable armatures, normalized weights, full-range deformation QA |
+| F40 | MGR World Logic | QUEUED | NOT STARTED | P1 | F15,F17,F34 | Door/room/route/navmesh and agent-traversal acceptance |
+| F41 | MGR Cinematic Director | QUEUED | NOT STARTED | P1 | F13,F31,F35 | Reproducible cameras, lighting, material and shot recipes |
+| F42 | MGR Creation Memory | QUEUED | NOT STARTED | P0 | F05,F20,F34 | Approved scene/character decisions and asset continuity replay |
+| F43 | MGR Self-Repair Studio | QUEUED | NOT STARTED | P1 | F23,F30,F35,F36 | Detect→repair→render→recheck with rollback and stop budgets |
 
-**Scope:** 33 MGR-native areas: original 30 plus F31 MGR World Flight, F32 MGR Model Dock, F33 MGR Spatial Eyes. Unverified research candidates do not automatically become product requirements. Third-party source attributions live solely under `research/external-provenance/` where necessary.
+**Scope:** 43 MGR-native areas: original 33 plus F34–F43 approved for the implementation queue on 2026-10-25. Queued is **not** implemented. Technical research is organized by MGR functions in `research/MGR-CREATION-INTELLIGENCE-HOWTO.md`; necessary external provenance stays under `research/external-provenance/`.
 
 ## Definition of production completeness
 
@@ -46,12 +56,14 @@ All critical capabilities must have checked-in code, reproducible runtime eviden
 
 ## Immediate build order
 
-1. Obtain and verify source repos / Blender version / hardware, plus approved Tevin base privately.
+1. Use the verified Windows Blender 5.2.2 installation; obtain full hardware inventory and approved Tevin base privately.
 2. Build F01/F02/F05/F06/F22/F29/F30 contracts and tests.
 3. Build F03/F04/F15/F16 CPU world slice; verify no GPU.
 4. Build F07/F08 baseline local generation with budget/quality receipts.
 5. Build F09/F10 character validation; then F11/F12 production tests.
-6. Expand world, reconstruction and studio only after narrow vertical slices pass.
+6. Build F34/F35 scene queries and visual QA on reproducible, small Blender renders, then F36 scoped coding jobs.
+7. Build F39 deforming rig, F38 separable clothing and F37 full-pose anatomical checks on generic models before Tevin.
+8. Build F40 world navigation, F41 cinematic controls, F42 continuity memory and F43 bounded repair loops; verify every consumer integration separately.
 
 ## Blocking external decisions
 

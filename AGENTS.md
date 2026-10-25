@@ -11,3 +11,4 @@
 - Treat exports as unverified in external engines until an actual independent import/render has occurred. Do not fabricate QA results.
 - Do not delete or overwrite unrelated work, and do not burn user GitHub Actions budget.
 - Update `docs/BUILD-REGISTER.md` and `docs/PROGRESS-LOG.md` alongside any tested implementation. Describe blockers and next proof clearly.
+- Owner-approved autonomy is defined in `docs/MGR-NATIVE-CANON.md` under **Locked owner execution policy — hands-off Forge workspace**. Build, test and fix unattended inside the approved workspace with receipts and recoverable edits; do not expand scope to personal files, credentials, unrelated repos, destructive operations or spending without separate authorization.

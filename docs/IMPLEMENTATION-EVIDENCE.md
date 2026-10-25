@@ -63,7 +63,7 @@ Measured under CPython 3.12.14, x86_64. This excludes expensive Blender import, 
 - Running on CPU with standard Python proves **this specific procedural path needs no GPU**. It does not prove neural high-quality image-to-3D inference is GPU-free.
 - The unit tests inspect geometry and file structure. Five Blender imports independently check some interoperability, **not commercial readiness**, visual fidelity, rigging, or full editor use.
 - No model weights, paid credentials or unapproved references were copied to the repository. The approved Tevin base remains a missing input for identity-grade output.
-- Only partial progress on the **33 MGR-native** tracked work areas is claimed. Every other area remains open in `BUILD-REGISTER.md`.
+- Only partial progress on the **43 MGR-native** tracked work areas is claimed. The 10 additional F34–F43 capability contracts include a starter `forge/consciousness.py` generated-geometry fact index (four new tests); the full visual and self-repair engine is **not implemented**. Latest local suite: **71/71 pass**. Every other area remains open in `BUILD-REGISTER.md`.
 
 ## Next acceptance gates
 

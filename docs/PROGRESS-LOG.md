@@ -2,6 +2,13 @@
 
 **This is a historical sequence, not the current status page.** The canonical current status is `docs/WHAT-WE-HAVE.md` plus `docs/IMPLEMENTATION-EVIDENCE.md`. Superseded historical claims are retained only as dated checkpoints.
 
+## 2026-10-25 — Owner autonomy lock, ten-capability extension and F34 starter
+
+- Locked approved **hands-off within Forge workspace** policy in MGR Native Canon and `AGENTS.md`; other personal files, credentials, destructive actions and spending remain authorization boundaries. The complete policy-enforcing task runner (F36) is not built yet.
+- Extended native implementation register F34–F43 and wrote functional how-to/negative-test/acceptance plan `research/MGR-CREATION-INTELLIGENCE-HOWTO.md` with source evidence segregated from product identity.
+- Built starter MGR Scene Consciousness `forge/consciousness.py`: reproducible scene facts grounded in authored world geometry, exact IDs/dimensions/entrance heuristics and honest road-route limitation labels. Added four tests covering determinism, route qualification, nonexistent objects and invalid dimensions.
+- Local automated suite **71/71 PASS**. Scene metadata intelligence is partial; no visual AI model, autonomous code runner, real rig, or complete world-interaction system is represented as finished.
+
 ## 2026-10-25 — MGR-native canon and Windows Blender import proof
 
 - Centralized MGR naming/ownership in `docs/MGR-NATIVE-CANON.md`. External technical reference details segregated under `research/external-provenance/`, not used as MGR feature names or product definitions.
