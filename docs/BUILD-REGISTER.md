@@ -70,7 +70,7 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F64 | MGR Sound-Reactive FX | SOURCED | QUEUED | P2 | F46,F54,F63 | Beat/envelope/event-driven light, particles and scene animation |
 | F65 | MGR Destruction Director | SOURCED | QUEUED | P1 | F55,F16 | Fracture, collision/physics, debris, cache and restoration |
 | F66 | MGR Spell Continuity Brain | SOURCED | QUEUED | P0 | F42,F48,F56 | Stable spell/world states, owner approvals and cross-shot replay |
-| F67 | MGR FX Judge | SOURCED | PARTIAL: geometry/phase + real Windows Blender glow and matched volume/control pixel comparisons | P0 | F35,F49,F54 | Perceptual semantics, volume artifacts and cross-view cinematic scoring open |
+| F67 | MGR FX Judge | SOURCED | PARTIAL: `forge/fx_judge.py` rejects unmatched cameras, fake volume and static pixels; Windows real 22.37957 RGB MAE PASS | P0 | F35,F49,F54 | Perceptual semantics, volume artifacts and cross-view cinematic scoring open |
 
 **Scope:** 67 MGR-native areas: original 33, F34–F43, director/camera/motion F44–F50 and fantasy/VFX F51–F67. All new tracks requested on 2026-10-25 remain independently tracked even if partially implemented. Queued is **not** implemented. Technical research is organized by MGR functions in `research/MGR-CREATION-INTELLIGENCE-HOWTO.md`, `research/MGR-DIRECTORS-CAMERAS-MOTION-HOWTO.md` and `research/MGR-FANTASY-CINEMA-CREATION-HOWTO.md`; external provenance remains separate.
 

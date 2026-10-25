@@ -3,7 +3,7 @@
 Date: 2026-10-25. This page distinguishes working code from future intent.
 
 **Current wave evidence (supersedes earlier baseline test counts below):**
-**141/141** unit tests passed on Linux and Time's Windows device. On real
+**146/146** unit tests passed on Linux and Time's Windows device. On real
 Blender 5.2.2 LTS, the 20-part/11-bone generic mannequin has 48 dual-bone
 elbow sleeve vertices and passes measured two-pose joint/weight QA; the world
 has verified imported PBR materials; and editable CPU Cycles cinema scenes have
@@ -16,6 +16,8 @@ shot RGB MAE **5.98669**. Actual `.blend`, PNG and JSON receipts are stored unde
 Further Windows Blender 5.2.2 render verification added two native point lights, an illuminated matte witness and the 5.x `Fog Glow` compositor. Actual PNG and JSON scene receipts are in `evidence/blender/windows-wave7-*`. This proves lighting and image-space composition in a controlled scene, **not** simulated fire, particle collisions, atmospheric volumes, game-runtime lighting or completion of the entire F51 track.
 
 The current Atmosphere Field wave independently rendered no-volume, uniform-volume and noise-cloud volume scenes in Blender 5.2.2 CPU Cycles. The two real scattering materials are native `ShaderNodeVolumePrincipled` instances. A matched comparison found **156,410 materially changed pixels** for the uniform field against control and RGBA MAE **0.06582227**; cloud vs uniform MAE **0.02924215**. Actual receipts and PNGs: `evidence/blender/windows-wave8-*`. These results prove ray-scattered fog in a bounded proxy, not dynamic smoke or flawless cinematic diffusion.
+
+MGR FX Judge now runs the matched comparison as a native validated CLI, not just an ad-hoc Blender console. The actual Windows control/volume proof passed with **22.37957 RGB MAE (8-bit)** against an explicit minimum of **3.0**, and the receipt is archived as `evidence/blender/windows-wave8-judge.json`. It refuses mismatched cameras and missing volume shader claims; it still does not recognize aesthetic defects semantically.
 
 ## What you can actually run
 

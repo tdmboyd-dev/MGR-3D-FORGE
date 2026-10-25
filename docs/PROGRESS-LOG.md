@@ -1,5 +1,11 @@
 # MGR 3D Forge — Progress and Evidence Log
 
+## 2026-10-25 — MGR FX Judge live acceptance
+
+- Implemented `forge/fx_judge.py` and `forge.cli judge-atmosphere` to compare matched real PNGs with a configurable RGB MAE threshold. The control must declare volume density zero; the candidate must declare positive density and `ShaderNodeVolumePrincipled`. Different cameras, lights, emissive materials, render status, fake volume or unchanged pixels are rejected rather than called progress.
+- Windows Blender rendered actual fixed-camera control and fog images; native `judge-atmosphere` reported **PASS**, **RGB MAE 22.37957/255** against a threshold of 3.0. On both Windows and Linux **146/146 tests PASS** including five new negative/positive judge cases. Exact machine receipt: `evidence/blender/windows-wave8-judge.json`.
+- This visual gate proves scene difference under controlled renderer conditions, not artistic film-grade quality or physically measured atmospheric correctness.
+
 ## 2026-10-25 — MGR Atmosphere Field Windows volume acceptance
 
 - Built `--volume-density` (strict finite `0..0.25`, 0 disables medium) and `--volume-style uniform|cloud` in the Blender FX command. Windows Blender 5.2.2 Cycles accepted a real `ShaderNodeVolumePrincipled` participating medium, anisotropy and point-light illumination. Cloud mode adds a bounded procedural noise-driven density material in an ellipsoidal volume proxy.
