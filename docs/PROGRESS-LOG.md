@@ -1,5 +1,13 @@
 # MGR 3D Forge — Progress and Evidence Log
 
+## 2026-10-25 — Native asset transport, format parity and motion-contact wave
+
+- **F83:** Built `forge/asset_parity.py`; validates independent counts of actual GLB and OBJ vertices/triangles, compares three-axis geometric bounds under a strict numeric tolerance, and detects tampering and invalid input. `forge.cli audit-export` emits a nonoverwriting JSON receipt. Actual generated six-building world passed the CLI parity audit. This does not demonstrate material or game-engine render parity.
+- **F84:** Built `forge/cell_transport.py`; reads actual local GLB cell files, verifies SHA-256 and size, enforces a memory budget, tracks real disk reads, honors active-cell priority and returns missing/tampered-cell failures. `forge.cli load-cells` produces a receipt; still synchronous CPU disk data, not game GPU/network streaming.
+- **F85:** Built `forge/dynamics.py` with continuous actor-segment contact against conservative expanded bounding rectangles to catch thin-wall tunneling. Positive/negative tests cover earliest-hit, ordering, motion rejection and invalid numbers. Not a complete rigid-body solver or skeleton physics binding.
+- Added detailed 16-field native engineering packet `research/MGR-RUNTIME-FOUNDATIONS-WAVE.md`, mapping source study and explicit production acceptance for F82–F86. Original external rights remain separated.
+- Added real CLI cell I/O and corrupt-cell receipt tests. `python3 -m unittest discover -q`: **212/212 tests PASS Linux**; Windows/independent second-engine verification remains pending for this new slice.
+
 ## 2026-10-25 — Open-system research expansion + MGR-native layered scenes
 
 - Added 24 additional open-engine/physics/AI/world research families in `research/OPEN-SYSTEMS-RESEARCH-QUEUE.md`, separate from the 20 foundational domains and the 24 studio/academic source families. Inspected selected first-party source/rights pages; not every module, model, talk or paper. Tracked exact access/rights in `research/external-provenance/OPEN-SYSTEMS-SOURCES.md`.

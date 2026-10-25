@@ -28,6 +28,9 @@ python3 -m forge.cli build --prompt "Create 25 buildings and streets" --out arti
 python3 -m forge.cli inspect artifacts/prompt-25/world.glb
 python3 -m forge.cli studio-proof --out artifacts/studio-proof.json
 python3 -m forge.cli compose-scene --layers examples/layered-scene.json --out artifacts/composed-scene.json
+python3 -m forge.cli audit-export --glb artifacts/prompt-25/world.glb --obj artifacts/prompt-25/world.obj --out artifacts/export-parity.json
+# For prepared cell files and SHA manifests:
+python3 -m forge.cli load-cells --root artifacts/cells --manifest artifacts/cell-manifest.json --plan artifacts/residency-plan.json --out artifacts/cell-load.json
 python3 -m forge.cli blender-studio-witness --blend artifacts/studio-scene.blend --image artifacts/studio-scene.png --report artifacts/studio-scene.json
 python3 -m forge.cli verify-bundle artifacts/prompt-25
 python3 -m forge.cli character --pose T --out artifacts/generic-t
@@ -61,6 +64,7 @@ Code lives under `forge/`, tests under `tests/`; [implementation evidence](docs/
 | [RESEARCH-REGISTER.md](research/RESEARCH-REGISTER.md) | Source-linked model/research comparisons and evidence disposition |
 | [Open systems research queue](research/OPEN-SYSTEMS-RESEARCH-QUEUE.md) | 24 additional open engine, physics, world and AI research branches |
 | [Open systems rights ledger](research/external-provenance/OPEN-SYSTEMS-SOURCES.md) | Official sources and rights separated from native product canon |
+| [Runtime foundations research](research/MGR-RUNTIME-FOUNDATIONS-WAVE.md) | F82–F86 native contracts, 16 research/build fields and remaining engine proofs |
 | [MGR-NATIVE-CANON.md](docs/MGR-NATIVE-CANON.md) | Ownership, feature identity, creative sovereignty and source-of-truth precedence |
 | [External provenance ledger](research/external-provenance/) | Isolated licensing and audit references only; not product definitions |
 | [DEEP-DIVE-NATIVE-CPU.md](research/DEEP-DIVE-NATIVE-CPU.md) | 16-field native procedural research packet |
@@ -88,6 +92,8 @@ Code lives under `forge/`, tests under `tests/`; [implementation evidence](docs/
 10. **Tevin is a locked identity.** Character DNA, proportions and detachable outfits must be measured and verified.
 
 ## Current truth
+
+- **Latest native runtime foundation: 212/212 tests PASS Linux.** An actual generated-world GLB/OBJ export passed the new geometry-parity command; the cell transport exercises real disk I/O, SHA-256 and bounded RAM, and a swept-contact guard catches thin-wall motion. **Last separately verified Windows suite: 187/187**, with a real Blender 5.2.2 studio witness render recorded under `evidence/blender/windows-wave12-studio-witness.json`. F83–F85 remain CPU-prototype quality, not independently playable/renderer-proven. Full new engineering contract: `research/MGR-RUNTIME-FOUNDATIONS-WAVE.md`.
 
 - **Current expanded local wave: 187/187 Python tests PASS on Linux; last published Windows wave: 175/175 PASS.** Blender 5.2.2 accepted the 20-piece mannequin with 48 two-bone elbow sleeve vertices, 11-bone pose audit and imported PBR materials. It saved an editable three-camera CPU Cycles scene with real cut markers and a second shot whose camera moved **7.21726m** between frames 49 and 96. Four frames proved moving-shot RGB MAE **5.98669**. Later Windows Cycles render proofs established native energy portal phase motion, Fog Glow, an illuminated witness, **uniform plus procedural-cloud volumetric scattering** and an independently executed MGR FX Judge with **22.37957/255** matched-image RGB MAE. Native tests now add oriented stereo triangulation, mesh-edge audit, sampled kinematics, camera-distance chunk planning, and **ten synthetic studio-quality CPU test contracts**. A new actual Blender studio witness script has code/CLI tests, but its Windows scene/render receipt is still pending. Earlier Windows spatial proof reconstructs `(0,1,4)` meters with zero reported reprojection errors in a controlled fixture. These remain controlled prototypes; photoreal full VFX, real-world Tevin visual approval and live game streaming remain open.
 

@@ -87,9 +87,9 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F81 | MGR Atmosphere Memory | AUDIT IN PROGRESS | PARTIAL: bounded indexed volume temporal consistency guard, TESTED | P1 | F53,F61,F67 | Physically rendered volumetric temporal shots, flow/smoke sim and measured runtime proof |
 
 | F82 | MGR Layered Reality Composition | SELECTED OPEN-SYSTEMS RESEARCH | PARTIAL: deterministic field overrides, provenance and hashing; 5 CPU tests PASS | P1 | F18,F78 | Real USD authoring, scene references, time samples and engine roundtrip |
-| F83 | MGR Runtime Parity Lab | RESEARCH QUEUED | NOT BUILT | P1 | F82,F79 | Independently import/render and compare output/performance in two engines |
-| F84 | MGR Cell Transport | RESEARCH QUEUED | NOT BUILT | P1 | F78,F82 | Actual cell I/O, memory budgets, continuity, retries and frame-rate validation |
-| F85 | MGR Dynamics Binding | RESEARCH QUEUED | NOT BUILT | P1 | F39,F40 | Contact/rig physics, time-step and cross-system determinism |
+| F83 | MGR Runtime Parity Lab | SELECTED RESEARCH | PARTIAL: actual GLB/OBJ independent geometry count and bound cross-check; TESTED | P1 | F82,F79 | Independently import/render in two engines, animation and material fidelity, measured FPS |
+| F84 | MGR Cell Transport | SELECTED RESEARCH | PARTIAL: actual disk GLB cell reads, SHA-256, bounded active/prefetch RAM cache; TESTED | P1 | F78,F82 | Live game/GPU residency, asynchronous transfers, collision continuity, recovery and FPS |
+| F85 | MGR Dynamics Binding | SELECTED RESEARCH | PARTIAL: conservative swept actor segment vs obstacle contact; TESTED | P1 | F39,F40 | Physics-engine capsule, stairs/slopes, rig contact, impulses and deterministic replay |
 | F86 | MGR Render Truth Lab | RESEARCH QUEUED | NOT BUILT | P1 | F72,F73,F74 | Real engine lighting/material parity and performance |
 
 **Scope:** 86 MGR-native areas: original 33, F34–F43, director/camera/motion F44–F50, fantasy/VFX F51–F67, reality-to-space F68–F71, ten studio quality CPU contracts F72–F81, and open-systems F82–F86. Queued is **not** implemented. Detailed MGR-native research remains in `research/` and external attribution/rights under `research/external-provenance/`.

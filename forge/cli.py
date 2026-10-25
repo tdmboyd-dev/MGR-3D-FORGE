@@ -29,6 +29,8 @@ from .materials import MGR_MATERIAL_PRESETS
 from .shot_design import validate_shot_reel, lighting_recipe, validate_camera_clearance
 from .fx import create_magic_effect, export_effect_glb
 from .scene_layers import compose_scene_layers
+from .asset_parity import audit_export_parity
+from .cell_transport import MGRCellTransport
 
 
 def build(spec: WorldSpec, output: Path):
@@ -134,6 +136,16 @@ def main(argv=None):
     layers=sub.add_parser("compose-scene",help="compose owned MGR scene layers into a deterministic receipt")
     layers.add_argument("--layers",type=Path,required=True,help="JSON object with ordered layers list")
     layers.add_argument("--out",type=Path,required=True,help="new receipt file; never overwrites")
+    parity=sub.add_parser("audit-export",help="compare geometry counts and bounds in Forge GLB and OBJ exports")
+    parity.add_argument("--glb",type=Path,required=True)
+    parity.add_argument("--obj",type=Path,required=True)
+    parity.add_argument("--out",type=Path,required=True)
+    transport=sub.add_parser("load-cells",help="apply a residency plan to integrity-checked local GLB cells")
+    transport.add_argument("--root",type=Path,required=True)
+    transport.add_argument("--manifest",type=Path,required=True)
+    transport.add_argument("--plan",type=Path,required=True)
+    transport.add_argument("--budget-bytes",type=int,default=8_000_000)
+    transport.add_argument("--out",type=Path,required=True)
     blender = sub.add_parser("blender-verify",help="run actual Blender GLB import verification if installed")
     blender.add_argument("path",type=Path)
     blender.add_argument("--report",type=Path,required=True)
@@ -245,6 +257,26 @@ def main(argv=None):
         print(json.dumps({"status":"PASS","objects":len(result["objects"]),
                           "sha256":result["sha256"],"receipt":str(args.out)},indent=2))
         return 0
+    if args.action == "audit-export":
+        if args.out.exists():
+            raise FileExistsError("export parity receipt already exists")
+        result=audit_export_parity(args.glb.read_bytes(),args.obj.read_text(encoding="utf-8"))
+        args.out.parent.mkdir(parents=True,exist_ok=True)
+        with args.out.open("x",encoding="utf-8") as output:
+            output.write(json.dumps(result,indent=2,sort_keys=True)+"\n")
+        print(json.dumps({"status":result["status"],"receipt":str(args.out)},indent=2))
+        return 0 if result["status"]=="PASS" else 1
+    if args.action == "load-cells":
+        if args.out.exists():
+            raise FileExistsError("cell transport receipt already exists")
+        manifest=json.loads(args.manifest.read_text(encoding="utf-8"))
+        plan=json.loads(args.plan.read_text(encoding="utf-8"))
+        result=MGRCellTransport(args.root,manifest,memory_budget_bytes=args.budget_bytes).apply_plan(plan)
+        args.out.parent.mkdir(parents=True,exist_ok=True)
+        with args.out.open("x",encoding="utf-8") as output:
+            output.write(json.dumps(result,indent=2,sort_keys=True)+"\n")
+        print(json.dumps({"status":result["status"],"receipt":str(args.out)},indent=2))
+        return 0 if result["status"]=="PASS" else 1
     if args.action == "spatial-proof":
         from .spatial_truth import camera_project,pixel_to_ray,slice_mesh_at_height,triangulate_parallel_views,triangulate_oriented_views
         from .surface_truth import inspect_surface_edges
