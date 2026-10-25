@@ -74,7 +74,9 @@ try{
   assert.equal(await evaluate("document.getElementById('director-build-blender').disabled"),false);
   await evaluate("document.getElementById('director-build-blender').click()");
   let blend=false;
-  for(let n=0;n<240;n++){
+  // A production-size Blender scene can take over one minute on a real laptop.
+  // Match the UI's three-minute background-job allowance, not a one-minute cap.
+  for(let n=0;n<720;n++){
     blend=await evaluate("Boolean(document.querySelector('#director-downloads a[href$=\"scene.blend\"]'))");
     if(blend)break;await pause(250);
   }
