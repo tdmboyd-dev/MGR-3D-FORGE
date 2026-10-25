@@ -17,6 +17,10 @@ from forge.workflow import LocalJobStore, Step, approve_plan, resolve_plan
 from forge.world import graph_for_world, shortest_road_path, overlaps_building
 from forge.obj import export_obj
 from forge.preview import render_world_svg
+from forge.streaming import chunk_world, simple_building_lod, lod_for_distance
+from forge.cinematic import camera_tour, interpolate_shots
+from forge.recipes import ModelRecipe, inspect_recipe
+from forge.meshqa import analyze_mesh, remove_bad_triangles
 
 
 class ForgeTests(unittest.TestCase):
@@ -94,6 +98,9 @@ class ForgeTests(unittest.TestCase):
             self.assertTrue((Path(temp) / "world.mtl").is_file())
             self.assertTrue((Path(temp) / "navigation.json").is_file())
             self.assertTrue((Path(temp) / "preview.svg").is_file())
+            self.assertTrue((Path(temp) / "world_lod1.glb").is_file())
+            self.assertTrue((Path(temp) / "chunks.json").is_file())
+            self.assertTrue((Path(temp) / "camera_tour.json").is_file())
             self.assertEqual(manifest["execution"]["external_api_calls"], 0)
             self.assertFalse(manifest["execution"]["blender_verified"])
             saved = json.loads((Path(temp) / "manifest.json").read_text())
@@ -121,6 +128,81 @@ class ForgeTests(unittest.TestCase):
         _, world = create_neighborhood(WorldSpec())
         with self.assertRaises(ValueError):
             render_world_svg(world, width=100000)
+
+    def test_chunks_cover_every_building_once(self):
+        _, world = create_neighborhood(WorldSpec(rows=13, columns=9, buildings=91))
+        data = chunk_world(world, chunk_lots=4)
+        listed = [bid for chunk in data["chunks"] for bid in chunk["building_ids"]]
+        self.assertEqual(sorted(listed), sorted(b["id"] for b in world["buildings"]))
+        self.assertEqual(len(listed), len(set(listed)))
+
+    def test_simple_lod_reduces_triangle_count(self):
+        _, world = create_neighborhood(WorldSpec())
+        lod = inspect_glb(export_glb(simple_building_lod(world)))
+        self.assertEqual(lod["triangles"], len(world["buildings"]) * 12)
+        self.assertLess(lod["triangles"], world["triangle_count"])
+
+    def test_lod_distance_boundaries(self):
+        self.assertEqual([lod_for_distance(x) for x in (0,79,80,249,250)], [0,0,1,1,2])
+        with self.assertRaises(ValueError):
+            lod_for_distance(float("nan"))
+
+    def test_spec_rejects_nonfinite_ground(self):
+        with self.assertRaises(ValueError):
+            WorldSpec(lot_size=float("inf"))
+
+    def test_camera_tour_is_actual_3d_not_video(self):
+        _, world = create_neighborhood(WorldSpec())
+        tour = camera_tour(world)
+        self.assertEqual(len(tour["shots"]), 10)
+        self.assertFalse(tour["requires_generated_video"])
+        self.assertEqual(len({shot["subject_id"] for shot in tour["shots"]}), 10)
+        self.assertEqual(tour, camera_tour(world))
+
+    def test_camera_interpolation_and_boundaries(self):
+        _, world = create_neighborhood(WorldSpec())
+        shots = camera_tour(world)["shots"]
+        halfway = interpolate_shots(shots[0], shots[1], 0.5)
+        self.assertEqual(halfway["camera"][0],
+                         round((shots[0]["camera"][0]+shots[1]["camera"][0])/2, 6))
+        with self.assertRaises(ValueError):
+            interpolate_shots(shots[0], shots[1], 1.5)
+
+    def test_model_recipe_fails_closed_on_license_and_gpu(self):
+        recipe = ModelRecipe(id="candidate", package_id="model-xyz", version="1.0",
+                             sha256="a"*64, license_id="restricted", runtime="python",
+                             requires_gpu=True, estimated_vram_gb=24,
+                             source_url="https://example.org/model")
+        result = inspect_recipe(recipe, available_vram_gb=0)
+        self.assertFalse(result["ready"])
+        self.assertIn("license not approved", result["reasons"])
+        self.assertIn("insufficient GPU VRAM", result["reasons"])
+        self.assertFalse(result["execute"])
+
+    def test_model_recipe_rejects_unpinned_hash(self):
+        with self.assertRaises(ValueError):
+            ModelRecipe(id="bad", package_id="p", version="1", sha256="unverified",
+                        license_id="MGR-native", runtime="python", requires_gpu=False,
+                        estimated_vram_gb=0, source_url="https://example.org/model")
+
+    def test_world_meshes_have_nonzero_triangles(self):
+        meshes, _ = create_neighborhood(WorldSpec())
+        self.assertTrue(all(analyze_mesh(mesh)["passed"] for mesh in meshes))
+
+    def test_mesh_repair_drops_degenerate_and_invalid_indices(self):
+        mesh = Mesh()
+        mesh.box(0, 0, 0, 1, 1, 1)
+        mesh.indices.extend([0,0,0, 0,1,9999])
+        self.assertFalse(analyze_mesh(mesh)["passed"])
+        cleaned, receipt = remove_bad_triangles(mesh)
+        self.assertEqual(receipt["removed_triangles"], 2)
+        self.assertEqual(receipt["remaining_triangles"], 12)
+        self.assertTrue(analyze_mesh(cleaned)["passed"])
+
+    def test_mesh_repair_rejects_nonfinite_vertices(self):
+        mesh = Mesh(positions=[float("nan"),0,0], normals=[0,1,0], indices=[])
+        with self.assertRaises(ValueError):
+            remove_bad_triangles(mesh)
 
     def test_character_missing_hand(self):
         landmarks = {name: [0, i, 0] for i, name in enumerate((

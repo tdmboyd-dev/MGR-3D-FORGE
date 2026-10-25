@@ -13,6 +13,8 @@ from .spec import WorldSpec
 from .obj import export_obj
 from .world import graph_for_world
 from .preview import render_world_svg
+from .streaming import chunk_world, simple_building_lod
+from .cinematic import camera_tour
 
 
 def build(spec: WorldSpec, output: Path):
@@ -34,13 +36,22 @@ def build(spec: WorldSpec, output: Path):
         json.dumps({"schema": "mgr.forge.road-graph.v1", "nodes": roads_data},
                    indent=2, sort_keys=True) + "\n", encoding="utf-8")
     (output / "preview.svg").write_text(render_world_svg(manifest), encoding="utf-8")
+    chunks = chunk_world(manifest)
+    (output / "chunks.json").write_text(
+        json.dumps(chunks, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    (output / "camera_tour.json").write_text(
+        json.dumps(camera_tour(manifest), indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    lod1_payload = export_glb(simple_building_lod(manifest), name=f"{spec.name} LOD1")
+    (output / "world_lod1.glb").write_bytes(lod1_payload)
     manifest["quality"] = qc
     manifest["glb_quality"] = glb_qc
     manifest["artifact"] = {"path": "world.glb", "sha256": hashlib.sha256(payload).hexdigest(),
                             "bytes": len(payload)}
     manifest["additional_artifacts"] = {
         "obj": "world.obj", "mtl": "world.mtl", "road_graph": "navigation.json",
-        "preview": "preview.svg"}
+        "preview": "preview.svg", "chunks": "chunks.json", "lod1": "world_lod1.glb",
+        "camera_tour": "camera_tour.json"}
+    manifest["lod1_quality"] = inspect_glb(lod1_payload)
     manifest["execution"] = {"compute": "CPU", "external_api_calls": 0,
                              "model_inference": False, "blender_verified": False,
                              "independent_engine_import_verified": False}

@@ -24,7 +24,7 @@ python3 -m forge.cli build --prompt "Create 25 buildings and streets" --out arti
 python3 -m forge.cli inspect artifacts/prompt-25/world.glb
 ```
 
-Each build now creates `world.glb`, `world.obj`, `world.mtl`, `navigation.json`, a simple `preview.svg` and `manifest.json` with seed, buildings, hash, geometry counts and quality results. You can open the SVG in a browser; it is a projected preview of the scene plan, **not** a rendered Blender/game-engine verification of the GLB. The road graph supports simple building-to-building navigation and box collisions. This prototype understands **limited** count-based prompts—not general text-to-3D. Buildings are basic massing blocks without interiors, detailed assets or animation.
+Each build now creates nine files: `world.glb`, `world.obj`, `world.mtl`, `world_lod1.glb`, `navigation.json`, `chunks.json`, `camera_tour.json`, `preview.svg`, and `manifest.json`. It can partition buildings into chunks, export a simplified LOD1 mesh, and plan editable 3D camera keyframes. These are static exports, **not** live streaming, camera playback or external Blender/game-engine verification. The SVG is a projected preview of the scene plan, not a render of the GLB. The road graph supports simple pathfinding and box collisions. Prompts are **limited** count-based requests, and buildings are basic blocks without interiors or animation.
 
 Code lives under `forge/`, tests under `tests/`; [implementation evidence](docs/IMPLEMENTATION-EVIDENCE.md) explains exact results and limitations.
 
@@ -34,6 +34,7 @@ Code lives under `forge/`, tests under `tests/`; [implementation evidence](docs/
 | [PRODUCT-BIBLE.md](docs/PRODUCT-BIBLE.md) | Complete intended product, capabilities, MGR-native ideas, use cases and limits |
 | [ARCHITECTURE.md](docs/ARCHITECTURE.md) | Owners, modules, data contracts, pipeline, integrations |
 | [RESEARCH-REGISTER.md](research/RESEARCH-REGISTER.md) | Source-linked model/research comparisons and evidence disposition |
+| [SCROLL-SYNAPSE-PINOKIO-INTAKE.md](research/SCROLL-SYNAPSE-PINOKIO-INTAKE.md) | New source research, licenses, MGR F31/F32 decisions and unresolved Synapse identity |
 | [DEEP-DIVE-NATIVE-CPU.md](research/DEEP-DIVE-NATIVE-CPU.md) | 16-field native procedural research packet |
 | [DEEP-DIVE-IMAGE-TO-3D.md](research/DEEP-DIVE-IMAGE-TO-3D.md) | 16-field TripoSR, TripoSG and TRELLIS.2 packets |
 | [DEEP-DIVE-WORLDS-PARTS.md](research/DEEP-DIVE-WORLDS-PARTS.md) | 16-field world/parts/rig research packets |

@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass, asdict
 import json
+import math
 
 
 @dataclass(frozen=True)
@@ -21,7 +22,10 @@ class WorldSpec:
             raise ValueError("rows/columns must be integers from 1 to 100")
         if type(self.buildings) is not int or not (0 <= self.buildings <= self.columns * self.rows):
             raise ValueError("buildings cannot exceed available lots")
-        if not (4 <= self.lot_size <= 100) or not (2 <= self.road_width <= 30):
+        if (not all(type(v) in (int, float) and math.isfinite(v)
+                    for v in (self.lot_size, self.road_width))
+                or not (4 <= self.lot_size <= 100)
+                or not (2 <= self.road_width <= 30)):
             raise ValueError("invalid lot or road size")
         if not isinstance(self.name, str) or not (1 <= len(self.name) <= 120):
             raise ValueError("name must be 1-120 characters")

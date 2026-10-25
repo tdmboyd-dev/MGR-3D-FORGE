@@ -1,5 +1,16 @@
 # MGR 3D Forge — Progress and Evidence Log
 
+## 2026-10-25 — LOD, repair and two MGR-native research extensions
+
+- Added coarse, **building-only** LOD1 mesh and deterministic world building chunk partition (`forge/streaming.py`), exported `world_lod1.glb` and `chunks.json`. This excludes terrain/roads and is preparation for streaming, **not a complete renderable LOD scene or live streamer**. Example 10-building LOD1: 120 triangles versus 372 triangles in the full original scene (different contents, so not an apples-to-apples optimization benchmark).
+- Tightened `WorldSpec` against nonfinite dimensions.
+- Added actual-3D-coordinate camera tour keyframes and interpolation (`forge/cinematic.py`, `camera_tour.json`) inspired by Scroll-World's flight concept but independent of its image/video pipeline.
+- Added security-first model recipe schema and offline readiness assessment (`forge/recipes.py`), inspired by Pinokio's local launcher concept; no installation or execution yet.
+- Added mesh triangle corruption/degeneracy inspection and conservative cleanup (`forge/meshqa.py`), not retopology.
+- Reviewed primary upstream Scroll-World/Pinokio READMEs and licenses; researched the ambiguous Synapse name; documented exact native value and caveats in `research/SCROLL-SYNAPSE-PINOKIO-INTAKE.md`.
+- Register expanded from 30 to **32** with F31/F32; Synapse is not counted until uniquely identified.
+- **44/44 unit tests passed**. No GPU, model inference, unreviewed downloaded scripts or paid APIs used.
+
 ## 2026-10-25 — World graph and multi-export build increment
 
 - Added deterministic intersections and symmetrical road adjacency, building-to-building shortest path and coarse AABB/circle collision (`forge/world.py`).
