@@ -24,7 +24,7 @@ python3 -m forge.cli build --prompt "Create 25 buildings and streets" --out arti
 python3 -m forge.cli inspect artifacts/prompt-25/world.glb
 ```
 
-Each build creates a real binary `world.glb` mesh and a `manifest.json` with seed, building positions, file hash, geometry counts, and quality results. This prototype can plan a **limited** count-based neighborhood prompt; it is not a general text-to-3D model. Current materials are simple PBR colors and buildings are basic massing blocks, not detailed interiors. The GLB is internally validated but has **not** been imported and rendered in Blender or a game engine here.
+Each build now creates `world.glb`, `world.obj`, `world.mtl`, `navigation.json`, a simple `preview.svg` and `manifest.json` with seed, buildings, hash, geometry counts and quality results. You can open the SVG in a browser; it is a projected preview of the scene plan, **not** a rendered Blender/game-engine verification of the GLB. The road graph supports simple building-to-building navigation and box collisions. This prototype understands **limited** count-based prompts—not general text-to-3D. Buildings are basic massing blocks without interiors, detailed assets or animation.
 
 Code lives under `forge/`, tests under `tests/`; [implementation evidence](docs/IMPLEMENTATION-EVIDENCE.md) explains exact results and limitations.
 

@@ -1,5 +1,14 @@
 # MGR 3D Forge — Progress and Evidence Log
 
+## 2026-10-25 — World graph and multi-export build increment
+
+- Added deterministic intersections and symmetrical road adjacency, building-to-building shortest path and coarse AABB/circle collision (`forge/world.py`).
+- Added CPU-only OBJ/MTL export (`forge/obj.py`) alongside native GLB; test checks triangle count parity across formats. OBJ diffuse colors approximate GLB PBR.
+- Added static isometric SVG preview (`forge/preview.py`) and exported JSON navigation graph for human/consumer inspection. The SVG is generated from the scene manifest, **not imported and rendered from the GLB**.
+- CLI now emits six related files: world.glb, world.obj, world.mtl, navigation.json, preview.svg and manifest.json.
+- **33/33 Python tests pass**. Example spec generates 10 buildings, 372 triangles, QA PASS. External GLB/OBJ import, animated navigation and visual rendering acceptance are still pending.
+- Updated the capability register for F15, F17, F24 and F28 as partial, not production finished.
+
 ## 2026-10-25 — First native code vertical slice
 
 ### Second native build increment — guarded workflows

@@ -14,6 +14,9 @@ from forge.planner import plan_neighborhood
 from forge.assets import AssetRegistry
 from forge.quality import compare_character_identity
 from forge.workflow import LocalJobStore, Step, approve_plan, resolve_plan
+from forge.world import graph_for_world, shortest_road_path, overlaps_building
+from forge.obj import export_obj
+from forge.preview import render_world_svg
 
 
 class ForgeTests(unittest.TestCase):
@@ -87,10 +90,37 @@ class ForgeTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             manifest = build(WorldSpec(), Path(temp))
             self.assertTrue((Path(temp) / "world.glb").is_file())
+            self.assertTrue((Path(temp) / "world.obj").is_file())
+            self.assertTrue((Path(temp) / "world.mtl").is_file())
+            self.assertTrue((Path(temp) / "navigation.json").is_file())
+            self.assertTrue((Path(temp) / "preview.svg").is_file())
             self.assertEqual(manifest["execution"]["external_api_calls"], 0)
             self.assertFalse(manifest["execution"]["blender_verified"])
             saved = json.loads((Path(temp) / "manifest.json").read_text())
             self.assertEqual(saved["artifact"], manifest["artifact"])
+
+    def test_obj_has_same_triangle_count_as_glb(self):
+        meshes, world = create_neighborhood(WorldSpec())
+        obj, material = export_obj(meshes)
+        self.assertEqual(sum(line.startswith("f ") for line in obj.splitlines()),
+                         world["triangle_count"])
+        self.assertEqual(sum(line.startswith("newmtl ") for line in material.splitlines()), 6)
+
+    def test_obj_refuses_unsafe_mtl_path(self):
+        with self.assertRaises(ValueError):
+            export_obj([], mtl_name="../private.mtl")
+
+    def test_svg_preview_is_deterministic_and_safe(self):
+        _, world = create_neighborhood(WorldSpec())
+        a = render_world_svg(world)
+        self.assertEqual(a, render_world_svg(world))
+        self.assertEqual(a.count('<polygon '), 1 + len(world["roads"]) + len(world["buildings"]) * 3)
+        self.assertIn('not a GLB render', a)
+
+    def test_svg_preview_rejects_oversize(self):
+        _, world = create_neighborhood(WorldSpec())
+        with self.assertRaises(ValueError):
+            render_world_svg(world, width=100000)
 
     def test_character_missing_hand(self):
         landmarks = {name: [0, i, 0] for i, name in enumerate((
@@ -196,6 +226,35 @@ class ForgeTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             with self.assertRaises(ValueError):
                 LocalJobStore(Path(temp)).create("../out", [])
+
+    def test_world_road_graph_size_and_symmetric_links(self):
+        _, world = create_neighborhood(WorldSpec(rows=3, columns=4, buildings=12))
+        graph = graph_for_world(world)
+        self.assertEqual(len(graph), 20)
+        for node, data in graph.items():
+            for adjacent in data["neighbors"]:
+                self.assertIn(node, graph[adjacent]["neighbors"])
+
+    def test_route_between_distant_buildings(self):
+        _, world = create_neighborhood(WorldSpec(rows=2, columns=2, buildings=4))
+        by_lot = {tuple(b["lot"]): b["id"] for b in world["buildings"]}
+        route = shortest_road_path(world, by_lot[(0, 0)], by_lot[(1, 1)])
+        self.assertEqual(len(route["intersection_ids"]), 3)
+        self.assertEqual(len(route["waypoints"]), 3)
+        self.assertEqual(route, shortest_road_path(world, by_lot[(0, 0)], by_lot[(1, 1)]))
+
+    def test_collision_hits_building_not_road(self):
+        _, world = create_neighborhood(WorldSpec(rows=1, columns=1, buildings=1))
+        b = world["buildings"][0]
+        x, _, z = b["center"]
+        self.assertEqual(overlaps_building(world, x, 1, z), [b["id"]])
+        self.assertEqual(overlaps_building(world, x, 50, z), [])
+        self.assertEqual(overlaps_building(world, 1000, 1, 1000), [])
+
+    def test_collision_rejects_nonfinite(self):
+        _, world = create_neighborhood(WorldSpec())
+        with self.assertRaises(ValueError):
+            overlaps_building(world, float("nan"), 0, 0)
 
 
 if __name__ == "__main__":

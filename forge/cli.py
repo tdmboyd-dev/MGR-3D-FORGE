@@ -10,6 +10,9 @@ from .glb import export_glb, inspect_glb
 from .quality import validate_neighborhood
 from .planner import plan_neighborhood
 from .spec import WorldSpec
+from .obj import export_obj
+from .world import graph_for_world
+from .preview import render_world_svg
 
 
 def build(spec: WorldSpec, output: Path):
@@ -23,10 +26,21 @@ def build(spec: WorldSpec, output: Path):
     glb_path = output / "world.glb"
     manifest_path = output / "manifest.json"
     glb_path.write_bytes(payload)
+    obj_data, mtl_data = export_obj(meshes)
+    (output / "world.obj").write_text(obj_data, encoding="utf-8")
+    (output / "world.mtl").write_text(mtl_data, encoding="utf-8")
+    roads_data = graph_for_world(manifest)
+    (output / "navigation.json").write_text(
+        json.dumps({"schema": "mgr.forge.road-graph.v1", "nodes": roads_data},
+                   indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    (output / "preview.svg").write_text(render_world_svg(manifest), encoding="utf-8")
     manifest["quality"] = qc
     manifest["glb_quality"] = glb_qc
     manifest["artifact"] = {"path": "world.glb", "sha256": hashlib.sha256(payload).hexdigest(),
                             "bytes": len(payload)}
+    manifest["additional_artifacts"] = {
+        "obj": "world.obj", "mtl": "world.mtl", "road_graph": "navigation.json",
+        "preview": "preview.svg"}
     manifest["execution"] = {"compute": "CPU", "external_api_calls": 0,
                              "model_inference": False, "blender_verified": False,
                              "independent_engine_import_verified": False}

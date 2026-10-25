@@ -17,6 +17,10 @@ Date: 2026-10-25. This page distinguishes working code from future intent.
 | DAG / dependency guard | `forge/workflow.py` | Deterministic ordered steps; rejects missing/cyclic dependencies | `test_workflow_*` | Full scene dependency graph, worker orchestration |
 | Approval and spend protection | `forge/workflow.py` | Fail-closed budget, network and license gates | `test_paid_plan_*`, `test_license_gate_*` | Human approval UI, authenticated approvals and model license verification |
 | Durable local progress | `forge/workflow.py` | Atomic checkpoint with restart recovery | `test_workflow_restart_checkpoint` | Concurrent jobs, queued workers, true retries and cancellation |
+| Road graph/path | `forge/world.py` | Symmetric road intersections and reproducible shortest paths | `test_world_road_graph_*`, `test_route_*` | True navmesh, dynamic obstacles and engine traversal |
+| Coarse collision | `forge/world.py` | Stationary disk against building bounding boxes | `test_collision_*` | Physics engine, moving collision, detailed mesh collisions |
+| Alternative export | `forge/obj.py` | Writes OBJ geometry and MTL colors | `test_obj_*` | Independent application import and material fidelity |
+| Isometric preview | `forge/preview.py` | Creates SVG approximation directly from world manifest | `test_svg_*` | Actual GLB rendering and interactive 3D editing |
 
 ## Repeatable smoke commands
 
@@ -26,7 +30,7 @@ python3 -m forge.cli build --prompt "Create 25 buildings and streets" --out arti
 python3 -m forge.cli inspect artifacts/prompt-25/world.glb
 ```
 
-Observed result: 25/25 tests passed in the latest suite (the first checkpoint was 17/17). The 25-building run produced 756 triangles and a structurally valid GLB with 1,512 vertices, six primitives and six materials. No Blender is installed in the current runner. Internal validation is not the same as an independent viewer rendering the asset correctly.
+Observed result: **33/33 tests passed** in the latest suite (earlier checkpoints were 17/17 and 25/25). The 25-building run produced 756 triangles and a structurally valid GLB with 1,512 vertices, six primitives and six materials. The fresh example-spec run produced 10 buildings and 372 triangles. No Blender is installed in the current runner. Internal validation is not the same as an independent viewer rendering the asset correctly.
 
 ## Limits and honesty
 
