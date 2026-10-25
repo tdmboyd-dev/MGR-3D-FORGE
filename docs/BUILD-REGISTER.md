@@ -24,7 +24,7 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F18 | LOD/instancing/streaming | QUEUED | PARTIAL: LOD1 + chunk manifest TESTED | P1 | F16 | LOD1 GLB and chunk coverage; runtime streaming/fps pending |
 | F19 | Image/video scene reconstruction | SOURCED | NOT STARTED | P2 | licensed weights, GPU | Camera/depth benchmark |
 | F20 | Persistent character/world memory | SPECIFIED | NOT STARTED | P1 | F05,F09,F15 | Cross-run continuity |
-| F21 | Compute/resource cost router | SPECIFIED | PARTIAL: budget gate TESTED | P1 | benchmark data | Real hardware/provider estimates pending |
+| F21 | Compute/resource cost router | SPECIFIED | PARTIAL: budget + conservative local model admission TESTED | P1 | benchmark data | Owner PC hardware inventoried; per-model inference benchmarks/cloud pricing pending |
 | F22 | Human approvals | SPECIFIED | PARTIAL: authorization TESTED | P0 | existing gateway integration | Fail-closed remote/spend test passes; identity and UI pending |
 | F23 | Workflow resumes/retries | SPECIFIED | PARTIAL: local checkpoints TESTED | P1 | job store | Restart test passes; retries/concurrency pending |
 | F24 | User-facing creation studio | DISCOVERED | PARTIAL: static SVG preview | P2 | stable engine | Actual editor, live preview and rehearsal UI absent |

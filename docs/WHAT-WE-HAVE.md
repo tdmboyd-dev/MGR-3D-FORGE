@@ -23,6 +23,7 @@
 | MGR Self-Repair Studio | Bounded repair proposals, trusted validation and automatic rollback | Synthetic fail→revert→pass and exhaustion tests | Vision-led diagnosis, Blender edit strategies and isolated execution |
 | MGR Creation Pipeline | Fresh-workspace world build, optional actual Blender import/render, visual baseline and stage receipts | CPU path automated tests | Latest integrated pipeline still needs actual Windows Blender end-to-end run and visual acceptance |
 | MGR Model Dock | Offline recipe schema, CPU adapter, license/spend guards | Mock/CPU adapter tests | Real installed licensed neural models and isolated execution |
+| MGR Compute Admission | Hardware-aware CPU/GPU prerequisite gate, explicit license and shared-memory uncertainty | Local 103-test suite includes no-CUDA, no-license and shared-GPU negatives; Windows hardware inventory captured | Real neural inference and GPU backend benchmarking |
 | MGR Asset Vault | Hash-based local dedupe and rights metadata | Tamper/provenance tests | Multiuser DB, revisions, search |
 | MGR Geometry QA | Degenerate/bad index checks and conservative cleanup | Mesh tests | Watertight repair, retopo, UV validation |
 | MGR Delivery Bundle | GLB, OBJ, MTL, LOD1, parks, interiors, scene facts/camera JSON, preview SVG | 14-file hash manifest, SHA verification, Blender import of core GLBs | Engine/film pipeline, full interoperability and rendered visual QA |
