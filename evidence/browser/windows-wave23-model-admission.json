@@ -1,0 +1,53 @@
+{
+  "schema": "mgr.forge.browser-model-admission-evidence.v1",
+  "date": "2026-10-25",
+  "device": "Time's connected Windows desktop",
+  "status": "PASS_AFTER_RETEST",
+  "browser": {
+    "checks": 8,
+    "status": "PASS",
+    "process_exit_code": 0,
+    "seconds": 32.78,
+    "checks_list": [
+      "localhost token session",
+      "browser PNG upload",
+      "generated relief GLB",
+      "original GLB admission",
+      "live edited world GLB",
+      "Godot project package",
+      "full Blender project conversion",
+      "downloadable real artifacts"
+    ],
+    "downloads": [
+      "/files/b6a0a97f4fb985ae2ecad669/scene.blend",
+      "/files/b6a0a97f4fb985ae2ecad669/godot-project.zip",
+      "/files/b6a0a97f4fb985ae2ecad669/edited/world-editor.html",
+      "/files/b6a0a97f4fb985ae2ecad669/edited/world.glb",
+      "/files/92970e3ab7d7d866a704ade7/candidate/candidate.json",
+      "/files/92970e3ab7d7d866a704ade7/candidate/candidate.glb",
+      "/files/947d049092c0675f8986004d/relief/relief.glb"
+    ]
+  },
+  "regression": {
+    "initial": {
+      "tests": 364,
+      "seconds": 26.214,
+      "result": "ONE_ERROR",
+      "error": "Windows ConnectionAbortedError 10053 on tokenless character-upload HTTP test"
+    },
+    "independent_rerun": {
+      "tests": 364,
+      "seconds": 25.625,
+      "result": "PASS",
+      "skipped": 0,
+      "process_exit_code": 0
+    }
+  },
+  "limitations": [
+    "Only existing 3D GLB assets are admitted, not single-picture full 3D inference",
+    "Browser admission currently caps files at 900 KB; larger source files use CLI pending streamed intake",
+    "Sparse/Draco/meshopt geometry requires audited local normalization",
+    "Human identity, garment separation, deforming skin weights and runtime game acceptance not verified",
+    "Intermittent Windows socket abort observed once and not reproduced on rerun"
+  ]
+}

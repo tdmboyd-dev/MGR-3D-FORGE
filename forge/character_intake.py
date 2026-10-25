@@ -5,7 +5,6 @@ import json
 import math
 from pathlib import Path
 import shutil
-import struct
 import subprocess
 
 from .character_glb import parse_character_glb
