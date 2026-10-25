@@ -72,7 +72,7 @@ def main():
     scene.compositing_node_group=comp
     render_layers=comp.nodes.new("CompositorNodeRLayers")
     glare=comp.nodes.new("CompositorNodeGlare")
-    glare.glare_type="FOG_GLOW"
+    glare.inputs["Type"].default_value="Fog Glow"
     composite=comp.nodes.new("CompositorNodeComposite")
     comp.links.new(render_layers.outputs["Image"],glare.inputs["Image"])
     comp.links.new(glare.outputs["Image"],composite.inputs["Image"])
@@ -96,7 +96,7 @@ def main():
             "emission_socket_colors":emissive,"camera":"MGR_FX_Camera",
             "render_engine":"CYCLES","render_device":"CPU",
             "point_light_count":2,"light_witness":witness.name,
-            "compositor_glare":glare.glare_type,
+            "compositor_glare":glare.inputs["Type"].default_value,
             "image_bytes":image.stat().st_size if image.exists() else 0,
             "limitations":["basic emissive geometry, not physically simulated effects",
                            "optical glare is not physical volume scattering",

@@ -64,7 +64,7 @@ class FantasyForgeTests(unittest.TestCase):
         source=(Path(__file__).resolve().parents[1]/"bridge"/"blender_fx_render.py").read_text()
         ast.parse(source)
         self.assertIn('"POINT"',source)
-        self.assertIn('"FOG_GLOW"',source)
+        self.assertIn('"Fog Glow"',source)
         self.assertIn('"MGR_FX_Light_Witness"',source)
 
 
