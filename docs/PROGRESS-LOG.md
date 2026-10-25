@@ -4,7 +4,7 @@
 
 - Added original `character-readiness` report: source SHA, named mesh and primitive/material inventory, UV presence, per-primitive joint-weight signals and skin bindings.
 - Added negative structural gates for unbound/broken skins and mismatched inverse-bind matrices. Mesh names do not automatically prove garment identity; structural rig data does not prove pose deformation or anatomical likeness.
-- Blender intake now records every imported editable mesh object's materials, armature modifiers, vertex groups and shape keys. External Blender rerun pending at creation of this entry.
+- Blender intake now records every imported editable mesh object's materials, armature modifiers, vertex groups and shape keys. **Connected Windows 5.2.2 LTS passed** import/save and an independent fresh-process reopen with matching SHA. All **376/376 Windows Python tests PASS** (27.153s); Linux 376 PASS with 30 network skips. Exact receipt: `evidence/blender/windows-wave24-character-readiness.json`.
 - Relevant original Khronos/Blender research and legal traceability: `research/external-provenance/CHARACTER-READINESS-SOURCES-2026-10-25.md`.
 
 

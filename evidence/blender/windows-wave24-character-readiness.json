@@ -1,0 +1,26 @@
+{
+  "schema": "mgr.forge.windows-character-readiness-proof.v1",
+  "date": "2026-10-25",
+  "machine": "Time's authorized Windows workstation",
+  "source": "generic MGR anonymous mannequin; NOT Tevin identity",
+  "source_sha256": "90a98b906c865c64e185ea90505b2a7a67c5e5b390800436288b3aa1a0e20e1f",
+  "commands": [
+    "py -3 -m unittest discover -s tests -q",
+    "py -3 -m forge.cli character-readiness --source <source.glb> --out <new-report.json>",
+    "py -3 -m forge.cli character-blender --candidate <admitted-dir> --blend <new.blend> --report <new.json> --binary <Blender 5.2.2>",
+    "py -3 -m forge.cli character-reopen --blend <new.blend> --sha256 <expected-sha> --report <new.json> --binary <Blender 5.2.2>"
+  ],
+  "python_tests": {"run": 376, "passed": 376, "skipped": 0, "seconds": 27.153},
+  "blender_version": "5.2.2 LTS",
+  "inventory": {"mesh_containers": 1, "primitives": 7, "triangles": 264,
+                "material_slots": 7, "skins": 0, "rig_structure": "NOT_READY"},
+  "blender_import": {"status": "PASS", "mesh_objects": 1, "triangles": 264,
+                     "editable_parts_in_receipt": 1, "vertex_groups": 0, "shape_keys": 0,
+                     "materials": ["skin-placeholder", "hair-placeholder", "undershirt", "coat",
+                                   "pants", "boots", "chain"]},
+  "independent_reopen": {"status": "PASS", "mesh_objects": 1, "triangles": 264,
+                         "source_sha256_matches": true},
+  "limitations": ["No approved likeness", "No deforming skeleton in this test source",
+                  "Seven materials still share one mesh object; wardrobe is not separated",
+                  "No pose/skin deformation check", "No game-engine receiving proof"]
+}
