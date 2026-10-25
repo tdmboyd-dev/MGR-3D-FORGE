@@ -1,0 +1,38 @@
+{
+  "schema": "mgr.forge.creation-director-browser-proof.v1",
+  "date": "2026-10-25",
+  "target": "F90 Creation Director and F91 speech/image-input foundations",
+  "machine": "Time Windows / Chrome headless / ANGLE SwiftShader WebGL2",
+  "commit_under_test": "a9ebd5f5f2986589f7b1b76b21942f7a1c02c281",
+  "browser_test": "node tests/browser_editor_smoke.mjs CHROME_BINARY demos/mgr-world-editor.html",
+  "browser_test_status": "PASS",
+  "browser_checks_passed": 16,
+  "verified_checks": [
+    "Real WebGL2 runtime loaded the ten-building authored world",
+    "Modified a real building and verified scene edit state",
+    "Undo/redo restored numeric building state",
+    "LocalStorage retained real building edits",
+    "Downloaded editable world JSON from Chrome",
+    "Imported JSON back into the editor",
+    "Restored original world with Reset",
+    "Screen ray-picking resolved a real building",
+    "Actual CDP mouse click selected the building",
+    "Actual keyboard input navigated the 3D camera",
+    "Creation Director panel expanded and collapsed",
+    "Typed creation added a genuine scene building",
+    "Typed commands changed its dimensions, material and position",
+    "Arbitrary Python request was rejected",
+    "Scene object duplication and removal worked",
+    "Local PNG reference color sampled into selected building's actual material"
+  ],
+  "python_unit_tests_linux": "227/227 PASS",
+  "python_unit_tests_windows": "227/227 PASS; exit code 0",
+  "current_limits": [
+    "Typed grammar is limited; it is not an unconstrained text-to-3D model",
+    "Image color sampling changes material; no image-to-mesh inference exists",
+    "Microphone speech recognition is opt-in and transcript-reviewed, but actual audio recognition was not tested",
+    "Arbitrary voice-to-Python execution is intentionally not implemented",
+    "Procedural architecture is not a character rig, cinematic engine, or professional mesh sculptor",
+    "Headless visual/browsing QA is not a manual usability or Hollywood visual-quality acceptance test"
+  ]
+}
