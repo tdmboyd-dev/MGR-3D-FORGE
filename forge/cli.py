@@ -183,6 +183,16 @@ def main(argv=None):
     separate.add_argument("--out",type=Path,required=True)
     separate.add_argument("--report",type=Path,required=True)
     separate.add_argument("--binary",default="blender")
+    motion=sub.add_parser("character-motion-export",help="export an existing deforming Blender rig to animated GLB")
+    motion.add_argument("--blend",type=Path,required=True)
+    motion.add_argument("--out",type=Path,required=True)
+    motion.add_argument("--report",type=Path,required=True)
+    motion.add_argument("--binary",default="blender")
+    motion_check=sub.add_parser("character-motion-reimport",help="independently import animated GLB in Blender")
+    motion_check.add_argument("--glb",type=Path,required=True)
+    motion_check.add_argument("--sha256",required=True)
+    motion_check.add_argument("--report",type=Path,required=True)
+    motion_check.add_argument("--binary",default="blender")
     live_blender=sub.add_parser("blender-live-scene",help="turn verified edited world into an actual individually editable Blender project")
     live_blender.add_argument("--world",type=Path,required=True,help="materialized edited world directory")
     live_blender.add_argument("--blend",type=Path,required=True,help="new Blender project file")
@@ -334,6 +344,14 @@ def main(argv=None):
         from .character_intake import separate_character_materials
         print(json.dumps(separate_character_materials(args.blend,args.out,args.report,
                                                       binary=args.binary),indent=2))
+        return 0
+    if args.action == "character-motion-export":
+        from .character_motion import export_character_motion
+        print(json.dumps(export_character_motion(args.blend,args.out,args.report,binary=args.binary),indent=2))
+        return 0
+    if args.action == "character-motion-reimport":
+        from .character_motion import reimport_character_motion
+        print(json.dumps(reimport_character_motion(args.glb,args.sha256,args.report,binary=args.binary),indent=2))
         return 0
     if args.action == "blender-live-scene":
         print(json.dumps(create_live_blender_scene(args.world,args.blend,args.report,binary=args.binary),indent=2))
