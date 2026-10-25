@@ -18,11 +18,12 @@
 | MGR Visual Judge | Exact 8-bit PNG decode, RGB image delta, silhouette occupancy | Synthetic image tests; real Blender preview images already saved separately | Semantic visual diagnosis, camera calibration, production render thresholds |
 | MGR Code Architect | Scoped multi-file text changes, digest preconditions and recoverable rollback | Multi-file, traversal, symlink, size, stale-change and rollback tests | OS-level isolation and safe arbitrary code execution, job UI and approvals |
 | MGR Creation Memory | Integrity-chained identity revisions and property locks | Lock, stale write and tamper tests | Authenticated owner approvals, concurrent DB, consumer replay |
+| MGR Self-Repair Studio | Bounded repair proposals, trusted validation and automatic rollback | Synthetic fail→revert→pass and exhaustion tests | Vision-led diagnosis, Blender edit strategies and isolated execution |
 | MGR Model Dock | Offline recipe schema, CPU adapter, license/spend guards | Mock/CPU adapter tests | Real installed licensed neural models and isolated execution |
 | MGR Asset Vault | Hash-based local dedupe and rights metadata | Tamper/provenance tests | Multiuser DB, revisions, search |
 | MGR Geometry QA | Degenerate/bad index checks and conservative cleanup | Mesh tests | Watertight repair, retopo, UV validation |
 | MGR Delivery Bundle | GLB, OBJ, MTL, LOD1, parks, interiors, scene facts/camera JSON, preview SVG | 14-file hash manifest, SHA verification, Blender import of core GLBs | Engine/film pipeline, full interoperability and rendered visual QA |
-| MGR Build Ledger | 43-area native register, provenance, 82 current local tests, benchmark receipts | Windows 64/64 baseline tests + current Linux 82/82 | Production CI, cross-engine/render/owner acceptance |
+| MGR Build Ledger | 43-area native register, provenance, 85 current local tests, benchmark receipts | Windows 64/64 baseline tests + current Linux 85/85; Windows latest rerun pending | Production CI, cross-engine/render/owner acceptance |
 
 ## Exact Blender environment and measured Windows receipts
 

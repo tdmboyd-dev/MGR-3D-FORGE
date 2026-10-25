@@ -32,7 +32,12 @@ class CodeArchitectTests(unittest.TestCase):
             with self.subTest(path=path), self.assertRaises(ValueError):
                 self.job.preview([FileChange(path, "no")])
         outside = Path(self.tmp.name).parent
-        (self.root / "jump").symlink_to(outside, target_is_directory=True)
+        try:
+            (self.root / "jump").symlink_to(outside, target_is_directory=True)
+        except (OSError, NotImplementedError):
+            # Windows often requires Developer Mode/elevation for creating
+            # symlinks. The path traversal tests above still run normally.
+            return
         with self.assertRaises(PermissionError):
             self.job.preview([FileChange("jump/escape.txt", "no")])
 

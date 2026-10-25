@@ -46,7 +46,7 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F40 | MGR World Logic | QUEUED | NOT STARTED | P1 | F15,F17,F34 | Door/room/route/navmesh and agent-traversal acceptance |
 | F41 | MGR Cinematic Director | QUEUED | NOT STARTED | P1 | F13,F31,F35 | Reproducible cameras, lighting, material and shot recipes |
 | F42 | MGR Creation Memory | SPECIFIED | PARTIAL: integrity-chained JSON revisions and locks TESTED | P0 | F05,F20,F34 | `forge/creation_memory.py`; concurrent DB, actual owner identity and cross-app replay pending |
-| F43 | MGR Self-Repair Studio | QUEUED | NOT STARTED | P1 | F23,F30,F35,F36 | Detect→repair→render→recheck with rollback and stop budgets |
+| F43 | MGR Self-Repair Studio | SPECIFIED | PARTIAL: bounded file-fix/validate/revert loop TESTED | P1 | F23,F30,F35,F36 | `forge/repair.py`; no autonomous diagnosis, Blender visual repair or isolated agent execution yet |
 
 **Scope:** 43 MGR-native areas: original 33 plus F34–F43 approved for the implementation queue on 2026-10-25. Queued is **not** implemented. Technical research is organized by MGR functions in `research/MGR-CREATION-INTELLIGENCE-HOWTO.md`; necessary external provenance stays under `research/external-provenance/`.
 

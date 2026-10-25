@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-25",
+  "device": "owner-authorized Windows PC",
+  "blender": "5.2.2 LTS",
+  "validation_commit_before_test_harness_fix": "da3f6a95689daccd662a240e72b58c047d41374e",
+  "world_generation": {
+    "status": "PASS",
+    "buildings": 10,
+    "triangles": 372,
+    "sha256": "46aa9815cb37e3b984a80528b51f32e72bf33c5784313fa3d657f9e0ffa4b746"
+  },
+  "blender_scene_facts": {
+    "status": "PASS",
+    "imported_objects": 1,
+    "limitation": "The exported world is one mesh; separate buildings are identified from Forge's generated metadata, not Blender mesh object names."
+  },
+  "visual_judge": {
+    "same_fixed_character_image": {
+      "rgb_mae": 0.0,
+      "passed": true,
+      "silhouette_bbox": [290, 261, 596, 656],
+      "sha256": "78e241c7355585ac1600a9d33586fdbcb35e21d69f149e1bfe217f47357b0af3"
+    },
+    "different_world_image": {
+      "rgb_mae": 7.153049,
+      "passed": false,
+      "expected_outcome": "FAIL because inputs are different images",
+      "silhouette_bbox": [160, 340, 739, 634],
+      "sha256": "f7423364671edd3c343aa4c7686563ec5748fd3778f2f1ea56826d9e4a202aad"
+    }
+  },
+  "windows_test_suite_initial": {
+    "ran": 82,
+    "passed": 81,
+    "error": "Windows lacks symlink-creation privilege for one test fixture, WinError 1314; test fixture revised, rerun pending."
+  },
+  "limitations": [
+    "Pixel comparison is not semantic visual quality understanding.",
+    "The Blender scene-facts receipt is object metadata, not per-building portal understanding.",
+    "Windows full test suite pass must be reverified after the test-fixture correction."
+  ]
+}

@@ -8,7 +8,10 @@
 - Built MGR Visual Judge deterministic PNG engine (`forge/visualqa.py`): RGB/RGBA PNG decode with filter/CRC validation, exact RGB mean-absolute difference, foreground bounds and occupancy; strict camera/render-setting equivalence remains caller responsibility. **Not a semantic image model**.
 - Built MGR Creation Memory starter (`forge/creation_memory.py`): SHA-chained JSON revisions, approved property locks, stale-head rejection, tamper detection. No authenticated owner identity or concurrent backing store yet.
 - Integrated MGR Scene Consciousness facts into generated world bundles (`scene_facts.json` plus integrity manifest), added Blender scene-object inspection script and CLI entrypoint (real Windows Blender validation pending).
-- Extended negative regression tests; local suite **82/82 PASS** at this checkpoint. This is functional early groundwork, not production acceptance.
+- Built `forge/repair.py` bounded trusted-callback repair loop: failed candidate automatically reverts, successful candidate persists, budgeted attempts stop. No untrusted callback execution or model-driven diagnosis.
+- Reproduced on Time's actual Windows Blender **5.2.2 LTS**: CLI-generated world GLB imported into new scene-facts inspector, `status=PASS` and `objects=1` (GLB combines 3D scene into one mesh). Windows visual judge processed a real fixed-mannequin PNG: self-comparison RGB MAE **0.0 PASS**, comparison to a world PNG MAE **7.153049 FAIL** as expected; silhouette bounds reported. The visual judge cannot semantically identify missing anatomy.
+- Initial Windows suite on commit `da3f6a9` ran 82 tests with one **test-harness error**: Windows symlink creation privilege (`WinError 1314`) prevented the symlink fixture. Fixed the fixture to handle unavailable symlink creation privilege without skipping traversal tests. The corrected Windows rerun is tracked in a subsequent receipt.
+- Expanded negative regression tests; local suite **85/85 PASS** at this checkpoint. This is functional early groundwork, not production acceptance.
 
 ## 2026-10-25 — Owner autonomy lock, ten-capability extension and F34 starter
 
