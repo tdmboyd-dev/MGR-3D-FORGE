@@ -183,6 +183,13 @@ def main(argv=None):
     fxrender.add_argument("--volume-density",type=float,default=0.0,
                           help="bounded MGR physical atmosphere density 0..0.25 (0 disables volume)")
     fxrender.add_argument("--volume-style",choices=("uniform","cloud"),default="uniform")
+    fxjudge=sub.add_parser("judge-atmosphere",help="compare real matched Blender volume/control renders")
+    fxjudge.add_argument("control_png",type=Path)
+    fxjudge.add_argument("candidate_png",type=Path)
+    fxjudge.add_argument("control_json",type=Path)
+    fxjudge.add_argument("candidate_json",type=Path)
+    fxjudge.add_argument("--minimum-rgb-mae",type=float,default=3.0)
+    fxjudge.add_argument("--out",type=Path,required=True)
     bundle=sub.add_parser("verify-bundle",help="verify artifact hashes in world build folder")
     bundle.add_argument("directory",type=Path)
     visual=sub.add_parser("compare-renders",help="compare fixed-camera RGB PNG frames")
@@ -385,6 +392,16 @@ def main(argv=None):
             raise RuntimeError("FX Blender emission receipt invalid")
         print(json.dumps(receipt,indent=2))
         return 0
+    if args.action == "judge-atmosphere":
+        from .fx_judge import judge_atmosphere
+        if args.out.exists():
+            raise FileExistsError("MGR atmosphere judge output already exists")
+        result=judge_atmosphere(args.control_png,args.candidate_png,args.control_json,
+                                args.candidate_json,minimum_rgb_mae=args.minimum_rgb_mae)
+        args.out.parent.mkdir(parents=True,exist_ok=True)
+        args.out.write_text(json.dumps(result,indent=2,sort_keys=True)+"\n",encoding="utf-8")
+        print(json.dumps(result,indent=2))
+        return 0 if result["status"]=="PASS" else 1
     if args.action == "verify-bundle":
         print(json.dumps(verify_bundle(args.directory),indent=2))
         return 0
