@@ -7,7 +7,9 @@ import struct
 from pathlib import Path
 import tempfile
 import threading
+import time
 import unittest
+from unittest.mock import patch
 import zlib
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
@@ -143,6 +145,65 @@ class StudioServerTests(unittest.TestCase):
         self.assertEqual(status, 200)
         self.assertEqual(headers["X-Content-Type-Options"], "nosniff")
         self.assertEqual(headers["Cache-Control"], "no-store")
+
+    def _edited_job(self):
+        manifest = json.loads((self.world / "manifest.json").read_text())
+        edits = {"schema": "mgr.forge.world-edit.v1",
+                 "asset_sha256": hashlib.sha256((self.world / "world.glb").read_bytes()).hexdigest(),
+                 "buildings": [{k: b[k] for k in ("id", "center", "size", "material")}
+                               for b in manifest["buildings"]]}
+        code, raw, _ = self.fetch("/api/world", {"edits": edits})
+        self.assertEqual(code, 200)
+        return json.loads(raw)["job_id"]
+
+    def test_blender_poll_before_start_is_not_started(self):
+        job = self._edited_job()
+        code, raw, _ = self.fetch("/api/blender-status", {"job_id": job})
+        self.assertEqual(code, 200)
+        self.assertEqual(json.loads(raw)["status"], "NOT_STARTED")
+
+    def test_blender_runs_once_even_with_duplicate_clicks(self):
+        job = self._edited_job()
+        started, release = threading.Event(), threading.Event()
+        calls = []
+        def create(*args, **kwargs):
+            calls.append(args)
+            started.set()
+            release.wait(4)
+            return {"editable_buildings": 2}
+        with patch("forge.studio_server.create_live_blender_scene", side_effect=create):
+            first = json.loads(self.fetch("/api/blender", {"job_id": job})[1])
+            self.assertEqual(first["status"], "RUNNING")
+            self.assertTrue(started.wait(2))
+            again = json.loads(self.fetch("/api/blender", {"job_id": job})[1])
+            self.assertEqual(again["status"], "RUNNING")
+            self.assertEqual(len(calls), 1)
+            release.set()
+            for _ in range(100):
+                state = json.loads(self.fetch("/api/blender-status", {"job_id": job})[1])
+                if state["status"] == "PASS":
+                    break
+                time.sleep(.01)
+            self.assertEqual(state["status"], "PASS")
+            self.assertEqual(state["editable_buildings"], 2)
+            self.assertEqual(state["blend_url"], f"/files/{job}/scene.blend")
+
+    def test_blender_background_failure_is_reported(self):
+        job = self._edited_job()
+        with patch("forge.studio_server.create_live_blender_scene", side_effect=RuntimeError("no Blender found")):
+            self.fetch("/api/blender", {"job_id": job})
+            for _ in range(100):
+                state = json.loads(self.fetch("/api/blender-status", {"job_id": job})[1])
+                if state["status"] == "FAILED":
+                    break
+                time.sleep(.01)
+            self.assertEqual(state["status"], "FAILED")
+            self.assertIn("no Blender found", state["error"])
+
+    def test_blender_status_requires_correct_token(self):
+        job = self._edited_job()
+        code, _, _ = self.fetch("/api/blender-status", {"job_id": job}, token=False)
+        self.assertEqual(code, 403)
 
 
 if __name__ == "__main__":
