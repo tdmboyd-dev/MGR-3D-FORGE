@@ -2,6 +2,10 @@
 
 ## 2026-10-25 — Expanded multi-capability build wave
 
+- Windows machine (Blender 5.2.2 LTS) accepted **123/123 tests**, actual skinned 20-part / 11-bone mannequin, **48 dual-weight elbow sleeve vertices**, joint gaps **0.0m** at both frames and hand travel **0.427002m**. This is a partial elbow-weight demonstration, not a smooth full character.
+- Blender imported actual world PBR: **5 Principled materials**, inspected metallic/roughness/colors, **PASS**. CPU Cycles rendered a 3-shot golden-hour reel to an editable **100,058-byte `.blend`** and **229,289-byte PNG**, **PASS** on execution. Visual inspection caught a framing issue (roof nearly fills image), so we corrected the shot planner to place cameras above the highest authored building and added generated-world AABB collision clearance + negative test. **Corrected image must be rerendered before calling cinematic visuals accepted.**
+- Additional camera-clearance negative regression brought local suite to **124/124 PASS**.
+
 - F11/F38: added independently exported left/right trouser meshes and left/right elbow sleeve garment meshes; 20 editable mannequin parts total with MGR wardrobe classification, complete inventory and assignment checking. These remain generic proxies.
 - F12/F37/F39: added 2-bone normalized weighting for elbow sleeve meshes, dual-bone weight counts and Blender-evaluated normalized-weight QA. Existing 11-bone mannequin anatomy remains unchanged. Smooth skin on an entire continuous body is **not** implemented.
 - F13: authored native PBR material recipes, range-validated glTF metallic/roughness overrides, and Blender Principled-socket inspector with fail-closed material quality checks. Full texture/UV pipeline pending.

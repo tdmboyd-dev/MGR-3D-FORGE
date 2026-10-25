@@ -26,7 +26,7 @@ from .blender_bridge import verify_blender, blender_render_command, blender_fact
 from .environment import generate_parks, ENVIRONMENT_MATERIALS
 from .receipt import file_receipt, verify_bundle
 from .materials import MGR_MATERIAL_PRESETS
-from .shot_design import validate_shot_reel, lighting_recipe
+from .shot_design import validate_shot_reel, lighting_recipe, validate_camera_clearance
 
 
 def build(spec: WorldSpec, output: Path):
@@ -57,6 +57,9 @@ def build(spec: WorldSpec, output: Path):
         json.dumps(chunks, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     tour=camera_tour(manifest)
     manifest["cinematic_reel_quality"]=validate_shot_reel(tour)
+    manifest["cinematic_camera_clearance"]=validate_camera_clearance(manifest,tour)
+    if manifest["cinematic_camera_clearance"]["status"]!="PASS":
+        raise RuntimeError("generated camera intersects authored building geometry")
     (output / "camera_tour.json").write_text(
         json.dumps(tour, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     (output / "lighting.json").write_text(

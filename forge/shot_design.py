@@ -37,3 +37,20 @@ def lighting_recipe(*, mood="daylight"):
     if mood not in recipes:
         raise ValueError("unsupported lighting mood")
     return {"schema":"mgr.forge.lighting.v1","mood":mood,**recipes[mood]}
+
+
+def validate_camera_clearance(world, reel, *, overhead_clearance=2.0):
+    """Conservative camera-center AABB test against all authored buildings."""
+    validate_shot_reel(reel)
+    errors=[]
+    for shot in reel["shots"]:
+        x,y,z=shot["camera"]
+        for building in world.get("buildings",[]):
+            bx,by,bz=building["center"]
+            width,height,depth=building["size"]
+            if (abs(x-bx) <= width/2 + .25 and
+                abs(z-bz) <= depth/2 + .25 and
+                by-.25 <= y <= by+height+overhead_clearance):
+                errors.append(f"camera for {shot['id']} inside/too close to {building['id']}")
+    return {"schema":"mgr.forge.camera-clearance.v1",
+            "status":"PASS" if not errors else "FAIL","errors":errors}

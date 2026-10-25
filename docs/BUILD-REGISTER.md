@@ -34,7 +34,7 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F28 | Cross-engine export pack | SPECIFIED | PARTIAL: GLB Blender import VERIFIED | P1 | targets known | GLB Blender 5.2.2 PASS; OBJ and other engines unverified |
 | F29 | License/provenance gate | SOURCED | PARTIAL: license ID gate TESTED | P0 | model legal review | Unknown-license approval enforced; legal clearance still open |
 | F30 | Benchmark/quality ledger | SPECIFIED | PARTIAL: measured CPU + integrity ledger TESTED | P0 | metric spec | 10/100/1000 benchmark and all-file SHA; GPU/Blender comparisons pending |
-| F31 | MGR World Flight | SPECIFIED | PARTIAL: keyframe plan TESTED | P1 | F16,F17 | MGR 3D camera paths exported; actual camera player pending |
+| F31 | MGR World Flight | SPECIFIED | PARTIAL: 3D camera reel materialized in Windows Blender; visual framing fix CODED | P1 | F16,F17 | Three actual Blender keyframes recorded; corrected camera-clearance framing requires rerender; runtime camera player pending |
 | F32 | MGR Model Dock | SPECIFIED | PARTIAL: recipe inspection TESTED | P1 | F07,F22,F29 | MGR model manifest; sandboxed installs and model launch pending |
 | F33 | MGR Spatial Eyes | SPECIFIED | PARTIAL: geometry visibility TESTED | P1 | F16,F17,F20 | MGR-authored world occlusion and evidence labels; HUD and reconstruction pending |
 | F34 | MGR Scene Consciousness | SPECIFIED | PARTIAL: generated-world facts/qualified routes TESTED | P0 | F02,F05,F16,F33 | `forge/consciousness.py` emitted in world bundles; Blender object inspection pending machine test; semantic door portals absent |
@@ -44,7 +44,7 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F38 | MGR Fabric Intelligence | SPECIFIED | PARTIAL: 8 detachable garment pieces and metadata TESTED | P1 | F11,F12,F13 | `forge/wardrobe.py` catches missing/misbonded clothing; real tailored fit, cloth physics and intersections open |
 | F39 | MGR Rig Intelligence | SPECIFIED | PARTIAL: modular rig Windows VERIFIED; 2-bone elbow interpolation CODED | P0 | F09,F12,F37 | Prior Blender acceptance + new elbow sleeve 2-bone weights; live Windows proof and full-body smooth skin pending |
 | F40 | MGR World Logic | SPECIFIED | PARTIAL: collision-checked road-centerline rehearsal TESTED | P1 | F15,F17,F34 | `forge/traversal.py`; actual navmesh/doors/stairs/dynamic agent game runtime pending |
-| F41 | MGR Cinematic Director | SPECIFIED | PARTIAL: camera reel, 3 lighting moods and Blender CPU scene/render bridge CODED | P1 | F13,F31,F35 | `forge/shot_design.py`, `bridge/blender_cinematic.py`; actual Windows Cycles output and live camera playback pending |
+| F41 | MGR Cinematic Director | SPECIFIED | PARTIAL: real 3-shot 8-sample Windows Cycles render and editable .blend VERIFIED, framing FIX CODED | P1 | F13,F31,F35 | 100kB .blend / 229kB golden-hour PNG; first camera placement visually poor, overhead framing correction and collision QA require rerender; real cinematic quality pending |
 | F42 | MGR Creation Memory | SPECIFIED | PARTIAL: integrity-chained JSON revisions and locks TESTED | P0 | F05,F20,F34 | `forge/creation_memory.py`; concurrent DB, actual owner identity and cross-app replay pending |
 | F43 | MGR Self-Repair Studio | SPECIFIED | PARTIAL: bounded file repair + build→Blender→render receipt pipeline TESTED (CPU stage) | P1 | F23,F30,F35,F36 | `forge/repair.py`, `forge/pipeline.py`; full Blender integrated run and semantic repair pending |
 

@@ -100,5 +100,5 @@ def validate_pose_frames(frames, *, joint_tolerance_m=0.06, bone_length_toleranc
             "errors": errors, "frames": measurements,
             "maximum_hand_motion_m": round(max_movement, 6),
             "limitations": ["bone-chain continuity does not verify watertight mesh seams",
-                            "1.0 single-bone weights are rigid segments, not smooth skin deformation",
+                            "most parts use rigid 1.0 single-bone weights; elbow sleeves alone blend two bones",
                             "does not establish human identity or artistic quality"]}

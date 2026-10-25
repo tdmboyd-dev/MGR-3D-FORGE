@@ -12,7 +12,7 @@ from forge.geometry import Mesh
 from forge.glb import export_glb, inspect_glb
 from forge.materials import MGR_MATERIAL_PRESETS, make_material, validate_pbr_recipe
 from forge.material_guardian import validate_imported_materials
-from forge.shot_design import lighting_recipe, validate_shot_reel
+from forge.shot_design import lighting_recipe, validate_shot_reel, validate_camera_clearance
 from forge.spec import WorldSpec
 from forge.wardrobe import wardrobe_inventory
 
@@ -98,12 +98,20 @@ class MaterialsAndCinematicTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             result=build(WorldSpec(buildings=2),Path(directory))
             self.assertEqual(result["cinematic_reel_quality"]["shots"],2)
+            self.assertEqual(result["cinematic_camera_clearance"]["status"],"PASS")
             self.assertEqual(lighting_recipe(),json.loads((Path(directory)/"lighting.json").read_text()))
             self.assertIn("lighting",result["additional_artifacts"])
             command=blender_cinematic_command("blender",Path(directory)/"world.glb",
                     Path(directory)/"camera_tour.json","daylight",
                     Path(directory)/"scene.blend",Path(directory)/"scene.png",Path(directory)/"scene.json")
             self.assertIn("blender_cinematic.py"," ".join(command))
+
+    def test_camera_inside_known_building_fails(self):
+        world={"buildings":[{"id":"A","center":[0,0,0],"size":[10,20,10]}]}
+        tour={"shots":[{"id":"one","camera":[0,10,0],"look_at":[1,0,0],
+                        "hold_seconds":2}]}
+        result=validate_camera_clearance(world,tour)
+        self.assertEqual(result["status"],"FAIL")
 
 
 if __name__=="__main__":
