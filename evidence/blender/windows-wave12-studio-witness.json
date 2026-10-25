@@ -1,0 +1,56 @@
+{
+  "atmosphere_density": 0.009,
+  "blend": "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-studio-wave12.blend",
+  "blender_version": "5.2.2 LTS",
+  "camera_type": "PERSP",
+  "device": "CPU",
+  "hair_curve_points": 6,
+  "image": "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-studio-wave12.png",
+  "image_resolution": [
+    420,
+    280
+  ],
+  "limitations": [
+    "controlled 3-material/2-light render only; not photometric/material fit",
+    "hair stroke is static curve geometry, not dynamics or groom",
+    "uniform low-density medium is not animated fluid or fog simulation",
+    "not Tevin or an approved photoreal human"
+  ],
+  "materials": [
+    {
+      "material": "MGR_Material_Skin_Witness_Shader",
+      "metallic": 0,
+      "object": "MGR_Material_Skin_Witness",
+      "roughness": 0.42,
+      "subsurface_weight": 0.12
+    },
+    {
+      "material": "MGR_Material_Metal_Witness_Shader",
+      "metallic": 0.95,
+      "object": "MGR_Material_Metal_Witness",
+      "roughness": 0.21,
+      "subsurface_weight": 0
+    },
+    {
+      "material": "MGR_Material_Wax_Witness_Shader",
+      "metallic": 0,
+      "object": "MGR_Material_Wax_Witness",
+      "roughness": 0.35,
+      "subsurface_weight": 0.24
+    }
+  ],
+  "point_lights": [
+    {
+      "energy": 550,
+      "name": "MGR_Light_Key"
+    },
+    {
+      "energy": 380,
+      "name": "MGR_Light_Rim"
+    }
+  ],
+  "renderer": "CYCLES",
+  "samples": 12,
+  "schema": "mgr.forge.studio-blender-witness.v1",
+  "status": "PASS"
+}

@@ -1,5 +1,12 @@
 # MGR 3D Forge — Progress and Evidence Log
 
+## 2026-10-25 — Open-system research expansion + MGR-native layered scenes
+
+- Added 24 additional open-engine/physics/AI/world research families in `research/OPEN-SYSTEMS-RESEARCH-QUEUE.md`, separate from the 20 foundational domains and the 24 studio/academic source families. Inspected selected first-party source/rights pages; not every module, model, talk or paper. Tracked exact access/rights in `research/external-provenance/OPEN-SYSTEMS-SOURCES.md`.
+- Implemented `forge/scene_layers.py` field-level scene layering, deterministic hashing and author attribution, explicit deletion and reintroduction, bounds/NaN/path validation, and five tests in `tests/test_scene_layers.py`. **A native authoring prototype; not OpenUSD implementation or film renderer.**
+- `python3 -m unittest discover -q`: **192/192 PASS Linux**. New Windows regression and cross-engine import remain unverified. Prior Windows Blender 5.2.2 real studio scene render is evidenced by `evidence/blender/windows-wave12-studio-witness.json`.
+- Native register expanded F82–F86; only F82 is scoped CPU-implemented. F83–F86 queued with explicit independent runtime acceptance.
+
 ## 2026-10-25 — 24 external source families + ten studio-quality native test contracts
 
 - Corrected research scope to **24** separate external source families (SIGGRAPH plus 23 numbered targets, with GDC distinct from Weta/ILM/DNEG), all tracked in `research/SOURCE-INTELLIGENCE-QUEUE.md`. R01–R10 each have technical source-audit chapters and five paired provenance ledgers; R11–R20 research in progress; R21–R24 next. These are selected paper/spec/source inspections, **not** claims of total institutional source mastery.

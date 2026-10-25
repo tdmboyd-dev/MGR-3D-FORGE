@@ -86,7 +86,13 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F80 | MGR Cross-View Reality Judge | AUDIT IN PROGRESS | PARTIAL: calibrated pose+anatomy landmark reprojection with missing-hand gates, TESTED | P0 | F09,F35,F68 | Semantic identity, visibility/occlusion and actual multi-angle Tevin reference acceptance |
 | F81 | MGR Atmosphere Memory | AUDIT IN PROGRESS | PARTIAL: bounded indexed volume temporal consistency guard, TESTED | P1 | F53,F61,F67 | Physically rendered volumetric temporal shots, flow/smoke sim and measured runtime proof |
 
-**Scope:** 81 MGR-native areas: original 33, F34–F43, director/camera/motion F44–F50, fantasy/VFX F51–F67, reality-to-space F68–F71, and ten native film/game quality *test contracts* F72–F81. Queued is **not** implemented; a tested numeric guard is not a finished professional renderer. Technical research is organized by MGR functions in `research/MGR-CREATION-INTELLIGENCE-HOWTO.md`, `research/MGR-DIRECTORS-CAMERAS-MOTION-HOWTO.md`, `research/MGR-FANTASY-CINEMA-CREATION-HOWTO.md`, `research/MGR-REALITY-TO-SPACE-MASTER-MAP.md`, `research/MGR-STUDIO-TO-NATIVE-ENGINE-LESSONS.md`; 24 technical source families have a separate queue in `research/SOURCE-INTELLIGENCE-QUEUE.md`. External provenance remains separate.
+| F82 | MGR Layered Reality Composition | SELECTED OPEN-SYSTEMS RESEARCH | PARTIAL: deterministic field overrides, provenance and hashing; 5 CPU tests PASS | P1 | F18,F78 | Real USD authoring, scene references, time samples and engine roundtrip |
+| F83 | MGR Runtime Parity Lab | RESEARCH QUEUED | NOT BUILT | P1 | F82,F79 | Independently import/render and compare output/performance in two engines |
+| F84 | MGR Cell Transport | RESEARCH QUEUED | NOT BUILT | P1 | F78,F82 | Actual cell I/O, memory budgets, continuity, retries and frame-rate validation |
+| F85 | MGR Dynamics Binding | RESEARCH QUEUED | NOT BUILT | P1 | F39,F40 | Contact/rig physics, time-step and cross-system determinism |
+| F86 | MGR Render Truth Lab | RESEARCH QUEUED | NOT BUILT | P1 | F72,F73,F74 | Real engine lighting/material parity and performance |
+
+**Scope:** 86 MGR-native areas: original 33, F34–F43, director/camera/motion F44–F50, fantasy/VFX F51–F67, reality-to-space F68–F71, ten studio quality CPU contracts F72–F81, and open-systems F82–F86. Queued is **not** implemented. Detailed MGR-native research remains in `research/` and external attribution/rights under `research/external-provenance/`.
 
 ## Definition of production completeness
 
