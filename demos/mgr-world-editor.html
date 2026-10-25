@@ -24,6 +24,7 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opaci
   <label for="edit-height">Height (meters)</label><input id="edit-height" type="number" min="2" max="100" step="1">
   <label for="edit-color">Material color</label><select id="edit-color"><option value="building-brick">Warm Brick</option><option value="building-stone">Stone</option><option value="building-blue">Blue</option><option value="building-gold">Gold</option><option value="building-emerald">Emerald</option></select>
   <button id="save-world" type="button">Download World</button><button class="secondary" id="reset-world" type="button">Reset</button>
+  <div class="split"><button class="secondary" id="undo-world" type="button" disabled>↶ Undo</button><button class="secondary" id="redo-world" type="button" disabled>↷ Redo</button></div>
   <label for="import-world">Load a saved world (.json)</label><input id="import-world" type="file" accept="application/json,.json">
   <div id="editor-msg" role="status" aria-live="polite">Ready to edit.</div>
 </aside>
@@ -125,7 +126,8 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opaci
   };
   const edit={building:document.getElementById("building"),x:document.getElementById("edit-x"),
     z:document.getElementById("edit-z"),height:document.getElementById("edit-height"),
-    color:document.getElementById("edit-color"),message:document.getElementById("editor-msg")};
+    color:document.getElementById("edit-color"),message:document.getElementById("editor-msg"),
+    undo:document.getElementById("undo-world"),redo:document.getElementById("redo-world")};
   const limits={x:manifest.grounds.width/2,z:manifest.grounds.depth/2};
   const validBuildings=(items)=>Array.isArray(items)&&items.length===baseBuildings.length&&items.every((b,i)=>{
     const original=baseBuildings[i];
@@ -187,6 +189,20 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opaci
     ]);
   };
   const message=(value)=>{edit.message.textContent=value;};
+  const undoStack=[],redoStack=[];
+  const snapshot=()=>JSON.parse(JSON.stringify(buildings));
+  const updateHistoryButtons=()=>{edit.undo.disabled=!undoStack.length;edit.redo.disabled=!redoStack.length;};
+  const checkpoint=()=>{
+    undoStack.push(snapshot());if(undoStack.length>80)undoStack.shift();
+    redoStack.length=0;updateHistoryButtons();
+  };
+  const travel=(source,destination,label)=>{
+    if(!source.length)return;
+    destination.push(snapshot());buildings=source.pop();
+    resetGpuBuildings();refreshEditor();saveLocal();updateHistoryButtons();message(label);
+  };
+  edit.undo.addEventListener("click",()=>travel(undoStack,redoStack,"Edit undone."));
+  edit.redo.addEventListener("click",()=>travel(redoStack,undoStack,"Edit redone."));
   const saveLocal=()=>{try{localStorage.setItem(storageKey,JSON.stringify(projectDocument()));message("Saved locally. Download a copy to keep permanently.");}
     catch(error){message("Browser storage blocked; use Download World to keep edits.");}};
   const selected=()=>buildings.find(b=>b.id===edit.building.value);
@@ -203,11 +219,14 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opaci
        Math.abs(x)>limits.x||Math.abs(z)>limits.z||height<2||height>100||!Object.hasOwn(palette,edit.color.value)){
       message("Invalid position/height/material; edit rejected.");return;
     }
-    b.center[0]=x;b.center[2]=z;b.size[1]=height;b.material=edit.color.value;
+    if(b.center[0]===x&&b.center[2]===z&&b.size[1]===height&&b.material===edit.color.value)return;
+    checkpoint();b.center[0]=x;b.center[2]=z;b.size[1]=height;b.material=edit.color.value;
     resetGpuBuildings();saveLocal();
   };
   for(const control of [edit.x,edit.z,edit.height,edit.color])control.addEventListener("change",changeBuilding);
   document.getElementById("reset-world").addEventListener("click",()=>{
+    if(JSON.stringify(buildings)===JSON.stringify(baseBuildings))return;
+    checkpoint();
     buildings=JSON.parse(JSON.stringify(baseBuildings));resetGpuBuildings();refreshEditor();saveLocal();message("Original world restored.");
   });
   document.getElementById("save-world").addEventListener("click",()=>{
@@ -219,7 +238,10 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opaci
   document.getElementById("import-world").addEventListener("change",async event=>{
     const file=event.target.files?.[0];if(!file)return;
     if(file.size>1000000){message("Import rejected: file exceeds 1 MB.");return;}
-    try{restoreDocument(JSON.parse(await file.text()));resetGpuBuildings();refreshEditor();saveLocal();message("World edits loaded.");}
+    try{const before=snapshot();restoreDocument(JSON.parse(await file.text()));
+      if(JSON.stringify(before)!==JSON.stringify(buildings)){
+        undoStack.push(before);if(undoStack.length>80)undoStack.shift();redoStack.length=0;updateHistoryButtons();}
+      resetGpuBuildings();refreshEditor();saveLocal();message("World edits loaded.");}
     catch(error){message("Import rejected: incompatible or invalid world edits.");}
     event.target.value="";
   });
@@ -229,15 +251,66 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opaci
   const keys=new Set();
   window.addEventListener("keydown",e=>{
     if(["INPUT","SELECT","TEXTAREA"].includes(document.activeElement?.tagName))return;
+    if((e.ctrlKey||e.metaKey)&&e.code==="KeyZ"){
+      e.preventDefault();if(e.shiftKey)travel(redoStack,undoStack,"Edit redone.");
+      else travel(undoStack,redoStack,"Edit undone.");return;
+    }
+    if((e.ctrlKey||e.metaKey)&&e.code==="KeyY"){
+      e.preventDefault();travel(redoStack,undoStack,"Edit redone.");return;
+    }
     if(["Space","ArrowLeft","ArrowRight","ArrowUp","ArrowDown"].includes(e.code))e.preventDefault();
     keys.add(e.code);
   });
   window.addEventListener("keyup",e=>keys.delete(e.code));
   window.addEventListener("blur",()=>keys.clear());
-  let dragging=false;
-  canvas.addEventListener("pointerdown",e=>{dragging=true;canvas.setPointerCapture(e.pointerId);});
-  canvas.addEventListener("pointerup",()=>dragging=false);
-  canvas.addEventListener("pointermove",e=>{if(dragging){camera.yaw+=e.movementX*0.004;camera.pitch=Math.max(-1.3,Math.min(1.3,camera.pitch+e.movementY*0.004));}});
+  const pickAt=(clientX,clientY)=>{
+    const rect=canvas.getBoundingClientRect();
+    const nx=((clientX-rect.left)/rect.width)*2-1;
+    const ny=1-((clientY-rect.top)/rect.height)*2;
+    const fov=Math.PI/3,scale=Math.tan(fov/2);
+    const vx=nx*scale*(rect.width/rect.height),vy=ny*scale,vz=-1;
+    const cp=Math.cos(camera.pitch),sp=Math.sin(camera.pitch);
+    const ry=cp*vy+sp*vz,rz=-sp*vy+cp*vz;
+    const c=Math.cos(camera.yaw),s=Math.sin(camera.yaw);
+    const direction=[c*vx+s*rz,ry,-s*vx+c*rz];
+    let closest=Infinity,hit=null;
+    for(const b of buildings){
+      const [x,,z]=b.center,[w,h,d]=b.size;
+      const mins=[x-w/2,0,z-d/2],maxs=[x+w/2,h+0.3,z+d/2];
+      const origin=[camera.x,camera.y,camera.z];
+      let near=0,far=Infinity;
+      for(let axis=0;axis<3;axis++){
+        if(Math.abs(direction[axis])<1e-9){
+          if(origin[axis]<mins[axis]||origin[axis]>maxs[axis]){far=-1;break;}
+        } else {
+          const a=(mins[axis]-origin[axis])/direction[axis];
+          const end=(maxs[axis]-origin[axis])/direction[axis];
+          near=Math.max(near,Math.min(a,end));far=Math.min(far,Math.max(a,end));
+        }
+      }
+      if(far>=near&&near<closest){closest=near;hit=b.id;}
+    }
+    if(hit){edit.building.value=hit;refreshEditor();message(`Selected ${hit}.`);}
+    return hit;
+  };
+  let dragging=false,pointerStart=null;
+  canvas.addEventListener("pointerdown",e=>{
+    if(e.button!==0)return;
+    dragging=true;pointerStart={x:e.clientX,y:e.clientY,moved:false};canvas.setPointerCapture(e.pointerId);
+  });
+  canvas.addEventListener("pointerup",e=>{
+    if(dragging&&pointerStart&&!pointerStart.moved)pickAt(e.clientX,e.clientY);
+    dragging=false;pointerStart=null;
+  });
+  canvas.addEventListener("pointercancel",()=>{dragging=false;pointerStart=null;});
+  canvas.addEventListener("pointermove",e=>{
+    if(!dragging)return;
+    if(pointerStart&&Math.hypot(e.clientX-pointerStart.x,e.clientY-pointerStart.y)>5)pointerStart.moved=true;
+    if(pointerStart?.moved){
+      camera.yaw+=e.movementX*0.004;
+      camera.pitch=Math.max(-1.3,Math.min(1.3,camera.pitch+e.movementY*0.004));
+    }
+  });
   const blocked=(x,z)=>buildings.some(b=>{
     const [bx,,bz]=b.center,[w,,d]=b.size;
     return Math.abs(x-bx)<=w/2+0.5 && Math.abs(z-bz)<=d/2+0.5;
@@ -284,7 +357,8 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opaci
   }
   window.MGR_FORGE_RUNTIME={getStatus:()=>({drawCalls:draws.length+2*buildings.length,fps,
     position:[camera.x,camera.y,camera.z],collisions:hits,buildingCount:buildings.length,frameActive:frames>=0}),
-    getEdits:()=>projectDocument()};
+    getEdits:()=>projectDocument(),getHistory:()=>({undo:undoStack.length,redo:redoStack.length}),
+    pickAt};
   status.textContent="World loaded, opening live 3D view…";
   requestAnimationFrame(frame);
 })();

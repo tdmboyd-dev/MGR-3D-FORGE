@@ -24,6 +24,7 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opaci
   <label for="edit-height">Height (meters)</label><input id="edit-height" type="number" min="2" max="100" step="1">
   <label for="edit-color">Material color</label><select id="edit-color"><option value="building-brick">Warm Brick</option><option value="building-stone">Stone</option><option value="building-blue">Blue</option><option value="building-gold">Gold</option><option value="building-emerald">Emerald</option></select>
   <button id="save-world" type="button">Download World</button><button class="secondary" id="reset-world" type="button">Reset</button>
+  <div class="split"><button class="secondary" id="undo-world" type="button" disabled>↶ Undo</button><button class="secondary" id="redo-world" type="button" disabled>↷ Redo</button></div>
   <label for="import-world">Load a saved world (.json)</label><input id="import-world" type="file" accept="application/json,.json">
   <div id="editor-msg" role="status" aria-live="polite">Ready to edit.</div>
 </aside>

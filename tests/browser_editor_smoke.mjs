@@ -56,6 +56,11 @@ try{
     document.getElementById('edit-height').dispatchEvent(new Event('change',{bubbles:true}));
     return window.MGR_FORGE_RUNTIME.getEdits();})()`);
   assert.equal(modified.buildings[0].size[1],42);
+  assert.equal(await evaluate("window.MGR_FORGE_RUNTIME.getHistory().undo"),1);
+  await evaluate("document.getElementById('undo-world').click()");
+  assert.equal(await evaluate('window.MGR_FORGE_RUNTIME.getEdits().buildings[0].size[1]'),first.size[1]);
+  await evaluate("document.getElementById('redo-world').click()");
+  assert.equal(await evaluate('window.MGR_FORGE_RUNTIME.getEdits().buildings[0].size[1]'),42);
   assert.equal(await evaluate(`JSON.parse(localStorage.getItem('mgr.forge.world-edits.v1.'+window.MGR_WORLD_SHA)??'null')?.buildings?.[0]?.size?.[1]`),42);
   await call('Page.setDownloadBehavior',{behavior:'allow',downloadPath:profile});
   await evaluate("document.getElementById('save-world').click()");
@@ -82,9 +87,19 @@ try{
     return window.MGR_FORGE_RUNTIME.getEdits().buildings[0].size[1];
   })()`);
   assert.equal(reset,first.size[1]);
+  const picked=await evaluate(`(()=>{
+    const canvas=document.getElementById('world');const bounds=canvas.getBoundingClientRect();
+    for(let y=120;y<bounds.height-80;y+=35)for(let x=40;x<bounds.width-340;x+=35){
+      const hit=window.MGR_FORGE_RUNTIME.pickAt(x,y);if(hit)return hit;
+    }
+    return null;
+  })()`);
+  assert.ok(picked?.startsWith('building-'),'3D ray selection must intersect a real building');
+  assert.equal(await evaluate('document.getElementById("building").value'),picked);
   console.log(JSON.stringify({schema:'mgr.forge.browser-editor-smoke.v1',status:'PASS',
     browser:'Chrome headless WebGL2',buildings:base.buildings.length,
-    checks:['runtime boot','building changed','local persistence','downloaded edit JSON','JSON import restored','reset restored']}));
+    checks:['runtime boot','building changed','undo/redo','local persistence','downloaded edit JSON',
+      'JSON import restored','reset restored','ray-picked actual building']}));
 }finally{
   for(const waiter of pending.values())waiter.reject?.(new Error('browser ending'));
   socket?.close();child.kill();await rm(profile,{recursive:true,force:true,maxRetries:3,retryDelay:150});
