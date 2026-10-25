@@ -81,7 +81,8 @@ def main(argv):
     direction = Vector((0, 0, 4)) - camera.location
     camera.rotation_euler = direction.to_track_quat("-Z", "Y").to_euler()
     bpy.context.scene.camera = camera
-    bpy.context.scene.render.engine = "BLENDER_EEVEE_NEXT" if bpy.app.version >= (4, 2, 0) else "BLENDER_EEVEE"
+    # 4.2 renamed EEVEE to EEVEE_NEXT; Blender 5 returned to EEVEE.
+    bpy.context.scene.render.engine = "BLENDER_EEVEE_NEXT" if (4, 2, 0) <= bpy.app.version < (5, 0, 0) else "BLENDER_EEVEE"
     bpy.ops.wm.save_as_mainfile(filepath=str(blend.resolve()))
     data = {"schema": "mgr.forge.blender-live-scene-proof.v1", "status": "PASS",
             "blender_version": bpy.app.version_string, "editable_buildings": len(names),

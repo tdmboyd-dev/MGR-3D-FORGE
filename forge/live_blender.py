@@ -69,6 +69,8 @@ def create_live_blender_scene(folder, blend_path, report_path, *, binary="blende
     result = subprocess.run(command, capture_output=True, text=True, timeout=timeout, check=False)
     if result.returncode:
         raise RuntimeError(f"Blender scene build failed ({result.returncode}): {result.stderr[-800:]}")
+    if not Path(report_path).is_file():
+        raise RuntimeError(f"Blender exited without a proof receipt: {(result.stdout + result.stderr)[-1200:]}")
     receipt = json.loads(Path(report_path).read_text(encoding="utf-8"))
     original = validate_live_bundle(folder)
     if (receipt.get("status") != "PASS" or receipt.get("editable_buildings") != len(original["buildings"])

@@ -65,6 +65,17 @@ class BlenderLiveSceneTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "unavailable"):
                 create_live_blender_scene(self.world, self.root / "out.blend", self.root / "out.json")
 
+    def test_blender_false_zero_exit_without_receipt_is_rejected(self):
+        class FakeResult:
+            returncode = 0
+            stdout = "Python: Traceback..."
+            stderr = ""
+
+        with patch("forge.live_blender.shutil.which", return_value="blender"), \
+             patch("forge.live_blender.subprocess.run", return_value=FakeResult()):
+            with self.assertRaisesRegex(RuntimeError, "without a proof receipt"):
+                create_live_blender_scene(self.world, self.root / "out.blend", self.root / "out.json")
+
 
 if __name__ == "__main__":
     unittest.main()
