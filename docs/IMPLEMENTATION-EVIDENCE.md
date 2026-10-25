@@ -3,7 +3,7 @@
 Date: 2026-10-25. This page distinguishes working code from future intent.
 
 **Current wave evidence (supersedes earlier baseline test counts below):**
-**139/139** unit tests passed on Linux and Time's Windows device. On real
+**140/140** unit tests passed on Linux and Time's Windows device. On real
 Blender 5.2.2 LTS, the 20-part/11-bone generic mannequin has 48 dual-bone
 elbow sleeve vertices and passes measured two-pose joint/weight QA; the world
 has verified imported PBR materials; and editable CPU Cycles cinema scenes have
@@ -12,6 +12,8 @@ moving-camera shot, and a real four-frame Cycles timeline proof showed moving
 shot RGB MAE **5.98669**. Actual `.blend`, PNG and JSON receipts are stored under
 `evidence/blender/windows-wave5-*`. Fantasy geometry and glTF emission additionally passed real Windows Blender CPU Cycles at two portal phases: `evidence/blender/windows-wave6-*`, 600×600 frames and normalized pixel delta **0.00897953**. This does not establish cinematic volumetric FX. The full 67-area feature inventory is in
 `docs/BUILD-REGISTER.md`, including seven director and 17 FX tracks.
+
+Further Windows Blender 5.2.2 render verification added two native point lights, an illuminated matte witness and the 5.x `Fog Glow` compositor. Actual PNG and JSON scene receipts are in `evidence/blender/windows-wave7-*`. This proves lighting and image-space composition in a controlled scene, **not** simulated fire, particle collisions, atmospheric volumes, game-runtime lighting or completion of the entire F51 track.
 
 ## What you can actually run
 

@@ -1,5 +1,11 @@
 # MGR 3D Forge — Progress and Evidence Log
 
+## 2026-10-25 — MGR Light Sculptor + Optical FX live Windows proof
+
+- Implemented two physically instantiated Blender point lights and a separate neutral witness mesh, plus Blender 5.2 node-based `Fog Glow` optical compositor. This verifies **light interaction and image-space compositing**, not light-transport physics or atmospheric scattering.
+- Repaired two actual Blender 5.2 API mismatches while executing on Windows: `Scene.node_tree` was removed and the old Composite node was replaced by the compositor group's `NodeGroupOutput`; Glare type is now a socket menu, not a node property. Added fail-closed CLI detection of missing render/report when Blender exits successfully despite an embedded Python exception.
+- Real Windows Blender 5.2.2 CPU Cycles rendered a 600×600 PNG showing the native portal and visibly illuminated matte witness; JSON audit records **2 point lights**, `Fog Glow`, emitted materials and `PASS`. **140/140** Windows and Linux tests PASS. Evidence: `evidence/blender/windows-wave7-light-glow.png` and `evidence/blender/windows-wave7-light-glow.json`.
+
 ## 2026-10-25 — Windows fantasy effect acceptance (supersedes prior pending note)
 
 - Synced MGR Fantasy Forge to user Windows device; **139/139 Python tests PASS** on Windows and Linux. Used Blender **5.2.2 LTS** CPU Cycles to render two 600×600 portal phases at 0.25 and 0.75. Both render receipts **PASS**, each showing three material emission colors.

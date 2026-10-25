@@ -24,3 +24,9 @@ Important unfinished research: exact Blender 5.2 Geometry Nodes interfaces,
 temporal solver cache, material node versioning, volume budgets, compositor
 automation APIs, color scene-referred transforms, GPU bottlenecks, export
 support, and cross-device VR/real-time platform limitations.
+# Verified Blender 5.2 compositor compatibility (Windows execution)
+
+- Primary: Blender 5.0 Python API release notes, https://developer.blender.org/docs/release_notes/5.0/python_api/ — `scene.node_tree` removed in favor of `scene.compositing_node_group`, with compositor-tree interface output sockets.
+- Primary: Blender 5.0 compositor release notes, https://developer.blender.org/docs/release_notes/5.0/compositor/ — reusable compositor node groups, updated render output flow.
+- Primary: Blender 5.2 LTS compositor glare manual, https://docs.blender.org/manual/en/5.2/compositing/types/filter/glare.html — `Fog Glow` is optical/post-processing, not simulated physical fog.
+- Exact live Blender 5.2.2 API introspection on user's authorized Windows machine: `CompositorNodeGlare` has `inputs["Type"]` menu accepting `Fog Glow` and does not expose the former `glare_type` property; `NodeGroupOutput` with a declared `Image` interface output works. Source implementation `bridge/blender_fx_render.py` is independently authored MGR code. No upstream code copied.
