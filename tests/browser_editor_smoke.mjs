@@ -90,16 +90,22 @@ try{
   const picked=await evaluate(`(()=>{
     const canvas=document.getElementById('world');const bounds=canvas.getBoundingClientRect();
     for(let y=120;y<bounds.height-80;y+=35)for(let x=40;x<bounds.width-340;x+=35){
-      const hit=window.MGR_FORGE_RUNTIME.pickAt(x,y);if(hit)return hit;
+      const hit=window.MGR_FORGE_RUNTIME.pickAt(x,y);if(hit)return {hit,x,y};
     }
     return null;
   })()`);
-  assert.ok(picked?.startsWith('building-'),'3D ray selection must intersect a real building');
-  assert.equal(await evaluate('document.getElementById("building").value'),picked);
+  assert.ok(picked?.hit?.startsWith('building-'),'3D ray selection must intersect a real building');
+  assert.equal(await evaluate('document.getElementById("building").value'),picked.hit);
+  const another=base.buildings.find(b=>b.id!==picked.hit)?.id;
+  assert.ok(another);
+  await evaluate(`(()=>{const s=document.getElementById('building');s.value=${JSON.stringify(another)};s.dispatchEvent(new Event('change'));})()`);
+  await call('Input.dispatchMouseEvent',{type:'mousePressed',x:picked.x,y:picked.y,button:'left',clickCount:1});
+  await call('Input.dispatchMouseEvent',{type:'mouseReleased',x:picked.x,y:picked.y,button:'left',clickCount:1});
+  assert.equal(await evaluate('document.getElementById("building").value'),picked.hit,'real canvas mouse click must select ray hit');
   console.log(JSON.stringify({schema:'mgr.forge.browser-editor-smoke.v1',status:'PASS',
     browser:'Chrome headless WebGL2',buildings:base.buildings.length,
     checks:['runtime boot','building changed','undo/redo','local persistence','downloaded edit JSON',
-      'JSON import restored','reset restored','ray-picked actual building']}));
+      'JSON import restored','reset restored','ray-picked actual building','canvas mouse clicked actual building']}));
 }finally{
   for(const waiter of pending.values())waiter.reject?.(new Error('browser ending'));
   socket?.close();child.kill();await rm(profile,{recursive:true,force:true,maxRetries:3,retryDelay:150});

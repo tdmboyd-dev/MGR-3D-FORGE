@@ -253,3 +253,9 @@ The initial historical snapshot has been superseded by the current live inventor
 - Extended OBJ custom material support and SVG palettes. Seven new unit tests cover the generated-file loop, deterministic exports, tamper rejection, invalid geometry/identity, oversized input, non-overwrite and original immutability. **223/223 tests PASS on Linux and Time's Windows device**. Chrome headless ANGLE SwiftShader rendered the 3D world with visible editor controls; screenshot and truth limits in `evidence/browser/windows-wave14-world-editor.json`. **Windows CDP automated interaction PASS:** edited a real building, checked saved localStorage JSON, verified a real downloaded edit JSON file, re-imported the original and reset successfully (`tests/browser_editor_smoke.mjs`). Manual physical UI interaction remains untested.
 - Scope honesty: this creates editable cuboid buildings and material presets, not arbitrary sculpting, photoreal effects, animation editing or studio parity.
 
+## 2026-10-25 — Spatial object selection and recoverable editing (F89)
+
+- Added real browser-screen ray/AABB picking against authored 3D world geometry; click a building to select it without searching its ID in a form. Camera drag still rotates and is distinguished from a click via a five-pixel movement threshold.
+- Added recoverable edit history with bounded 80-entry undo stack, redo stack, Ctrl/Cmd+Z, Ctrl/Cmd+Y, Shift+Ctrl/Cmd+Z and disabled-button state. Changes, resets and imported edits participate; no-op edits do not create false checkpoints.
+- Rebuilt the canonical offline `demos/mgr-world-editor.html` with new controls while preserving its old published version in Git history. Added screenshot/interaction acceptance to `tests/browser_editor_smoke.mjs`. The last acceptance results are in the matching Windows Chrome evidence ledger.
+
