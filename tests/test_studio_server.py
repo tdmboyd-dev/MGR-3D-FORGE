@@ -57,7 +57,8 @@ class StudioServerTests(unittest.TestCase):
             with urlopen(request, timeout=4) as response:
                 return response.status, response.read(), response.headers
         except HTTPError as error:
-            return error.code, error.read(), error.headers
+            with error:
+                return error.code, error.read(), error.headers
 
     def test_studio_binds_only_localhost(self):
         self.assertEqual(self.server.server_address[0], "127.0.0.1")
