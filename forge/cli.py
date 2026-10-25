@@ -193,6 +193,14 @@ def main(argv=None):
     motion_check.add_argument("--sha256",required=True)
     motion_check.add_argument("--report",type=Path,required=True)
     motion_check.add_argument("--binary",default="blender")
+    references=sub.add_parser("character-reference-pack",help="admit many private character/outfit images as one coordinated asset batch")
+    references.add_argument("--spec",type=Path,required=True)
+    references.add_argument("--out",type=Path,required=True)
+    unclothe_review=sub.add_parser("unclothe-review",help="inspect a proposed multi-part segmentation without extracting")
+    unclothe_review.add_argument("--spec",type=Path,required=True)
+    unclothe_extract=sub.add_parser("unclothe-extract",help="isolate only owner-approved visible pixels for separate 3D jobs")
+    unclothe_extract.add_argument("--spec",type=Path,required=True)
+    unclothe_extract.add_argument("--out",type=Path,required=True)
     live_blender=sub.add_parser("blender-live-scene",help="turn verified edited world into an actual individually editable Blender project")
     live_blender.add_argument("--world",type=Path,required=True,help="materialized edited world directory")
     live_blender.add_argument("--blend",type=Path,required=True,help="new Blender project file")
@@ -352,6 +360,18 @@ def main(argv=None):
     if args.action == "character-motion-reimport":
         from .character_motion import reimport_character_motion
         print(json.dumps(reimport_character_motion(args.glb,args.sha256,args.report,binary=args.binary),indent=2))
+        return 0
+    if args.action == "character-reference-pack":
+        from .reference_pack import prepare_reference_pack
+        print(json.dumps(prepare_reference_pack(args.spec,args.out),indent=2))
+        return 0
+    if args.action == "unclothe-review":
+        from .unclothe_3d import inspect_unclothe
+        print(json.dumps(inspect_unclothe(args.spec),indent=2))
+        return 0
+    if args.action == "unclothe-extract":
+        from .unclothe_3d import extract_approved_parts
+        print(json.dumps(extract_approved_parts(args.spec,args.out),indent=2))
         return 0
     if args.action == "blender-live-scene":
         print(json.dumps(create_live_blender_scene(args.world,args.blend,args.report,binary=args.binary),indent=2))

@@ -24,9 +24,17 @@ python -m forge.cli character-separate --blend path/to/new-character.blend --out
 python -m forge.cli character-motion-export --blend path/to/rigged-character.blend --out path/to/new-animated.glb --report path/to/new-motion.json --binary blender
 # Independently reopen the GLB, checking the skeleton, skinned geometry and animation actions:
 python -m forge.cli character-motion-reimport --glb path/to/new-animated.glb --sha256 EXPECTED_SHA256 --report path/to/new-reimport.json --binary blender
+# Register a whole private multi-image reference set; owner approval is separate from 3D verification:
+python -m forge.cli character-reference-pack --spec path/to/private-images/pack.json --out path/to/private-report.json
+# Unclothe 3D: inspect provider/manual semantic masks, approve/reject each part, then
+# create actual transparent extracted PNGs + separate 3D job tickets (requires Pillow):
+python -m forge.cli unclothe-review --spec path/to/private-images/proposal.json
+python -m forge.cli unclothe-extract --spec path/to/private-images/approved-proposal.json --out path/to/new-separated-parts
 # Alternatively, open the loopback Creation Chat and select a small existing .glb
 # under "Existing 3D model"; "Inspect / Preserve 3D Model" gives GLB and JSON downloads.
 ```
+
+An Unclothe proposal is JSON with `schema: "mgr.forge.unclothe.v1"`, a `source` PNG basename and `parts` entries such as `{"id":"coat_1","kind":"coat","mask":"coat-mask.png","decision":"approved"}`. The image and each same-size PNG mask stay beside that JSON in a **private** folder. Unreviewed parts block extraction. `unclothe-extract` extracts real visible pixels, **not** generated 3D meshes or guessed hidden anatomy. SAM3/SAM2 mask generation and 3D model adapters remain follow-on work.
 
 Open the `http://127.0.0.1:PORT/` address printed in your terminal on the same computer. Port `0` lets Windows select an available port automatically. The service binds **only** to loopback and generates a fresh session token; it does not grant access to arbitrary directories or execute free-form code.
 

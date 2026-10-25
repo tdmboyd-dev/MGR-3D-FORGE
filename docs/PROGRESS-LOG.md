@@ -345,3 +345,10 @@ The initial historical snapshot has been superseded by the current live inventor
 - Validated one private 18-entry, 16-distinct-PNG owner-approved reference batch and produced a SHA-bound local JSON receipt. Six new owner-approved body/face/feet sheets are included, along with prior outfit component sheets. Sheets still require per-view extraction and actual 3D modeling.
 - `python3 -m unittest discover -q` **397 tests OK**, **30 skipped** because of restricted sockets; Blender proof is not newly claimed.
 
+## 2026-10-25 — F106 Unclothe 3D native approval/separation boundary
+
+- Selected primary research into Meta SAM3/SAM2, Microsoft TRELLIS.2 and Tencent Hunyuan3D. Model inference, exact code/weights licenses, local GPU feasibility and actual quality are not yet verified; see `research/external-provenance/UNCLOTHE-3D-SOURCES-2026-10-25.md`.
+- Implemented a real, reversible production-admission boundary: semantic asset mask proposal review, explicit per-part owner approval/rejection, fully transparent per-part RGBA PNG isolation with actual bounds, independent hashes and named downstream 3D reconstruction job tickets. No network call or unaudited Python execution.
+- Explicitly left occluded geometry, 3D generation, rig binding, texture reconstruction and game-engine import **OPEN**. Owner approval of full-body references is distinct from approval of AI-suggested masks on a dressed image.
+- 11 new tests for real mask extraction, missing approval, rejection, invalid kinds/paths, duplicate IDs, mismatched dimensions, empty masks, overwrite and schema errors. **408/408 tests OK (30 environment skips)** using `python3 -m unittest discover -q`.
+
