@@ -84,7 +84,7 @@ Code lives under `forge/`, tests under `tests/`; [implementation evidence](docs/
 
 ## Current truth
 
-- **Current wave: 124/124 Python tests PASS on Linux and Time's Windows device.** Actual Blender 5.2.2 accepted the 20-piece anonymous mannequin with 48 two-bone elbow sleeve vertices, 11-bone pose audit, and imported PBR materials. It also saved a 3-shot editable CPU Cycles scene and rendered PNG. Original composition was visibly poor; second camera-clearance-aware render was visually inspected and shows the building with surrounding roads. Source plus scene, render, receipts and honest gaps live in `evidence/blender/` and `docs/BUILD-REGISTER.md`.
+- **Current wave: 132/132 Python tests PASS on Linux and Time's Windows device.** Blender 5.2.2 accepted the 20-piece mannequin with 48 two-bone elbow sleeve vertices, 11-bone pose audit and imported PBR materials. It saved an editable three-camera CPU Cycles scene with real cut markers and a second shot whose camera moved **7.21726m** between frames 49 and 96. The saved scene was independently reopened and measured. Source, scene, render, receipts and honest gaps live in `evidence/blender/` and `docs/BUILD-REGISTER.md`.
 
 - MGR Forge owns a working CPU procedural GLB exporter, bounded planner, 20-part generic T/A mannequin, scene intelligence, environment/interior meshes, geometry QA, license/cost gates and artifact receipts.
 - On Windows, **64/64 tests passed**, and **five GLB imports passed Blender 5.2.2 LTS**. Reproducible evidence is preserved under `evidence/blender/`.

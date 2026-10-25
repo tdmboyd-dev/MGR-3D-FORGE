@@ -1,0 +1,33 @@
+{
+  "blender_version": "5.2.2 LTS",
+  "camera_count": 3,
+  "cuts": [
+    {
+      "camera": "MGR_Shot_Camera_0000",
+      "frame": 1,
+      "last_frame": 48,
+      "measured_motion_m": 0,
+      "name": "MGR_shot-0000"
+    },
+    {
+      "camera": "MGR_Shot_Camera_0001",
+      "frame": 49,
+      "last_frame": 96,
+      "measured_motion_m": 7.21726,
+      "name": "MGR_shot-0001"
+    },
+    {
+      "camera": "MGR_Shot_Camera_0002",
+      "frame": 97,
+      "last_frame": 144,
+      "measured_motion_m": 0,
+      "name": "MGR_shot-0002"
+    }
+  ],
+  "errors": [],
+  "frame_end": 144,
+  "frame_start": 1,
+  "moving_shots": 1,
+  "schema": "mgr.forge.director-blender-audit.v1",
+  "status": "PASS"
+}

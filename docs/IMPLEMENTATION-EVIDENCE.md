@@ -2,6 +2,16 @@
 
 Date: 2026-10-25. This page distinguishes working code from future intent.
 
+**Current wave evidence (supersedes earlier baseline test counts below):**
+**132/132** unit tests passed on Linux and Time's Windows device. On real
+Blender 5.2.2 LTS, the 20-part/11-bone generic mannequin has 48 dual-bone
+elbow sleeve vertices and passes measured two-pose joint/weight QA; the world
+has verified imported PBR materials; and editable CPU Cycles cinema scenes have
+three distinct cameras, three camera-bound cuts and a measured **7.21726m**
+moving-camera shot. Actual `.blend`, PNG and JSON receipts are stored under
+`evidence/blender/windows-wave5-*`. The full 50-area feature inventory is in
+`docs/BUILD-REGISTER.md`, including seven newly queued director tracks.
+
 ## What you can actually run
 
 | Feature | Module | Actual behavior | Evidence | Still missing |
@@ -23,11 +33,11 @@ Date: 2026-10-25. This page distinguishes working code from future intent.
 | Isometric preview | `forge/preview.py` | Creates SVG approximation directly from world manifest | `test_svg_*` | Actual GLB rendering and interactive 3D editing |
 | Mesh health | `forge/meshqa.py` | Identifies broken indices/degenerate triangles and safely drops invalid triangles | `test_mesh_*`, `test_world_meshes_*` | Watertight manifold repair, retopology, topology-aware normals |
 | Coarse LOD/chunks | `forge/streaming.py` | Exports building-only LOD1 mesh and stable chunk cover | `test_chunks_*`, `test_simple_lod_*`, `test_lod_distance_*` | LOD scene parity, runtime streaming, instancing, FPS |
-| Native world flight | `forge/cinematic.py` | World-space camera keyframes and interpolation | `test_camera_*` | Timeline scrub UI, actual rendering/video |
+| Native world flight | `forge/cinematic.py`, `forge/director.py` | Authored 3D camera positions, collision/clearance, distinct cuts and sampled easing | Unit tests and actual 3-camera Blender Cycles scene/receipt | Timeline scrub UI, video production and advanced camera tracks |
 | Local Model Dock | `forge/recipes.py` | Static model manifest license/checksum/VRAM validation | `test_model_recipe_*` | Installer, sandbox, execution, provider verification |
 | Spatial Eyes | `forge/perception.py` | Geometry-grounded object distances and center-ray occlusion with evidence labels | `test_spatial_overview_*` | True scene parsing, live data, image reconstruction, HUD |
 | Beyond Imagery prototype | `forge/interiors.py` | Creates separate two-room interior meshes from building footprints with hypothesis provenance | `test_interior_*` | True reconstruction, multi-floor architecture, visual/user approval |
-| Detachable generic character | `forge/character.py` | T/A full-arm/hand proxy with 16 parts; exports whole and each part in GLB | `test_generic_character_*`, `test_character_exports_*` | Tevin likeness, real garment segmentation, rigging, visual review |
+| Detachable generic character | `forge/character.py`, `forge/wardrobe.py` | T/A full-arm/hand proxy with 20 detachable parts and typed garments | `test_generic_character_*`, garment tests, actual 20-part Blender rig PASS | Tevin likeness, real tailored clothing, full smooth skin, visual review |
 | Kinematic pose samples | `forge/animation.py` | T-A-T bone-length-preserving editable landmarks over time | `test_pose_track_*`, `test_a_pose_*` | Skinned mesh weights/deformation and playback |
 | Native provider contract | `forge/adapters.py` | Selects executable approved offline CPU generator, rejects absent or unapproved neural/provider work | `test_adapter_*` | Real model engines, GPU workers, quality comparisons |
 | Blender import probe | `bridge/blender_probe.py`, `forge/blender_bridge.py` | Actual bpy GLB import, triangle/mesh count receipt | Windows Blender 5.2.2 **five PASS** receipts under `evidence/blender/` | Render appearance, edit/re-export and skin/animation testing |
