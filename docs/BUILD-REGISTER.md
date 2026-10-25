@@ -14,9 +14,9 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F08 | CPU TripoSR prototype | SOURCED | NOT STARTED | P0 | runtime resources | Timed 3 asset benchmark |
 | F09 | Character DNA measurements | SPECIFIED | PROTOTYPE TESTED | P0 | approved Tevin base | Synthetic proportion comparison only; Tevin not captured |
 | F10 | Anatomy guardian | SPECIFIED | PROTOTYPE TESTED | P0 | F09 | Missing hand and symmetry checks; visual mesh checking pending |
-| F11 | Garment/part separation | SOURCED | PARTIAL: synthetic detachable parts TESTED | P1 | F09, permitted segmentation | Generic 16-part mannequin; real Tevin segmentation absent |
-| F12 | Automated rig/weights | SOURCED | PARTIAL: rigid + 1.0-weight skinned armature Blender VERIFIED | P1 | clean mesh, rig type | 16 modifiers, 11 bones, hand mesh moved 0.428m, 2 render frames; smooth joint weights/full animation remain |
-| F13 | Material/UV quality | SOURCED | NOT STARTED | P1 | F06 | PBR/export validation |
+| F11 | Garment/part separation | SOURCED | PARTIAL: 20 independently exported mannequin parts TESTED | P1 | F09, permitted segmentation | Separate left/right trousers and two elbow sleeves added; real Tevin segmentation absent |
+| F12 | Automated rig/weights | SOURCED | PARTIAL: rigid + 1.0-weight skin verified; mixed elbow sleeves CODED | P1 | clean mesh, rig type | Prior 16-part Windows proof and 20-part dual-weight sleeves now implemented; new Blender validation pending |
+| F13 | Material/UV quality | RESEARCHED | PARTIAL: standard glTF PBR values TESTED, Blender inspector CODED | P1 | F06 | MGR PBR recipes, metallic/roughness bounds, actual Blender material socket check pending; textures/UV remain |
 | F14 | Geometry repair/retopo | SOURCED | PARTIAL: triangle repair TESTED | P1 | F06 | Malformed triangle cleanup passed; retopo/manifold repair pending |
 | F15 | Region/world graph | SPECIFIED | PARTIAL: road intersections TESTED | P0 | F02 | Region hierarchy and landmarks pending |
 | F16 | World assembly | SPECIFIED | PARTIAL: static scene TESTED | P0 | F03-F05,F15 | Scene export works; graph and navigation pending |
@@ -40,11 +40,11 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F34 | MGR Scene Consciousness | SPECIFIED | PARTIAL: generated-world facts/qualified routes TESTED | P0 | F02,F05,F16,F33 | `forge/consciousness.py` emitted in world bundles; Blender object inspection pending machine test; semantic door portals absent |
 | F35 | MGR Visual Judge | SPECIFIED | PARTIAL: pixel/translation/quarter-turn/alpha-aware silhouettes TESTED | P0 | F06,F30,F34 | Real transparent Blender pose images foreground QA; arbitrary 3D pose identity and semantic evaluator pending |
 | F36 | MGR Code Architect | SPECIFIED | PARTIAL: typed workspace file edits and rollback TESTED | P0 | F22,F23,F29 | `forge/code_architect.py`; isolated arbitrary-code executor, policy enforcement, consent UI pending |
-| F37 | MGR Anatomy Guardian Plus | SPECIFIED | PARTIAL: multi-frame bone/joint QA verified on Windows Blender | P0 | F09,F10,F35 | 11 bones, 16 skinned parts, 0m arm gaps, 0.427m hand motion at frames 1/12; deforming skin seam QA still pending |
-| F38 | MGR Fabric Intelligence | QUEUED | NOT STARTED | P1 | F11,F12,F13 | Separable fitted garments, intersections and motion QA |
-| F39 | MGR Rig Intelligence | SPECIFIED | PARTIAL: modular rig and 2-frame pose guardian Windows Blender VERIFIED | P0 | F09,F12,F37 | `bridge/blender_pose_inspect.py` accepted actual skinned mannequin; smooth weights, full pose suite and production animation remain |
+| F37 | MGR Anatomy Guardian Plus | SPECIFIED | PARTIAL: 2-frame bone/joint QA Windows VERIFIED; dual-weight QA CODED | P0 | F09,F10,F35 | Prior 11 bones, 16 skinned parts, 0m gaps; new elbow sleeve normalized-weight checks pending Blender proof |
+| F38 | MGR Fabric Intelligence | SPECIFIED | PARTIAL: 8 detachable garment pieces and metadata TESTED | P1 | F11,F12,F13 | `forge/wardrobe.py` catches missing/misbonded clothing; real tailored fit, cloth physics and intersections open |
+| F39 | MGR Rig Intelligence | SPECIFIED | PARTIAL: modular rig Windows VERIFIED; 2-bone elbow interpolation CODED | P0 | F09,F12,F37 | Prior Blender acceptance + new elbow sleeve 2-bone weights; live Windows proof and full-body smooth skin pending |
 | F40 | MGR World Logic | SPECIFIED | PARTIAL: collision-checked road-centerline rehearsal TESTED | P1 | F15,F17,F34 | `forge/traversal.py`; actual navmesh/doors/stairs/dynamic agent game runtime pending |
-| F41 | MGR Cinematic Director | QUEUED | NOT STARTED | P1 | F13,F31,F35 | Reproducible cameras, lighting, material and shot recipes |
+| F41 | MGR Cinematic Director | SPECIFIED | PARTIAL: camera reel, 3 lighting moods and Blender CPU scene/render bridge CODED | P1 | F13,F31,F35 | `forge/shot_design.py`, `bridge/blender_cinematic.py`; actual Windows Cycles output and live camera playback pending |
 | F42 | MGR Creation Memory | SPECIFIED | PARTIAL: integrity-chained JSON revisions and locks TESTED | P0 | F05,F20,F34 | `forge/creation_memory.py`; concurrent DB, actual owner identity and cross-app replay pending |
 | F43 | MGR Self-Repair Studio | SPECIFIED | PARTIAL: bounded file repair + build→Blender→render receipt pipeline TESTED (CPU stage) | P1 | F23,F30,F35,F36 | `forge/repair.py`, `forge/pipeline.py`; full Blender integrated run and semantic repair pending |
 

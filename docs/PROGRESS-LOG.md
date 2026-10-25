@@ -1,5 +1,14 @@
 # MGR 3D Forge — Progress and Evidence Log
 
+## 2026-10-25 — Expanded multi-capability build wave
+
+- F11/F38: added independently exported left/right trouser meshes and left/right elbow sleeve garment meshes; 20 editable mannequin parts total with MGR wardrobe classification, complete inventory and assignment checking. These remain generic proxies.
+- F12/F37/F39: added 2-bone normalized weighting for elbow sleeve meshes, dual-bone weight counts and Blender-evaluated normalized-weight QA. Existing 11-bone mannequin anatomy remains unchanged. Smooth skin on an entire continuous body is **not** implemented.
+- F13: authored native PBR material recipes, range-validated glTF metallic/roughness overrides, and Blender Principled-socket inspector with fail-closed material quality checks. Full texture/UV pipeline pending.
+- F31/F41: added native shot-plan checks, daylight/golden-hour/moonlit recipes, CPU Cycles scene/lighting/camera creation and actual `.blend`/PNG receipt command. Renderer runtime verification pending publication to Windows at this checkpoint.
+- Build now exports a lighting recipe alongside its camera tour and applies native PBR params. Added ten material, wardrobe and cinematic acceptance tests plus two sleeve-weight regression tests and material-guardian test; **123/123 local tests PASS**.
+- Official interoperable format/weight-paint research preserved under `research/external-provenance/PBR-AND-SKINNING-2026-10-25.md` with no external code copied.
+
 ## 2026-10-25 — Next wave: MGR pose integrity gate
 
 - Implemented `forge/pose_guardian.py`: strict two-frame joint-continuity, non-stretching bones, all required bones, mesh skin coverage and real hand motion checks, with structured failure receipts. Explicitly **not** identity proof or smooth-skin acceptance.

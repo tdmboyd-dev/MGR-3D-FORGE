@@ -5,16 +5,22 @@ import math
 import struct
 
 from .geometry import MATERIALS
+from .materials import validate_pbr_recipe
 
 
 def _pad(blob: bytes, fill=b"\x00") -> bytes:
     return blob + fill * ((-len(blob)) % 4)
 
 
-def export_glb(meshes, *, name="MGR Forge World", materials=None) -> bytes:
+def export_glb(meshes, *, name="MGR Forge World", materials=None, pbr_overrides=None) -> bytes:
     materials = MATERIALS if materials is None else materials
     if len(meshes) != len(materials) or not materials:
         raise ValueError("mesh/material count mismatch")
+    if pbr_overrides is not None and (not isinstance(pbr_overrides, dict) or
+                                      any(type(i) is not int or i < 0 or i >= len(materials)
+                                          for i in pbr_overrides)):
+        raise ValueError("PBR override material index invalid")
+    pbr_overrides = pbr_overrides or {}
     binary = bytearray()
     views, accessors, primitives = [], [], []
 
@@ -62,10 +68,11 @@ def export_glb(meshes, *, name="MGR Forge World", materials=None) -> bytes:
         "nodes": [{"name": name, "mesh": 0}],
         "meshes": [{"name": name, "primitives": primitives}],
         "materials": [{"name": mat_name, "doubleSided": False,
-                       "pbrMetallicRoughness": {
-                           "baseColorFactor": rgba,
-                           "metallicFactor": 0.0, "roughnessFactor": 0.9}}
-                      for mat_name, rgba in materials],
+                       "pbrMetallicRoughness": (validate_pbr_recipe(pbr_overrides[index])
+                           if index in pbr_overrides else {
+                               "baseColorFactor": rgba,
+                               "metallicFactor": 0.0, "roughnessFactor": 0.9})}
+                      for index, (mat_name, rgba) in enumerate(materials)],
         "buffers": [{"byteLength": len(binary)}],
         "bufferViews": views, "accessors": accessors,
     }

@@ -77,6 +77,10 @@ def validate_pose_frames(frames, *, joint_tolerance_m=0.06, bone_length_toleranc
                 item.get("armature_modifier") is not True
             ):
                 errors.append(f"frame {frame_number}: missing geometry/skin coverage {name}")
+            elif item.get("max_weight_sum_error", 0) > .01:
+                errors.append(f"frame {frame_number}: skin weights not normalized {name}")
+            elif name.endswith("_elbow_sleeve") and item.get("dual_weight_vertices", 0) < 1:
+                errors.append(f"frame {frame_number}: elbow sleeve missing mixed bone weights {name}")
         measurements.append({"frame": frame_number, "joint_max_gap_m": round(max_gap, 6),
                              "bone_count": len(valid), "skinned_part_count": len(parts)})
     first_bones = frames[0].get("bones", {})

@@ -11,6 +11,14 @@ from pathlib import Path
 from .geometry import Mesh
 from .glb import export_glb, inspect_glb
 from .quality import validate_character_landmarks
+from .materials import MGR_MATERIAL_PRESETS
+from .wardrobe import wardrobe_inventory
+
+
+CHARACTER_PBR={3:MGR_MATERIAL_PRESETS["fabric"],
+               4:MGR_MATERIAL_PRESETS["fabric"],
+               5:MGR_MATERIAL_PRESETS["leather"],
+               6:MGR_MATERIAL_PRESETS["gold"]}
 
 
 CHARACTER_MATERIALS = (
@@ -52,8 +60,17 @@ def mannequin(pose="T"):
         add(f"{side}_upper_arm",0,"beam",shoulder,elbow,0.16)
         add(f"{side}_forearm",0,"beam",elbow,wrist,0.12)
         add(f"{side}_hand",0,"beam",wrist,hand,0.11)
+        # Short independent fabric bridge around the elbow. Blender applies
+        # TWO bone influences to this piece rather than rigidly following one.
+        sleeve_start=[elbow[i] + (shoulder[i]-elbow[i])*.26 for i in range(3)]
+        sleeve_end=[elbow[i] + (wrist[i]-elbow[i])*.26 for i in range(3)]
+        add(f"{side}_elbow_sleeve",3,"beam",sleeve_start,sleeve_end,0.20)
         add(f"{side}_leg",4,"beam",landmarks[f"{side}_hip"],
             landmarks[f"{side}_ankle"],0.22)
+        # Detachable garment deliberately remains separate from the body mesh.
+        # This is a boxy trousers proxy, not simulated cloth or fitted Tevin wear.
+        add(f"{side}_pant_leg",4,"beam",landmarks[f"{side}_hip"],
+            [sign*0.15,0.18,0],0.255)
         add(f"{side}_boot",5,"box",sign*0.15,0.0,-0.05,0.26,0.16,0.39)
     add("head",0,"box",0,1.58,0,0.26,0.28,0.25)
     add("hair",1,"box",0,1.84,0,0.27,0.08,0.26)
@@ -91,12 +108,12 @@ def build_mannequin(output,pose="T"):
     output.mkdir(parents=True,exist_ok=True)
     parts,landmarks,quality=mannequin(pose)
     payload=export_glb(_assemble(parts), name=f"MGR Anonymous {pose}-pose",
-                       materials=CHARACTER_MATERIALS)
+                       materials=CHARACTER_MATERIALS,pbr_overrides=CHARACTER_PBR)
     # The same neutral template is the identity anchor for both procedural
     # poses. It proves template lineage, NOT an owner's real-world likeness.
     rest_parts,_,_=mannequin("T")
     neutral_payload=export_glb(_assemble(rest_parts),name="MGR Anonymous Neutral Template",
-                               materials=CHARACTER_MATERIALS)
+                               materials=CHARACTER_MATERIALS,pbr_overrides=CHARACTER_PBR)
     rest_hash=sha256(neutral_payload).hexdigest()
     (output/"mannequin.glb").write_bytes(payload)
     part_dir=output/"parts"
@@ -104,7 +121,7 @@ def build_mannequin(output,pose="T"):
     for name, material_mesh in sorted(parts.items()):
         partial=_assemble({name:material_mesh})
         (part_dir/f"{name}.glb").write_bytes(export_glb(
-            partial,name=name,materials=CHARACTER_MATERIALS))
+            partial,name=name,materials=CHARACTER_MATERIALS,pbr_overrides=CHARACTER_PBR))
     manifest={"schema":"mgr.forge.character-proxy.v1", "pose":pose,
               "owner_approved":False,"tevin_identity_verified":False,
               "asset_view":{"asset_id":"mgr-anonymous-mannequin-v1",
@@ -115,6 +132,10 @@ def build_mannequin(output,pose="T"):
               "quality":quality,"glb_quality":inspect_glb(payload),
               "status":"generic procedural mannequin, not likeness/rig verified"}
     (output/"character.json").write_text(json.dumps(manifest,indent=2,sort_keys=True)+"\n")
+    wardrobe=wardrobe_inventory(manifest)
+    if wardrobe["status"]!="PASS":
+        raise RuntimeError(f"missing detachable garment: {wardrobe['errors']}")
+    (output/"wardrobe.json").write_text(json.dumps(wardrobe,indent=2,sort_keys=True)+"\n")
     # Import here: animation reuses mannequin's T pose as its rest skeleton.
     from .animation import arm_pose_clip
     (output/"pose_track.json").write_text(

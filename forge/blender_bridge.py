@@ -12,6 +12,8 @@ SCENE_FACTS=Path(__file__).resolve().parent.parent/"bridge"/"blender_scene_facts
 RIG=Path(__file__).resolve().parent.parent/"bridge"/"blender_rig.py"
 POSE_RENDER=Path(__file__).resolve().parent.parent/"bridge"/"blender_pose_render.py"
 POSE_INSPECT=Path(__file__).resolve().parent.parent/"bridge"/"blender_pose_inspect.py"
+CINEMATIC=Path(__file__).resolve().parent.parent/"bridge"/"blender_cinematic.py"
+MATERIAL_INSPECT=Path(__file__).resolve().parent.parent/"bridge"/"blender_material_inspect.py"
 
 
 def blender_command(blender_binary,source,report):
@@ -95,3 +97,31 @@ def blender_pose_inspect_command(blender_binary, blend_source, observation_path)
     return [str(blender_binary), "--background", "--factory-startup",
             "--python", str(POSE_INSPECT), "--", str(Path(blend_source).resolve()),
             str(Path(observation_path).resolve())]
+
+
+def blender_cinematic_command(blender_binary, glb, tour, mood, blend, image, report):
+    if not Path(glb).is_file() or Path(glb).suffix.lower() != ".glb":
+        raise ValueError("existing GLB required")
+    if not Path(tour).is_file() or Path(tour).suffix.lower() != ".json":
+        raise ValueError("existing camera-tour JSON required")
+    if Path(blend).suffix.lower() != ".blend" or Path(image).suffix.lower() != ".png" or Path(report).suffix.lower() != ".json":
+        raise ValueError("expect .blend, .png and .json outputs")
+    from .shot_design import validate_shot_reel, lighting_recipe
+    validate_shot_reel(json.loads(Path(tour).read_text(encoding="utf-8")))
+    lighting_recipe(mood=mood)
+    if not CINEMATIC.is_file():
+        raise FileNotFoundError("Blender cinematic script missing")
+    return [str(blender_binary),"--background","--factory-startup", "--python",
+            str(CINEMATIC),"--",str(Path(glb).resolve()),str(Path(tour).resolve()),
+            mood,str(Path(blend).resolve()),str(Path(image).resolve()),str(Path(report).resolve())]
+
+
+def blender_material_inspect_command(blender_binary, glb, report):
+    if not Path(glb).is_file() or Path(glb).suffix.lower()!=".glb":
+        raise ValueError("existing GLB required")
+    if Path(report).suffix.lower()!=".json":
+        raise ValueError("JSON material report required")
+    if not MATERIAL_INSPECT.is_file():
+        raise FileNotFoundError("Blender material inspector missing")
+    return [str(blender_binary),"--background","--factory-startup","--python",
+            str(MATERIAL_INSPECT),"--",str(Path(glb).resolve()),str(Path(report).resolve())]

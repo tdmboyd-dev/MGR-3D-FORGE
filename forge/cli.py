@@ -22,9 +22,11 @@ from .view_identity import compare_view_silhouettes, compare_asset_views, AssetV
 from .traversal import rehearse_road_walk
 from .interiors import generate_interiors
 from .character import build_mannequin
-from .blender_bridge import verify_blender, blender_render_command, blender_facts_command, blender_rig_command, blender_pose_render_command, blender_pose_inspect_command
+from .blender_bridge import verify_blender, blender_render_command, blender_facts_command, blender_rig_command, blender_pose_render_command, blender_pose_inspect_command, blender_cinematic_command, blender_material_inspect_command
 from .environment import generate_parks, ENVIRONMENT_MATERIALS
 from .receipt import file_receipt, verify_bundle
+from .materials import MGR_MATERIAL_PRESETS
+from .shot_design import validate_shot_reel, lighting_recipe
 
 
 def build(spec: WorldSpec, output: Path):
@@ -33,7 +35,11 @@ def build(spec: WorldSpec, output: Path):
     qc = validate_neighborhood(manifest)
     if not qc["passed"]:
         raise RuntimeError(f"scene QA failed: {qc['errors']}")
-    payload = export_glb(meshes, name=spec.name)
+    payload = export_glb(meshes, name=spec.name,
+        pbr_overrides={1:MGR_MATERIAL_PRESETS["asphalt"],
+                       2:MGR_MATERIAL_PRESETS["weathered-brick"],
+                       3:MGR_MATERIAL_PRESETS["matte-stone"],
+                       4:MGR_MATERIAL_PRESETS["painted-metal"]})
     glb_qc = inspect_glb(payload)
     glb_path = output / "world.glb"
     manifest_path = output / "manifest.json"
@@ -49,8 +55,12 @@ def build(spec: WorldSpec, output: Path):
     chunks = chunk_world(manifest)
     (output / "chunks.json").write_text(
         json.dumps(chunks, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    tour=camera_tour(manifest)
+    manifest["cinematic_reel_quality"]=validate_shot_reel(tour)
     (output / "camera_tour.json").write_text(
-        json.dumps(camera_tour(manifest), indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        json.dumps(tour, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    (output / "lighting.json").write_text(
+        json.dumps(lighting_recipe(),indent=2,sort_keys=True)+"\n",encoding="utf-8")
     (output / "spatial_overview.json").write_text(
         json.dumps(scene_overview(manifest), indent=2, sort_keys=True) + "\n", encoding="utf-8")
     (output / "scene_facts.json").write_text(
@@ -73,7 +83,7 @@ def build(spec: WorldSpec, output: Path):
     manifest["additional_artifacts"] = {
         "obj": "world.obj", "mtl": "world.mtl", "road_graph": "navigation.json",
         "preview": "preview.svg", "chunks": "chunks.json", "lod1": "world_lod1.glb",
-        "camera_tour": "camera_tour.json", "spatial_overview": "spatial_overview.json",
+        "camera_tour": "camera_tour.json", "lighting": "lighting.json", "spatial_overview": "spatial_overview.json",
         "scene_facts": "scene_facts.json",
         "interiors": "interiors.glb", "interior_plan": "interiors.json",
         "parks":"parks.glb", "parks_manifest":"parks.json"}
@@ -133,6 +143,18 @@ def main(argv=None):
     guardian.add_argument("blend",type=Path)
     guardian.add_argument("--report",type=Path,required=True)
     guardian.add_argument("--binary",default="blender")
+    cinema=sub.add_parser("blender-cinematic",help="materialize a 3D camera reel, lights, editable .blend and real CPU render")
+    cinema.add_argument("glb",type=Path)
+    cinema.add_argument("--tour",type=Path,required=True)
+    cinema.add_argument("--mood",choices=("daylight","golden-hour","moonlit"),default="daylight")
+    cinema.add_argument("--blend",type=Path,required=True)
+    cinema.add_argument("--image",type=Path,required=True)
+    cinema.add_argument("--report",type=Path,required=True)
+    cinema.add_argument("--binary",default="blender")
+    material_audit=sub.add_parser("blender-material-audit",help="check actual imported Blender PBR material sockets")
+    material_audit.add_argument("glb",type=Path)
+    material_audit.add_argument("--report",type=Path,required=True)
+    material_audit.add_argument("--binary",default="blender")
     bundle=sub.add_parser("verify-bundle",help="verify artifact hashes in world build folder")
     bundle.add_argument("directory",type=Path)
     visual=sub.add_parser("compare-renders",help="compare fixed-camera RGB PNG frames")
@@ -239,6 +261,38 @@ def main(argv=None):
         args.report.write_text(json.dumps(report,indent=2,sort_keys=True)+"\n",encoding="utf-8")
         print(json.dumps(report,indent=2))
         return 0 if report["status"]=="PASS" else 2
+    if args.action == "blender-cinematic":
+        import subprocess
+        if any(path.exists() for path in (args.blend,args.image,args.report)):
+            raise FileExistsError("cinematic output already exists; choose a fresh folder")
+        command=blender_cinematic_command(args.binary,args.glb,args.tour,args.mood,
+                                          args.blend,args.image,args.report)
+        result=subprocess.run(command,timeout=600,capture_output=True,text=True,check=False)
+        if result.returncode:
+            raise RuntimeError(f"Blender cinematic failed ({result.returncode}): {result.stderr[-600:] or result.stdout[-600:]}")
+        report=json.loads(args.report.read_text(encoding="utf-8"))
+        if report.get("status")!="PASS" or not all(path.stat().st_size>0
+                                                    for path in (args.blend,args.image)):
+            raise RuntimeError("Blender cinematic receipt invalid")
+        print(json.dumps(report,indent=2))
+        return 0
+    if args.action == "blender-material-audit":
+        import subprocess
+        from .material_guardian import validate_imported_materials
+        observation=args.report.with_name(args.report.stem+"-observation.json")
+        if args.report.exists() or observation.exists():
+            raise FileExistsError("material receipt already exists")
+        command=blender_material_inspect_command(args.binary,args.glb,observation)
+        result=subprocess.run(command,timeout=180,capture_output=True,text=True,check=False)
+        if result.returncode:
+            raise RuntimeError(f"Blender material inspection failed ({result.returncode}): {result.stderr[-600:] or result.stdout[-600:]}")
+        raw=json.loads(observation.read_text(encoding="utf-8"))
+        receipt=validate_imported_materials(raw)
+        receipt["blender_version"]=raw["blender_version"]
+        receipt["materials"]=raw["materials"]
+        args.report.write_text(json.dumps(receipt,indent=2,sort_keys=True)+"\n",encoding="utf-8")
+        print(json.dumps(receipt,indent=2))
+        return 0 if receipt["status"]=="PASS" else 2
     if args.action == "verify-bundle":
         print(json.dumps(verify_bundle(args.directory),indent=2))
         return 0

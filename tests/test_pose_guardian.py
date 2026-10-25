@@ -51,6 +51,24 @@ class PoseGuardianTests(unittest.TestCase):
         frames[1]["frame"]=12
         self.assertIn("animation frozen", " ".join(validate_pose_frames(frames)["errors"]))
 
+    def test_mixed_weight_sleeve_accepts_normalized_blend(self):
+        frames=fixture()
+        for frame in frames:
+            frame["parts"]["MGR_left_elbow_sleeve"]={"vertices":8,"weighted_vertices":8,
+                "armature_modifier":True,"dual_weight_vertices":8,"max_weight_sum_error":0.0}
+        self.assertEqual(validate_pose_frames(frames)["status"],"PASS")
+
+    def test_unblended_or_unnormalized_sleeve_fails(self):
+        frames=fixture()
+        for frame in frames:
+            frame["parts"]["MGR_left_elbow_sleeve"]={"vertices":8,"weighted_vertices":8,
+                "armature_modifier":True,"dual_weight_vertices":0,"max_weight_sum_error":0.0}
+        self.assertIn("mixed bone weights"," ".join(validate_pose_frames(frames)["errors"]))
+        for frame in frames:
+            frame["parts"]["MGR_left_elbow_sleeve"]["dual_weight_vertices"]=8
+            frame["parts"]["MGR_left_elbow_sleeve"]["max_weight_sum_error"]=.3
+        self.assertIn("not normalized"," ".join(validate_pose_frames(frames)["errors"]))
+
     def test_invalid_numbers_fail_closed(self):
         frames=fixture()
         frames[0]["bones"]["left_hand"]["tail"][1]=float("nan")

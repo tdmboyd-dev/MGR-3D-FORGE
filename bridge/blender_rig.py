@@ -44,6 +44,14 @@ def bone_for_part(name):
         return "left_leg"
     if name=="right_boot":
         return "right_leg"
+    if name=="left_pant_leg":
+        return "left_leg"
+    if name=="right_pant_leg":
+        return "right_leg"
+    if name=="left_elbow_sleeve":
+        return "left_upper_arm"
+    if name=="right_elbow_sleeve":
+        return "right_upper_arm"
     raise ValueError(f"unmapped part: {name}")
 
 
@@ -95,11 +103,25 @@ def main():
             armature.edit_bones[name].parent=armature.edit_bones[parent]
     bpy.ops.object.mode_set(mode="OBJECT")
     assignments={}
+    mixed_weight_vertices=0
     for part,obj in assembled:
         target=bone_for_part(part)
         if skin:
-            group=obj.vertex_groups.new(name=target)
-            group.add(list(range(len(obj.data.vertices))),1.0,"REPLACE")
+            if part.endswith("_elbow_sleeve"):
+                side=part.split("_")[0]
+                upper=obj.vertex_groups.new(name=f"{side}_upper_arm")
+                lower=obj.vertex_groups.new(name=f"{side}_forearm")
+                for vertex in obj.data.vertices:
+                    # All imported meshes are in Blender Z-up. Sleeve is
+                    # positioned around |x| = 0.61m at neutral T pose.
+                    x=abs((obj.matrix_world @ vertex.co).x)
+                    t=max(.05,min(.95,(x-.52)/.18))
+                    upper.add([vertex.index],1-t,"REPLACE")
+                    lower.add([vertex.index],t,"REPLACE")
+                    mixed_weight_vertices+=1
+            else:
+                group=obj.vertex_groups.new(name=target)
+                group.add(list(range(len(obj.data.vertices))),1.0,"REPLACE")
             modifier=obj.modifiers.new("MGR_Deform_Armature","ARMATURE")
             modifier.object=rig
         else:
@@ -145,8 +167,9 @@ def main():
             "status":"PASS" if len(assembled)==len(manifest["editable_parts"]) else "FAIL",
             "mesh_parts":len(assembled),"bones":sorted(RIG_BONES),
             "attachments":assignments,"blend_file":destination.name,"rig_mode":"skin" if skin else "rigid",
+            "dual_bone_weight_vertices":mixed_weight_vertices,
             "animation_motion_m":round(movement_m,6) if skin else None,
-            "limitations":["single-bone 1.0 weights per rigid segment; no smooth cross-joint skin blending" if skin else "rigid bone parenting, no deforming vertex weights",
+            "limitations":["two-bone elbow sleeve interpolation only; rest of mesh remains rigid single-bone weights" if skin else "rigid bone parenting, no deforming vertex weights",
                            "only hand-motion smoke test, no full pose deformation acceptance" if skin else "no animation curves or full pose deformation acceptance",
                            "generic mannequin only, not approved Tevin likeness"]}
     report.parent.mkdir(parents=True,exist_ok=True)
