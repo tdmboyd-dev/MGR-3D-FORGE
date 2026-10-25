@@ -13,6 +13,7 @@ const profile=await mkdtemp(join(tmpdir(),'mgr-editor-cdp-'));
 const port=19000+Math.floor(Math.random()*1000);
 const child=spawn(chrome,['--headless=new','--no-first-run','--disable-extensions',
   '--enable-unsafe-swiftshader','--use-gl=angle','--use-angle=swiftshader',
+  '--disable-background-timer-throttling','--disable-renderer-backgrounding',
   '--remote-allow-origins=*',`--remote-debugging-port=${port}`,
   `--user-data-dir=${profile}`,pathToFileURL(resolve(html)).href],{stdio:'ignore'});
 const pause=(ms)=>new Promise(r=>setTimeout(r,ms));
@@ -102,10 +103,19 @@ try{
   await call('Input.dispatchMouseEvent',{type:'mousePressed',x:picked.x,y:picked.y,button:'left',clickCount:1});
   await call('Input.dispatchMouseEvent',{type:'mouseReleased',x:picked.x,y:picked.y,button:'left',clickCount:1});
   assert.equal(await evaluate('document.getElementById("building").value'),picked.hit,'real canvas mouse click must select ray hit');
+  await evaluate("document.activeElement?.blur()");
+  const beforeMotion=await evaluate('window.MGR_FORGE_RUNTIME.getStatus().position');
+  await call('Input.dispatchKeyEvent',{type:'keyDown',key:'w',code:'KeyW',windowsVirtualKeyCode:87});
+  await pause(650);
+  await call('Input.dispatchKeyEvent',{type:'keyUp',key:'w',code:'KeyW',windowsVirtualKeyCode:87});
+  const afterMotion=await evaluate('window.MGR_FORGE_RUNTIME.getStatus().position');
+  assert.ok(Math.hypot(...afterMotion.map((v,i)=>v-beforeMotion[i]))>0.1,
+    'actual browser keyboard input must move world camera');
   console.log(JSON.stringify({schema:'mgr.forge.browser-editor-smoke.v1',status:'PASS',
     browser:'Chrome headless WebGL2',buildings:base.buildings.length,
     checks:['runtime boot','building changed','undo/redo','local persistence','downloaded edit JSON',
-      'JSON import restored','reset restored','ray-picked actual building','canvas mouse clicked actual building']}));
+      'JSON import restored','reset restored','ray-picked actual building','canvas mouse clicked actual building',
+      'keyboard navigated real 3D camera']}));
 }finally{
   for(const waiter of pending.values())waiter.reject?.(new Error('browser ending'));
   socket?.close();child.kill();await rm(profile,{recursive:true,force:true,maxRetries:3,retryDelay:150});
