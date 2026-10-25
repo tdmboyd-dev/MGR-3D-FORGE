@@ -2,6 +2,8 @@
 
 Date: 2026-10-25. **Not a new competing source of truth.** This is the cross-domain implementation sheet feeding the canonical `MGR-REALITY-TO-SPACE-MASTER-MAP.md`, `docs/BUILD-REGISTER.md` and `docs/PROGRESS-LOG.md`. Outside research/rights live exclusively in `external-provenance/STUDIO-ENGINE-PRIMARY-SOURCES-2026-10-25.md`.
 
+**Implementation wave:** all ten rows below now have *scoped CPU proof/guard functions* in `forge/studio_quality.py`, real unit/negative tests in `tests/test_studio_quality.py`, and an `studio-proof` CLI receipt. This does **not** upgrade any row's missing professional Blender/live engine acceptance. 24 separate source-family audits are tracked in `research/SOURCE-INTELLIGENCE-QUEUE.md`, preserving each source's exact inspected depth and rights.
+
 ## What the 20 foundations teach — and what studio engineering adds
 
 Scientific foundations explain depth, geometry, simulation, imaging, mathematics and the physical meaning of a world. Studio and engine research answers the harder shipping question: **how to make those truths editable, directable, visually beautiful, performant and stable across thousands of shots/players/poses.** The winning MGR architecture uses both.

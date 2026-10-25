@@ -1,5 +1,13 @@
 # MGR 3D Forge — Progress and Evidence Log
 
+## 2026-10-25 — 24 external source families + ten studio-quality native test contracts
+
+- Corrected research scope to **24** separate external source families (SIGGRAPH plus 23 numbered targets, with GDC distinct from Weta/ILM/DNEG), all tracked in `research/SOURCE-INTELLIGENCE-QUEUE.md`. R01–R10 each have technical source-audit chapters and five paired provenance ledgers; R11–R20 research in progress; R21–R24 next. These are selected paper/spec/source inspections, **not** claims of total institutional source mastery.
+- Began independent studio-quality implementation alongside source reading: `forge/studio_quality.py` has ten bounded native validation/proof functions: material parameter check, camera-budgeted light plan, absorption reference, mesh-edge guard, strand motion consistency, pure scene layering + hash, chunk streaming plan, screen-space landmark drift, calibrated anatomical multiview reprojection, and atmosphere density continuity. Negative-case suite in `tests/test_studio_quality.py` and new `forge.cli studio-proof` materialize machine-readable receipts. Their limits are explicit; none replaces production physics, BRDF, full-body semantic vision, or a live engine.
+- Local Linux suite after adding ten studio contracts: **186/186 PASS**, `python3 -m unittest discover -q`; `git diff --check` clean. Latest Windows verification for this new code is pending publication.
+- Finished all **24/24 selected-technique source audit chapters** with 14 source provenance ledgers (ten paired and four individual); each marks inaccessible proprietary code, closed model weights, paper-only claims and legal rights explicitly. The exact source queue is `research/SOURCE-INTELLIGENCE-QUEUE.md`; these audits are not exhaustive catalogs, source-level parity or patent clearance.
+- Added `bridge/blender_studio_witness.py` and `forge.cli blender-studio-witness`, an original editable `.blend` + CPU Cycles PNG fixture with three PBR/SSS materials, two actual point lights, a real Blender curve and low-density volume. Unit-tested typed outputs, nonoverwrite and script presence. Current Linux suite **187/187 PASS** and `compileall`/whitespace checks pass. Independent Windows render receipt is required before this real Blender witness is marked verified.
+
 ## 2026-10-25 — Five simultaneous foundations plus native validation
 
 - Five distinct 16-field sourced research packets and source ledgers now cover S01 vision, S02 optics, S03 geometry/slicing, S04 camera-transform algebra and S05 continuous motion/calculus. These are foundations, **not** full upstream audits or a claim S06–S20 are finished.

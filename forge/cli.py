@@ -22,7 +22,7 @@ from .view_identity import compare_view_silhouettes, compare_asset_views, AssetV
 from .traversal import rehearse_road_walk
 from .interiors import generate_interiors
 from .character import build_mannequin
-from .blender_bridge import verify_blender, blender_render_command, blender_facts_command, blender_rig_command, blender_pose_render_command, blender_pose_inspect_command, blender_cinematic_command, blender_material_inspect_command, blender_director_inspect_command, blender_director_frames_command, blender_fx_render_command
+from .blender_bridge import verify_blender, blender_render_command, blender_facts_command, blender_rig_command, blender_pose_render_command, blender_pose_inspect_command, blender_cinematic_command, blender_material_inspect_command, blender_director_inspect_command, blender_director_frames_command, blender_fx_render_command, blender_studio_witness_command
 from .environment import generate_parks, ENVIRONMENT_MATERIALS
 from .receipt import file_receipt, verify_bundle
 from .materials import MGR_MATERIAL_PRESETS
@@ -128,6 +128,8 @@ def main(argv=None):
     spatial=sub.add_parser("spatial-proof",help="prove 2D/3D perspective ambiguity and mesh slicing")
     spatial.add_argument("--out",type=Path,required=True)
     spatial.add_argument("--height",type=float,default=2.0)
+    studio=sub.add_parser("studio-proof",help="run ten native studio-quality validation contracts; not a film render")
+    studio.add_argument("--out",type=Path,required=True)
     blender = sub.add_parser("blender-verify",help="run actual Blender GLB import verification if installed")
     blender.add_argument("path",type=Path)
     blender.add_argument("--report",type=Path,required=True)
@@ -186,6 +188,11 @@ def main(argv=None):
     fxrender.add_argument("--volume-density",type=float,default=0.0,
                           help="bounded MGR physical atmosphere density 0..0.25 (0 disables volume)")
     fxrender.add_argument("--volume-style",choices=("uniform","cloud"),default="uniform")
+    studio_blender=sub.add_parser("blender-studio-witness",help="render real Blender CPU material/strand/light/volume witness")
+    studio_blender.add_argument("--blend",type=Path,required=True)
+    studio_blender.add_argument("--image",type=Path,required=True)
+    studio_blender.add_argument("--report",type=Path,required=True)
+    studio_blender.add_argument("--binary",default="blender")
     fxjudge=sub.add_parser("judge-atmosphere",help="compare real matched Blender volume/control renders")
     fxjudge.add_argument("control_png",type=Path)
     fxjudge.add_argument("candidate_png",type=Path)
@@ -251,6 +258,43 @@ def main(argv=None):
         args.out.parent.mkdir(parents=True,exist_ok=True)
         args.out.write_text(json.dumps(proof,indent=2,sort_keys=True)+"\n",encoding="utf-8")
         print(json.dumps({"status":"PASS","spatial_proof":str(args.out)},indent=2))
+        return 0
+    if args.action == "studio-proof":
+        from .studio_quality import (
+            material_reality_witness,adaptive_light_orchestra,flesh_translucence_witness,
+            surface_anatomy_guardian,living_hair_director,layered_world_dna,
+            horizon_truth_streaming,visual_surface_reconciler,cross_view_reality_judge,
+            atmosphere_memory)
+        from .geometry import Mesh
+        if args.out.exists():
+            raise FileExistsError("studio evidence output already exists")
+        mesh=Mesh()
+        mesh.box(0,0,0,2,2,2)
+        world={"head":(0,2,4),"left_hand":(-1,1,4),"right_hand":(1,1,4)}
+        view={"position":(0,0,0),"camera_to_world":((1,0,0),(0,1,0),(0,0,1)),
+              "focal_px":400,"observed":{"head":(0,200),"left_hand":(-100,100),"right_hand":(100,100)}}
+        checks={
+            "material_reality_witness":material_reality_witness([{"base_color":[0.4,0.3,0.2],"metallic":0.1,"roughness":0.5}]),
+            "adaptive_light_orchestra":adaptive_light_orchestra([{"id":"key","position":[1,0,0],"energy":10},{"id":"fill","position":[4,0,0],"energy":2}],(0,0,0),max_active=1),
+            "flesh_translucence_lab":flesh_translucence_witness([0,0.01,0.1],12),
+            "surface_anatomy_guardian":surface_anatomy_guardian(mesh),
+            "living_hair_director":living_hair_director([[[0,0,0],[0,1,0]],[[0.01,0,0],[0.01,1,0]]]),
+            "layered_world_dna":layered_world_dna({"hero":{"coat":"black","owner":"MGR"}},[{"id":"hero","operation":"set","properties":{"coat":"silver"}}]),
+            "horizon_truth_streaming":horizon_truth_streaming({"chunks":[{"id":"cell-0","world_origin":[0,0,0]}]},(0,0,0)),
+            "visual_surface_reconciler":visual_surface_reconciler({"head":(10,20)},{"head":(10,20)}),
+            "cross_view_reality_judge":cross_view_reality_judge(world,[view]),
+            "atmosphere_memory":atmosphere_memory([[0.1,0.2],[0.12,0.19]]),
+        }
+        accepted={"PASS","PLAN_ONLY"}
+        if any(receipt.get("status") not in accepted for receipt in checks.values()):
+            raise RuntimeError("studio proof fixture did not pass its scoped contract")
+        proof={"schema":"mgr.forge.studio-proof.v1","status":"PASS",
+               "count":len(checks),"checks":checks,
+               "limitations":["synthetic CPU fixture validation only; not professional material, hair, physics or game runtime acceptance",
+                              "real Blender render parity, live engine and Tevin owner approval still open"]}
+        args.out.parent.mkdir(parents=True,exist_ok=True)
+        args.out.write_text(json.dumps(proof,indent=2,sort_keys=True)+"\n",encoding="utf-8")
+        print(json.dumps({"status":"PASS","studio_proof":str(args.out),"checks":len(checks)},indent=2))
         return 0
     if args.action == "character":
         result = build_mannequin(args.out,args.pose)
@@ -424,6 +468,20 @@ def main(argv=None):
         receipt=json.loads(args.report.read_text(encoding="utf-8"))
         if receipt.get("status")!="PASS" or not receipt.get("emission_socket_colors"):
             raise RuntimeError("FX Blender emission receipt invalid")
+        print(json.dumps(receipt,indent=2))
+        return 0
+    if args.action == "blender-studio-witness":
+        import subprocess
+        cmd=blender_studio_witness_command(args.binary,args.blend,args.image,args.report)
+        result=subprocess.run(cmd,timeout=600,capture_output=True,text=True,check=False)
+        if result.returncode or any(not path.is_file() for path in (args.blend,args.image,args.report)):
+            details=(result.stderr+"\n"+result.stdout).strip()
+            raise RuntimeError(f"Blender studio witness failed ({result.returncode}): {details[-1800:]}")
+        receipt=json.loads(args.report.read_text(encoding="utf-8"))
+        if (receipt.get("status")!="PASS" or receipt.get("renderer")!="CYCLES"
+                or receipt.get("device")!="CPU" or len(receipt.get("materials",[]))!=3
+                or len(receipt.get("point_lights",[]))!=2 or receipt.get("hair_curve_points")!=6):
+            raise RuntimeError("Blender studio witness report incomplete")
         print(json.dumps(receipt,indent=2))
         return 0
     if args.action == "judge-atmosphere":

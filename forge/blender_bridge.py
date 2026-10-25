@@ -17,6 +17,7 @@ MATERIAL_INSPECT=Path(__file__).resolve().parent.parent/"bridge"/"blender_materi
 DIRECTOR_INSPECT=Path(__file__).resolve().parent.parent/"bridge"/"blender_director_inspect.py"
 DIRECTOR_FRAMES=Path(__file__).resolve().parent.parent/"bridge"/"blender_director_frames.py"
 FX_RENDER=Path(__file__).resolve().parent.parent/"bridge"/"blender_fx_render.py"
+STUDIO_WITNESS=Path(__file__).resolve().parent.parent/"bridge"/"blender_studio_witness.py"
 
 
 def blender_command(blender_binary,source,report):
@@ -164,3 +165,16 @@ def blender_fx_render_command(blender_binary, glb, image, report, volume_density
     return [str(blender_binary),"--background","--factory-startup","--python",
             str(FX_RENDER),"--",str(Path(glb).resolve()),
             str(Path(image).resolve()),str(Path(report).resolve()),str(float(volume_density)),volume_style]
+
+
+def blender_studio_witness_command(blender_binary, blend, image, report):
+    """Generate a fresh editable .blend and real CPU-rendered PNG."""
+    if (Path(blend).suffix.lower(),Path(image).suffix.lower(),Path(report).suffix.lower())!=(".blend",".png",".json"):
+        raise ValueError("studio witness needs .blend, .png and .json")
+    if any(Path(path).exists() for path in (blend,image,report)):
+        raise FileExistsError("studio witness outputs must all be new")
+    if not STUDIO_WITNESS.is_file():
+        raise FileNotFoundError("studio witness bridge script missing")
+    return [str(blender_binary),"--background","--factory-startup","--python",
+            str(STUDIO_WITNESS),"--",str(Path(blend).resolve()),
+            str(Path(image).resolve()),str(Path(report).resolve())]

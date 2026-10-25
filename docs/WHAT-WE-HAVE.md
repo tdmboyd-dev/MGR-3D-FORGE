@@ -6,6 +6,8 @@
 
 **Latest research expansion:** twenty 16-field cross-disciplinary chapters plus twenty isolated source ledgers are written, with a focused production-paper/technical-engine research overlay under `research/MGR-STUDIO-TO-NATIVE-ENGINE-LESSONS.md`. Code now also includes oriented-camera depth and CPU chunk-residency *planning*: **175/175 Linux and Windows tests PASS**. Real Windows evidence `evidence/blender/windows-wave11-oriented-stereo.json` confirms calibrated rotated-view depth at 0-pixel reprojection error. The research is a foundation and implementation contract, **not** a fully finished film/game/VR engine.
 
+**Current source/quality wave:** all 24 separately named industry/lab/spec/patent/VFX source families have selected-technique audits and traceable provenance under `research/source-audits/` and `research/external-provenance/`. Ten independent native studio-quality guards are implemented in `forge/studio_quality.py`; `forge.cli studio-proof` generates a ten-check JSON fixture receipt. A separate Blender CPU scene fixture now has runnable bridge code for physically rendered PBR/SSS spheres, light rig, strand and atmospheric medium. **187/187 local Linux tests PASS; previous Windows verified 175/175**, latest Windows replay and real Blender witness render pending. These numeric contracts are *not* finished physically realistic hair/skin/light simulation.
+
 ## What MGR owns and can run now
 
 | MGR capability | Native implementation | Verified proof | Production gap |

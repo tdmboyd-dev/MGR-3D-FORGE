@@ -1,0 +1,35 @@
+# R13/R14 — MIT and Stanford Primary University Provenance
+
+**Research:** 2026-10-25. **Scope:** official academic course pages/syllabus/resource inventories and lab technical-paper pages/selected original paper PDFs, **not** all lectures, datasets, implementation source or course assignments. MGR-native technical proposals and benchmarks live in `research/source-audits/R13-MIT.md` and `research/source-audits/R14-STANFORD.md`.
+
+## R13 MIT OpenCourseWare — education, not code licensing
+
+| MIT-authored resource | Specific useful material | Depth and caveat |
+|---|---|---|
+| [18.06 Linear Algebra syllabus](https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/pages/syllabus/); [lecture calendar](https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/pages/calendar/) | Linear transforms, matrix inverse, determinants, rank, eigenanalysis, singular-value reasoning. | Course/topic index reviewed; no claim every lecture and problem was studied. |
+| [18.06 linear transformations lecture](https://www.ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/resources/lecture-30-linear-transformations-and-their-matrices/); [eigenvectors lesson](https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/pages/least-squares-determinants-and-eigenvalues/eigenvalues-and-eigenvectors/) | Matrix mappings and characteristic directions; foundations for camera/joint transforms and conditioning. | Resource summaries reviewed; numerical algorithms independently interpreted. |
+| [6.837 Computer Graphics course](https://ocw.mit.edu/courses/6-837-computer-graphics-fall-2012/); [lecture index](https://ocw.mit.edu/courses/6-837-computer-graphics-fall-2012/pages/lecture-notes/) | Transforms, ray casting/tracing, rasterization, light, global illumination and skinning. | Lecture titles/resources reviewed; not every PDF, code assignment or exercise executed. |
+| [6.837 Coordinates and Transformations](https://ocw.mit.edu/courses/6-837-computer-graphics-fall-2012/resources/mit6_837f12_lec03/); [Ray Tracing](https://ocw.mit.edu/courses/6-837-computer-graphics-fall-2012/resources/mit6_837f12_lec13/) | Geometry/camera matrix chain and analytical ray intersections. | Individual resource pages reviewed. |
+| [6.801 Machine Vision 2020](https://ocw.mit.edu/courses/6-801-machine-vision-fall-2020/); [older lecture index](https://ocw.mit.edu/courses/6-801-machine-vision-fall-2004/pages/lecture-notes/) | Pinhole camera, optical flow, image motion and inferable environment geometry. | Courses differ by year; focus on stable math, not blanket equivalence of curricula. |
+| [MIT OCW official terms](https://ocw.mit.edu/pages/privacy-and-terms-of-use/); [MIT usage FAQ](https://support.learn.mit.edu/hc/en-us/articles/42909882604315-What-are-the-requirements-of-use-for-MIT-OpenCourseWare) | **CC BY-NC-SA 4.0** licensing, attribution, noncommercial sharing and share-alike obligations; special conditions affect derivative AI/training uses. | **Do not** ingest/repackage OCW materials into commercial MGR software/models absent case-specific permission review. Independently authored standard equations and tests are a safer native route. |
+
+## R14 Stanford Computer Graphics Laboratory — papers, software and research datasets
+
+| Original lab resource | Grounded finding | Depth and caveat |
+|---|---|---|
+| [Light Field Rendering, Marc Levoy/Pat Hanrahan](https://graphics.stanford.edu/papers/light/gamma-corrected/); [original SIGGRAPH paper PDF](https://graphics.stanford.edu/papers/light/light-lores-corrected.pdf) | Free-space radiance can be parameterized over a ray-space, enabling novel sampled views. | Original lab paper/resource page selectively inspected, not a reproduction of experimental results. |
+| [Stanford light field archive](https://graphics.stanford.edu/data/LF/); [research program](https://graphics.stanford.edu/projects/lightfield/lightfield.html) | Captured multi-view radiance can support view interpolation and photographic refocus. | Data licensing must be checked per dataset; no commercial reuse inferred. |
+| [QSplat: multiresolution point rendering](https://graphics.stanford.edu/papers/qsplat/); [original paper PDF](https://graphics.stanford.edu/papers/qsplat/qsplat_paper.pdf) | Hierarchical points can render very large scan-derived geometry with view/LOD adaptation. | Original paper abstract and selected details reviewed. Point imagery is not editable watertight collision geometry. |
+| [Stanford volume project](https://graphics.stanford.edu/projects/volume/); [original volume-display research](https://www.graphics.stanford.edu/papers/volume-cga88/) | Ray-based visualization of sampled 3D fields without explicit polygon surface extraction. | Historical article page notes an exposition correction; numerical tests must follow corrected model, not an unverified transcription. |
+| [Stanford 3D Scanning Repository](https://graphics.stanford.edu/data/3Dscanrep/3Dscanrep.html) | Acquired mesh/point scan benchmarks for research; explicit invitation to **research use**. | Research use != unrestricted commercial redistribution. Exclude assets from MGR shipped bundle until owner permission validated. |
+| [Stanford rendering research](https://graphics.stanford.edu/projects/rendering/); [technical publications](https://graphics.stanford.edu/papers/) | Light/material scattering, realistic image synthesis and hardware acceleration are research areas. | Program/index descriptions do not substantiate a particular invented shader or full source implementation. |
+| [Stanford LightPack software](https://graphics.stanford.edu/software/lightpack/); [QSplat software page](https://aperture.stanford.edu/software/qsplat/) | Historical demonstration implementations exist and may carry custom licenses. | Exact licenses and hardware-age compatibility require separate legal/technical review prior to copying into MGR. |
+
+## Source/legal rules carried into engineering
+
+1. Citations are retained here for audit transparency; MGR-native capabilities must be independently implemented and measured rather than portrayed as undocumented access to MIT/Stanford proprietary sources.
+2. MIT OCW learning resource licensing is material: do not train a commercial AI on downloaded OCW corpus or package derivative lecture text/figures without verifying permissions and compatible terms.
+3. Stanford research archives and scans are not blanket commercial asset libraries. Even if downloadable, asset license, photographer and test-scene provenance remain separate questions.
+4. Math correctness must be measured using MGR-owned geometry, images, camera sweeps and controlled test vectors. No university study alone certifies Forge production quality.
+
+**Cross-source thesis:** MIT's transforms/vision equations diagnose when spatial claims are mathematically unsupported; Stanford's light-field/point/volume/scan research explains why different visual 3D representations carry different truths. Fuse the concepts in MGR acceptance without copying their protected content.
