@@ -3,6 +3,7 @@
 import hashlib
 import json
 import math
+import re
 from pathlib import Path
 
 from .geometry import MATERIALS, Mesh, create_neighborhood
@@ -35,24 +36,37 @@ def _validate_edits(document, originals, world_sha, grounds):
             or document["asset_sha256"] != world_sha):
         raise ValueError("editor schema or source world fingerprint mismatch")
     changed = document["buildings"]
-    if not isinstance(changed, list) or len(changed) != len(originals):
-        raise ValueError("building count mismatch")
+    if not isinstance(changed, list) or len(changed) > 128:
+        raise ValueError("invalid building count")
     half_width, half_depth = grounds["width"] / 2, grounds["depth"] / 2
-    normalized = []
-    for base, item in zip(originals, changed):
+    original_by_id = {item["id"]: item for item in originals}
+    seen, normalized = set(), []
+    for item in changed:
         if (not isinstance(item, dict) or set(item) != {"id", "center", "size", "material"}
-                or item["id"] != base["id"] or item["material"] not in BUILDING_MATERIALS):
+                or type(item["id"]) is not str or item["id"] in seen
+                or item["material"] not in BUILDING_MATERIALS):
             raise ValueError("building identity/material mismatch")
+        seen.add(item["id"])
+        base = original_by_id.get(item["id"])
+        if base is None and not re.fullmatch(r"mgr-created-[0-9]{4,6}", item["id"]):
+            raise ValueError("unrecognized authored building identity")
         center, size = item["center"], item["size"]
         if (not isinstance(center, list) or len(center) != 3
                 or not isinstance(size, list) or len(size) != 3
                 or any(type(v) not in (int, float) or not math.isfinite(v) for v in center + size)
-                or center[1] != base["center"][1]
-                or size[0] != base["size"][0] or size[2] != base["size"][2]
-                or abs(center[0]) > half_width or abs(center[2]) > half_depth
+                or center[1] != 0
+                or not 2 <= size[0] <= max(40, base["size"][0] if base else 40)
+                or not 2 <= size[2] <= max(40, base["size"][2] if base else 40)
+                or abs(center[0]) + size[0] / 2 > half_width
+                or abs(center[2]) + size[2] / 2 > half_depth
                 or not 2 <= size[1] <= 100):
             raise ValueError("invalid building transform or dimension")
-        normalized.append({**base, "center": center[:], "size": size[:], "material": item["material"]})
+        if base is None:
+            normalized.append({"id": item["id"], "center": center[:], "size": size[:],
+                               "material": item["material"], "lot": None,
+                               "entry_road_distance": None, "origin": "mgr-editor-created"})
+        else:
+            normalized.append({**base, "center": center[:], "size": size[:], "material": item["material"]})
     return normalized
 
 
@@ -76,6 +90,7 @@ def apply_world_edits(world_dir, edits_path, output):
         raise ValueError("source geometry does not match deterministic MGR manifest")
     document = _load_json(edits_path)
     changed = _validate_edits(document, reproducible["buildings"], sha, reproducible["grounds"])
+    original_by_id = {b["id"]: b for b in reproducible["buildings"]}
     generated = [Mesh() for _ in EDITOR_MATERIALS]
     generated[0], generated[1] = meshes[0], meshes[1]
     for building in changed:
@@ -84,6 +99,7 @@ def apply_world_edits(world_dir, edits_path, output):
         generated[BUILDING_MATERIALS[building["material"]]].box(x, 0, z, width, height, depth)
         generated[5].box(x, height, z, width + 0.3, 0.3, depth + 0.3)
     manifest = {**reproducible, "buildings": changed,
+                "editable_building_count": len(changed),
                 "material_count": len(EDITOR_MATERIALS),
                 "triangle_count": sum(len(mesh.indices) // 3 for mesh in generated),
                 "vertex_count": sum(len(mesh.positions) // 3 for mesh in generated)}
@@ -101,7 +117,9 @@ def apply_world_edits(world_dir, edits_path, output):
         "schema": "mgr.forge.edited-world.v1", "original_glb_sha256": sha,
         "edit_sha256": hashlib.sha256(json.dumps(document, sort_keys=True,
                                                 separators=(",", ":")).encode()).hexdigest(),
-        "edit_count": sum(a != b for a, b in zip(reproducible["buildings"], changed)),
+        "edit_count": sum(original_by_id.get(b["id"]) != b for b in changed)
+                      + len({b["id"] for b in reproducible["buildings"]}
+                            - {b["id"] for b in changed}),
     }
     manifest["execution"] = {"compute": "CPU", "external_api_calls": 0,
                              "model_inference": False, "blender_verified": False,

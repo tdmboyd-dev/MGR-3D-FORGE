@@ -12,19 +12,38 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opaci
 #editor .split{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 #editor button{cursor:pointer;background:#1d7e75;color:#fff;border:0;border-radius:6px;padding:9px 11px;margin:10px 5px 0 0;font-weight:600}
 #editor button.secondary{background:#37465f}#editor-msg{font-size:12px;min-height:30px;margin-top:10px;color:#a6f4d7}
-@media(max-width:650px){#editor{top:auto;bottom:48px;right:8px;left:8px;width:auto;max-height:32vh;padding:10px}#editor .split{grid-template-columns:repeat(3,1fr)}#help{font-size:10px;left:8px;bottom:4px}#overlay{top:8px;left:8px}h1{font-size:16px}}
+#director-toggle{position:absolute;left:18px;top:150px;padding:10px 16px;background:#0c786b;color:#fff;border:1px solid #74e6c4;border-radius:8px;font-weight:700;cursor:pointer}
+#director{position:absolute;left:18px;top:205px;width:315px;max-height:calc(100vh - 285px);overflow:auto;padding:15px;background:#131b2bee;border:1px solid #64778f;border-radius:12px;box-shadow:0 14px 45px #0008}
+#director[hidden]{display:none}#director h2{font-size:16px;margin:0 0 7px}#director textarea{box-sizing:border-box;width:100%;min-height:74px;resize:vertical;background:#29364a;border:1px solid #64778f;border-radius:7px;padding:9px;color:#fff;font:inherit}
+#director button{background:#126f66;border:0;border-radius:6px;padding:9px 12px;color:#fff;margin:8px 4px 8px 0;cursor:pointer}#director button:disabled{opacity:.42;cursor:not-allowed}
+#director input{display:block;max-width:100%;font-size:12px;margin:7px 0}#director img{max-width:100%;max-height:150px;object-fit:contain;border-radius:8px}#director-msg{font-size:12px;color:#9af4cd;white-space:pre-wrap}
+#editor button:disabled{opacity:.4;cursor:not-allowed}
+@media(max-width:650px){#editor{top:auto;bottom:48px;right:8px;left:8px;width:auto;max-height:32vh;padding:10px}#editor .split{grid-template-columns:repeat(3,1fr)}#director{left:8px;top:114px;width:calc(100vw - 48px);max-height:30vh}#director-toggle{left:8px;top:72px}#help{font-size:10px;left:8px;bottom:4px}#overlay{top:8px;left:8px}h1{font-size:16px}}
 </style></head><body>
 <canvas id="world" aria-label="Interactive three-dimensional MGR world"></canvas>
 <div id="overlay"><h1>MGR // WORLD FLIGHT</h1><small>OWNED WORLD · LOCAL RENDER · LIVE NAVIGATION</small><div><span id="status">Loading world…</span></div></div>
 <div id="help">W/S: forward/back &nbsp; A/D: strafe &nbsp; E/Q: up/down &nbsp; ←/→: turn &nbsp; Drag: look &nbsp; Shift: move faster</div>
+<button id="director-toggle" type="button" aria-expanded="false" aria-controls="director">✦ Creation Chat</button>
+<aside id="director" hidden aria-label="MGR Creation Director">
+  <h2>MGR CREATION DIRECTOR</h2><small>Describe an edit or a new building. Commands stay local.</small>
+  <label for="director-prompt">Creation command</label>
+  <textarea id="director-prompt" maxlength="600" placeholder="Create a gold building 12 meters tall at x 6 z -10"></textarea>
+  <button id="director-run" type="button">Create / Change</button><button id="director-voice" type="button">🎙 Voice</button>
+  <small>Try: “make it blue”, “set height to 24”, “move to x 5 z -8”, “create a gold building height 15”.</small>
+  <label for="director-image">Optional picture reference (local preview, not image reconstruction)</label>
+  <input id="director-image" type="file" accept="image/png,image/jpeg,image/webp"><img id="director-preview" alt="Your private local picture reference" hidden>
+  <p id="director-msg" role="status" aria-live="polite">Ready. No external AI call or GPU required for supported commands.</p>
+</aside>
 <aside id="editor" aria-label="MGR World Editor">
   <h2>WORLD EDITOR</h2><small>Change buildings. Save the world you create.</small>
   <label for="building">Building</label><select id="building"></select>
   <div class="split"><div><label for="edit-x">X (meters)</label><input id="edit-x" type="number" step="1"></div><div><label for="edit-z">Z (meters)</label><input id="edit-z" type="number" step="1"></div></div>
   <label for="edit-height">Height (meters)</label><input id="edit-height" type="number" min="2" max="100" step="1">
+  <div class="split"><div><label for="edit-width">Width (m)</label><input id="edit-width" type="number" min="2" max="40" step="1"></div><div><label for="edit-depth">Depth (m)</label><input id="edit-depth" type="number" min="2" max="40" step="1"></div></div>
   <label for="edit-color">Material color</label><select id="edit-color"><option value="building-brick">Warm Brick</option><option value="building-stone">Stone</option><option value="building-blue">Blue</option><option value="building-gold">Gold</option><option value="building-emerald">Emerald</option></select>
   <button id="save-world" type="button">Download World</button><button class="secondary" id="reset-world" type="button">Reset</button>
   <div class="split"><button class="secondary" id="undo-world" type="button" disabled>↶ Undo</button><button class="secondary" id="redo-world" type="button" disabled>↷ Redo</button></div>
+  <div class="split"><button class="secondary" id="duplicate-building" type="button">Duplicate</button><button class="secondary" id="delete-building" type="button">Delete</button></div>
   <label for="import-world">Load a saved world (.json)</label><input id="import-world" type="file" accept="application/json,.json">
   <div id="editor-msg" role="status" aria-live="polite">Ready to edit.</div>
 </aside>

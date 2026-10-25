@@ -111,11 +111,48 @@ try{
   const afterMotion=await evaluate('window.MGR_FORGE_RUNTIME.getStatus().position');
   assert.ok(Math.hypot(...afterMotion.map((v,i)=>v-beforeMotion[i]))>0.1,
     'actual browser keyboard input must move world camera');
+  await evaluate("document.getElementById('director-toggle').click()");
+  assert.equal(await evaluate("document.getElementById('director').hidden"),false);
+  const added=await evaluate(`(()=>{
+    document.getElementById('director-prompt').value='create a gold building height 16 width 8 depth 8 at x 0 z 0';
+    document.getElementById('director-run').click();
+    return window.MGR_FORGE_RUNTIME.getEdits().buildings.at(-1);
+  })()`);
+  assert.equal(added.material,'building-gold');
+  assert.deepEqual(added.center,[0,0,0]);
+  assert.deepEqual(added.size,[8,16,8]);
+  assert.ok(added.id.startsWith('mgr-created-'));
+  assert.equal(await evaluate("window.MGR_FORGE_RUNTIME.executeCommand('set height to 27')"),true);
+  assert.equal(await evaluate('window.MGR_FORGE_RUNTIME.getEdits().buildings.at(-1).size[1]'),27);
+  assert.equal(await evaluate("window.MGR_FORGE_RUNTIME.executeCommand('make it blue')"),true);
+  assert.equal(await evaluate('window.MGR_FORGE_RUNTIME.getEdits().buildings.at(-1).material'),'building-blue');
+  assert.equal(await evaluate("window.MGR_FORGE_RUNTIME.executeCommand('move to x 10 z -10')"),true);
+  assert.deepEqual(await evaluate('window.MGR_FORGE_RUNTIME.getEdits().buildings.at(-1).center'),[10,0,-10]);
+  assert.equal(await evaluate("window.MGR_FORGE_RUNTIME.executeCommand('run arbitrary python code')"),false);
+  assert.equal(await evaluate('window.MGR_FORGE_RUNTIME.getEdits().buildings.length'),11);
+  await evaluate("document.getElementById('duplicate-building').click()");
+  assert.equal(await evaluate('window.MGR_FORGE_RUNTIME.getEdits().buildings.length'),12);
+  await evaluate("document.getElementById('delete-building').click()");
+  assert.equal(await evaluate('window.MGR_FORGE_RUNTIME.getEdits().buildings.length'),11);
+  const reference=await evaluate(`(()=>{
+    const input=document.getElementById('director-image'),transfer=new DataTransfer();
+    transfer.items.add(new File([new Uint8Array([137,80,78,71,13,10,26,10])],
+      'reference.png',{type:'image/png'}));input.files=transfer.files;
+    input.dispatchEvent(new Event('change',{bubbles:true}));
+    return {hidden:document.getElementById('director-preview').hidden,
+      message:document.getElementById('director-msg').textContent};
+  })()`);
+  assert.equal(reference.hidden,false);
+  assert.ok(reference.message.includes('not yet connected'));
+  await evaluate("document.getElementById('director-toggle').click()");
+  assert.equal(await evaluate("document.getElementById('director').hidden"),true);
   console.log(JSON.stringify({schema:'mgr.forge.browser-editor-smoke.v1',status:'PASS',
     browser:'Chrome headless WebGL2',buildings:base.buildings.length,
     checks:['runtime boot','building changed','undo/redo','local persistence','downloaded edit JSON',
       'JSON import restored','reset restored','ray-picked actual building','canvas mouse clicked actual building',
-      'keyboard navigated real 3D camera']}));
+      'keyboard navigated real 3D camera','expand/collapse creation chat','text generated new building',
+      'text changed dimensions/material/position','arbitrary-code request rejected',
+      'duplicated and deleted building','local image reference loaded']}));
 }finally{
   for(const waiter of pending.values())waiter.reject?.(new Error('browser ending'));
   socket?.close();child.kill();await rm(profile,{recursive:true,force:true,maxRetries:3,retryDelay:150});

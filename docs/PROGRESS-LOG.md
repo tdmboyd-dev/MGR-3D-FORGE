@@ -259,3 +259,10 @@ The initial historical snapshot has been superseded by the current live inventor
 - Added recoverable edit history with bounded 80-entry undo stack, redo stack, Ctrl/Cmd+Z, Ctrl/Cmd+Y, Shift+Ctrl/Cmd+Z and disabled-button state. Changes, resets and imported edits participate; no-op edits do not create false checkpoints.
 - Rebuilt the canonical offline `demos/mgr-world-editor.html` with new controls while preserving its old published version in Git history. Windows Chrome now passes **ten real editor checks**: real building edits, history travel, local persistence, downloaded JSON, import, reset, 3D ray selection, canvas mouse click selection and actual KeyW camera navigation. Screenshot + receipt: `evidence/browser/windows-wave15-spatial-editor.json`. **223/223 Python tests PASS on Linux and Windows.**
 
+## 2026-10-25 — MGR Creation Director, text-to-real geometry (F90–F93)
+
+- Added collapsible MGR Creation Director sidecar. Typed prompts compile into allowlisted actual scene changes; optional browser speech transcribes into a **reviewable** command, never arbitrary Python. Photo uploads preview as local references only; no image-to-mesh model claim.
+- Expanded scene editor to create, duplicate and remove independent buildings and to resize width/depth. `forge/world_editor.py` accepts tightly bounded `mgr-created-####` IDs and deleted/reordered base buildings, with source SHA and dimensional checks, then emits genuine GLB/OBJ/MTL/SVG/HTML.
+- Added research specification `research/MGR-CREATION-DIRECTOR-CONTRACT.md` and segregated Web Speech/File API standards provenance. F92 real picture reconstruction and F93 spoken Python execution remain separate research gates, NOT BUILT.
+- Browser/WebGL full interaction acceptance pending; Python unit and adversarial tests continue to verify actual geometry and edit transaction outputs.
+

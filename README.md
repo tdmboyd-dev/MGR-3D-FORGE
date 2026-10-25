@@ -30,6 +30,11 @@ python3 -m forge.cli studio-proof --out artifacts/studio-proof.json
 python3 -m forge.cli compose-scene --layers examples/layered-scene.json --out artifacts/composed-scene.json
 python3 -m forge.cli world-flight --world artifacts/prompt-25 --out artifacts/prompt-25-flight.html
 python3 -m forge.cli apply-world-edits --world artifacts/prompt-25 --edits artifacts/mgr-world-edits.json --out artifacts/edited-city
+
+# Inside the offline world-editor HTML, open "Creation Chat". Try:
+# "create a gold building height 16 at x 0 z 0"
+# "set height to 27"  /  "make it blue"  /  "move to x 10 z -10"
+# Then Download World and feed that JSON into apply-world-edits above.
 python3 -m forge.cli audit-export --glb artifacts/prompt-25/world.glb --obj artifacts/prompt-25/world.obj --out artifacts/export-parity.json
 # For prepared cell files and SHA manifests:
 python3 -m forge.cli load-cells --root artifacts/cells --manifest artifacts/cell-manifest.json --plan artifacts/residency-plan.json --out artifacts/cell-load.json

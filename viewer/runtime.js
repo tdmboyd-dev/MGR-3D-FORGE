@@ -95,25 +95,35 @@
   };
   const edit={building:document.getElementById("building"),x:document.getElementById("edit-x"),
     z:document.getElementById("edit-z"),height:document.getElementById("edit-height"),
+    width:document.getElementById("edit-width"),depth:document.getElementById("edit-depth"),
     color:document.getElementById("edit-color"),message:document.getElementById("editor-msg"),
     undo:document.getElementById("undo-world"),redo:document.getElementById("redo-world")};
   const limits={x:manifest.grounds.width/2,z:manifest.grounds.depth/2};
-  const validBuildings=(items)=>Array.isArray(items)&&items.length===baseBuildings.length&&items.every((b,i)=>{
-    const original=baseBuildings[i];
-    return b&&b.id===original.id&&Array.isArray(b.center)&&b.center.length===3&&
-      Array.isArray(b.size)&&b.size.length===3&&b.center[1]===original.center[1]&&
-      Number.isFinite(b.center[0])&&Math.abs(b.center[0])<=limits.x&&
-      Number.isFinite(b.center[2])&&Math.abs(b.center[2])<=limits.z&&
-      b.size[0]===original.size[0]&&b.size[2]===original.size[2]&&
-      Number.isFinite(b.size[1])&&b.size[1]>=2&&b.size[1]<=100&&
-      Object.hasOwn(palette,b.material);
-  });
+  const originalIds=new Set(baseBuildings.map(b=>b.id));
+  const validBuildings=(items)=>{
+    if(!Array.isArray(items)||items.length>128)return false;
+    const seen=new Set();
+    return items.every(b=>{
+      if(!b||typeof b.id!=="string"||seen.has(b.id)||
+         (!originalIds.has(b.id)&&!/^mgr-created-[0-9]{4,6}$/.test(b.id)))return false;
+      seen.add(b.id);
+      const original=baseBuildings.find(o=>o.id===b.id);
+      return Array.isArray(b.center)&&b.center.length===3&&Array.isArray(b.size)&&b.size.length===3&&
+        b.center[1]===0&&b.center.every(Number.isFinite)&&b.size.every(Number.isFinite)&&
+        b.size[0]>=2&&b.size[0]<=Math.max(40,original?.size[0]||0)&&
+        b.size[2]>=2&&b.size[2]<=Math.max(40,original?.size[2]||0)&&
+        b.size[1]>=2&&b.size[1]<=100&&
+        Math.abs(b.center[0])+b.size[0]/2<=limits.x&&
+        Math.abs(b.center[2])+b.size[2]/2<=limits.z&&Object.hasOwn(palette,b.material);
+    });
+  };
   const projectDocument=()=>({schema:"mgr.forge.world-edit.v1",asset_sha256:worldSHA,
     buildings:buildings.map(b=>({id:b.id,center:[...b.center],size:[...b.size],material:b.material}))});
   const restoreDocument=(doc)=>{
     if(!doc||doc.schema!=="mgr.forge.world-edit.v1"||doc.asset_sha256!==worldSHA||!validBuildings(doc.buildings))
       throw new Error("Saved scene is not compatible with this world");
-    buildings=baseBuildings.map((b,i)=>({...b,...doc.buildings[i]}));
+    const originals=new Map(baseBuildings.map(b=>[b.id,b]));
+    buildings=doc.buildings.map(b=>({...originals.get(b.id),...b}));
   };
   try {const persisted=localStorage.getItem(storageKey);if(persisted)restoreDocument(JSON.parse(persisted));}
   catch(error){edit.message.textContent="Old saved edits were rejected; original world loaded.";buildings=JSON.parse(JSON.stringify(baseBuildings));}
@@ -168,7 +178,7 @@
   const travel=(source,destination,label)=>{
     if(!source.length)return;
     destination.push(snapshot());buildings=source.pop();
-    resetGpuBuildings();refreshEditor();saveLocal();updateHistoryButtons();message(label);
+    resetGpuBuildings();syncBuildingOptions();saveLocal();updateHistoryButtons();message(label);
   };
   edit.undo.addEventListener("click",()=>travel(undoStack,redoStack,"Edit undone."));
   edit.redo.addEventListener("click",()=>travel(redoStack,undoStack,"Edit redone."));
@@ -177,26 +187,64 @@
   const selected=()=>buildings.find(b=>b.id===edit.building.value);
   const refreshEditor=()=>{
     const b=selected();if(!b)return;
-    edit.x.value=b.center[0];edit.z.value=b.center[2];edit.height.value=b.size[1];edit.color.value=b.material;
+    edit.x.value=b.center[0];edit.z.value=b.center[2];edit.height.value=b.size[1];
+    edit.width.value=b.size[0];edit.depth.value=b.size[2];edit.color.value=b.material;
   };
-  for(const b of buildings){const opt=document.createElement("option");opt.value=b.id;opt.textContent=b.id;edit.building.append(opt);}
+  const syncBuildingOptions=(preferred)=>{
+    const target=preferred||edit.building.value;
+    edit.building.replaceChildren();
+    for(const b of buildings){const opt=document.createElement("option");opt.value=b.id;opt.textContent=b.id;edit.building.append(opt);}
+    if(buildings.some(b=>b.id===target))edit.building.value=target;
+    refreshEditor();
+  };
+  syncBuildingOptions();
   edit.building.addEventListener("change",refreshEditor);
   const changeBuilding=()=>{
     const b=selected();if(!b)return;
     const x=Number(edit.x.value),z=Number(edit.z.value),height=Number(edit.height.value);
+    const width=Number(edit.width.value),depth=Number(edit.depth.value);
     if(!Number.isFinite(x)||!Number.isFinite(z)||!Number.isFinite(height)||
-       Math.abs(x)>limits.x||Math.abs(z)>limits.z||height<2||height>100||!Object.hasOwn(palette,edit.color.value)){
+       !Number.isFinite(width)||!Number.isFinite(depth)||width<2||
+       width>Math.max(40,baseBuildings.find(o=>o.id===b.id)?.size[0]||0)||depth<2||
+       depth>Math.max(40,baseBuildings.find(o=>o.id===b.id)?.size[2]||0)||
+       Math.abs(x)+width/2>limits.x||Math.abs(z)+depth/2>limits.z||
+       height<2||height>100||!Object.hasOwn(palette,edit.color.value)){
       message("Invalid position/height/material; edit rejected.");return;
     }
-    if(b.center[0]===x&&b.center[2]===z&&b.size[1]===height&&b.material===edit.color.value)return;
-    checkpoint();b.center[0]=x;b.center[2]=z;b.size[1]=height;b.material=edit.color.value;
+    if(b.center[0]===x&&b.center[2]===z&&b.size[1]===height&&
+       b.size[0]===width&&b.size[2]===depth&&b.material===edit.color.value)return;
+    checkpoint();b.center[0]=x;b.center[2]=z;b.size[1]=height;
+    b.size[0]=width;b.size[2]=depth;b.material=edit.color.value;
     resetGpuBuildings();saveLocal();
   };
-  for(const control of [edit.x,edit.z,edit.height,edit.color])control.addEventListener("change",changeBuilding);
+  for(const control of [edit.x,edit.z,edit.height,edit.width,edit.depth,edit.color])control.addEventListener("change",changeBuilding);
+  let createdSequence=1;
+  const nextCreatedId=()=>{
+    let result;
+    do{result=`mgr-created-${String(createdSequence++).padStart(4,"0")}`;}
+    while(buildings.some(b=>b.id===result));
+    return result;
+  };
+  const applyScene=(proposed,label,selection)=>{
+    if(!validBuildings(proposed)){message("Edit rejected: building count or geometry exceeds world limits.");return false;}
+    if(JSON.stringify(buildings)===JSON.stringify(proposed))return true;
+    checkpoint();buildings=proposed;resetGpuBuildings();syncBuildingOptions(selection);saveLocal();message(label);return true;
+  };
+  const duplicateSelected=()=>{
+    const b=selected();if(!b)return false;
+    const copy=JSON.parse(JSON.stringify(b));copy.id=nextCreatedId();
+    copy.center[0]=Math.min(limits.x-copy.size[0]/2,copy.center[0]+copy.size[0]+2);
+    copy.center[2]=Math.min(limits.z-copy.size[2]/2,copy.center[2]+copy.size[2]+2);
+    return applyScene([...buildings,copy],`Duplicated ${b.id}.`,copy.id);
+  };
+  document.getElementById("duplicate-building").addEventListener("click",duplicateSelected);
+  document.getElementById("delete-building").addEventListener("click",()=>{
+    const b=selected();if(b)applyScene(buildings.filter(item=>item.id!==b.id),`Removed ${b.id}.`);
+  });
   document.getElementById("reset-world").addEventListener("click",()=>{
     if(JSON.stringify(buildings)===JSON.stringify(baseBuildings))return;
     checkpoint();
-    buildings=JSON.parse(JSON.stringify(baseBuildings));resetGpuBuildings();refreshEditor();saveLocal();message("Original world restored.");
+    buildings=JSON.parse(JSON.stringify(baseBuildings));resetGpuBuildings();syncBuildingOptions();saveLocal();message("Original world restored.");
   });
   document.getElementById("save-world").addEventListener("click",()=>{
     const blob=new Blob([JSON.stringify(projectDocument(),null,2)+"\n"],{type:"application/json"});
@@ -210,9 +258,119 @@
     try{const before=snapshot();restoreDocument(JSON.parse(await file.text()));
       if(JSON.stringify(before)!==JSON.stringify(buildings)){
         undoStack.push(before);if(undoStack.length>80)undoStack.shift();redoStack.length=0;updateHistoryButtons();}
-      resetGpuBuildings();refreshEditor();saveLocal();message("World edits loaded.");}
+      resetGpuBuildings();syncBuildingOptions();saveLocal();message("World edits loaded.");}
     catch(error){message("Import rejected: incompatible or invalid world edits.");}
     event.target.value="";
+  });
+  // MGR Creation Director: fixed, auditable scene commands; never eval user text.
+  const panel=document.getElementById("director"),toggle=document.getElementById("director-toggle");
+  const prompt=document.getElementById("director-prompt"),directorMessage=document.getElementById("director-msg");
+  toggle.addEventListener("click",()=>{
+    panel.hidden=!panel.hidden;toggle.setAttribute("aria-expanded",String(!panel.hidden));
+    toggle.textContent=panel.hidden?"✦ Creation Chat":"✕ Close Creation Chat";
+  });
+  const numberPattern="(-?(?:[0-9]+(?:\\.[0-9]+)?|\\.[0-9]+))";
+  const capture=(source,expression)=>{
+    const m=source.match(new RegExp(expression,"i"));return m?Number(m[1]):null;
+  };
+  const colorNames={"gold":"building-gold","emerald":"building-emerald","green":"building-emerald",
+    "brick":"building-brick","red":"building-brick","stone":"building-stone","gray":"building-stone",
+    "grey":"building-stone","blue":"building-blue"};
+  const commandColor=(source)=>{
+    const hit=source.match(/\b(gold|emerald|green|brick|red|stone|gray|grey|blue)\b/i);
+    return hit?colorNames[hit[1].toLowerCase()]:null;
+  };
+  const availableLot=()=>{
+    const stride=manifest.spec.lot_size+manifest.spec.road_width;
+    for(let row=0;row<manifest.spec.rows;row++)for(let col=0;col<manifest.spec.columns;col++){
+      const x=(col-(manifest.spec.columns-1)/2)*stride;
+      const z=(row-(manifest.spec.rows-1)/2)*stride;
+      if(!buildings.some(b=>Math.abs(b.center[0]-x)<manifest.spec.lot_size/2&&
+                            Math.abs(b.center[2]-z)<manifest.spec.lot_size/2))return [x,z];
+    }
+    return [0,0];
+  };
+  const executeCommand=(text)=>{
+    const source=String(text||"").trim().toLowerCase().replace(/[.,!?]+$/g,"");
+    if(!source||source.length>600){directorMessage.textContent="Enter a creation command (600 characters max).";return false;}
+    let label="",proposed=snapshot(),target=selected();
+    const creating=/\b(create|add|build|generate)\b/.test(source)&&/\b(building|house|tower)\b/.test(source);
+    const removing=/\b(delete|remove)\b/.test(source)&&/\b(building|selected|it)\b/.test(source);
+    const duplicating=/\b(duplicate|copy|clone)\b/.test(source)&&/\b(building|selected|it)\b/.test(source);
+    if(creating){
+      const [lotX,lotZ]=availableLot();
+      const x=capture(source,`\\bx\\s*(?:=|to|at)?\\s*${numberPattern}`)??lotX;
+      const z=capture(source,`\\bz\\s*(?:=|to|at)?\\s*${numberPattern}`)??lotZ;
+      const height=capture(source,`\\bheight\\s*(?:=|to|of)?\\s*${numberPattern}`)??
+        capture(source,`${numberPattern}\\s*(?:meters?|m)\\s*tall`)??12;
+      const width=capture(source,`\\bwidth\\s*(?:=|to|of)?\\s*${numberPattern}`)??8;
+      const depth=capture(source,`\\bdepth\\s*(?:=|to|of)?\\s*${numberPattern}`)??8;
+      const next={id:nextCreatedId(),center:[x,0,z],size:[width,height,depth],
+        material:commandColor(source)||"building-stone"};
+      proposed.push(next);target=next;label=`Created ${next.id}. Export saved edits to materialize its GLB.`;
+    }else if(removing){
+      if(!target){directorMessage.textContent="Select a building before removing it.";return false;}
+      proposed=proposed.filter(b=>b.id!==target.id);label=`Removed ${target.id}.`;
+    }else if(duplicating){
+      const ok=duplicateSelected();directorMessage.textContent=ok?"Building duplicated.":"Duplication rejected by world limits.";
+      return ok;
+    }else if(target){
+      const b=proposed.find(b=>b.id===target.id);
+      const height=capture(source,`\\b(?:height|tall)\\s*(?:=|to|of)?\\s*${numberPattern}`);
+      const width=capture(source,`\\bwidth\\s*(?:=|to|of)?\\s*${numberPattern}`);
+      const depth=capture(source,`\\bdepth\\s*(?:=|to|of)?\\s*${numberPattern}`);
+      const x=capture(source,`\\bx\\s*(?:=|to|at)?\\s*${numberPattern}`);
+      const z=capture(source,`\\bz\\s*(?:=|to|at)?\\s*${numberPattern}`);
+      const material=commandColor(source);
+      const movement=/\b(move|position|relocate)\b/.test(source);
+      const sizing=/\b(set|change|make|resize|scale|height|width|depth|taller|shorter)\b/.test(source);
+      const painting=/\b(paint|color|colour|make|turn)\b/.test(source);
+      if((x!==null||z!==null)&&movement){
+        if(x!==null)b.center[0]=x;if(z!==null)b.center[2]=z;
+      }
+      if(sizing){
+        if(height!==null)b.size[1]=height;
+        if(width!==null)b.size[0]=width;
+        if(depth!==null)b.size[2]=depth;
+      }
+      if(material&&painting)b.material=material;
+      if(JSON.stringify(proposed)===JSON.stringify(buildings)){
+        directorMessage.textContent="Didn't find a supported change. Try: set height to 24, make it gold, move to x 5 z -8.";
+        return false;
+      }
+      label=`Updated ${b.id} from your instruction.`;
+    }else{directorMessage.textContent="No building selected. Try creating a building first.";return false;}
+    const ok=applyScene(proposed,label,target?.id);
+    directorMessage.textContent=ok?label:"Scene limits rejected that command. Use meters and stay within the world boundary.";
+    return ok;
+  };
+  document.getElementById("director-run").addEventListener("click",()=>executeCommand(prompt.value));
+  prompt.addEventListener("keydown",e=>{
+    if((e.ctrlKey||e.metaKey)&&e.key==="Enter"){e.preventDefault();executeCommand(prompt.value);}
+  });
+  const recognitionCtor=window.SpeechRecognition||window.webkitSpeechRecognition;
+  const voiceButton=document.getElementById("director-voice");
+  if(!recognitionCtor){voiceButton.disabled=true;voiceButton.title="Speech input unavailable in this browser; type a command instead.";}
+  else voiceButton.addEventListener("click",()=>{
+    try{
+      const recognizer=new recognitionCtor();recognizer.lang="en-US";recognizer.interimResults=false;
+      recognizer.onresult=e=>{const heard=e.results?.[0]?.[0]?.transcript||"";
+        prompt.value=heard;directorMessage.textContent=`Heard: ${heard}. Review then press Create / Change.`;};
+      recognizer.onerror=e=>{directorMessage.textContent=`Voice input unavailable: ${e.error}. Type the command instead.`;};
+      directorMessage.textContent="Listening. Your browser's speech service may process audio remotely; review the text before running.";
+      recognizer.start();
+    }catch(error){directorMessage.textContent="Speech input couldn't start. Type the command instead.";}
+  });
+  let referenceUrl=null;
+  document.getElementById("director-image").addEventListener("change",e=>{
+    const file=e.target.files?.[0];if(!file)return;
+    if(file.size>5_000_000||!["image/png","image/jpeg","image/webp"].includes(file.type)){
+      directorMessage.textContent="Image rejected: PNG/JPEG/WebP up to 5 MB only.";e.target.value="";return;
+    }
+    if(referenceUrl)URL.revokeObjectURL(referenceUrl);
+    referenceUrl=URL.createObjectURL(file);
+    const preview=document.getElementById("director-preview");preview.src=referenceUrl;preview.hidden=false;
+    directorMessage.textContent="Image reference loaded locally. Describe what you want created; image-to-3D inference is not yet connected.";
   });
   resetGpuBuildings();refreshEditor();
   const halfDepth=manifest.grounds.depth/2;
@@ -327,7 +485,7 @@
   window.MGR_FORGE_RUNTIME={getStatus:()=>({drawCalls:draws.length+2*buildings.length,fps,
     position:[camera.x,camera.y,camera.z],collisions:hits,buildingCount:buildings.length,frameActive:frames>=0}),
     getEdits:()=>projectDocument(),getHistory:()=>({undo:undoStack.length,redo:redoStack.length}),
-    pickAt};
+    pickAt,executeCommand};
   status.textContent="World loaded, opening live 3D view…";
   requestAnimationFrame(frame);
 })();

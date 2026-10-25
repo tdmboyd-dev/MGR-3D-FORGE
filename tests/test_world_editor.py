@@ -89,6 +89,43 @@ class WorldEditorRoundtripTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             apply_world_edits(self.world, self.edits_path, self.root / "bad")
 
+    def test_native_created_building_exports_true_new_geometry(self):
+        self.edits["buildings"].append({"id": "mgr-created-0001", "center": [0, 0, 0],
+                                         "size": [8, 16, 8], "material": "building-gold"})
+        self.write_edits()
+        report = apply_world_edits(self.world, self.edits_path, self.root / "created")
+        self.assertEqual(report["buildings"], 5)
+        self.assertEqual(report["changed_buildings"], 3)
+        self.assertEqual(report["triangles"], 228)
+        self.assertEqual(verify_bundle(self.root / "created")["passed"], True)
+
+    def test_native_deleted_building_updates_true_geometry(self):
+        self.edits["buildings"] = self.edits["buildings"][1:]
+        self.write_edits()
+        report = apply_world_edits(self.world, self.edits_path, self.root / "removed")
+        self.assertEqual(report["buildings"], 3)
+        self.assertEqual(report["changed_buildings"], 2)
+        self.assertEqual(report["triangles"], 180)
+
+    def test_native_resized_building_materializes_true_dimensions(self):
+        self.edits["buildings"][0]["size"][0] = 19
+        self.edits["buildings"][0]["size"][2] = 17
+        self.write_edits()
+        output = self.root / "resized"
+        apply_world_edits(self.world, self.edits_path, output)
+        manifest = json.loads((output / "manifest.json").read_text())
+        self.assertEqual(manifest["buildings"][0]["size"], [19, 31.5, 17])
+
+    def test_duplicate_or_unauthorized_created_identity_fails(self):
+        self.edits["buildings"].append(copy.deepcopy(self.edits["buildings"][0]))
+        self.write_edits()
+        with self.assertRaises(ValueError):
+            apply_world_edits(self.world, self.edits_path, self.root / "bad-duplicate")
+        self.edits["buildings"][-1]["id"] = "unsafe@name"
+        self.write_edits()
+        with self.assertRaises(ValueError):
+            apply_world_edits(self.world, self.edits_path, self.root / "bad-id")
+
 
 if __name__ == "__main__":
     unittest.main()

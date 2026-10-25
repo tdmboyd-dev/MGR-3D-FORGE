@@ -75,3 +75,5 @@
 
 **F89 LIVE SPATIAL EDITING:** The native browser editor now selects real world buildings with 3D screen-ray hits. Changes/import/reset support bounded undo/redo and shortcut keys. Rebuilt self-contained demo `demos/mgr-world-editor.html`; Windows Chrome interaction tests include actual model editing, history and spatial selection. Precision mesh editing and a full move/rotate/scale gizmo remain open.
 
+**F90 CREATION DIRECTOR:** Native sidecar opens/closes; typed instructions can build/change/delete/duplicate houses and edit height, width, depth, material and position. CPU rebuild emits real new GLB geometry. Voice input is browser-optional and preview-first; picture upload is a local reference, **not** an image-to-3D reconstruction. Browser acceptance still pending; see `research/MGR-CREATION-DIRECTOR-CONTRACT.md`.
+
