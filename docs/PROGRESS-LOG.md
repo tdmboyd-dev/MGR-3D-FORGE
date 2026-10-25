@@ -7,6 +7,13 @@
 - Blender intake now records every imported editable mesh object's materials, armature modifiers, vertex groups and shape keys. **Connected Windows 5.2.2 LTS passed** import/save and an independent fresh-process reopen with matching SHA. All **376/376 Windows Python tests PASS** (27.153s); Linux 376 PASS with 30 network skips. Exact receipt: `evidence/blender/windows-wave24-character-readiness.json`.
 - Relevant original Khronos/Blender research and legal traceability: `research/external-provenance/CHARACTER-READINESS-SOURCES-2026-10-25.md`.
 
+## 2026-10-25 — F103 non-destructive character material part separation
+
+- `character-separate` opens admitted character `.blend` in actual Windows Blender 5.2.2, splits selected mesh by material into a **new** `.blend`, preserves source, and emits each object's materials, triangle count, vertex group and armature modifier inventory. Original source is untouched.
+- Windows proof: generic test mannequin went from **1 original mesh object** to **7 separately editable objects**, matching seven source material regions and **264/264 conserved triangles**. New file saved, then an independent Blender process reopened all **7** meshes and confirmed original GLB fingerprint. This enables selecting/removing/adjusting material regions, not verified semantic garment segmentation.
+- Rig still absent on test source; human likeness, actual Tevin components, extreme pose deformation and runtime outfit swapping remain open.
+- Final verification of the extended wave: **381/381 Windows Python tests PASS** in 27.608 seconds, no skips; **381/381 Linux PASS** with 30 loopback-dependent skips. Saved source, separation and reopened artifact were independently checked by installed Blender, with evidence `evidence/blender/windows-wave24-material-separation.json`.
+
 
 ## 2026-10-25 — First end-to-end interactive world program (F87)
 

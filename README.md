@@ -18,6 +18,8 @@ python -m forge.cli character-blender --candidate path/to/new-intake --blend pat
 # Independently reopen the .blend to verify the original source SHA on every mesh:
 python -m forge.cli character-reopen --blend path/to/new-character.blend --sha256 ORIGINAL_64_DIGIT_SHA --report path/to/reopen.json --binary blender
 python -m forge.cli character-readiness --source path/to/new-intake/candidate.glb --out path/to/new-readiness.json
+# Make distinct material regions selectable as independent objects in a NEW Blender project:
+python -m forge.cli character-separate --blend path/to/new-character.blend --out path/to/new-separated.blend --report path/to/new-parts.json --binary blender
 # Alternatively, open the loopback Creation Chat and select a small existing .glb
 # under "Existing 3D model"; "Inspect / Preserve 3D Model" gives GLB and JSON downloads.
 ```
