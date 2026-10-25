@@ -1,0 +1,40 @@
+{
+  "schema": "mgr.forge.browser-engine-handoff-evidence.v1",
+  "date": "2026-10-25",
+  "device": "Time's authorized Windows desktop",
+  "status": "PASS",
+  "browser": "Google Chrome headless CDP and WebGL2",
+  "blender": "Blender 5.2.2 LTS",
+  "browser_checks_passed": 7,
+  "browser_checks": [
+    "localhost token session",
+    "browser PNG upload",
+    "generated relief GLB",
+    "live edited world GLB",
+    "Godot project package",
+    "full Blender project conversion",
+    "downloadable real artifacts"
+  ],
+  "browser_process_exit_code": 0,
+  "browser_process_runtime_seconds": 144.94,
+  "downloaded_paths": [
+    "/files/9c948dc569b50a3a21fe9b95/scene.blend",
+    "/files/9c948dc569b50a3a21fe9b95/godot-project.zip",
+    "/files/9c948dc569b50a3a21fe9b95/edited/world-editor.html",
+    "/files/9c948dc569b50a3a21fe9b95/edited/world.glb",
+    "/files/2fe4a21e128e6a21d725810e/relief/relief.glb"
+  ],
+  "unit_tests": {
+    "passed": 335,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 142.775,
+    "exit_code": 0
+  },
+  "receiving_engine": {
+    "name": "Godot 4",
+    "binary_available_on_authorized_windows_path": false,
+    "import_run_verified": false,
+    "reason": "Engine binary not found on connected Windows device; the generated project has not been imported or played in Godot"
+  }
+}
