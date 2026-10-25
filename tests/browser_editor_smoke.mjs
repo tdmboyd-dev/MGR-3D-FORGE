@@ -142,6 +142,7 @@ try{
     transfer.items.add(new File([blob],'reference.png',{type:'image/png'}));input.files=transfer.files;
     const loaded=new Promise(resolve=>document.getElementById('director-preview').addEventListener('load',resolve,{once:true}));
     input.dispatchEvent(new Event('change',{bubbles:true}));await loaded;
+    await new Promise(resolve=>setTimeout(resolve,25));
     document.getElementById('director-sample-color').click();
     return {hidden:document.getElementById('director-preview').hidden,
       message:document.getElementById('director-msg').textContent,
