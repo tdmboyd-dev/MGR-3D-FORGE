@@ -34,7 +34,19 @@ python3 -m forge.benchmark --out artifacts/benchmark.json
 python3 -m forge.cli blender-verify artifacts/prompt-25/world.glb --report artifacts/blender-report.json
 ```
 
-Each world build creates fourteen files: `world.glb`, `world.obj`, `world.mtl`, `world_lod1.glb`, `navigation.json`, `chunks.json`, `camera_tour.json`, `spatial_overview.json`, `interiors.glb`, `interiors.json`, `parks.glb`, `parks.json`, `preview.svg`, and `manifest.json`. The manifest has SHA-256 receipts for the other 13 outputs. `character` separately creates a **generic** T/A-pose mannequin, 16 detachable GLB parts and an editable bone-length-checked pose track. None of this is Tevin's verified likeness or a production deforming rig. Worlds include static chunks, a building-only LOD1, editable camera keyframes, simple parks and invented two-room interior hypotheses. **Five GLB imports actually passed Blender 5.2.2 on Time's Windows PC**; this does **not** yet prove rendered appearance, animation deformation or game-engine acceptance. Invented rooms are explicitly not observed reality. The SVG previews scene-plan projection, not the imported GLB. The road graph supports pathfinding and box collisions. Prompts are **limited** count-based requests; architecture remains blocky rather than cinematic final-quality.
+Each world build currently creates **16 files**, including `world.glb`, `world.obj`, `world.mtl`, `world_lod1.glb`, `navigation.json`, `chunks.json`, `camera_tour.json`, `lighting.json`, `spatial_overview.json`, `scene_facts.json`, `interiors.glb`, `interiors.json`, `parks.glb`, `parks.json`, `preview.svg`, and `manifest.json`. The manifest holds SHA-256 receipts for the other 15 outputs. `character` separately creates a **generic** T/A mannequin, **20 detachable GLB parts** (including trouser legs and mixed-weight elbow sleeves), an editable pose track and `wardrobe.json`. None of this is Tevin's verified likeness or a production deforming rig. Windows Blender 5.2.2 now verifies the 20-part, 11-bone skin, 48 mixed-weight sleeve vertices, PBR material parameters and an actual 3-shot CPU Cycles rendered `.blend` scene. See `evidence/blender/windows-wave5-*.json`. Invented rooms are explicitly not observed reality. The road graph supports pathfinding and box collisions. Prompts remain **limited** count-based requests; art direction and geometry remain deliberately blocky prototypes.
+
+### Larger-wave hands-on Blender commands
+
+```bash
+python3 -m forge.cli character --pose T --out artifacts/anonymous-model
+python3 -m forge.cli blender-rig artifacts/anonymous-model --skin --blend artifacts/model.blend --report artifacts/rig.json
+python3 -m forge.cli blender-pose-audit artifacts/model.blend --report artifacts/pose.json
+python3 -m forge.cli blender-material-audit artifacts/prompt-25/world.glb --report artifacts/materials.json
+python3 -m forge.cli blender-cinematic artifacts/prompt-25/world.glb --tour artifacts/prompt-25/camera_tour.json --mood golden-hour --blend artifacts/world-scene.blend --image artifacts/world-preview.png --report artifacts/cinematic.json
+```
+
+The Blender executable must be available on the system or supplied using `--binary`. All commands are actual external-tool operations, not mock proofs.
 
 Code lives under `forge/`, tests under `tests/`; [implementation evidence](docs/IMPLEMENTATION-EVIDENCE.md) explains exact results and limitations.
 
@@ -72,9 +84,11 @@ Code lives under `forge/`, tests under `tests/`; [implementation evidence](docs/
 
 ## Current truth
 
-- MGR Forge owns a working CPU procedural GLB exporter, bounded planner, 16-part generic T/A mannequin, scene intelligence, environment/interior meshes, geometry QA, license/cost gates and artifact receipts.
+- **Current wave: 124/124 Python tests PASS on Linux and Time's Windows device.** Actual Blender 5.2.2 accepted the 20-piece anonymous mannequin with 48 two-bone elbow sleeve vertices, 11-bone pose audit, and imported PBR materials. It also saved a 3-shot editable CPU Cycles scene and rendered PNG. Original composition was visibly poor; second camera-clearance-aware render was visually inspected and shows the building with surrounding roads. Source plus scene, render, receipts and honest gaps live in `evidence/blender/` and `docs/BUILD-REGISTER.md`.
+
+- MGR Forge owns a working CPU procedural GLB exporter, bounded planner, 20-part generic T/A mannequin, scene intelligence, environment/interior meshes, geometry QA, license/cost gates and artifact receipts.
 - On Windows, **64/64 tests passed**, and **five GLB imports passed Blender 5.2.2 LTS**. Reproducible evidence is preserved under `evidence/blender/`.
-- Native register covers **43 capabilities**; the implementation plan is `research/MGR-CREATION-INTELLIGENCE-HOWTO.md`.
+- Native register covers **50 capabilities**, including the seven director/camera/motion tracks F44–F50; the implementation plans are `research/MGR-CREATION-INTELLIGENCE-HOWTO.md` and `research/MGR-DIRECTORS-CAMERAS-MOTION-HOWTO.md`.
 - Prior verified development wave: **85/85 tests passed on both Linux and Time's Windows PC**. F34 generated-world facts, F35 measurable PNG comparison, F36 recoverable workspace edits, F42 integrity-checked creation memory and F43 bounded repair coordination have partial implementations. The full visual intelligence, isolated code runner, advanced rig and interactive world remain open.
 - Earlier wave: **94/94 tests passed on both platforms**, with cross-view identity rules, a Windows-verified build→Blender→render pipeline, and a real modular armature `.blend`. Provenance can confirm the same underlying template across poses; a silhouette by itself cannot prove character identity.
 - Latest extension: **97/97 tests pass on Linux and Time's Windows PC**; modular armature verified on Windows, editable `.blend` preserved under `evidence/blender/`, and F40 offline collision-checked road traversal verified with a 120m route. Interactive game-world runtime remains open.

@@ -32,5 +32,7 @@ class MgrCanonTests(unittest.TestCase):
     def test_current_inventory_has_real_blender_receipt(self):
         inventory=(ROOT/"docs/WHAT-WE-HAVE.md").read_text(encoding="utf-8")
         self.assertIn("Blender 5.2.2",inventory)
-        self.assertIn("64/64",inventory)
+        # The current inventory advances with newly evidenced test totals;
+        # old 64/64 is preserved in historical logs, not frozen as current.
+        self.assertIn("124/124",inventory)
         self.assertTrue((ROOT/"evidence/blender/windows-2026-10-25.json").is_file())

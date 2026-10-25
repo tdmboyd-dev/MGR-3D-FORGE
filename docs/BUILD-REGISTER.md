@@ -47,8 +47,15 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F41 | MGR Cinematic Director | SPECIFIED | PARTIAL: real 3-shot Windows CPU Cycles render and editable .blend VERIFIED, framed composition visually improved | P1 | F13,F31,F35 | Corrected screenshot 252,649 bytes and editable Blender file 100,097 bytes; real lighting/material/camera output, low quality proof render only |
 | F42 | MGR Creation Memory | SPECIFIED | PARTIAL: integrity-chained JSON revisions and locks TESTED | P0 | F05,F20,F34 | `forge/creation_memory.py`; concurrent DB, actual owner identity and cross-app replay pending |
 | F43 | MGR Self-Repair Studio | SPECIFIED | PARTIAL: bounded file repair + build→Blender→render receipt pipeline TESTED (CPU stage) | P1 | F23,F30,F35,F36 | `forge/repair.py`, `forge/pipeline.py`; full Blender integrated run and semantic repair pending |
+| F44 | MGR Narrative Director | SOURCED | QUEUED | P1 | F01,F34,F41 | Beats, subject intent, continuity, human approval and directed scene assembly |
+| F45 | MGR Camera Intelligence | SOURCED | PARTIAL: camera AABB clearance and shot placement TESTED | P0 | F31,F35,F41 | Subject framing, camera collision/occlusion, lenses, focus and tracking |
+| F46 | MGR Motion Director | SOURCED | PARTIAL: deterministic sampled easing + trajectory contract TESTED | P0 | F12,F31,F39 | Bone/object motion library, retarget, foot plants and real Blender moving shot |
+| F47 | MGR Lighting Director | SOURCED | PARTIAL: 3 mood recipes + Windows CPU Cycles key/ambient TESTED | P1 | F13,F41 | Key/fill/rim, continuity, cinematographer controls, physical light calibration |
+| F48 | MGR Scene Continuity Director | SOURCED | PARTIAL: identity and revision primitives only | P0 | F35,F42,F44 | Shot-level costume, props, screen direction and position continuity tests |
+| F49 | MGR Cinematic Judge | SOURCED | PARTIAL: visual pixel comparison and camera clearance only | P0 | F35,F41,F45 | Subject framing, DOF, clipping, intershot composition and temporal QA |
+| F50 | MGR Editorial Director | SOURCED | QUEUED | P1 | F41,F44,F46 | Native edit decision list, timeline, clips, audio sync and final media assembly |
 
-**Scope:** 43 MGR-native areas: original 33 plus F34–F43 approved for the implementation queue on 2026-10-25. Queued is **not** implemented. Technical research is organized by MGR functions in `research/MGR-CREATION-INTELLIGENCE-HOWTO.md`; necessary external provenance stays under `research/external-provenance/`.
+**Scope:** 50 MGR-native areas: original 33 plus F34–F43 and director/camera/motion F44–F50. New director tracks requested on 2026-10-25 remain independently tracked even when partially implemented. Queued is **not** implemented. Technical research is organized by MGR functions in `research/MGR-CREATION-INTELLIGENCE-HOWTO.md` and `research/MGR-DIRECTORS-CAMERAS-MOTION-HOWTO.md`; necessary external provenance stays under `research/external-provenance/`.
 
 ## Definition of production completeness
 

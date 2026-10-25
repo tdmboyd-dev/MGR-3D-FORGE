@@ -34,17 +34,16 @@ def main():
     if not imported:
         raise ValueError("world GLB has no imported mesh")
     scene=bpy.context.scene
-    camera_data=bpy.data.cameras.new("MGR_Cinematic_Lens")
-    camera=bpy.data.objects.new("MGR_Cinematic_Camera",camera_data)
-    scene.collection.objects.link(camera)
-    scene.camera=camera
-    camera_data.type="PERSP"
-    camera_data.lens=35
     fps=24
     scene.render.fps=fps
     frames=[]
     cursor=1
-    for shot in tour["shots"]:
+    for index,shot in enumerate(tour["shots"]):
+        camera_data=bpy.data.cameras.new(f"MGR_Lens_{index:04d}")
+        camera=bpy.data.objects.new(f"MGR_Shot_Camera_{index:04d}",camera_data)
+        scene.collection.objects.link(camera)
+        camera_data.type="PERSP"
+        camera_data.lens=50
         point=xyz_to_blender(shot["camera"])
         look=xyz_to_blender(shot["look_at"])
         if (look-point).length<.01:
@@ -53,8 +52,17 @@ def main():
         camera.rotation_euler=(look-point).to_track_quat("-Z","Y").to_euler()
         camera.keyframe_insert(data_path="location",frame=cursor)
         camera.keyframe_insert(data_path="rotation_euler",frame=cursor)
-        frames.append({"shot":shot["id"],"frame":cursor})
-        cursor+=max(1,round(shot["hold_seconds"]*fps))
+        stop=cursor+max(2,round(shot["hold_seconds"]*fps))-1
+        camera.keyframe_insert(data_path="location",frame=stop)
+        camera.keyframe_insert(data_path="rotation_euler",frame=stop)
+        marker=scene.timeline_markers.new(f"MGR_{shot['id']}",frame=cursor)
+        marker.camera=camera
+        frames.append({"shot":shot["id"],"frame":cursor,"last_frame":stop,
+                       "camera":camera.name,"lens_mm":camera_data.lens,
+                       "direction":"cut with held subject framing"})
+        if index==0:
+            scene.camera=camera
+        cursor=stop+1
     scene.frame_start=1
     scene.frame_end=cursor-1
     strength,color,ambient,exposure=recipes[mood]
@@ -89,13 +97,14 @@ def main():
     result={"schema":"mgr.forge.cinematic-materialization.v1",
             "status":"PASS" if Path(image).is_file() and Path(image).stat().st_size>0 else "FAIL",
             "blender_version":bpy.app.version_string, "mood":mood,
-            "keyframes":frames,"camera_count":1,"light_count":1,
+            "keyframes":frames,"camera_count":len(frames),
+            "camera_cut_markers":len(scene.timeline_markers),"light_count":1,
             "mesh_count":len(imported),"frame_end":scene.frame_end,
             "render_engine":"CYCLES","render_device":"CPU",
             "render_bytes":Path(image).stat().st_size if Path(image).exists() else 0,
             "blend_bytes":Path(blend).stat().st_size if Path(blend).exists() else 0,
             "limitations":["8-sample CPU render is proof of pipeline, not final cinematic quality",
-                           "no interactive camera player or semantic shot composition"]}
+                           "timeline cuts and held frames only; interactive camera player and directed moving shots remain open"]}
     Path(receipt).write_text(json.dumps(result,indent=2,sort_keys=True)+"\n",encoding="utf-8")
     if result["status"]!="PASS":
         raise RuntimeError("cinematic render missing")
