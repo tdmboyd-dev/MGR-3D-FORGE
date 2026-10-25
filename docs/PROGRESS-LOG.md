@@ -1,5 +1,11 @@
 # MGR 3D Forge — Progress and Evidence Log
 
+## 2026-10-25 — Windows fantasy effect acceptance (supersedes prior pending note)
+
+- Synced MGR Fantasy Forge to user Windows device; **139/139 Python tests PASS** on Windows and Linux. Used Blender **5.2.2 LTS** CPU Cycles to render two 600×600 portal phases at 0.25 and 0.75. Both render receipts **PASS**, each showing three material emission colors.
+- Independently inspected both actual Windows PNGs: cyan ring, purple orbit and moving orange particles. Actual Blender PNG pixel evaluation recorded mean absolute per-channel difference **0.00897953** across 360,000 pixels (normalized channels 0–1). The two actual images and machine report are kept under `evidence/blender/windows-wave6-*`.
+- This proves imported emissive geometry, two different temporal states and real Blender visual output. It does **not** prove physically simulated portal phenomena, glow/bloom, raytraced volume scattering or film-grade FX.
+
 ## 2026-10-25 — Fantasy/VFX/Magic expansion wave
 
 - Added F51–F67 MGR-native feature queue (now 67 tracked areas) for sophisticated lighting/shadow, volumes, particles, elemental physics, portals, magic, illusion, transformations, compositing, color, motion graphics, sound-response, destruction, continuity and FX judging. Kept public technical vendor study separate from MGR product truth.

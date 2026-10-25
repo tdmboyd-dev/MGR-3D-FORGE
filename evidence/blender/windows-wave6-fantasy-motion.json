@@ -1,0 +1,18 @@
+{
+  "schema": "mgr.forge.fx-visual-acceptance.v1",
+  "date": "2026-10-25",
+  "platform": "Time Windows",
+  "blender_version": "5.2.2 LTS",
+  "render_engine": "Cycles CPU",
+  "test_suites": {"windows": "139/139 PASS", "linux": "139/139 PASS"},
+  "effect_kind": "portal",
+  "particles": 96,
+  "phases": [0.25, 0.75],
+  "images": ["windows-wave6-portal-phase-025.png", "windows-wave6-portal-phase-075.png"],
+  "dimensions": [600, 600],
+  "mean_absolute_pixel_delta_normalized_rgba": 0.00897953,
+  "emissive_material_colors": [[0.07, 0.75, 1.0], [0.45, 0.06, 0.9], [1.0, 0.36, 0.04]],
+  "visual_inspection": "Cyan energy ring, inner purple orbit, orange spark particles; particle positions differ between frames",
+  "status": "PASS",
+  "limits": ["Low sample stylized geometry", "No validated bloom, physically based volume or fluids", "No claim of production film effects"]
+}

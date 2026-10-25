@@ -1,0 +1,35 @@
+{
+  "blender_version": "5.2.2 LTS",
+  "camera": "MGR_FX_Camera",
+  "emission_socket_colors": [
+    [
+      0.07000000029802322,
+      0.75,
+      1,
+      1
+    ],
+    [
+      0.44999998807907104,
+      0.05999999865889549,
+      0.8999999761581421,
+      1
+    ],
+    [
+      1,
+      0.36000001430511475,
+      0.03999999910593033,
+      1
+    ]
+  ],
+  "image_bytes": 341525,
+  "limitations": [
+    "basic emissive geometry, not physically simulated effects",
+    "no validated bloom/compositor, fog volume or advanced post pipeline"
+  ],
+  "mesh_count": 1,
+  "render_device": "CPU",
+  "render_engine": "CYCLES",
+  "schema": "mgr.forge.fx-blender-render.v1",
+  "source": "effect.glb",
+  "status": "PASS"
+}
