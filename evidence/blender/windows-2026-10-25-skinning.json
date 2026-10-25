@@ -3,6 +3,13 @@
   "device": "owner-authorized Windows PC",
   "blender": "5.2.2 LTS",
   "status": "PASS_PROTOTYPE",
+  "published_code_verification": {
+    "commit": "35f1b9c3986d12016432bd5394a18ce3655a7120",
+    "windows_python_tests": {"passed": 99, "ran": 99},
+    "cli_blender_rig_skin": "PASS, 16 parts, 11 bones",
+    "cli_blender_pose_render": "PASS, two non-identical PNGs",
+    "cli_pose_rgb_mae": 0.671411
+  },
   "character": "anonymous geometric T-pose mannequin; no owner-approved Tevin likeness",
   "project": "evidence/blender/modular-skinned-pose-example.blend",
   "file_bytes": 124099,

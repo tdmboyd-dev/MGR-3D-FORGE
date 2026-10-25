@@ -8,6 +8,7 @@
 - Blender 5.2.2 actually generated/reopened a **124,099-byte** skinned `.blend` with 16 mesh objects, 11 bones and 16 armature modifiers.
 - Rendered both keyframes from a fixed Blender Workbench camera. Visual inspection confirmed changed arm positions; raw decoded RGB MAE **0.671411**. First QA incorrectly classified the whole image as foreground because of a gradient background; repaired render path to transparent RGBA and QA to use alpha. Corrected foreground: **40,564 / 39,265 pixels**; separate subject bounding boxes recorded.
 - Added two negative/alpha-positive tests. Local Python suite **99/99 PASS**; latest Windows rerun of new source pending at this checkpoint.
+- Pulled published commit `35f1b9c` onto Time's Windows machine. **99/99 Windows tests PASS**. Used `forge.cli blender-rig --skin` end to end with installed Blender 5.2.2: **PASS** 16 separate parts/11 bones; used `forge.cli blender-pose-render`: **PASS**, two PNG frames, RGB MAE **0.671411** and visibly different arm poses. This verifies the public CLI workflow, not just ad hoc scripts.
 - Saved actual skinned Blender project and frame PNGs to `evidence/blender/`; full trace is in `evidence/blender/windows-2026-10-25-skinning.json`.
 
 ## 2026-10-25 — Cross-view honesty and integrated creation pipeline

@@ -26,7 +26,7 @@
 | MGR Asset Vault | Hash-based local dedupe and rights metadata | Tamper/provenance tests | Multiuser DB, revisions, search |
 | MGR Geometry QA | Degenerate/bad index checks and conservative cleanup | Mesh tests | Watertight repair, retopo, UV validation |
 | MGR Delivery Bundle | GLB, OBJ, MTL, LOD1, parks, interiors, scene facts/camera JSON, preview SVG | 14-file hash manifest, SHA verification, Blender import of core GLBs | Engine/film pipeline, full interoperability and rendered visual QA |
-| MGR Build Ledger | 43-area native register, provenance, 97 current tests, benchmark receipts | Windows **97/97** and Linux **97/97**; world pipeline, modular rig and 120m offline traversal PASS | Production CI, engine runtime and owner acceptance |
+| MGR Build Ledger | 43-area native register, provenance, 99 current tests, benchmark receipts | Windows **99/99** and Linux **99/99**; world pipeline, weighted rig/two-pose render, 120m offline traversal PASS | Production CI, game-engine runtime and owner acceptance |
 
 ## Exact Blender environment and measured Windows receipts
 
