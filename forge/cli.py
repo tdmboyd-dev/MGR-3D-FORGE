@@ -22,7 +22,7 @@ from .view_identity import compare_view_silhouettes, compare_asset_views, AssetV
 from .traversal import rehearse_road_walk
 from .interiors import generate_interiors
 from .character import build_mannequin
-from .blender_bridge import verify_blender, blender_render_command, blender_facts_command, blender_rig_command, blender_pose_render_command
+from .blender_bridge import verify_blender, blender_render_command, blender_facts_command, blender_rig_command, blender_pose_render_command, blender_pose_inspect_command
 from .environment import generate_parks, ENVIRONMENT_MATERIALS
 from .receipt import file_receipt, verify_bundle
 
@@ -129,6 +129,10 @@ def main(argv=None):
     poses.add_argument("--second",type=Path,required=True)
     poses.add_argument("--report",type=Path,required=True)
     poses.add_argument("--binary",default="blender")
+    guardian=sub.add_parser("blender-pose-audit", help="measure animated rig bones, joints and skin coverage inside Blender")
+    guardian.add_argument("blend",type=Path)
+    guardian.add_argument("--report",type=Path,required=True)
+    guardian.add_argument("--binary",default="blender")
     bundle=sub.add_parser("verify-bundle",help="verify artifact hashes in world build folder")
     bundle.add_argument("directory",type=Path)
     visual=sub.add_parser("compare-renders",help="compare fixed-camera RGB PNG frames")
@@ -219,6 +223,22 @@ def main(argv=None):
         if diff["rgb_mae"]<=0:
             raise RuntimeError("animated pose render did not change pixel output")
         return 0
+    if args.action == "blender-pose-audit":
+        import subprocess
+        from .pose_guardian import validate_pose_frames
+        observations=args.report.with_name(args.report.stem+"-observations.json")
+        if args.report.exists() or observations.exists():
+            raise FileExistsError("pose receipt already exists; use a fresh output path")
+        command=blender_pose_inspect_command(args.binary,args.blend,observations)
+        result=subprocess.run(command,timeout=180,capture_output=True,text=True,check=False)
+        if result.returncode:
+            raise RuntimeError(f"Blender pose inspection failed ({result.returncode}): {result.stderr[-500:]}")
+        data=json.loads(observations.read_text(encoding="utf-8"))
+        report=validate_pose_frames(data["observations"])
+        report["blender_version"]=data["blender_version"]
+        args.report.write_text(json.dumps(report,indent=2,sort_keys=True)+"\n",encoding="utf-8")
+        print(json.dumps(report,indent=2))
+        return 0 if report["status"]=="PASS" else 2
     if args.action == "verify-bundle":
         print(json.dumps(verify_bundle(args.directory),indent=2))
         return 0

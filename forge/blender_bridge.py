@@ -11,6 +11,7 @@ RENDER=Path(__file__).resolve().parent.parent/"bridge"/"blender_render.py"
 SCENE_FACTS=Path(__file__).resolve().parent.parent/"bridge"/"blender_scene_facts.py"
 RIG=Path(__file__).resolve().parent.parent/"bridge"/"blender_rig.py"
 POSE_RENDER=Path(__file__).resolve().parent.parent/"bridge"/"blender_pose_render.py"
+POSE_INSPECT=Path(__file__).resolve().parent.parent/"bridge"/"blender_pose_inspect.py"
 
 
 def blender_command(blender_binary,source,report):
@@ -82,3 +83,15 @@ def blender_pose_render_command(blender_binary,blend_source,first_image,second_i
     return [str(blender_binary),"--background","--factory-startup",
             "--python",str(POSE_RENDER),"--",str(Path(blend_source).resolve()),
             str(Path(first_image).resolve()),str(Path(second_image).resolve()),str(Path(report).resolve())]
+
+
+def blender_pose_inspect_command(blender_binary, blend_source, observation_path):
+    if not Path(blend_source).is_file() or Path(blend_source).suffix.lower() != ".blend":
+        raise ValueError("existing Blender project required")
+    if Path(observation_path).suffix.lower() != ".json":
+        raise ValueError("observation output must be JSON")
+    if not POSE_INSPECT.is_file():
+        raise FileNotFoundError("Blender pose inspection script missing")
+    return [str(blender_binary), "--background", "--factory-startup",
+            "--python", str(POSE_INSPECT), "--", str(Path(blend_source).resolve()),
+            str(Path(observation_path).resolve())]

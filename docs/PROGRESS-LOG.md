@@ -1,5 +1,11 @@
 # MGR 3D Forge — Progress and Evidence Log
 
+## 2026-10-25 — Next wave: MGR pose integrity gate
+
+- Implemented `forge/pose_guardian.py`: strict two-frame joint-continuity, non-stretching bones, all required bones, mesh skin coverage and real hand motion checks, with structured failure receipts. Explicitly **not** identity proof or smooth-skin acceptance.
+- Implemented `bridge/blender_pose_inspect.py` and CLI `blender-pose-audit` to extract Blender-evaluated bone endpoints and mesh vertex-group coverage at frames 1 and 12. The Blender bridge is **implemented, not yet actually executed on Windows** at this checkpoint.
+- Added seven positive/negative checks including missing hand, separated elbow, stretched bones, missing weights, frozen animation and NaN coordinates. Local suite **110/110 PASS**. Existing Windows 103-test Blender proof remains valid for the earlier revision, not this new bridge.
+
 **This is a historical sequence, not the current status page.** The canonical current status is `docs/WHAT-WE-HAVE.md` plus `docs/IMPLEMENTATION-EVIDENCE.md`. Superseded historical claims are retained only as dated checkpoints.
 
 ## 2026-10-25 — First actual weighted Blender pose proof
