@@ -91,7 +91,7 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F84 | MGR Cell Transport | SELECTED RESEARCH | PARTIAL: actual disk GLB cell reads, SHA-256, bounded active/prefetch RAM cache; TESTED | P1 | F78,F82 | Live game/GPU residency, asynchronous transfers, collision continuity, recovery and FPS |
 | F85 | MGR Dynamics Binding | SELECTED RESEARCH | PARTIAL: conservative swept actor segment vs obstacle contact; TESTED | P1 | F39,F40 | Physics-engine capsule, stairs/slopes, rig contact, impulses and deterministic replay |
 | F86 | MGR Render Truth Lab | RESEARCH QUEUED | NOT BUILT | P1 | F72,F73,F74 | Real engine lighting/material parity and performance |
-| F87 | MGR World Flight Runtime | SELECTED WEBGL/GLB SPEC RESEARCH | IMPLEMENTED: self-contained browser WebGL2 player, imported real geometry, movement/camera, bounds collision and FPS telemetry; browser proof OPEN | P0 | F04,F18,F40,F83 | Actual Windows GPU/browser screenshots, controls and cross-browser render acceptance |
+| F87 | MGR World Flight Runtime | SELECTED WEBGL/GLB SPEC RESEARCH | IMPLEMENTED and Windows BROWSER RENDER VERIFIED: self-contained WebGL2 city, actual GLB meshes, screenshot receipt; input/FPS still UNVERIFIED | P0 | F04,F18,F40,F83 | Keyboard/collision/fps telemetry acceptance, independent second backend, full asset/animation/rendering |
 
 **Scope:** 87 MGR-native areas: original 33, F34–F43, director/camera/motion F44–F50, fantasy/VFX F51–F67, reality-to-space F68–F71, ten studio-quality CPU contracts F72–F81, open-systems F82–F86 and offline interactive World Flight F87. Queued is **not** implemented. Detailed MGR-native research remains in `research/` and external attribution/rights under `research/external-provenance/`.
 

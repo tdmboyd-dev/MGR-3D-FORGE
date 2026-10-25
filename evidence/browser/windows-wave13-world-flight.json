@@ -1,0 +1,31 @@
+{
+  "schema": "mgr.forge.browser-witness.v1",
+  "date": "2026-10-25",
+  "status": "VISIBLE_SCENE_CONFIRMED",
+  "platform": "Time Windows PC",
+  "browser": "Google Chrome headless WebGL2 (ANGLE SwiftShader)",
+  "source": "demos/mgr-world-flight.html",
+  "image": "evidence/browser/windows-wave13-world-flight.png",
+  "image_dimensions": [1280, 720],
+  "image_bytes": 31941,
+  "image_sha256": "cc6a0d8b24615e64eb3bc390baa9523a69b0c9f6e1f218e1419e90f455fc9092",
+  "asset_world": {
+    "buildings": 10,
+    "triangles": 372,
+    "glb_sha256": "7c799190167d1255a5cbfbbb01fb4959a39b1441a8db78509365fcaa673c6cfa"
+  },
+  "observed": [
+    "Actual generated building meshes visible in three-dimensional perspective",
+    "Roads and ground polygons visibly rendered from embedded GLB",
+    "MGR World Flight HUD and controls visibly present",
+    "No remote model, API key or asset download required"
+  ],
+  "not_yet_proven": [
+    "Automated human-style keyboard/mouse input and collision acceptance",
+    "Measured steady-state FPS in an interactive desktop session",
+    "Second browser/GPU backend, accessibility and mobile runtime",
+    "Production shader/material/texture quality, streaming and real player physics"
+  ],
+  "windows_regression_tests": {"passed": 216, "total": 216, "exit_code": 0, "runtime_seconds": 3.265},
+  "honesty": "Real browser-drawn prototype world, not a production-quality playable game"
+}
