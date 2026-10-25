@@ -34,8 +34,12 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opaci
   <input id="director-image" type="file" accept="image/png,image/jpeg,image/webp"><img id="director-preview" alt="Your private local picture reference" hidden>
   <button id="director-sample-color" type="button" disabled>Use image color on building</button>
   <button id="director-generate-relief" type="button" disabled>Create 3D Relief (PNG)</button>
+  <label for="director-model">Existing 3D model (.glb, up to 900 KB in browser)</label>
+  <input id="director-model" type="file" accept=".glb,model/gltf-binary">
+  <button id="director-check-model" type="button" disabled>Inspect / Preserve 3D Model</button>
   <button id="director-build-world" type="button" disabled>Build Edited World</button>
   <button id="director-build-blender" type="button" disabled>Open in Blender Project</button>
+  <button id="director-build-godot" type="button" disabled>Download Game Engine Project</button>
   <div id="director-downloads" aria-live="polite"></div>
   <p id="director-msg" role="status" aria-live="polite">Ready. No external AI call or GPU required for supported commands.</p>
 </aside>
@@ -459,8 +463,10 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opaci
   // Optional same-origin localhost workstation. Offline files retain all existing editor behavior.
   const forgeToken=window.MGR_FORGE_STUDIO_TOKEN;
   const reliefButton=document.getElementById("director-generate-relief");
+  const checkModelButton=document.getElementById("director-check-model");
   const worldButton=document.getElementById("director-build-world");
   const blenderButton=document.getElementById("director-build-blender");
+  const godotButton=document.getElementById("director-build-godot");
   const downloadLinks=document.getElementById("director-downloads");
   let activeStudioJob=null;
   const studioEnabled=typeof forgeToken==="string"&&forgeToken.length>=20&&
@@ -496,12 +502,30 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opaci
     }catch(error){directorMessage.textContent=`3D relief failed: ${error.message}`;}
     finally{reliefButton.disabled=false;}
   });
+  document.getElementById("director-model").addEventListener("change",e=>{
+    const file=e.target.files?.[0];
+    checkModelButton.disabled=!studioEnabled||!file||!file.name.toLowerCase().endsWith(".glb")||file.size>900_000;
+  });
+  checkModelButton.addEventListener("click",async()=>{
+    const file=document.getElementById("director-model").files?.[0];
+    if(!studioEnabled||!file||file.size>900_000)return;
+    checkModelButton.disabled=true;
+    try{
+      const bytes=new Uint8Array(await file.arrayBuffer());let binary="";
+      for(let i=0;i<bytes.length;i+=16384)binary+=String.fromCharCode(...bytes.subarray(i,i+16384));
+      const result=await studioPost("/api/character",{glb_base64:btoa(binary)});
+      studioLink(result.glb_url,"Download preserved original 3D model (GLB)");
+      studioLink(result.report_url,"Download 3D model inspection report");
+      directorMessage.textContent=`Inspected ${result.triangles} triangles; ${result.mesh_containers} mesh container(s); ${result.skins} skin(s). ${result.warnings.join(" · ") || "No structural warnings."} Human likeness still requires approval.`;
+    }catch(error){directorMessage.textContent=`3D model inspection failed: ${error.message}`;}
+    finally{checkModelButton.disabled=false;}
+  });
   worldButton.addEventListener("click",async()=>{
     if(!studioEnabled)return;
     worldButton.disabled=true;
     try{
       const result=await studioPost("/api/world",{edits:projectDocument()});
-      activeStudioJob=result.job_id;blenderButton.disabled=false;
+      activeStudioJob=result.job_id;blenderButton.disabled=false;godotButton.disabled=false;
       studioLink(result.glb_url,"Download edited 3D world (GLB)");
       studioLink(result.html_url,"Open rebuilt editable 3D world");
       directorMessage.textContent=`Saved actual ${result.buildings}-building world in local Forge workspace.`;
@@ -522,6 +546,16 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opaci
       studioLink(result.blend_url,`Download editable Blender project (${result.editable_buildings} buildings)`);
       directorMessage.textContent="Native Blender project created and verified in the Forge workspace.";
     }catch(error){directorMessage.textContent=`Blender build failed: ${error.message}`;}
+  });
+  godotButton.addEventListener("click",async()=>{
+    if(!studioEnabled||!activeStudioJob)return;
+    godotButton.disabled=true;
+    try{
+      const result=await studioPost("/api/godot",{job_id:activeStudioJob});
+      studioLink(result.archive_url,"Download Godot 4 project with world and collisions (ZIP)");
+      directorMessage.textContent="Game-engine project packaged. Import/run acceptance in Godot is still required.";
+    }catch(error){directorMessage.textContent=`Engine package failed: ${error.message}`;}
+    finally{godotButton.disabled=false;}
   });
   resetGpuBuildings();refreshEditor();
   const halfDepth=manifest.grounds.depth/2;
