@@ -406,6 +406,7 @@
   const reliefButton=document.getElementById("director-generate-relief");
   const worldButton=document.getElementById("director-build-world");
   const blenderButton=document.getElementById("director-build-blender");
+  const godotButton=document.getElementById("director-build-godot");
   const downloadLinks=document.getElementById("director-downloads");
   let activeStudioJob=null;
   const studioEnabled=typeof forgeToken==="string"&&forgeToken.length>=20&&
@@ -446,7 +447,7 @@
     worldButton.disabled=true;
     try{
       const result=await studioPost("/api/world",{edits:projectDocument()});
-      activeStudioJob=result.job_id;blenderButton.disabled=false;
+      activeStudioJob=result.job_id;blenderButton.disabled=false;godotButton.disabled=false;
       studioLink(result.glb_url,"Download edited 3D world (GLB)");
       studioLink(result.html_url,"Open rebuilt editable 3D world");
       directorMessage.textContent=`Saved actual ${result.buildings}-building world in local Forge workspace.`;
@@ -467,6 +468,16 @@
       studioLink(result.blend_url,`Download editable Blender project (${result.editable_buildings} buildings)`);
       directorMessage.textContent="Native Blender project created and verified in the Forge workspace.";
     }catch(error){directorMessage.textContent=`Blender build failed: ${error.message}`;}
+  });
+  godotButton.addEventListener("click",async()=>{
+    if(!studioEnabled||!activeStudioJob)return;
+    godotButton.disabled=true;
+    try{
+      const result=await studioPost("/api/godot",{job_id:activeStudioJob});
+      studioLink(result.archive_url,"Download Godot 4 project with world and collisions (ZIP)");
+      directorMessage.textContent="Game-engine project packaged. Import/run acceptance in Godot is still required.";
+    }catch(error){directorMessage.textContent=`Engine package failed: ${error.message}`;}
+    finally{godotButton.disabled=false;}
   });
   resetGpuBuildings();refreshEditor();
   const halfDepth=manifest.grounds.depth/2;

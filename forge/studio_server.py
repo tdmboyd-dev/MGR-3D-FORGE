@@ -13,8 +13,10 @@ import secrets
 import subprocess
 import threading
 from urllib.parse import urlparse
+from zipfile import ZipFile, ZIP_DEFLATED
 
 from .image_relief import export_image_relief
+from .engine_handoff import export_godot_project
 from .live_blender import create_live_blender_scene
 from .web_runtime import make_world_flight
 from .world_editor import apply_world_edits
@@ -26,7 +28,8 @@ FILES = {"relief.glb": "model/gltf-binary", "relief.obj": "text/plain",
          "relief.mtl": "text/plain", "manifest.json": "application/json",
          "world.glb": "model/gltf-binary", "world.obj": "text/plain",
          "world.mtl": "text/plain", "world-editor.html": "text/html",
-         "scene.blend": "application/octet-stream", "scene-report.json": "application/json"}
+         "scene.blend": "application/octet-stream", "scene-report.json": "application/json",
+         "godot-project.zip": "application/zip"}
 
 
 class ForgeWorkstation:
@@ -118,6 +121,22 @@ class ForgeWorkstation:
                     "glb_url": f"/files/{job_id}/edited/world.glb",
                     "html_url": f"/files/{job_id}/edited/world-editor.html",
                     "buildings": result["buildings"]}
+        if route == "/api/godot":
+            if set(payload) != {"job_id"}:
+                raise ValueError("expect only authored job identifier")
+            job_id = payload["job_id"]
+            job = self.valid_job(job_id)
+            if not (job / "edited" / "manifest.json").is_file():
+                raise ValueError("job does not have an edited MGR world")
+            archive = job / "godot-project.zip"
+            if not archive.exists():
+                project = job / "godot"
+                result = export_godot_project(job / "edited", project)
+                with ZipFile(archive, "x", compression=ZIP_DEFLATED) as package:
+                    for name in [*result["files"], "handoff.json"]:
+                        package.write(project / name, arcname=name)
+            return {"status": "MATERIALIZED", "engine_import_verified": False,
+                    "archive_url": f"/files/{job_id}/godot-project.zip"}
         if route in ("/api/blender", "/api/blender-status"):
             if set(payload) != {"job_id"}:
                 raise ValueError("expect only authored job identifier")
@@ -183,7 +202,7 @@ def make_handler(studio):
             path = urlparse(self.path).path
             if path in ("/", "/studio"):
                 return self.send_bytes(200, studio.page.encode("utf-8"), "text/html; charset=utf-8")
-            match = re.fullmatch(r"/files/([a-f0-9]{24})/(relief|edited)?/?([a-z-]+\.(?:glb|obj|mtl|json|html)|scene\.blend)", path)
+            match = re.fullmatch(r"/files/([a-f0-9]{24})/(relief|edited)?/?([a-z-]+\.(?:glb|obj|mtl|json|html|zip)|scene\.blend)", path)
             if match:
                 jid, subfolder, name = match.groups()
                 if name not in FILES:
@@ -199,7 +218,7 @@ def make_handler(studio):
             return self.send_bytes(404, b"not found", "text/plain")
 
         def do_POST(self):
-            if self.path not in ("/api/relief", "/api/world", "/api/blender", "/api/blender-status"):
+            if self.path not in ("/api/relief", "/api/world", "/api/godot", "/api/blender", "/api/blender-status"):
                 return self.send_bytes(404, b"not found", "text/plain")
             if self.headers.get("X-MGR-Forge-Token") != studio.token:
                 return self.send_bytes(403, b"forbidden", "text/plain")

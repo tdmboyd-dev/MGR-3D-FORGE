@@ -71,6 +71,14 @@ try{
     if(world)break;await pause(250);
   }
   assert.ok(world,'world JSON must become real GLB');
+  assert.equal(await evaluate("document.getElementById('director-build-godot').disabled"),false);
+  await evaluate("document.getElementById('director-build-godot').click()");
+  let engine=false;
+  for(let n=0;n<100;n++){
+    engine=await evaluate("Boolean(document.querySelector('#director-downloads a[href$=\"godot-project.zip\"]'))");
+    if(engine)break;await pause(250);
+  }
+  assert.ok(engine,'Godot engine-project ZIP must materialize');
   assert.equal(await evaluate("document.getElementById('director-build-blender').disabled"),false);
   await evaluate("document.getElementById('director-build-blender').click()");
   let blend=false;
@@ -90,7 +98,7 @@ try{
   }
   console.log(JSON.stringify({schema:'mgr.forge.browser-studio-smoke.v1',status:'PASS',
     checks:['localhost token session','browser PNG upload','generated relief GLB','live edited world GLB',
-      'full Blender project conversion','downloadable real artifacts'],links}));
+      'Godot project package','full Blender project conversion','downloadable real artifacts'],links}));
 }finally{
   socket?.close();child.kill();await pause(300);await rm(profile,{recursive:true,force:true,maxRetries:4,retryDelay:200});
 }

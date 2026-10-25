@@ -159,6 +159,9 @@ def main(argv=None):
     edited.add_argument("--world",type=Path,required=True,help="original generated world directory")
     edited.add_argument("--edits",type=Path,required=True,help="downloaded browser world edits JSON")
     edited.add_argument("--out",type=Path,required=True,help="new output directory (must not exist)")
+    engine=sub.add_parser("godot-handoff",help="package verified Forge world for Godot 4 with collision bodies and camera")
+    engine.add_argument("--world",type=Path,required=True)
+    engine.add_argument("--out",type=Path,required=True,help="new Godot project directory")
     live_blender=sub.add_parser("blender-live-scene",help="turn verified edited world into an actual individually editable Blender project")
     live_blender.add_argument("--world",type=Path,required=True,help="materialized edited world directory")
     live_blender.add_argument("--blend",type=Path,required=True,help="new Blender project file")
@@ -285,6 +288,10 @@ def main(argv=None):
         return 0
     if args.action == "apply-world-edits":
         print(json.dumps(apply_world_edits(args.world,args.edits,args.out),indent=2))
+        return 0
+    if args.action == "godot-handoff":
+        from .engine_handoff import export_godot_project
+        print(json.dumps(export_godot_project(args.world,args.out),indent=2))
         return 0
     if args.action == "blender-live-scene":
         print(json.dumps(create_live_blender_scene(args.world,args.blend,args.report,binary=args.binary),indent=2))

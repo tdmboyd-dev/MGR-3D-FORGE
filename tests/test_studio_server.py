@@ -11,6 +11,8 @@ import time
 import unittest
 from unittest.mock import patch
 import zlib
+from io import BytesIO
+from zipfile import ZipFile
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
@@ -203,6 +205,27 @@ class StudioServerTests(unittest.TestCase):
     def test_blender_status_requires_correct_token(self):
         job = self._edited_job()
         code, _, _ = self.fetch("/api/blender-status", {"job_id": job}, token=False)
+        self.assertEqual(code, 403)
+
+    def test_godot_package_from_live_edited_world(self):
+        job = self._edited_job()
+        code, raw, _ = self.fetch("/api/godot", {"job_id": job})
+        self.assertEqual(code, 200)
+        response = json.loads(raw)
+        self.assertFalse(response["engine_import_verified"])
+        archive_status, payload, _ = self.fetch(response["archive_url"])
+        self.assertEqual(archive_status, 200)
+        with ZipFile(BytesIO(payload)) as zipfile:
+            self.assertEqual(set(zipfile.namelist()),
+                             {"project.godot", "world.tscn", "assets/world.glb", "handoff.json"})
+            self.assertEqual(zipfile.read("assets/world.glb")[:4], b"glTF")
+
+    def test_engine_endpoint_refuses_invalid_job(self):
+        code, _, _ = self.fetch("/api/godot", {"job_id": "../escape"})
+        self.assertEqual(code, 400)
+
+    def test_engine_endpoint_requires_token(self):
+        code, _, _ = self.fetch("/api/godot", {"job_id": "a" * 24}, token=False)
         self.assertEqual(code, 403)
 
     def test_blender_job_receipt_persists_between_sessions(self):

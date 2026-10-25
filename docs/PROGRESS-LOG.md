@@ -297,3 +297,9 @@ The initial historical snapshot has been superseded by the current live inventor
 - Four additional HTTP-backed tests exercise recovered failure, interrupted-worker recovery, invalid receipt isolation and atomic file replacement. **321 local unit tests PASS** (23 network/socket tests skipped under Linux sandbox restrictions). **All 321/321 tests also PASS on Time's Windows machine in 27.641 seconds with zero skips; process exit 0.**
 - This addresses process-restart truthfulness; it does **not** make Blender jobs independently resumable after process termination. Full durable background worker orchestration remains open.
 
+## 2026-10-25 — Engine-target handoff (F98)
+
+- Added `forge/engine_handoff.py`, `godot-handoff` CLI and Studio `/api/godot` export. A SHA-verified MGR authored world becomes a genuine Godot 4 source project: `project.godot`, `world.tscn`, original GLB under `assets/`, per-building collision body preserving authored MGR identity, ground collider, preview camera, and directional light. The Studio delivers the files as a project ZIP.
+- Added independent contract tests for complete package, original GLB identity, collider counts, scene entry, nonoverwrite, corrupted GLB, invalid manifest, duplicate identity, nonfinite collision bounds, CLI and Studio endpoints. **335 local tests PASS; 26 HTTP tests skipped because the Linux sandbox forbids loopback binds.** Connected Windows acceptance and real Godot 4 runtime import remain separate proof gates.
+- Project intentionally records `engine_import_verified=false` until a real Godot execution can prove import, rendering, collision, and material results. No game-engine installation, credentials, or paid API used.
+
