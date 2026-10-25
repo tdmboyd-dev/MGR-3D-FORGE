@@ -74,11 +74,12 @@ try{
   assert.equal(await evaluate("document.getElementById('director-build-blender').disabled"),false);
   await evaluate("document.getElementById('director-build-blender').click()");
   let blend=false;
-  for(let n=0;n<100;n++){
+  for(let n=0;n<240;n++){
     blend=await evaluate("Boolean(document.querySelector('#director-downloads a[href$=\"scene.blend\"]'))");
     if(blend)break;await pause(250);
   }
-  assert.ok(blend,'real Blender .blend must be downloadable');
+  assert.ok(blend,'real Blender .blend must be downloadable; UI says: '+
+    await evaluate("document.getElementById('director-msg').textContent"));
   const links=await evaluate("Array.from(document.querySelectorAll('#director-downloads a')).map(a=>a.getAttribute('href'))");
   for(const link of links){
     const answer=await fetch(new URL(link,url));

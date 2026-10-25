@@ -180,7 +180,7 @@ def main(argv=None):
     studio=sub.add_parser("serve-studio",help="start private localhost Forge creation workstation")
     studio.add_argument("--world",type=Path,required=True)
     studio.add_argument("--workspace",type=Path,required=True)
-    studio.add_argument("--port",type=int,default=8765)
+    studio.add_argument("--port",type=int,default=0,help="0 chooses a Windows-allowed ephemeral localhost port")
     studio.add_argument("--blender",default="blender")
     blender = sub.add_parser("blender-verify",help="run actual Blender GLB import verification if installed")
     blender.add_argument("path",type=Path)

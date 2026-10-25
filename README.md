@@ -5,10 +5,10 @@
 **New connected local workstation (pending Windows HTTP validation):** Use the creation chat's PNG-to-3D-relief, Build Edited World and Blender Project buttons from a locally served session. Full one-shot figure reconstruction remains unbuilt. Sample CLI:
 
 ```bash
-python -m forge.cli serve-studio --world path/to/world --workspace path/to/dedicated/forge-workspace --port 8765 --blender blender
+python -m forge.cli serve-studio --world path/to/world --workspace path/to/dedicated/forge-workspace --port 0 --blender blender
 ```
 
-Open `http://127.0.0.1:8765/` on the same computer. The service binds **only** to loopback and generates a fresh session token; it does not grant access to arbitrary directories or execute free-form code.
+Open the `http://127.0.0.1:PORT/` address printed in your terminal on the same computer. Port `0` lets Windows select an available port automatically. The service binds **only** to loopback and generates a fresh session token; it does not grant access to arbitrary directories or execute free-form code.
 
 ```bash
 python -m forge.cli blender-live-scene --world edited-world-folder --blend new-scene.blend --report blender-proof.json --binary blender
