@@ -15,9 +15,13 @@ Build an MGR-owned, prompt-driven 3D creation platform for **characters, editabl
 
 | Read | Purpose |
 |---|---|
+| [WHAT-WE-HAVE.md](docs/WHAT-WE-HAVE.md) | Full plain-English inventory: what exists, what Forge will create and exactly what is missing |
 | [PRODUCT-BIBLE.md](docs/PRODUCT-BIBLE.md) | Complete intended product, capabilities, MGR-native ideas, use cases and limits |
 | [ARCHITECTURE.md](docs/ARCHITECTURE.md) | Owners, modules, data contracts, pipeline, integrations |
 | [RESEARCH-REGISTER.md](research/RESEARCH-REGISTER.md) | Source-linked model/research comparisons and evidence disposition |
+| [DEEP-DIVE-NATIVE-CPU.md](research/DEEP-DIVE-NATIVE-CPU.md) | 16-field native procedural research packet |
+| [DEEP-DIVE-IMAGE-TO-3D.md](research/DEEP-DIVE-IMAGE-TO-3D.md) | 16-field TripoSR, TripoSG and TRELLIS.2 packets |
+| [DEEP-DIVE-WORLDS-PARTS.md](research/DEEP-DIVE-WORLDS-PARTS.md) | 16-field world/parts/rig research packets |
 | [HARDWARE-COST.md](research/HARDWARE-COST.md) | CPU versus GPU feasibility and total-cost framework |
 | [LICENSE-RISK.md](research/LICENSE-RISK.md) | License gates, derivative rights, commercial-use caution |
 | [ACCEPTANCE-PLAN.md](docs/ACCEPTANCE-PLAN.md) | Build phases, tests, benchmark protocol and definition of done |
