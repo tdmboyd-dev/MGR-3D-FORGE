@@ -12,7 +12,8 @@ def _pad(blob: bytes, fill=b"\x00") -> bytes:
     return blob + fill * ((-len(blob)) % 4)
 
 
-def export_glb(meshes, *, name="MGR Forge World", materials=None, pbr_overrides=None) -> bytes:
+def export_glb(meshes, *, name="MGR Forge World", materials=None, pbr_overrides=None,
+               emissive_overrides=None) -> bytes:
     materials = MATERIALS if materials is None else materials
     if len(meshes) != len(materials) or not materials:
         raise ValueError("mesh/material count mismatch")
@@ -21,6 +22,15 @@ def export_glb(meshes, *, name="MGR Forge World", materials=None, pbr_overrides=
                                           for i in pbr_overrides)):
         raise ValueError("PBR override material index invalid")
     pbr_overrides = pbr_overrides or {}
+    if emissive_overrides is not None and (not isinstance(emissive_overrides,dict) or
+                                           any(type(i) is not int or not 0<=i<len(materials)
+                                               for i in emissive_overrides)):
+        raise ValueError("invalid emissive material index")
+    emissive_overrides=emissive_overrides or {}
+    for color in emissive_overrides.values():
+        if (not isinstance(color,(list,tuple)) or len(color)!=3 or
+            not all(type(v) in (float,int) and math.isfinite(v) and 0<=v<=1 for v in color)):
+            raise ValueError("emissiveFactor RGB must be finite and in [0,1]")
     binary = bytearray()
     views, accessors, primitives = [], [], []
 
@@ -71,7 +81,9 @@ def export_glb(meshes, *, name="MGR Forge World", materials=None, pbr_overrides=
                        "pbrMetallicRoughness": (validate_pbr_recipe(pbr_overrides[index])
                            if index in pbr_overrides else {
                                "baseColorFactor": rgba,
-                               "metallicFactor": 0.0, "roughnessFactor": 0.9})}
+                               "metallicFactor": 0.0, "roughnessFactor": 0.9}),
+                       **({"emissiveFactor": list(emissive_overrides[index])}
+                          if index in emissive_overrides else {})}
                       for index, (mat_name, rgba) in enumerate(materials)],
         "buffers": [{"byteLength": len(binary)}],
         "bufferViews": views, "accessors": accessors,

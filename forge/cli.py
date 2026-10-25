@@ -22,11 +22,12 @@ from .view_identity import compare_view_silhouettes, compare_asset_views, AssetV
 from .traversal import rehearse_road_walk
 from .interiors import generate_interiors
 from .character import build_mannequin
-from .blender_bridge import verify_blender, blender_render_command, blender_facts_command, blender_rig_command, blender_pose_render_command, blender_pose_inspect_command, blender_cinematic_command, blender_material_inspect_command, blender_director_inspect_command, blender_director_frames_command
+from .blender_bridge import verify_blender, blender_render_command, blender_facts_command, blender_rig_command, blender_pose_render_command, blender_pose_inspect_command, blender_cinematic_command, blender_material_inspect_command, blender_director_inspect_command, blender_director_frames_command, blender_fx_render_command
 from .environment import generate_parks, ENVIRONMENT_MATERIALS
 from .receipt import file_receipt, verify_bundle
 from .materials import MGR_MATERIAL_PRESETS
 from .shot_design import validate_shot_reel, lighting_recipe, validate_camera_clearance
+from .fx import create_magic_effect, export_effect_glb
 
 
 def build(spec: WorldSpec, output: Path):
@@ -117,6 +118,13 @@ def main(argv=None):
     character = sub.add_parser("character",help="export generic detachable mannequin T/A pose")
     character.add_argument("--pose",choices=("T","A"),default="T")
     character.add_argument("--out",type=Path,required=True)
+    effect=sub.add_parser("fantasy-effect",help="generate native animated-time magic geometry with emissive GLB")
+    effect.add_argument("--kind",choices=("portal","spell-orbit","aura"),default="portal")
+    effect.add_argument("--phase",type=float,default=0.0)
+    effect.add_argument("--particles",type=int,default=96)
+    effect.add_argument("--radius",type=float,default=2.0)
+    effect.add_argument("--seed",type=int,default=8964)
+    effect.add_argument("--out",type=Path,required=True)
     blender = sub.add_parser("blender-verify",help="run actual Blender GLB import verification if installed")
     blender.add_argument("path",type=Path)
     blender.add_argument("--report",type=Path,required=True)
@@ -167,6 +175,11 @@ def main(argv=None):
     director_frames.add_argument("--out",type=Path,required=True)
     director_frames.add_argument("--report",type=Path,required=True)
     director_frames.add_argument("--binary",default="blender")
+    fxrender=sub.add_parser("blender-fx-render",help="actually render CPU-native 3D fantasy effect in Blender")
+    fxrender.add_argument("glb",type=Path)
+    fxrender.add_argument("--image",type=Path,required=True)
+    fxrender.add_argument("--report",type=Path,required=True)
+    fxrender.add_argument("--binary",default="blender")
     bundle=sub.add_parser("verify-bundle",help="verify artifact hashes in world build folder")
     bundle.add_argument("directory",type=Path)
     visual=sub.add_parser("compare-renders",help="compare fixed-camera RGB PNG frames")
@@ -200,6 +213,21 @@ def main(argv=None):
         print(json.dumps({"output":str(args.out.resolve()), "pose":result["pose"],
                           "parts":len(result["editable_parts"]),
                           "anatomy":"PASS" if result["quality"]["passed"] else "FAIL"},indent=2))
+        return 0
+    if args.action == "fantasy-effect":
+        if args.out.exists():
+            raise FileExistsError("effect output already exists; pick a fresh folder")
+        meshes,receipt=create_magic_effect(kind=args.kind,phase=args.phase,
+            particles=args.particles,radius=args.radius,seed=args.seed)
+        payload=export_effect_glb(meshes)
+        result=inspect_glb(payload)
+        args.out.mkdir(parents=True)
+        (args.out/"effect.glb").write_bytes(payload)
+        receipt["glb_quality"]=result
+        receipt["asset"]={"path":"effect.glb","sha256":hashlib.sha256(payload).hexdigest()}
+        (args.out/"effect.json").write_text(json.dumps(receipt,indent=2,sort_keys=True)+"\n",encoding="utf-8")
+        print(json.dumps({"status":"PASS","kind":args.kind,"triangles":result["triangles"],
+                          "output":str(args.out.resolve())},indent=2))
         return 0
     if args.action == "blender-verify":
         print(json.dumps(verify_blender(args.path,args.report,blender_binary=args.binary),indent=2))
@@ -339,6 +367,19 @@ def main(argv=None):
         report["moving_shot_rgb_mae"]=difference
         args.report.write_text(json.dumps(report,indent=2,sort_keys=True)+"\n",encoding="utf-8")
         print(json.dumps(report,indent=2))
+        return 0
+    if args.action == "blender-fx-render":
+        import subprocess
+        if args.image.exists() or args.report.exists():
+            raise FileExistsError("FX proof output already exists")
+        cmd=blender_fx_render_command(args.binary,args.glb,args.image,args.report)
+        result=subprocess.run(cmd,timeout=600,capture_output=True,text=True,check=False)
+        if result.returncode:
+            raise RuntimeError(f"Blender FX render failed ({result.returncode}): {result.stderr[-600:] or result.stdout[-600:]}")
+        receipt=json.loads(args.report.read_text(encoding="utf-8"))
+        if receipt.get("status")!="PASS" or not receipt.get("emission_socket_colors"):
+            raise RuntimeError("FX Blender emission receipt invalid")
+        print(json.dumps(receipt,indent=2))
         return 0
     if args.action == "verify-bundle":
         print(json.dumps(verify_bundle(args.directory),indent=2))

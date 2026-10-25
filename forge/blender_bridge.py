@@ -16,6 +16,7 @@ CINEMATIC=Path(__file__).resolve().parent.parent/"bridge"/"blender_cinematic.py"
 MATERIAL_INSPECT=Path(__file__).resolve().parent.parent/"bridge"/"blender_material_inspect.py"
 DIRECTOR_INSPECT=Path(__file__).resolve().parent.parent/"bridge"/"blender_director_inspect.py"
 DIRECTOR_FRAMES=Path(__file__).resolve().parent.parent/"bridge"/"blender_director_frames.py"
+FX_RENDER=Path(__file__).resolve().parent.parent/"bridge"/"blender_fx_render.py"
 
 
 def blender_command(blender_binary,source,report):
@@ -148,3 +149,13 @@ def blender_director_frames_command(blender_binary, blend, output, report):
     return [str(blender_binary),"--background","--factory-startup","--python",
             str(DIRECTOR_FRAMES),"--",str(Path(blend).resolve()),
             str(Path(output).resolve()),str(Path(report).resolve())]
+
+
+def blender_fx_render_command(blender_binary, glb, image, report):
+    if not Path(glb).is_file() or Path(glb).suffix.lower()!=".glb":
+        raise ValueError("existing effect GLB required")
+    if Path(image).suffix.lower()!=".png" or Path(report).suffix.lower()!=".json":
+        raise ValueError("effect render needs PNG + JSON")
+    return [str(blender_binary),"--background","--factory-startup","--python",
+            str(FX_RENDER),"--",str(Path(glb).resolve()),
+            str(Path(image).resolve()),str(Path(report).resolve())]

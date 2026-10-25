@@ -1,5 +1,12 @@
 # MGR 3D Forge — Progress and Evidence Log
 
+## 2026-10-25 — Fantasy/VFX/Magic expansion wave
+
+- Added F51–F67 MGR-native feature queue (now 67 tracked areas) for sophisticated lighting/shadow, volumes, particles, elemental physics, portals, magic, illusion, transformations, compositing, color, motion graphics, sound-response, destruction, continuity and FX judging. Kept public technical vendor study separate from MGR product truth.
+- Authored full 16-field `research/MGR-FANTASY-CINEMA-CREATION-HOWTO.md` and external official provenance ledger. These provide the build curriculum and honest gaps, not completed film-studio capability.
+- Implemented CPU `forge/fx.py`: real 3D portal/spell-orbit/aura beams and animated-phase seeded spark geometry, 3 layers, structured receipts, low per-job particle limits. Added standard glTF emissive-factor export and actual Blender emission-preview bridge/CLI.
+- Five new quality tests plus Blender bridge negative, local suite now **139/139 PASS**. Blender FX actual Windows preview remains pending at this checkpoint.
+
 ## 2026-10-25 — Expanded multi-capability build wave
 
 - Owner extended scope to full director, camera and motion capability research. Added F44–F50 MGR-native capability queue (total now 50), native 16-field `research/MGR-DIRECTORS-CAMERAS-MOTION-HOWTO.md` and isolated official-documentation provenance.

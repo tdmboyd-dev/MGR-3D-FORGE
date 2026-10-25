@@ -54,8 +54,25 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F48 | MGR Scene Continuity Director | SOURCED | PARTIAL: identity and revision primitives only | P0 | F35,F42,F44 | Shot-level costume, props, screen direction and position continuity tests |
 | F49 | MGR Cinematic Judge | SOURCED | PARTIAL: 4-frame Blender timeline render + moving-shot pixel difference Windows VERIFIED | P0 | F35,F41,F45 | Four 320x180 PNGs, middle-shot RGB MAE 5.98669; semantic framing, DOF, clipping, intershot composition open |
 | F50 | MGR Editorial Director | SOURCED | QUEUED | P1 | F41,F44,F46 | Native edit decision list, timeline, clips, audio sync and final media assembly |
+| F51 | MGR Light Sculptor | SOURCED | QUEUED | P0 | F13,F41,F47 | Key/fill/rim, global illumination, practical lighting and art direction |
+| F52 | MGR Shadow Intelligence | SOURCED | QUEUED | P1 | F51,F16 | Contact, soft, volumetric and dynamic-world shadow quality |
+| F53 | MGR Atmosphere Field | SOURCED | QUEUED | P1 | F51,F56 | Fog, clouds, haze, volumetric depth and environment interaction |
+| F54 | MGR Particle Architect | SOURCED | PARTIAL: seeded budgeted CPU particle geometry TESTED | P0 | F03,F13 | `forge/fx.py` stable particles; emitters, forces, GPU/runtime/LOD still open |
+| F55 | MGR Elemental Simulator | SOURCED | QUEUED | P1 | F53,F54 | Smoke, fire, water, wind, fluids and deterministic simulation caches |
+| F56 | MGR Portal Intelligence | SOURCED | PARTIAL: 3D ring geometry and emissive GLB TESTED | P0 | F54,F59 | Real Blender emissive render pending; traversal, interior dimension and parallax open |
+| F57 | MGR Energy Weave | SOURCED | PARTIAL: animated phase arc/aura geometry TESTED | P0 | F54,F59 | Beams, shields, electric forces, character spell choreography and glow QA |
+| F58 | MGR Illusion Architect | SOURCED | QUEUED | P1 | F33,F35,F56 | Depth/parallax, refraction, impossible-space portals and cross-view validity |
+| F59 | MGR Shader Alchemist | SOURCED | PARTIAL: glTF emissiveFactor and native PBR validator TESTED | P0 | F13,F56 | Blender emissive socket proof, procedural shader graphs and MaterialX support |
+| F60 | MGR Metamorphosis Director | SOURCED | QUEUED | P1 | F39,F42,F57 | Safe shape/material transformation with face/identity locks |
+| F61 | MGR Compositor | SOURCED | QUEUED | P1 | F35,F41,F57 | Scene passes, bloom, glare, distortion, grade and export QA |
+| F62 | MGR Color Master | SOURCED | QUEUED | P1 | F13,F41,F61 | ACES/OCIO scene-referred grade, display transforms and tone mapping |
+| F63 | MGR Motion Graphics | SOURCED | QUEUED | P1 | F41,F50,F61 | Kinetic typography, 3D HUD, animation timing and web export |
+| F64 | MGR Sound-Reactive FX | SOURCED | QUEUED | P2 | F46,F54,F63 | Beat/envelope/event-driven light, particles and scene animation |
+| F65 | MGR Destruction Director | SOURCED | QUEUED | P1 | F55,F16 | Fracture, collision/physics, debris, cache and restoration |
+| F66 | MGR Spell Continuity Brain | SOURCED | QUEUED | P0 | F42,F48,F56 | Stable spell/world states, owner approvals and cross-shot replay |
+| F67 | MGR FX Judge | SOURCED | PARTIAL: geometry validity/phase determinism TESTED | P0 | F35,F49,F54 | Real glow, volumetrics, temporal and cross-view artifact tests |
 
-**Scope:** 50 MGR-native areas: original 33 plus F34–F43 and director/camera/motion F44–F50. New director tracks requested on 2026-10-25 remain independently tracked even when partially implemented. Queued is **not** implemented. Technical research is organized by MGR functions in `research/MGR-CREATION-INTELLIGENCE-HOWTO.md` and `research/MGR-DIRECTORS-CAMERAS-MOTION-HOWTO.md`; necessary external provenance stays under `research/external-provenance/`.
+**Scope:** 67 MGR-native areas: original 33, F34–F43, director/camera/motion F44–F50 and fantasy/VFX F51–F67. All new tracks requested on 2026-10-25 remain independently tracked even if partially implemented. Queued is **not** implemented. Technical research is organized by MGR functions in `research/MGR-CREATION-INTELLIGENCE-HOWTO.md`, `research/MGR-DIRECTORS-CAMERAS-MOTION-HOWTO.md` and `research/MGR-FANTASY-CINEMA-CREATION-HOWTO.md`; external provenance remains separate.
 
 ## Definition of production completeness
 

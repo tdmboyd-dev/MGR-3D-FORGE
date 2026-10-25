@@ -30,7 +30,8 @@
 | MGR Asset Vault | Hash-based local dedupe and rights metadata | Tamper/provenance tests | Multiuser DB, revisions, search |
 | MGR Geometry QA | Degenerate/bad index checks and conservative cleanup | Mesh tests | Watertight repair, retopo, UV validation |
 | MGR Delivery Bundle | GLB, OBJ, MTL, LOD1, parks, interiors, scene facts/camera/lighting JSON, preview SVG | 16-file bundle with 15 artifact SHA receipts; Blender world and PBR inspection | Engine/film pipeline, full interoperability and rendered visual QA |
-| MGR Build Ledger | 50-area native register (including directed cinema F44–F50), provenance, **133 current tests**, benchmark receipts | Windows **133/133** and Linux **133/133**; actual 20-part rig, PBR, 3-camera Cycles scene, 7.21726m dolly and four-frame pixel comparison PASS | Production CI, game-engine runtime and owner acceptance |
+| MGR Fantasy Forge | GPU-free procedural 3D portal, spell orbit and aura meshes; seeded phase-driven particle geometry and glTF emission | 139 local tests include geometry determinism, budget and emissive export; Blender preview bridge CODED | Real Blender effect render, compositing, volumetric magic, physics and cinematic quality |
+| MGR Build Ledger | 67-area native register (including cinema F44–F50 and fantasy FX F51–F67), provenance, **139 current local tests**, benchmark receipts | Windows prior **133/133**, Linux **139/139**; actual 20-part rig, PBR, 3-camera Cycles, dolly and four-frame comparison PASS | New FX Windows acceptance, production CI, game-engine runtime and owner approval |
 
 ## Exact Blender environment and measured Windows receipts
 
