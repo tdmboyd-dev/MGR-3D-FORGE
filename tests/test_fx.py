@@ -78,7 +78,10 @@ class FantasyForgeTests(unittest.TestCase):
                 with self.subTest(value=bad),self.assertRaises(ValueError):
                     blender_fx_render_command("blender",glb,img,report,bad)
             command=blender_fx_render_command("blender",glb,img,report,.075)
-            self.assertEqual(command[-1],"0.075")
+            self.assertEqual(command[-2:],["0.075","uniform"])
+            self.assertEqual(blender_fx_render_command("blender",glb,img,report,.075,"cloud")[-1],"cloud")
+            with self.assertRaises(ValueError):
+                blender_fx_render_command("blender",glb,img,report,.075,"unknown")
 
 
 if __name__=="__main__":

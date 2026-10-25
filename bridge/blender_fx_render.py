@@ -11,12 +11,15 @@ from mathutils import Vector
 
 def main():
     args=sys.argv[sys.argv.index("--")+1:]
-    if len(args)!=4:
-        raise ValueError("expected effect.glb output.png report.json volume_density")
+    if len(args)!=5:
+        raise ValueError("expected effect.glb output.png report.json volume_density volume_style")
     source,image,report=map(Path,args[:3])
     density=float(args[3])
     if not math.isfinite(density) or not 0<=density<=.25:
         raise ValueError("MGR volume density must be in 0..0.25")
+    style=args[4]
+    if style not in ("uniform","cloud"):
+        raise ValueError("unsupported MGR volume style")
     bpy.ops.wm.read_factory_settings(use_empty=True)
     bpy.ops.import_scene.gltf(filepath=str(source.resolve()))
     objects=[obj for obj in bpy.data.objects if obj.type=="MESH"]
@@ -67,17 +70,30 @@ def main():
         # Real Cycles participating medium: ray-path absorption/scattering
         # with existing scene point lights. This is a homogeneous atmospheric
         # proxy, not a smoke simulation or authored OpenVDB grid.
-        bpy.ops.mesh.primitive_cube_add(size=1,location=center)
+        if style=="cloud":
+            bpy.ops.mesh.primitive_uv_sphere_add(segments=32,ring_count=16,radius=1,location=center)
+        else:
+            bpy.ops.mesh.primitive_cube_add(size=1,location=center)
         atmosphere=bpy.context.object
         atmosphere.name="MGR_FX_Atmosphere_Field"
-        atmosphere.scale=(span*1.15,span*1.15,span*.85)
+        atmosphere.scale=(span*.85,span*.85,span*.60) if style=="cloud" else (span*1.15,span*1.15,span*.85)
         atmosphere_material=bpy.data.materials.new("MGR_FX_Scattering_Medium")
         atmosphere_material.use_nodes=True
         nodes=atmosphere_material.node_tree.nodes
         nodes.clear()
         output=nodes.new("ShaderNodeOutputMaterial")
         volume=nodes.new("ShaderNodeVolumePrincipled")
-        volume.inputs["Density"].default_value=density
+        if style=="cloud":
+            noise=nodes.new("ShaderNodeTexNoise")
+            noise.inputs["Scale"].default_value=3.0
+            noise.inputs["Detail"].default_value=3.0
+            density_mix=nodes.new("ShaderNodeMath")
+            density_mix.operation="MULTIPLY"
+            density_mix.inputs[1].default_value=density*2
+            atmosphere_material.node_tree.links.new(noise.outputs["Fac"],density_mix.inputs[0])
+            atmosphere_material.node_tree.links.new(density_mix.outputs[0],volume.inputs["Density"])
+        else:
+            volume.inputs["Density"].default_value=density
         volume.inputs["Anisotropy"].default_value=.25
         volume.inputs["Color"].default_value=(.48,.7,1,1)
         atmosphere_material.node_tree.links.new(volume.outputs["Volume"],output.inputs["Volume"])
@@ -122,11 +138,12 @@ def main():
             "render_engine":"CYCLES","render_device":"CPU",
             "point_light_count":2,"light_witness":witness.name,
             "compositor_glare":glare.inputs["Type"].default_value,
-            "volume_density":density,"volume_object":atmosphere.name if atmosphere else None,
+            "volume_density":density,"volume_style":style,
+            "volume_object":atmosphere.name if atmosphere else None,
             "volume_shader":"ShaderNodeVolumePrincipled" if atmosphere else None,
             "image_bytes":image.stat().st_size if image.exists() else 0,
             "limitations":["basic emissive geometry, not physically simulated effects",
-                           "uniform volume scattering is not simulated animated smoke",
+                           "procedural volume scattering is not simulated animated smoke",
                            "no collision-driven particles or fluid simulation"]}
     report.write_text(json.dumps(result,indent=2,sort_keys=True)+"\n",encoding="utf-8")
     if result["status"]!="PASS":

@@ -151,14 +151,16 @@ def blender_director_frames_command(blender_binary, blend, output, report):
             str(Path(output).resolve()),str(Path(report).resolve())]
 
 
-def blender_fx_render_command(blender_binary, glb, image, report, volume_density=0.0):
+def blender_fx_render_command(blender_binary, glb, image, report, volume_density=0.0, volume_style="uniform"):
     import math
     if type(volume_density) not in (float,int) or not math.isfinite(volume_density) or not 0<=volume_density<=0.25:
         raise ValueError("volume density must be finite and between 0 and 0.25")
+    if volume_style not in ("uniform","cloud"):
+        raise ValueError("unknown MGR volume style")
     if not Path(glb).is_file() or Path(glb).suffix.lower()!=".glb":
         raise ValueError("existing effect GLB required")
     if Path(image).suffix.lower()!=".png" or Path(report).suffix.lower()!=".json":
         raise ValueError("effect render needs PNG + JSON")
     return [str(blender_binary),"--background","--factory-startup","--python",
             str(FX_RENDER),"--",str(Path(glb).resolve()),
-            str(Path(image).resolve()),str(Path(report).resolve()),str(float(volume_density))]
+            str(Path(image).resolve()),str(Path(report).resolve()),str(float(volume_density)),volume_style]
