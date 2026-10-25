@@ -1,0 +1,24 @@
+{
+  "schema": "mgr.forge.pose-guardian.v1",
+  "status": "PASS",
+  "errors": [],
+  "frames": [
+    {"frame": 1, "joint_max_gap_m": 0.0, "bone_count": 11, "skinned_part_count": 16},
+    {"frame": 12, "joint_max_gap_m": 0.0, "bone_count": 11, "skinned_part_count": 16}
+  ],
+  "maximum_hand_motion_m": 0.427002,
+  "blender_version": "5.2.2 LTS",
+  "verification": {
+    "device": "Time (authorized Windows device)",
+    "source": "evidence/blender/modular-skinned-pose-example.blend",
+    "command": "py -3 -m forge.cli blender-pose-audit evidence/blender/modular-skinned-pose-example.blend --report <temp>/windows-pose-guardian-wave.json --binary <installed Blender 5.2.2>",
+    "exit_code": 0,
+    "windows_unittest_count": 110,
+    "windows_unittest_status": "PASS"
+  },
+  "limitations": [
+    "bone-chain continuity does not verify watertight mesh seams",
+    "1.0 single-bone weights are rigid segments, not smooth skin deformation",
+    "does not establish human identity or artistic quality"
+  ]
+}
