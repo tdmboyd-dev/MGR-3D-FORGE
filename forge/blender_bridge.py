@@ -15,6 +15,7 @@ POSE_INSPECT=Path(__file__).resolve().parent.parent/"bridge"/"blender_pose_inspe
 CINEMATIC=Path(__file__).resolve().parent.parent/"bridge"/"blender_cinematic.py"
 MATERIAL_INSPECT=Path(__file__).resolve().parent.parent/"bridge"/"blender_material_inspect.py"
 DIRECTOR_INSPECT=Path(__file__).resolve().parent.parent/"bridge"/"blender_director_inspect.py"
+DIRECTOR_FRAMES=Path(__file__).resolve().parent.parent/"bridge"/"blender_director_frames.py"
 
 
 def blender_command(blender_binary,source,report):
@@ -135,3 +136,15 @@ def blender_director_inspect_command(blender_binary, blend, report):
         raise ValueError("JSON director receipt required")
     return [str(blender_binary),"--background","--factory-startup","--python",
             str(DIRECTOR_INSPECT),"--",str(Path(blend).resolve()),str(Path(report).resolve())]
+
+
+def blender_director_frames_command(blender_binary, blend, output, report):
+    if not Path(blend).is_file() or Path(blend).suffix.lower()!=".blend":
+        raise ValueError("existing Blender director .blend required")
+    if Path(report).suffix.lower()!=".json":
+        raise ValueError("JSON report required")
+    if Path(output).exists():
+        raise FileExistsError("director frame output must be a new directory")
+    return [str(blender_binary),"--background","--factory-startup","--python",
+            str(DIRECTOR_FRAMES),"--",str(Path(blend).resolve()),
+            str(Path(output).resolve()),str(Path(report).resolve())]

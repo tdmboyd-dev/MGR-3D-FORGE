@@ -2,7 +2,7 @@ import math
 import unittest
 
 from forge.director import compile_director_reel, ease_fraction, sample_motion
-from forge.blender_bridge import blender_director_inspect_command
+from forge.blender_bridge import blender_director_inspect_command,blender_director_frames_command
 from pathlib import Path
 import tempfile
 
@@ -72,6 +72,15 @@ class NativeDirectorTests(unittest.TestCase):
             self.assertIn("blender_director_inspect.py"," ".join(command))
             with self.assertRaises(ValueError):
                 blender_director_inspect_command("blender",Path(directory)/"missing.blend",Path(directory)/"out.json")
+
+    def test_timeline_render_command_validates_new_output(self):
+        with tempfile.TemporaryDirectory() as directory:
+            blend=Path(directory)/"scene.blend"
+            blend.write_bytes(b"placeholder")
+            cmd=blender_director_frames_command("blender",blend,Path(directory)/"new",Path(directory)/"report.json")
+            self.assertIn("blender_director_frames.py"," ".join(cmd))
+            with self.assertRaises(FileExistsError):
+                blender_director_frames_command("blender",blend,Path(directory),Path(directory)/"report.json")
 
 
 if __name__=="__main__":

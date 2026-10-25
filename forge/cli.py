@@ -22,7 +22,7 @@ from .view_identity import compare_view_silhouettes, compare_asset_views, AssetV
 from .traversal import rehearse_road_walk
 from .interiors import generate_interiors
 from .character import build_mannequin
-from .blender_bridge import verify_blender, blender_render_command, blender_facts_command, blender_rig_command, blender_pose_render_command, blender_pose_inspect_command, blender_cinematic_command, blender_material_inspect_command, blender_director_inspect_command
+from .blender_bridge import verify_blender, blender_render_command, blender_facts_command, blender_rig_command, blender_pose_render_command, blender_pose_inspect_command, blender_cinematic_command, blender_material_inspect_command, blender_director_inspect_command, blender_director_frames_command
 from .environment import generate_parks, ENVIRONMENT_MATERIALS
 from .receipt import file_receipt, verify_bundle
 from .materials import MGR_MATERIAL_PRESETS
@@ -162,6 +162,11 @@ def main(argv=None):
     director_audit.add_argument("blend",type=Path)
     director_audit.add_argument("--report",type=Path,required=True)
     director_audit.add_argument("--binary",default="blender")
+    director_frames=sub.add_parser("blender-director-frames",help="render four actual timeline frames and compare dolly output")
+    director_frames.add_argument("blend",type=Path)
+    director_frames.add_argument("--out",type=Path,required=True)
+    director_frames.add_argument("--report",type=Path,required=True)
+    director_frames.add_argument("--binary",default="blender")
     bundle=sub.add_parser("verify-bundle",help="verify artifact hashes in world build folder")
     bundle.add_argument("directory",type=Path)
     visual=sub.add_parser("compare-renders",help="compare fixed-camera RGB PNG frames")
@@ -311,6 +316,28 @@ def main(argv=None):
         report=json.loads(args.report.read_text(encoding="utf-8"))
         if report.get("status")!="PASS" or report.get("camera_count",0)<2:
             raise RuntimeError("Blender director receipt invalid")
+        print(json.dumps(report,indent=2))
+        return 0
+    if args.action == "blender-director-frames":
+        import subprocess
+        if args.report.exists():
+            raise FileExistsError("director frame receipt already exists")
+        command=blender_director_frames_command(args.binary,args.blend,args.out,args.report)
+        result=subprocess.run(command,timeout=600,capture_output=True,text=True,check=False)
+        if result.returncode:
+            raise RuntimeError(f"Blender director frames failed ({result.returncode}): {result.stderr[-600:] or result.stdout[-600:]}")
+        report=json.loads(args.report.read_text(encoding="utf-8"))
+        frames=report.get("frames",[])
+        if report.get("status")!="PASS" or len(frames)<4:
+            raise RuntimeError("missing actual rendered director frames")
+        from .visualqa import compare_pngs
+        before=args.out/frames[1]["filename"]
+        after=args.out/frames[2]["filename"]
+        difference=compare_pngs(before,after)["rgb_mae"]
+        if difference<=0:
+            raise RuntimeError("moving camera produced unchanged rendered pixels")
+        report["moving_shot_rgb_mae"]=difference
+        args.report.write_text(json.dumps(report,indent=2,sort_keys=True)+"\n",encoding="utf-8")
         print(json.dumps(report,indent=2))
         return 0
     if args.action == "verify-bundle":
