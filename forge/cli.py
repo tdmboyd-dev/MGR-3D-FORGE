@@ -33,6 +33,7 @@ from .asset_parity import audit_export_parity
 from .cell_transport import MGRCellTransport
 from .web_runtime import make_world_flight
 from .world_editor import apply_world_edits
+from .live_blender import create_live_blender_scene
 
 
 def build(spec: WorldSpec, output: Path):
@@ -155,6 +156,11 @@ def main(argv=None):
     edited.add_argument("--world",type=Path,required=True,help="original generated world directory")
     edited.add_argument("--edits",type=Path,required=True,help="downloaded browser world edits JSON")
     edited.add_argument("--out",type=Path,required=True,help="new output directory (must not exist)")
+    live_blender=sub.add_parser("blender-live-scene",help="turn verified edited world into an actual individually editable Blender project")
+    live_blender.add_argument("--world",type=Path,required=True,help="materialized edited world directory")
+    live_blender.add_argument("--blend",type=Path,required=True,help="new Blender project file")
+    live_blender.add_argument("--report",type=Path,required=True,help="new Blender verification JSON")
+    live_blender.add_argument("--binary",default="blender")
     blender = sub.add_parser("blender-verify",help="run actual Blender GLB import verification if installed")
     blender.add_argument("path",type=Path)
     blender.add_argument("--report",type=Path,required=True)
@@ -258,6 +264,9 @@ def main(argv=None):
         return 0
     if args.action == "apply-world-edits":
         print(json.dumps(apply_world_edits(args.world,args.edits,args.out),indent=2))
+        return 0
+    if args.action == "blender-live-scene":
+        print(json.dumps(create_live_blender_scene(args.world,args.blend,args.report,binary=args.binary),indent=2))
         return 0
     if args.action == "compose-scene":
         if args.out.exists():

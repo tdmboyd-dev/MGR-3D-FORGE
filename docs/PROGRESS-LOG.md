@@ -267,3 +267,10 @@ The initial historical snapshot has been superseded by the current live inventor
 - **Verified on Time's Windows machine:** real Chrome headless WebGL2 passed all **16/16 browser checks**, including live text creation/change, collapsible chat, arbitrary-code rejection, duplicate/delete and pixel-sampled image-to-material editing. **227/227 Python tests PASS** on both Linux and Windows; Windows full command exited 0. See `evidence/browser/windows-wave16-creation-director.json`. The source HTML and geometry exporter are genuine, but these tests do not prove arbitrary image-to-3D reconstruction or microphone dictation accuracy.
 - Image preview has an optional material sampler: it downsamples a locally loaded PNG/JPEG/WebP, averages visible pixels, and applies the nearest native material preset to the selected real building. This change participates in edit history and the JSON-to-GLB rebuild. It does **not** fabricate geometry from the picture.
 
+## 2026-10-25 — MGR Editable Blender World Handoff (F94)
+
+- Added `forge/live_blender.py` to inspect edited-world geometry fingerprints, reject altered/malformed source, cap input sizes, protect existing outputs and run a fixed Blender script instead of executing user-authored Python.
+- Added `bridge/blender_live_scene.py`: independently selectable building meshes preserve MGR IDs, dimensions and materials. Native Blender scene gains ground, lighting, camera and saves to a new `.blend` file alongside a JSON receipt.
+- Added CLI `blender-live-scene --world EDITED_BUNDLE --blend NEW.blend --report NEW.json --binary BLENDER_PATH`.
+- Five new adversarial tests cover source fingerprint mismatch, absent edit provenance, output overwrite and missing executable. **232/232 local Python tests PASS**; live Blender verification is a separate gate.
+
