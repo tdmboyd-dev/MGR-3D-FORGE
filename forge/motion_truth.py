@@ -32,17 +32,28 @@ def judge_motion_samples(samples, *, max_speed_mps=12.0,
     velocities=[]
     for first,second in zip(checked,checked[1:]):
         dt=second[0]-first[0]
-        velocities.append((tuple((second[1][axis]-first[1][axis])/dt for axis in range(3)),dt))
-    speeds=[math.sqrt(sum(v*v for v in vel)) for vel,dt in velocities]
+        if not math.isfinite(dt) or dt<=0:
+            raise ValueError("motion time delta is not representable")
+        components=tuple((second[1][axis]-first[1][axis])/dt for axis in range(3))
+        if not all(math.isfinite(v) for v in components):
+            raise ValueError("motion velocity overflow")
+        velocities.append((components,dt))
+    speeds=[math.hypot(*vel) for vel,dt in velocities]
+    if not all(math.isfinite(value) for value in speeds):
+        raise ValueError("motion speed overflow")
     accelerations=[]
     for earlier,later in zip(velocities,velocities[1:]):
         dt=(earlier[1]+later[1])/2
         delta=tuple((later[0][axis]-earlier[0][axis])/dt for axis in range(3))
-        accelerations.append(math.sqrt(sum(v*v for v in delta)))
+        if not all(math.isfinite(v) for v in delta):
+            raise ValueError("motion acceleration overflow")
+        accelerations.append(math.hypot(*delta))
     violations=[]
     for index,speed in enumerate(speeds):
         if speed>max_speed_mps:
             violations.append({"kind":"speed","segment":index,"measured":round(speed,6)})
+    if not all(math.isfinite(value) for value in accelerations):
+        raise ValueError("motion acceleration magnitude overflow")
     for index,acceleration in enumerate(accelerations):
         if acceleration>max_acceleration_mps2:
             violations.append({"kind":"acceleration","junction":index+1,

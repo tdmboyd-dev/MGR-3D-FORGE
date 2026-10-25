@@ -4,6 +4,8 @@
 
 **New foundation wave:** five sourced 16-field packets (S01–S05) and CPU tests for parallel-camera depth triangulation, triangle-edge surface defects, and sampled motion speed/acceleration are now implemented. Linux **168/168 PASS**; Windows verification on this new code is still pending (previous Windows run **153/153 PASS**). These checks are partial safeguards, not proof of reconstructed photoreal characters, printable watertight meshes or a full physics solver.
 
+**Latest research expansion:** twenty 16-field cross-disciplinary chapters plus twenty isolated source ledgers are written, with a focused production-paper/technical-engine research overlay under `research/MGR-STUDIO-TO-NATIVE-ENGINE-LESSONS.md`. Local code now also includes oriented-camera depth and CPU chunk-residency *planning*: **175/175 Linux tests PASS**; last Windows verified **168/168 PASS**, newest changes pending Windows rerun. The research is a foundation and implementation contract, **not** a fully finished film/game/VR engine.
+
 ## What MGR owns and can run now
 
 | MGR capability | Native implementation | Verified proof | Production gap |

@@ -1,0 +1,29 @@
+# S08 external provenance — game/runtime architecture
+
+Captured 2026-10-25. Research inputs, not MGR feature names. Each row is documented upstream design evidence rather than code admitted to Forge. **No third-party game-engine source or asset was copied.** URLs should be version-pinned before a shipping dependency is added; online documentation changes.
+
+| Source | Official URL | Observed engineering lesson | License/rights and verification |
+|---|---|---|---|
+| Unreal World Partition | https://dev.epicgames.com/documentation/unreal-engine/world-partition-in-unreal-engine | World divided into streamable spatial grid cells loaded by proximity to streaming sources; integrates data layers, per-actor files and HLOD generation. | Epic documentation, UE 5.8 at retrieval; source/build redistribution governed by Unreal EULA; **docs researched, engine not executed here**. |
+| Unreal HLOD | https://dev.epicgames.com/documentation/unreal-engine/world-partition---hierarchical-level-of-detail-in-unreal-engine | Distant cells can use baked proxy/merged detail, preserving silhouette without keeping all source actors active. | Licensed technology/branding; implement general LOD concept independently. |
+| Unreal Nanite virtualized geometry | https://dev.epicgames.com/documentation/unreal-engine/nanite-in-unreal-engine | Specialized compressed mesh hierarchy and per-view geometry streaming seeks pixel-scale relevant detail, not blind full-res loading. | No implication that Nanite renderer is open for relicensing or runs without supported graphics hardware; not tested. |
+| Unreal Nanite technical details | https://dev.epicgames.com/documentation/unreal-engine/nanite-technical-details | Virtualized/high-resolution render path and source geometry can coexist, with workflow/platform limitations. | Vendor implementation specific. |
+| Unreal multiplayer | https://dev.epicgames.com/documentation/unreal-engine/networking-and-multiplayer-in-unreal-engine | State replication, client/server ownership and data relevancy are distinct from local rendering. | Vendor runtime code not copied. |
+| Unreal networking overview | https://dev.epicgames.com/documentation/unreal-engine/networking-overview-for-unreal-engine | Server authoritative state, client local visual/audio rendering and replication are separate work. | Documentation reviewed; no live network load tested. |
+| Godot large-world coordinates | https://docs.godotengine.org/en/stable/tutorials/physics/large_world_coordinates.html | Floating-point position precision degrades with distance; double precision has performance/compatibility cost and origin shifting complicates multiplayer. | Official docs; Godot engine license MIT, but engine version/export builds/extensions must align; not benchmarked. |
+| Godot high-level multiplayer | https://docs.godotengine.org/en/stable/tutorials/networking/high_level_multiplayer.html | RPC routing and authority make explicit distinctions among network peers; synchronized transforms alone are not secure multiplayer. | Official docs, architecture research only. |
+| Godot physics interpolation | https://docs.godotengine.org/en/stable/tutorials/physics/interpolation.html | Fixed physics step and presentation rendering may run at different frequencies; interpolation prevents visible judder. | Official docs; version-specific details require validation. |
+| Godot server optimization | https://docs.godotengine.org/en/stable/tutorials/performance/using_servers.html | Lower-level rendering/physics servers can reduce per-node overhead in heavy scenes. | Official docs, no exact performance claim for MGR. |
+| Godot optimization | https://docs.godotengine.org/en/stable/tutorials/performance/index.html | Profiling and platform budgets must drive render/CPU/asset optimizations rather than polygon count alone. | Official docs, no actual target hardware profiled. |
+| Khronos glTF 2.0 | https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html | Runtime-friendly typed scenes, transforms, meshes, skinning, animation and materials suitable as an interchange contract. | Open specification; sample assets and individual libraries have independent terms. |
+| GDC Vault | https://gdcvault.com/ | Primary conference presentations are a source for shipped-game architecture postmortems; access may require purchase/login. | No named GDC talk was accessed in this wave; do not misstate a talk as reviewed. |
+| Fortnite/UEFN memory management | https://dev.epicgames.com/documentation/en-us/fortnite/memory-management-in-unreal-editor-for-fortnite | Cook-time memory budgets and streaming strategy influence published playable island acceptance. | Epic UEFN guidance, not proof of actual Fortnite production source internals. |
+
+## Evidence boundaries and risks
+
+1. Engine architecture ideas can inspire independent MGR design; no vendor private source, copyrighted assets, proprietary console SDKs or restricted presentations have been obtained.
+2. Public Unreal documentation does not disclose *all* internal Fortnite infrastructure. “Fortnite-style” means capability goal, not claim of code parity.
+3. Platform consoles require approved developer access, SDK, certification and hardware; research cannot promise PlayStation/Xbox/Switch deployment without those approvals.
+4. Godot's MIT license is materially more permissive for native code extension than Unreal EULA, but application dependencies, assets and console porting are distinct rights.
+5. Nanite is a useful reference for perception-budgeted geometry; copying its internal format/technology or claiming MGR achieves Nanite-level performance requires separate technical and legal work.
+6. URLs/source dates were accessed as current web documentation; no source code checkout, shader profiling, device farm or network load test was performed in this packet.

@@ -33,6 +33,10 @@ class MotionTruthTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             judge_motion_samples([(0,(0,0,0)),(1,(1,0,0)),(2,(2,0,0))],max_samples=2)
 
+    def test_subnormal_timing_overflow_rejected_without_fake_receipt(self):
+        with self.assertRaises((ValueError,OverflowError)):
+            judge_motion_samples([(0,(0,0,0)),(1e-320,(1,0,0)),(2e-320,(2,0,0))])
+
 
 if __name__=="__main__":
     unittest.main()

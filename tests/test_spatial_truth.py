@@ -7,7 +7,7 @@ import tempfile
 import unittest
 
 from forge.geometry import Mesh
-from forge.spatial_truth import camera_project,pixel_to_ray,slice_mesh_at_height,triangulate_parallel_views
+from forge.spatial_truth import camera_project,pixel_to_ray,slice_mesh_at_height,triangulate_parallel_views,triangulate_oriented_views
 from forge.cli import main
 
 
@@ -65,6 +65,8 @@ class SpatialTruthTests(unittest.TestCase):
             self.assertEqual(data["surface_edge_audit"]["status"],"PASS")
             for actual,expected in zip(data["stereo_calibrated_example"]["point_m"],(0,1,4)):
                 self.assertAlmostEqual(actual,expected,places=6)
+            for actual,expected in zip(data["oriented_stereo_example"]["point_m"],(0,1,4)):
+                self.assertAlmostEqual(actual,expected,places=6)
             with self.assertRaises(FileExistsError):
                 main(["spatial-proof","--out",str(path)])
 
@@ -91,6 +93,24 @@ class SpatialTruthTests(unittest.TestCase):
     def test_stereo_rejects_backwards_point(self):
         with self.assertRaises(ValueError):
             triangulate_parallel_views((-100,0),(100,0),camera_a=(-1,0,0),camera_b=(1,0,0),focal_px=400)
+
+    def test_rotated_camera_recovers_point_not_parallel(self):
+        identity=((1,0,0),(0,1,0),(0,0,1))
+        rotated=((0,0,1),(0,1,0),(-1,0,0))
+        result=triangulate_oriented_views((100,100),(0,200),camera_a=(-1,0,0),
+                                          camera_b=(-2,0,4),rotation_a=identity,
+                                          rotation_b=rotated,focal_px=400)
+        for actual,want in zip(result["point_m"],(0,1,4)):
+            self.assertAlmostEqual(actual,want,places=6)
+        self.assertEqual(result["reprojection_errors_px"],[0,0])
+
+    def test_rotated_camera_rejects_reflection_and_scale(self):
+        identity=((1,0,0),(0,1,0),(0,0,1))
+        for invalid in (((-1,0,0),(0,1,0),(0,0,1)),
+                        ((2,0,0),(0,1,0),(0,0,1))):
+            with self.subTest(rotation=invalid),self.assertRaises(ValueError):
+                triangulate_oriented_views((100,100),(0,200),camera_a=(-1,0,0),
+                    camera_b=(-2,0,4),rotation_a=identity,rotation_b=invalid,focal_px=400)
 
 
 if __name__=="__main__":

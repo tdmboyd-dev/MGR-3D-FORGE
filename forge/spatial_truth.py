@@ -82,6 +82,81 @@ def triangulate_parallel_views(pixel_a, pixel_b, *, camera_a, camera_b,
                            "a fit is not proof of unseen geometry"]}
 
 
+def triangulate_oriented_views(pixel_a, pixel_b, *, camera_a, camera_b,
+                               rotation_a, rotation_b, focal_px,
+                               center_px=(0,0), max_separation_m=0.05,
+                               max_reprojection_px=2.0):
+    """Triangulate two measured camera poses, including different orientations.
+
+    Rotations are proper orthonormal 3x3 camera-to-world matrices, row-major.
+    Coordinates are right-handed, +Z camera forward, +Y image up. This
+    accepts known correspondences; it does not discover/calibrate them.
+    """
+    def finite_vector(values,n):
+        return len(values)==n and all(type(x) in (int,float) and math.isfinite(x) for x in values)
+    def checked_rotation(value):
+        if len(value)!=3 or not all(finite_vector(row,3) for row in value):
+            raise ValueError("3x3 finite camera rotation required")
+        rows=tuple(tuple(row) for row in value)
+        for i in range(3):
+            for j in range(3):
+                dot=sum(rows[i][k]*rows[j][k] for k in range(3))
+                if abs(dot-(1.0 if i==j else 0.0))>1e-5:
+                    raise ValueError("orthonormal camera rotation required")
+        cross=(rows[0][1]*rows[1][2]-rows[0][2]*rows[1][1],
+               rows[0][2]*rows[1][0]-rows[0][0]*rows[1][2],
+               rows[0][0]*rows[1][1]-rows[0][1]*rows[1][0])
+        if abs(sum(cross[k]*rows[2][k] for k in range(3))-1)>1e-5:
+            raise ValueError("proper right-handed camera rotation required")
+        return rows
+    if not finite_vector(camera_a,3) or not finite_vector(camera_b,3):
+        raise ValueError("finite camera world positions required")
+    for tolerance in (max_separation_m,max_reprojection_px):
+        if type(tolerance) not in (int,float) or not math.isfinite(tolerance) or tolerance<=0:
+            raise ValueError("positive finite tolerances required")
+    rotations=(checked_rotation(rotation_a),checked_rotation(rotation_b))
+    origins=(camera_a,camera_b)
+    pixels=(pixel_a,pixel_b)
+    rays=[]
+    for pixel,rotation in zip(pixels,rotations):
+        local=pixel_to_ray(pixel,focal_px=focal_px,center_px=center_px)
+        rays.append(tuple(sum(rotation[i][j]*local[j] for j in range(3)) for i in range(3)))
+    d1,d2=rays
+    delta=tuple(camera_a[i]-camera_b[i] for i in range(3))
+    dot=sum(d1[i]*d2[i] for i in range(3))
+    denominator=1-dot*dot
+    if denominator<1e-8 or math.dist(camera_a,camera_b)<1e-5:
+        raise ValueError("unobservable depth: insufficient parallax")
+    d=sum(d1[i]*delta[i] for i in range(3))
+    e=sum(d2[i]*delta[i] for i in range(3))
+    t=(dot*e-d)/denominator
+    u=(e-dot*d)/denominator
+    if t<=0 or u<=0:
+        raise ValueError("point behind a camera")
+    pa=tuple(camera_a[i]+t*d1[i] for i in range(3))
+    pb=tuple(camera_b[i]+u*d2[i] for i in range(3))
+    separation=math.dist(pa,pb)
+    if separation>max_separation_m:
+        raise ValueError("inconsistent measured correspondence")
+    point=tuple((pa[i]+pb[i])/2 for i in range(3))
+    errors=[]
+    for camera,rotation,pixel in zip(origins,rotations,pixels):
+        world=tuple(point[i]-camera[i] for i in range(3))
+        local=tuple(sum(rotation[i][j]*world[i] for i in range(3)) for j in range(3))
+        projected=camera_project(local,focal_px=focal_px,center_px=center_px)
+        errors.append(math.dist(projected,pixel))
+    if max(errors)>max_reprojection_px:
+        raise ValueError("reprojection error too high")
+    return {"schema":"mgr.forge.oriented-stereo.v1","point_m":point,
+            "ray_separation_m":round(separation,8),
+            "reprojection_errors_px":[round(x,6) for x in errors],
+            "baseline_m":round(math.dist(camera_a,camera_b),8),
+            "observation":"two known camera poses and matched calibrated rays",
+            "limitations":["camera extrinsics/intrinsics and pixel match must be observed",
+                           "no distortion model, uncertainty propagation or robust outlier search",
+                           "reprojection fit cannot certify unseen surfaces"]}
+
+
 def slice_mesh_at_height(mesh, *, height_m, max_triangles=500_000):
     """Intersect triangles with a horizontal Y plane; return XZ line segments.
 
