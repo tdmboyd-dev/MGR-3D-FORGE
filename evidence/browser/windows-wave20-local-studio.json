@@ -1,0 +1,27 @@
+{
+  "schema": "mgr.forge.browser-studio-hardware-evidence.v1",
+  "date": "2026-10-25",
+  "device": "Time's connected Windows desktop",
+  "browser": "Google Chrome headless with CDP and WebGL2",
+  "renderer": "Installed native Blender 5.2.2 LTS",
+  "test": "node tests/browser_studio_smoke.mjs CHROME_BINARY http://127.0.0.1:64374/",
+  "status": "PASS",
+  "process_exit_code": 0,
+  "process_runtime_seconds": 106.29,
+  "checks": [
+    "localhost token session",
+    "browser PNG upload",
+    "generated relief GLB",
+    "live edited world GLB",
+    "full Blender project conversion",
+    "downloadable real artifacts"
+  ],
+  "downloads": [
+    "/files/1348c2af0fca65faad867aad/scene.blend",
+    "/files/1348c2af0fca65faad867aad/edited/world-editor.html",
+    "/files/1348c2af0fca65faad867aad/edited/world.glb",
+    "/files/2f0c58e02e03deec2edeec94/relief/relief.glb"
+  ],
+  "scope": "Actual private loopback-browser HTTP chain and editable Blender asset on Windows, not public deployment or general image-to-full-3D inference. URLs work only while this ephemeral local server and job folder exist.",
+  "transcript": "Chrome CDP process completed with exit code 0 after 106.29 seconds."
+}
