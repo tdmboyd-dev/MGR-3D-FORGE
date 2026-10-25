@@ -5,7 +5,7 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | ID | MGR-owned capability | Research state | Code state | Priority | Dependencies | Next evidence |
 |---|---|---|---|---|---|---|
 | F01 | Intent -> typed project & brief | SPECIFIED | PROTOTYPE TESTED | P0 | input schema | Limited count-only offline parser, not general intent |
-| F02 | Scene/asset dependency graph | SPECIFIED | NOT STARTED | P0 | F01 | Deterministic plan diff |
+| F02 | Scene/asset dependency graph | SPECIFIED | PARTIAL: tested DAG | P0 | F01 | Stable topo-sort/cycle checks; full scene graph pending |
 | F03 | CPU procedural terrain/roads | SOURCED | PARTIAL: roads, TESTED | P0 | F02, Blender | Terrain, curves and engine import absent |
 | F04 | Parametric buildings/rooms | SOURCED | PARTIAL: massing, TESTED | P0 | F03 | 1,000-lot test passes; rooms absent |
 | F05 | Asset store and provenance | SPECIFIED | PROTOTYPE TESTED | P0 | asset schema | Hash/dedupe/tamper tests pass; durable transactional backend pending |
@@ -24,15 +24,15 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F18 | LOD/instancing/streaming | QUEUED | NOT STARTED | P1 | F16 | Load times, fps |
 | F19 | Image/video scene reconstruction | SOURCED | NOT STARTED | P2 | licensed weights, GPU | Camera/depth benchmark |
 | F20 | Persistent character/world memory | SPECIFIED | NOT STARTED | P1 | F05,F09,F15 | Cross-run continuity |
-| F21 | Compute/resource cost router | SPECIFIED | NOT STARTED | P1 | benchmark data | Budget cap tests |
-| F22 | Human approvals | SPECIFIED | NOT STARTED | P0 | existing gateway integration | Denied spend/upload test |
-| F23 | Workflow resumes/retries | SPECIFIED | NOT STARTED | P1 | job store | Restart midflight |
+| F21 | Compute/resource cost router | SPECIFIED | PARTIAL: budget gate TESTED | P1 | benchmark data | Real hardware/provider estimates pending |
+| F22 | Human approvals | SPECIFIED | PARTIAL: authorization TESTED | P0 | existing gateway integration | Fail-closed remote/spend test passes; identity and UI pending |
+| F23 | Workflow resumes/retries | SPECIFIED | PARTIAL: local checkpoints TESTED | P1 | job store | Restart test passes; retries/concurrency pending |
 | F24 | User-facing creation studio | DISCOVERED | NOT STARTED | P2 | stable engine | Rehearsal UI |
 | F25 | Creation OS integration | BLOCKED: repo audit | NOT STARTED | P1 | canonical ownership | Integration contract |
 | F26 | Create Loco integration | BLOCKED: repo audit | NOT STARTED | P2 | consumer needs | Screenshot-to-scene |
 | F27 | Tevin/MGR-ONE integration | BLOCKED: repo audit | NOT STARTED | P1 | canonical base | Owner-approved character |
 | F28 | Cross-engine export pack | SPECIFIED | NOT STARTED | P1 | targets known | Target engine import |
-| F29 | License/provenance gate | SOURCED | NOT STARTED | P0 | model legal review | Block unapproved weights |
+| F29 | License/provenance gate | SOURCED | PARTIAL: license ID gate TESTED | P0 | model legal review | Unknown-license approval enforced; legal clearance still open |
 | F30 | Benchmark/quality ledger | SPECIFIED | PROTOTYPE TESTED | P0 | metric spec | Reproducible test/manifest; quality against Blender targets pending |
 
 ## Definition of production completeness

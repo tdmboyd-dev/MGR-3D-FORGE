@@ -13,6 +13,7 @@ from forge.spec import WorldSpec
 from forge.planner import plan_neighborhood
 from forge.assets import AssetRegistry
 from forge.quality import compare_character_identity
+from forge.workflow import LocalJobStore, Step, approve_plan, resolve_plan
 
 
 class ForgeTests(unittest.TestCase):
@@ -143,6 +144,58 @@ class ForgeTests(unittest.TestCase):
         changed = {k: list(v) for k, v in points.items()}
         changed["left_wrist"][0] += 3
         self.assertFalse(compare_character_identity(points, changed)["passed"])
+
+    def test_workflow_dependency_order(self):
+        plan = resolve_plan([Step("export", "glb", ("geometry",)),
+                             Step("geometry", "cpu")])
+        self.assertEqual([step.id for step in plan], ["geometry", "export"])
+
+    def test_workflow_rejects_cycles(self):
+        with self.assertRaises(ValueError):
+            resolve_plan([Step("a", "x", ("b",)), Step("b", "x", ("a",))])
+
+    def test_workflow_rejects_missing_dependencies(self):
+        with self.assertRaises(ValueError):
+            resolve_plan([Step("a", "x", ("missing",))])
+
+    def test_free_local_plan_auto_allowed(self):
+        result = approve_plan([Step("cpu", "procedural")])
+        self.assertTrue(result["allowed"])
+        self.assertEqual(result["estimated_usd"], 0)
+
+    def test_paid_plan_needs_budget_and_explicit_approval(self):
+        steps = [Step("neural", "remote", estimated_usd=0.8, network_access=True)]
+        with self.assertRaises(PermissionError):
+            approve_plan(steps)
+        with self.assertRaises(PermissionError):
+            approve_plan(steps, budget_usd=1.0)
+        self.assertTrue(approve_plan(steps, budget_usd=1.0,
+                                     approved_step_ids=["neural"])["allowed"])
+
+    def test_license_gate_requires_explicit_approval(self):
+        restricted = Step("model", "local", license_id="restricted-license")
+        with self.assertRaises(PermissionError):
+            approve_plan([restricted])
+        self.assertTrue(approve_plan([restricted], approved_step_ids=["model"])["allowed"])
+
+    def test_workflow_restart_checkpoint(self):
+        with tempfile.TemporaryDirectory() as temp:
+            steps = [Step("create", "cpu"), Step("export", "glb", ("create",))]
+            store = LocalJobStore(Path(temp))
+            store.create("job-1", steps)
+            with self.assertRaises(ValueError):
+                store.checkpoint("job-1", completed_id="export")
+            store.checkpoint("job-1", completed_id="create")
+            # New store instance simulates process restart.
+            restarted = LocalJobStore(Path(temp))
+            self.assertEqual(restarted.read("job-1")["completed_ids"], ["create"])
+            restarted.checkpoint("job-1", completed_id="export", state="complete")
+            self.assertEqual(restarted.read("job-1")["state"], "complete")
+
+    def test_workflow_job_id_no_path_traversal(self):
+        with tempfile.TemporaryDirectory() as temp:
+            with self.assertRaises(ValueError):
+                LocalJobStore(Path(temp)).create("../out", [])
 
 
 if __name__ == "__main__":

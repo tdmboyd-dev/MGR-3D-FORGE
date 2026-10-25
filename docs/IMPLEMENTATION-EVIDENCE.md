@@ -14,6 +14,9 @@ Date: 2026-10-25. This page distinguishes working code from future intent.
 | Asset memory | `forge/assets.py` | SHA deduplication and provenance; tamper detection | `test_asset_registry_*`, `test_asset_provenance_required` | Search, version history and approvals |
 | Character guard | `forge/quality.py` | Checks missing landmarks, symmetry and identity proportions | `test_character_*` | Mesh/rig/pose analysis; real Tevin inputs |
 | Build quality receipt | `forge/cli.py` | Writes scene manifest, GLB integrity and SHA | `test_build_manifest_and_file` | Automated independent render, visuals, performance ledger |
+| DAG / dependency guard | `forge/workflow.py` | Deterministic ordered steps; rejects missing/cyclic dependencies | `test_workflow_*` | Full scene dependency graph, worker orchestration |
+| Approval and spend protection | `forge/workflow.py` | Fail-closed budget, network and license gates | `test_paid_plan_*`, `test_license_gate_*` | Human approval UI, authenticated approvals and model license verification |
+| Durable local progress | `forge/workflow.py` | Atomic checkpoint with restart recovery | `test_workflow_restart_checkpoint` | Concurrent jobs, queued workers, true retries and cancellation |
 
 ## Repeatable smoke commands
 
@@ -23,7 +26,7 @@ python3 -m forge.cli build --prompt "Create 25 buildings and streets" --out arti
 python3 -m forge.cli inspect artifacts/prompt-25/world.glb
 ```
 
-Observed result: 17/17 tests passed. The 25-building run produced 756 triangles and a structurally valid GLB with 1,512 vertices, six primitives and six materials. No Blender is installed in the current runner. Internal validation is not the same as an independent viewer rendering the asset correctly.
+Observed result: 25/25 tests passed in the latest suite (the first checkpoint was 17/17). The 25-building run produced 756 triangles and a structurally valid GLB with 1,512 vertices, six primitives and six materials. No Blender is installed in the current runner. Internal validation is not the same as an independent viewer rendering the asset correctly.
 
 ## Limits and honesty
 
