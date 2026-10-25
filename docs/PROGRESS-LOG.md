@@ -294,6 +294,6 @@ The initial historical snapshot has been superseded by the current live inventor
 
 - Blender job transitions now write bounded atomic `blender-state.json` receipts inside their job directory. A newly started local Studio can recover success/failure receipts, and reports any orphaned `RUNNING` record as an interrupted job instead of claiming that a vanished worker is still running.
 - A Blender subprocess timeout now produces a visible failed-job result. Repeated clicks within the live process continue to share one worker, rather than launching duplicate conversions.
-- Four additional HTTP-backed tests exercise recovered failure, interrupted-worker recovery, invalid receipt isolation and atomic file replacement. **321 local unit tests PASS** (23 network/socket tests skipped under Linux sandbox restrictions); Windows HTTP acceptance pending for these new cases.
+- Four additional HTTP-backed tests exercise recovered failure, interrupted-worker recovery, invalid receipt isolation and atomic file replacement. **321 local unit tests PASS** (23 network/socket tests skipped under Linux sandbox restrictions). **All 321/321 tests also PASS on Time's Windows machine in 27.641 seconds with zero skips; process exit 0.**
 - This addresses process-restart truthfulness; it does **not** make Blender jobs independently resumable after process termination. Full durable background worker orchestration remains open.
 
