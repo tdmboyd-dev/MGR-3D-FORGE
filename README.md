@@ -20,6 +20,10 @@ python -m forge.cli character-reopen --blend path/to/new-character.blend --sha25
 python -m forge.cli character-readiness --source path/to/new-intake/candidate.glb --out path/to/new-readiness.json
 # Make distinct material regions selectable as independent objects in a NEW Blender project:
 python -m forge.cli character-separate --blend path/to/new-character.blend --out path/to/new-separated.blend --report path/to/new-parts.json --binary blender
+# Export a character that ALREADY has a real deforming rig and keyframed motion:
+python -m forge.cli character-motion-export --blend path/to/rigged-character.blend --out path/to/new-animated.glb --report path/to/new-motion.json --binary blender
+# Independently reopen the GLB, checking the skeleton, skinned geometry and animation actions:
+python -m forge.cli character-motion-reimport --glb path/to/new-animated.glb --sha256 EXPECTED_SHA256 --report path/to/new-reimport.json --binary blender
 # Alternatively, open the loopback Creation Chat and select a small existing .glb
 # under "Existing 3D model"; "Inspect / Preserve 3D Model" gives GLB and JSON downloads.
 ```

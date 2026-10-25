@@ -1,5 +1,12 @@
 # MGR 3D Forge — Progress and Evidence Log
 
+## 2026-10-25 — F104 deforming animation export research and implementation
+
+- Added a fixed Blender 5.2-compatible animated GLB export path that requires a real armature modifier, vertex groups and measurable skinned mesh movement across frames; new outputs only. Added independent Blender receiving-import script checking actual armature, skinned meshes and animation actions.
+- Added guarded CLI actions `character-motion-export` and `character-motion-reimport`, SHA binding and seven denial/tamper/overwrite tests. Actual Windows Blender run was attempted but the remote desktop connector returned **user rejected MCP tool call**. Permission boundary respected; runtime status is **UNVERIFIED**, not FAIL or PASS.
+- Research sources: Blender glTF export operators and Khronos glTF 2.0 animation/skins: `research/external-provenance/CHARACTER-MOTION-SOURCES-2026-10-25.md`. Game-engine receiving proof remains open.
+
+
 ## 2026-10-25 — F101/F102 character evidence and rig readiness
 
 - Added original `character-readiness` report: source SHA, named mesh and primitive/material inventory, UV presence, per-primitive joint-weight signals and skin bindings.
