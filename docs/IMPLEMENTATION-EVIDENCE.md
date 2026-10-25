@@ -3,7 +3,7 @@
 Date: 2026-10-25. This page distinguishes working code from future intent.
 
 **Current wave evidence (supersedes earlier baseline test counts below):**
-**146/146** unit tests passed on Linux and Time's Windows device. On real
+**153/153** unit tests passed on Linux and Time's Windows device. On real
 Blender 5.2.2 LTS, the 20-part/11-bone generic mannequin has 48 dual-bone
 elbow sleeve vertices and passes measured two-pose joint/weight QA; the world
 has verified imported PBR materials; and editable CPU Cycles cinema scenes have
@@ -19,7 +19,7 @@ The current Atmosphere Field wave independently rendered no-volume, uniform-volu
 
 MGR FX Judge now runs the matched comparison as a native validated CLI, not just an ad-hoc Blender console. The actual Windows control/volume proof passed with **22.37957 RGB MAE (8-bit)** against an explicit minimum of **3.0**, and the receipt is archived as `evidence/blender/windows-wave8-judge.json`. It refuses mismatched cameras and missing volume shader claims; it still does not recognize aesthetic defects semantically.
 
-New reality-to-space research is now mapped over 20 disciplines and four cross-domain bridges. `forge/spatial_truth.py` implements and tests pinhole projection, pixel-to-camera ray and triangle/plane mesh sectioning; the `spatial-proof` command emits an inspectable JSON example. **Seven additional local tests** passed, bringing the current Linux total to **153/153**. Windows verification of the latest spatial branch is pending in this pre-execution status. Nothing here implies monocular true-depth recovery or print-ready G-code.
+New reality-to-space research is now mapped over 20 disciplines and four cross-domain bridges. `forge/spatial_truth.py` implements and tests pinhole projection, pixel-to-camera ray and triangle/plane mesh sectioning; the `spatial-proof` command emits an inspectable JSON example. **Seven additional tests** brought both Linux and Windows to **153/153 PASS**. Windows CLI generated `evidence/blender/windows-wave9-spatial-truth.json` with measured section segments, identical projected pixels at depths 4m and 12m, and an explicit unknown-depth limitation. Nothing here implies monocular true-depth recovery or print-ready G-code.
 
 ## What you can actually run
 

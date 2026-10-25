@@ -1,0 +1,104 @@
+{
+  "cross_section_segments": [
+    [
+      [
+        -1,
+        -1
+      ],
+      [
+        -1,
+        0
+      ]
+    ],
+    [
+      [
+        -1,
+        -1
+      ],
+      [
+        0,
+        -1
+      ]
+    ],
+    [
+      [
+        -1,
+        0
+      ],
+      [
+        -1,
+        1
+      ]
+    ],
+    [
+      [
+        -1,
+        1
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    [
+      [
+        0,
+        -1
+      ],
+      [
+        1,
+        -1
+      ]
+    ],
+    [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    [
+      [
+        1,
+        -1
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    [
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ]
+    ]
+  ],
+  "depths_m": [
+    4,
+    12
+  ],
+  "limitations": [
+    "no unique depth can be recovered from the ray alone",
+    "triangle segments are not print-ready closed contours or G-code"
+  ],
+  "mesh_slice_height_m": 2,
+  "pixel_xy": [
+    100,
+    200
+  ],
+  "same_pixel_different_depth": true,
+  "schema": "mgr.forge.spatial-truth.v1",
+  "unit_camera_ray": [
+    0.2182178902359924,
+    0.4364357804719848,
+    0.8728715609439696
+  ]
+}
