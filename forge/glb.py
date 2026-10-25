@@ -11,7 +11,10 @@ def _pad(blob: bytes, fill=b"\x00") -> bytes:
     return blob + fill * ((-len(blob)) % 4)
 
 
-def export_glb(meshes, *, name="MGR Forge World") -> bytes:
+def export_glb(meshes, *, name="MGR Forge World", materials=None) -> bytes:
+    materials = MATERIALS if materials is None else materials
+    if len(meshes) != len(materials) or not materials:
+        raise ValueError("mesh/material count mismatch")
     binary = bytearray()
     views, accessors, primitives = [], [], []
 
@@ -62,7 +65,7 @@ def export_glb(meshes, *, name="MGR Forge World") -> bytes:
                        "pbrMetallicRoughness": {
                            "baseColorFactor": rgba,
                            "metallicFactor": 0.0, "roughnessFactor": 0.9}}
-                      for mat_name, rgba in MATERIALS],
+                      for mat_name, rgba in materials],
         "buffers": [{"byteLength": len(binary)}],
         "bufferViews": views, "accessors": accessors,
     }

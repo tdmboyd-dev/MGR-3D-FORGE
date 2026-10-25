@@ -23,6 +23,14 @@ from forge.recipes import ModelRecipe, inspect_recipe
 from forge.meshqa import analyze_mesh, remove_bad_triangles
 from forge.perception import scene_overview
 from forge.interiors import generate_interiors
+from forge.character import mannequin, build_mannequin, CHARACTER_MATERIALS
+from forge.animation import arm_pose_clip, pose_landmarks
+from forge.adapters import (AdapterCapabilities, ProceduralWorldAdapter,
+                            UnavailableNeuralAdapter, select_adapter)
+from forge.blender_bridge import blender_command, verify_blender
+from forge.benchmark import run_benchmark
+from forge.environment import generate_parks, ENVIRONMENT_MATERIALS
+from forge.receipt import verify_bundle
 
 
 class ForgeTests(unittest.TestCase):
@@ -106,10 +114,20 @@ class ForgeTests(unittest.TestCase):
             self.assertTrue((Path(temp) / "spatial_overview.json").is_file())
             self.assertTrue((Path(temp) / "interiors.glb").is_file())
             self.assertTrue((Path(temp) / "interiors.json").is_file())
+            self.assertTrue((Path(temp) / "parks.glb").is_file())
+            self.assertTrue((Path(temp) / "parks.json").is_file())
             self.assertEqual(manifest["execution"]["external_api_calls"], 0)
             self.assertFalse(manifest["execution"]["blender_verified"])
             saved = json.loads((Path(temp) / "manifest.json").read_text())
             self.assertEqual(saved["artifact"], manifest["artifact"])
+            self.assertTrue(verify_bundle(Path(temp))["passed"])
+
+    def test_world_bundle_detects_tampering(self):
+        with tempfile.TemporaryDirectory() as temp:
+            build(WorldSpec(),Path(temp))
+            (Path(temp)/"parks.json").write_text("tampered")
+            with self.assertRaises(ValueError):
+                verify_bundle(Path(temp))
 
     def test_obj_has_same_triangle_count_as_glb(self):
         meshes, world = create_neighborhood(WorldSpec())
@@ -249,6 +267,91 @@ class ForgeTests(unittest.TestCase):
         self.assertEqual(export_glb(first), export_glb(second))
         self.assertEqual(plan1,plan2)
 
+    def test_beam_geometry_faces_and_export(self):
+        beam=Mesh()
+        beam.beam((0,0,0),(1,1,0),0.2)
+        self.assertEqual(len(beam.indices)//3,12)
+        self.assertTrue(analyze_mesh(beam)["passed"])
+        for idx in range(0,len(beam.positions),12):
+            center=[sum(beam.positions[idx+j*3+axis] for j in range(4))/4
+                    for axis in range(3)]
+            outward=[center[0]-0.5,center[1]-0.5,center[2]]
+            normal=beam.normals[idx:idx+3]
+            self.assertGreater(sum(a*b for a,b in zip(outward,normal)),0)
+        with self.assertRaises(ValueError):
+            Mesh().beam((0,0,0),(0,0,0),0.2)
+
+    def test_generic_character_both_poses_have_complete_hands(self):
+        for pose in ("T","A"):
+            parts,landmarks,quality=mannequin(pose)
+            self.assertTrue(quality["passed"])
+            self.assertIn("left_hand",parts)
+            self.assertIn("right_hand",parts)
+            self.assertLess(landmarks["left_hand"][0],-0.8)
+            self.assertGreater(landmarks["right_hand"][0],0.8)
+            self.assertTrue(all(analyze_mesh(mesh)["passed"] for _,mesh in parts.values()))
+
+    def test_character_exports_detachable_components(self):
+        with tempfile.TemporaryDirectory() as temp:
+            result=build_mannequin(Path(temp),"T")
+            self.assertFalse(result["tevin_identity_verified"])
+            self.assertEqual(len(list((Path(temp)/"parts").glob("*.glb"))),
+                             len(result["editable_parts"]))
+            self.assertTrue(inspect_glb((Path(temp)/"mannequin.glb").read_bytes())["valid"])
+            for path in (Path(temp)/"parts").glob("*.glb"):
+                self.assertTrue(inspect_glb(path.read_bytes())["valid"])
+
+    def test_material_export_validates_mesh_count(self):
+        with self.assertRaises(ValueError):
+            export_glb([Mesh()],materials=CHARACTER_MATERIALS)
+
+    def test_pose_track_preserves_anatomy(self):
+        clip=arm_pose_clip(samples=15)
+        self.assertEqual(len(clip["frames"]),15)
+        base=clip["frames"][0]["landmarks"]
+        for frame in clip["frames"]:
+            self.assertTrue(compare_character_identity(base,frame["landmarks"],tolerance=0.001)["passed"])
+        self.assertFalse(clip["skinned_animation_exported"])
+
+    def test_a_pose_matches_procedural_character(self):
+        _,expected,_=mannequin("A")
+        self.assertEqual(expected,pose_landmarks(1))
+        with self.assertRaises(ValueError):
+            pose_landmarks(1.5)
+
+    def test_adapter_selects_free_native_world(self):
+        chosen=select_adapter("world-massing",[UnavailableNeuralAdapter(),ProceduralWorldAdapter()])
+        self.assertEqual(chosen.capabilities.name,"mgr-cpu-world")
+        with tempfile.TemporaryDirectory() as temp:
+            result=chosen.run(WorldSpec(),Path(temp))
+            self.assertTrue(result["quality"]["passed"])
+
+    def test_adapter_refuses_unavailable_neural(self):
+        with self.assertRaises(LookupError):
+            select_adapter("image-to-mesh",[UnavailableNeuralAdapter()])
+
+    def test_adapter_remote_requires_explicit_budget_and_approval(self):
+        class TestRemote:
+            capabilities=AdapterCapabilities("remote-sim",("image-to-mesh",),True,0.5,False,True)
+            def run(self, spec, output):
+                raise RuntimeError("test adapter intentionally not executable")
+        with self.assertRaises(LookupError):
+            select_adapter("image-to-mesh",[TestRemote()],allow_network=True,budget_usd=1)
+        chosen=select_adapter("image-to-mesh",[TestRemote()],allow_network=True,
+                              budget_usd=1,approved_step_ids=["remote-sim"])
+        self.assertEqual(chosen.capabilities.name,"remote-sim")
+
+    def test_blender_bridge_has_explicit_proof_gate(self):
+        with tempfile.TemporaryDirectory() as temp:
+            source=Path(temp)/"real.glb"
+            meshes,_=create_neighborhood(WorldSpec())
+            source.write_bytes(export_glb(meshes))
+            command=blender_command("blender",source,Path(temp)/"report.json")
+            self.assertIn("--background",command)
+            self.assertIn("--python",command)
+            with self.assertRaises(RuntimeError):
+                verify_blender(source,Path(temp)/"report.json",blender_binary="nonexistent-blender-mgr-test")
+
     def test_character_missing_hand(self):
         landmarks = {name: [0, i, 0] for i, name in enumerate((
             "head", "left_shoulder", "right_shoulder", "left_elbow", "right_elbow",
@@ -328,6 +431,29 @@ class ForgeTests(unittest.TestCase):
             approve_plan(steps, budget_usd=1.0)
         self.assertTrue(approve_plan(steps, budget_usd=1.0,
                                      approved_step_ids=["neural"])["allowed"])
+
+    def test_plan_rejects_nan_cost_and_budget(self):
+        with self.assertRaises(ValueError):
+            Step("bad","remote",estimated_usd=float("nan"))
+        with self.assertRaises(ValueError):
+            approve_plan([Step("cpu","local")],budget_usd=float("nan"))
+
+    def test_benchmark_receipt_small(self):
+        result=run_benchmark((10,))
+        self.assertEqual(result["external_api_calls"],0)
+        self.assertEqual(result["results"][0]["status"],"PASS")
+
+    def test_parks_fill_empty_lots_with_real_geometry(self):
+        _,world=create_neighborhood(WorldSpec(rows=4,columns=4,buildings=10))
+        meshes,parks=generate_parks(world)
+        self.assertEqual(len(parks["parks"]),6)
+        self.assertEqual(parks["tree_count"],18)
+        self.assertTrue(inspect_glb(export_glb(meshes,materials=ENVIRONMENT_MATERIALS))["valid"])
+        self.assertTrue(all(analyze_mesh(mesh)["passed"] for mesh in meshes))
+
+    def test_parks_reproducible(self):
+        _,world=create_neighborhood(WorldSpec())
+        self.assertEqual(generate_parks(world)[1],generate_parks(world)[1])
 
     def test_license_gate_requires_explicit_approval(self):
         restricted = Step("model", "local", license_id="restricted-license")

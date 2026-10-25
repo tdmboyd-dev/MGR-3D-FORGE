@@ -1,5 +1,19 @@
 # MGR 3D Forge — Progress and Evidence Log
 
+## 2026-10-25 — Larger connected build cycle: character, adapters, Blender probe, greenery
+
+- Locked universal inspiration interpretation in `docs/EXTERNAL-INSPIRATION-RULE.md` and `AGENTS.md`: every external project yields original MGR-native creative possibilities; never restrict Forge to the upstream feature or claim unobserved reality is known.
+- Added generic fully enclosed 3D proxy mannequin, left/right arms, visible hands, hair, detachable coat, shirt, chain, pants/legs and boots (`forge/character.py`), 16 independent parts, T and A poses. **Not Tevin's approved identity.** Actual CLI T/A builds both passed.
+- Added `forge/animation.py`: bone-length-preserving T→A→T landmark samples, currently **metadata only, no rig weights or deforming mesh**.
+- Added `forge/adapters.py`: swappable contract, functioning CPU-world adapter and explicit not-installed neural adapter. Mock remote choice tested against budget+approval. **No real neural model integrated**.
+- Added optional Blender import verifier (`bridge/blender_probe.py`, `forge/blender_bridge.py`). `blender` executable absent in runner; **not independently executed yet**.
+- Added deterministic trees/parks on unoccupied lots (`forge/environment.py`), distinct GLB and provenance manifest. Six parks/18 trees in default world test.
+- Added 13-file artifact SHA manifest (`forge/receipt.py`) and `verify-bundle` CLI; tamper rejection test passes.
+- Tightened workflow cost validation against NaN inputs.
+- Benchmarked procedural scene generation + GLB export: 10 buildings 0.006222s; 100 at 0.043213s; 1,000 at 0.310850s on CPython 3.12.14 x86_64. Baselines are **local CPU prototypes** and not compared to competitors.
+- Suite **64/64 pass**. No GitHub Actions run, no paid APIs, GPU inference or networked third-party script execution.
+- Remaining gates: real Blender import/render, approved Tevin body/face, skinning, exact asset separation, neural model runtime + licensing, interactive studio, external Creation OS/MGR-ONE consumer integration, game-engine benchmarks and owner acceptance.
+
 ## 2026-10-25 — User corrected Pinokio reference to God's Eye View
 
 - Kept F32 Model Dock from Pinokio because it has separate native value for optional local model orchestration.

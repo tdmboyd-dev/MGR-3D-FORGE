@@ -22,9 +22,15 @@ python3 -m unittest discover -v
 python3 -m forge.cli build --spec examples/neighborhood.json --out artifacts/example
 python3 -m forge.cli build --prompt "Create 25 buildings and streets" --out artifacts/prompt-25
 python3 -m forge.cli inspect artifacts/prompt-25/world.glb
+python3 -m forge.cli verify-bundle artifacts/prompt-25
+python3 -m forge.cli character --pose T --out artifacts/generic-t
+python3 -m forge.cli character --pose A --out artifacts/generic-a
+python3 -m forge.benchmark --out artifacts/benchmark.json
+# Requires Blender installed on this machine; otherwise reports unavailable:
+python3 -m forge.cli blender-verify artifacts/prompt-25/world.glb --report artifacts/blender-report.json
 ```
 
-Each build now creates twelve files: `world.glb`, `world.obj`, `world.mtl`, `world_lod1.glb`, `navigation.json`, `chunks.json`, `camera_tour.json`, `spatial_overview.json`, `interiors.glb`, `interiors.json`, `preview.svg`, and `manifest.json`. It can partition buildings into chunks, export a building-only LOD1 mesh, plan editable 3D camera keyframes, report scene-object visibility and generate a separate simple two-room interior hypothesis for each building. These are static exports, **not** live streaming, image-to-3D reconstruction, camera playback or external Blender/game-engine verification. Invented interiors are explicitly **not known real-world interiors**. The SVG is a projected preview of the scene plan, not a render of the GLB. The road graph supports simple pathfinding and box collisions. Prompts are **limited** count-based requests; buildings and rooms are basic shapes without a production-quality architecture or animation pipeline.
+Each world build creates fourteen files: `world.glb`, `world.obj`, `world.mtl`, `world_lod1.glb`, `navigation.json`, `chunks.json`, `camera_tour.json`, `spatial_overview.json`, `interiors.glb`, `interiors.json`, `parks.glb`, `parks.json`, `preview.svg`, and `manifest.json`. The manifest has SHA-256 receipts for the other 13 outputs. `character` separately creates a **generic** T/A-pose mannequin, 16 detachable GLB parts and an editable bone-length-checked pose track. None of this is Tevin's verified likeness or a production deforming rig. Worlds include static chunks, a building-only LOD1, editable camera keyframes, simple parks and invented two-room interior hypotheses. These exports are **not** live streaming, image-to-3D reconstruction, camera playback, or independently verified Blender/game-engine rendering. Invented rooms are explicitly not observed reality. The SVG previews scene-plan projection, not the imported GLB. The road graph supports pathfinding and box collisions. Prompts are **limited** count-based requests; architecture remains blocky rather than cinematic final-quality.
 
 Code lives under `forge/`, tests under `tests/`; [implementation evidence](docs/IMPLEMENTATION-EVIDENCE.md) explains exact results and limitations.
 
@@ -35,6 +41,7 @@ Code lives under `forge/`, tests under `tests/`; [implementation evidence](docs/
 | [ARCHITECTURE.md](docs/ARCHITECTURE.md) | Owners, modules, data contracts, pipeline, integrations |
 | [RESEARCH-REGISTER.md](research/RESEARCH-REGISTER.md) | Source-linked model/research comparisons and evidence disposition |
 | [SCROLL-SYNAPSE-PINOKIO-INTAKE.md](research/SCROLL-SYNAPSE-PINOKIO-INTAKE.md) | New source research, licenses, MGR F31/F32 decisions and unresolved Synapse identity |
+| [EXTERNAL-INSPIRATION-RULE.md](docs/EXTERNAL-INSPIRATION-RULE.md) | Standing rule: turn any external idea into an original MGR-native capability, never blindly clone it |
 | [GODS-EYE-VIEW-NATIVE-INTAKE.md](research/GODS-EYE-VIEW-NATIVE-INTAKE.md) | Canonical God’s Eye View analysis, third-party data license risks, F33 Spatial Eyes plan |
 | [DEEP-DIVE-NATIVE-CPU.md](research/DEEP-DIVE-NATIVE-CPU.md) | 16-field native procedural research packet |
 | [DEEP-DIVE-IMAGE-TO-3D.md](research/DEEP-DIVE-IMAGE-TO-3D.md) | 16-field TripoSR, TripoSG and TRELLIS.2 packets |

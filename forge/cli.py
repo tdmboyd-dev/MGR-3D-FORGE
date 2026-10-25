@@ -17,6 +17,10 @@ from .streaming import chunk_world, simple_building_lod
 from .cinematic import camera_tour
 from .perception import scene_overview
 from .interiors import generate_interiors
+from .character import build_mannequin
+from .blender_bridge import verify_blender
+from .environment import generate_parks, ENVIRONMENT_MATERIALS
+from .receipt import file_receipt, verify_bundle
 
 
 def build(spec: WorldSpec, output: Path):
@@ -49,6 +53,11 @@ def build(spec: WorldSpec, output: Path):
     (output / "interiors.glb").write_bytes(export_glb(interior_meshes, name=f"{spec.name} Interiors"))
     (output / "interiors.json").write_text(
         json.dumps(interior_plan, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    park_meshes,park_manifest=generate_parks(manifest)
+    (output / "parks.glb").write_bytes(export_glb(park_meshes,name=f"{spec.name} Parks",
+                                          materials=ENVIRONMENT_MATERIALS))
+    (output / "parks.json").write_text(
+        json.dumps(park_manifest,indent=2,sort_keys=True)+"\n",encoding="utf-8")
     lod1_payload = export_glb(simple_building_lod(manifest), name=f"{spec.name} LOD1")
     (output / "world_lod1.glb").write_bytes(lod1_payload)
     manifest["quality"] = qc
@@ -59,11 +68,15 @@ def build(spec: WorldSpec, output: Path):
         "obj": "world.obj", "mtl": "world.mtl", "road_graph": "navigation.json",
         "preview": "preview.svg", "chunks": "chunks.json", "lod1": "world_lod1.glb",
         "camera_tour": "camera_tour.json", "spatial_overview": "spatial_overview.json",
-        "interiors": "interiors.glb", "interior_plan": "interiors.json"}
+        "interiors": "interiors.glb", "interior_plan": "interiors.json",
+        "parks":"parks.glb", "parks_manifest":"parks.json"}
     manifest["lod1_quality"] = inspect_glb(lod1_payload)
     manifest["execution"] = {"compute": "CPU", "external_api_calls": 0,
                              "model_inference": False, "blender_verified": False,
                              "independent_engine_import_verified": False}
+    manifest["artifact_inventory"]={
+        name:file_receipt(output/name)
+        for name in sorted({"world.glb",*manifest["additional_artifacts"].values()})}
     manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return manifest
 
@@ -81,9 +94,30 @@ def main(argv=None):
     create.add_argument("--prompt", type=str, help="limited offline prompt, e.g. 'build 10 houses'")
     inspect = sub.add_parser("inspect", help="check a GLB for structural validity")
     inspect.add_argument("path", type=Path)
+    character = sub.add_parser("character",help="export generic detachable mannequin T/A pose")
+    character.add_argument("--pose",choices=("T","A"),default="T")
+    character.add_argument("--out",type=Path,required=True)
+    blender = sub.add_parser("blender-verify",help="run actual Blender GLB import verification if installed")
+    blender.add_argument("path",type=Path)
+    blender.add_argument("--report",type=Path,required=True)
+    blender.add_argument("--binary",default="blender")
+    bundle=sub.add_parser("verify-bundle",help="verify artifact hashes in world build folder")
+    bundle.add_argument("directory",type=Path)
     args = parser.parse_args(argv)
     if args.action == "inspect":
         print(json.dumps(inspect_glb(args.path.read_bytes()), indent=2))
+        return 0
+    if args.action == "character":
+        result = build_mannequin(args.out,args.pose)
+        print(json.dumps({"output":str(args.out.resolve()), "pose":result["pose"],
+                          "parts":len(result["editable_parts"]),
+                          "anatomy":"PASS" if result["quality"]["passed"] else "FAIL"},indent=2))
+        return 0
+    if args.action == "blender-verify":
+        print(json.dumps(verify_blender(args.path,args.report,blender_binary=args.binary),indent=2))
+        return 0
+    if args.action == "verify-bundle":
+        print(json.dumps(verify_bundle(args.directory),indent=2))
         return 0
     if args.spec and args.prompt:
         parser.error("choose either --spec or --prompt")

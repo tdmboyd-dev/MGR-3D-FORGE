@@ -6,6 +6,7 @@ for external network jobs and any projected paid model use.
 
 from dataclasses import dataclass, asdict
 import json
+import math
 import os
 from pathlib import Path
 import tempfile
@@ -21,7 +22,8 @@ class Step:
     license_id: str = "MGR-native"
 
     def __post_init__(self):
-        if not self.id or not self.kind or self.estimated_usd < 0:
+        if (not self.id or not self.kind or not isinstance(self.estimated_usd,(float,int))
+                or not math.isfinite(self.estimated_usd) or self.estimated_usd < 0):
             raise ValueError("invalid job step")
         if not self.license_id:
             raise ValueError("license metadata required")
@@ -61,7 +63,7 @@ def approve_plan(steps, *, budget_usd=0.0, approved_step_ids=(),
 
     Explicit approval is never implied by a high budget.
     """
-    if budget_usd < 0:
+    if not isinstance(budget_usd,(int,float)) or not math.isfinite(budget_usd) or budget_usd < 0:
         raise ValueError("negative budget")
     ordered = resolve_plan(steps)
     cost = sum(step.estimated_usd for step in ordered)

@@ -27,6 +27,13 @@ Date: 2026-10-25. This page distinguishes working code from future intent.
 | Local Model Dock | `forge/recipes.py` | Static model manifest license/checksum/VRAM validation | `test_model_recipe_*` | Installer, sandbox, execution, provider verification |
 | Spatial Eyes | `forge/perception.py` | Geometry-grounded object distances and center-ray occlusion with evidence labels | `test_spatial_overview_*` | True scene parsing, live data, image reconstruction, HUD |
 | Beyond Imagery prototype | `forge/interiors.py` | Creates separate two-room interior meshes from building footprints with hypothesis provenance | `test_interior_*` | True reconstruction, multi-floor architecture, visual/user approval |
+| Detachable generic character | `forge/character.py` | T/A full-arm/hand proxy with 16 parts; exports whole and each part in GLB | `test_generic_character_*`, `test_character_exports_*` | Tevin likeness, real garment segmentation, rigging, visual review |
+| Kinematic pose samples | `forge/animation.py` | T-A-T bone-length-preserving editable landmarks over time | `test_pose_track_*`, `test_a_pose_*` | Skinned mesh weights/deformation and playback |
+| Native provider contract | `forge/adapters.py` | Selects executable approved offline CPU generator, rejects absent or unapproved neural/provider work | `test_adapter_*` | Real model engines, GPU workers, quality comparisons |
+| Blender import probe | `bridge/blender_probe.py`, `forge/blender_bridge.py` | Actual bpy GLB import, triangle/mesh count receipt when Blender installed | `test_blender_bridge_*` only tests construction/unavailable gate | **Real Blender execution not run** in this environment |
+| Park/foliage props | `forge/environment.py` | Generated trees/trunks on empty lots with distinct materials | `test_parks_*` | Natural tree topology, biomes, asset instancing and collisions |
+| Bundle integrity | `forge/receipt.py` | Hash/size receipts for all 13 world output artifacts, detects tampering | `test_world_bundle_*` | Signed provenance, cross-consumer receipts |
+| CPU benchmark | `forge/benchmark.py` | Reproduces 10/100/1000 building scene generation + GLB export measurements | `test_benchmark_*` and local measured run | Independent runtime/quality/performance comparisons |
 
 ## Repeatable smoke commands
 
@@ -36,7 +43,19 @@ python3 -m forge.cli build --prompt "Create 25 buildings and streets" --out arti
 python3 -m forge.cli inspect artifacts/prompt-25/world.glb
 ```
 
-Observed result: **49/49 tests passed** in the latest suite (earlier checkpoints were 17/17, 25/25, 33/33, 44/44, 47/47). The 25-building run produced 756 triangles and a structurally valid GLB with 1,512 vertices, six primitives and six materials. The earlier example-spec run produced 10 buildings and 372 triangles. Interiors export separately; no Blender is installed in the current runner. Internal validation is not the same as an independent viewer rendering the asset correctly.
+Observed result: **64/64 tests passed** in the latest suite. The 25-building run produced 756 triangles and a structurally valid GLB with 1,512 vertices, six primitives and six materials. The example-spec world produces 10 buildings, 372 triangles, and now also exports 18 trees in 6 parks as a separate 504-triangle GLB. The generic T/A character has 16 detachable parts and passed anatomy/geometry tests. Interior meshes export separately. No Blender executable is installed in the current runner; importing models in a real application remains open. Internal structural checks are not proof of game-ready visuals.
+
+## CPU benchmark receipts (this runner, not broad performance promises)
+
+Command: `python3 -m forge.benchmark --out artifacts/benchmarks/cpu.json`.
+
+| Procedural buildings | Geometry + GLB seconds | GLB bytes | Python peak traced bytes | Triangles |
+|---|---:|---:|---:|---:|
+| 10 | 0.006222 | 28,804 | 189,027 | 408 |
+| 100 | 0.043213 | 223,256 | 1,667,022 | 3,648 |
+| 1,000 | 0.310850 | 1,525,788 | 12,012,848 | 25,356 |
+
+Measured under CPython 3.12.14, x86_64. This excludes expensive Blender import, rendering, LOD streaming, textures, characters, commercial-quality detail or neural generation. Results can vary across hardware.
 
 ## Limits and honesty
 

@@ -9,13 +9,13 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F03 | CPU procedural terrain/roads | SOURCED | PARTIAL: roads, TESTED | P0 | F02, Blender | Terrain, curves and engine import absent |
 | F04 | Parametric buildings/rooms | SOURCED | PARTIAL: massing + two-room hypothesis TESTED | P0 | F03 | 1,000-lot test + interior GLB; real architecture/edits pending |
 | F05 | Asset store and provenance | SPECIFIED | PROTOTYPE TESTED | P0 | asset schema | Hash/dedupe/tamper tests pass; durable transactional backend pending |
-| F06 | GLB import/export + QA | SPECIFIED | PARTIAL: export, TESTED | P0 | Blender version | Internal structure test passes; independent import/export pending |
-| F07 | Local model adapter contract | SPECIFIED | NOT STARTED | P0 | F02, license gates | Mock + two providers |
+| F06 | GLB import/export + QA | SPECIFIED | PARTIAL: export, Blender probe READY UNRUN | P0 | Blender version | Internal structure checks; bpy import probe written, Blender missing |
+| F07 | Local model adapter contract | SPECIFIED | PARTIAL: local+unavailable adapter selection TESTED | P0 | F02, license gates | CPU adapter runs; remote approval simulated, real models absent |
 | F08 | CPU TripoSR prototype | SOURCED | NOT STARTED | P0 | runtime resources | Timed 3 asset benchmark |
 | F09 | Character DNA measurements | SPECIFIED | PROTOTYPE TESTED | P0 | approved Tevin base | Synthetic proportion comparison only; Tevin not captured |
 | F10 | Anatomy guardian | SPECIFIED | PROTOTYPE TESTED | P0 | F09 | Missing hand and symmetry checks; visual mesh checking pending |
-| F11 | Garment/part separation | SOURCED | NOT STARTED | P1 | F09, permitted segmentation | Coat/chain boot suite |
-| F12 | Automated rig/weights | SOURCED | NOT STARTED | P1 | clean mesh, rig type | T/A/walk deformation |
+| F11 | Garment/part separation | SOURCED | PARTIAL: synthetic detachable parts TESTED | P1 | F09, permitted segmentation | Generic 16-part mannequin; real Tevin segmentation absent |
+| F12 | Automated rig/weights | SOURCED | PARTIAL: kinematic pose track TESTED | P1 | clean mesh, rig type | T/A landmarks and bone lengths; no skin weights or rigged animation |
 | F13 | Material/UV quality | SOURCED | NOT STARTED | P1 | F06 | PBR/export validation |
 | F14 | Geometry repair/retopo | SOURCED | PARTIAL: triangle repair TESTED | P1 | F06 | Malformed triangle cleanup passed; retopo/manifold repair pending |
 | F15 | Region/world graph | SPECIFIED | PARTIAL: road intersections TESTED | P0 | F02 | Region hierarchy and landmarks pending |
@@ -33,7 +33,7 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F27 | Tevin/MGR-ONE integration | BLOCKED: repo audit | NOT STARTED | P1 | canonical base | Owner-approved character |
 | F28 | Cross-engine export pack | SPECIFIED | PARTIAL: OBJ/MTL + GLB exported | P1 | targets known | External Blender/Unity/Unreal import still unverified |
 | F29 | License/provenance gate | SOURCED | PARTIAL: license ID gate TESTED | P0 | model legal review | Unknown-license approval enforced; legal clearance still open |
-| F30 | Benchmark/quality ledger | SPECIFIED | PROTOTYPE TESTED | P0 | metric spec | Reproducible test/manifest; quality against Blender targets pending |
+| F30 | Benchmark/quality ledger | SPECIFIED | PARTIAL: measured CPU + integrity ledger TESTED | P0 | metric spec | 10/100/1000 benchmark and all-file SHA; GPU/Blender comparisons pending |
 | F31 | Native World Flight (Scroll-World inspired) | SOURCED | PARTIAL: keyframe plan TESTED | P1 | F16,F17 | 3D camera paths exported; actual scroll player pending |
 | F32 | Forge Model Dock (Pinokio inspired) | SOURCED | PARTIAL: recipe inspection TESTED | P1 | F07,F22,F29 | Fail-closed manifest; sandboxed installs and model launch pending |
 | F33 | Spatial Eyes (God's Eye View inspired) | SOURCED | PARTIAL: geometry visibility TESTED | P1 | F16,F17,F20 | Known-object occlusion and evidence labels; HUD and external/reconstruction layers pending |

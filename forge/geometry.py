@@ -1,6 +1,7 @@
 """CPU-generated, real triangle geometry. Y is up; X/Z form the ground."""
 
 import random
+import math
 from dataclasses import dataclass, field
 
 from .spec import WorldSpec
@@ -48,6 +49,31 @@ class Mesh:
         # Outward-facing normals in right-handed glTF coordinates.
         for face in ((a,b,c,d), (h,g,f,e), (e,f,b,a),
                      (f,g,c,b), (g,h,d,c), (h,e,a,d)):
+            self.quad(*face)
+
+    def beam(self, start, end, thickness):
+        """Axis-independent rectangular beam between two points."""
+        if not all(math.isfinite(v) for v in (*start,*end,thickness)) or thickness <= 0:
+            raise ValueError("invalid beam geometry")
+        axis = [end[i]-start[i] for i in range(3)]
+        length = math.sqrt(sum(v*v for v in axis))
+        if length < 1e-8:
+            raise ValueError("beam needs nonzero length")
+        w = [v/length for v in axis]
+        guide = (0,1,0) if abs(w[1]) < 0.9 else (1,0,0)
+        u = [w[1]*guide[2]-w[2]*guide[1],
+             w[2]*guide[0]-w[0]*guide[2],
+             w[0]*guide[1]-w[1]*guide[0]]
+        norm = math.sqrt(sum(v*v for v in u))
+        u = [v/norm for v in u]
+        v = [w[1]*u[2]-w[2]*u[1],w[2]*u[0]-w[0]*u[2],w[0]*u[1]-w[1]*u[0]]
+        half = thickness/2
+        def p(base, sign_u, sign_v):
+            return tuple(base[i]+half*(sign_u*u[i]+sign_v*v[i]) for i in range(3))
+        a,b,c,d=(p(start,-1,-1),p(start,1,-1),p(start,1,1),p(start,-1,1))
+        e,f,g,h=(p(end,-1,-1),p(end,1,-1),p(end,1,1),p(end,-1,1))
+        for face in ((d,c,b,a),(e,f,g,h),(a,b,f,e),(b,c,g,f),
+                     (c,d,h,g),(d,a,e,h)):
             self.quad(*face)
 
 
