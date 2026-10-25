@@ -1,5 +1,11 @@
 # MGR 3D FORGE
 
+> **Latest tested creation wave (2026-10-25):** The Creation Director creates/changes/deletes actual 3D buildings from typed commands in a collapsible sidecar. Image pixels can change a building's native material. Browser edits export to GLB/OBJ/MTL/SVG/HTML via `apply-world-edits`, then `blender-live-scene` assembles an actual individually editable Blender project. **233/233 Python tests passed on Windows**, **16/16 Chrome interactive checks passed**, and real **Blender 5.2.2 LTS** generated, reopened and rendered a five-building scene. See `evidence/blender/windows-wave17-live-creation-scene.json`. Full image-to-character mesh, hardware microphone validation and unrestricted voice-to-Python are **not** built.
+
+```bash
+python -m forge.cli blender-live-scene --world edited-world-folder --blend new-scene.blend --report blender-proof.json --binary blender
+```
+
 **Owner:** Money Grind Religion (MGR) / Timebeunus Boyd  
 **Canonical repository:** https://github.com/tdmboyd-dev/MGR-3D-FORGE  
 **Project status:** Active build. First GPU-free world-generation vertical slice implemented and tested; full production platform remains unfinished.  

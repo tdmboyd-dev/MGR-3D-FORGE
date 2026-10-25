@@ -1,0 +1,23 @@
+{
+  "schema": "mgr.forge.windows-live-blender-proof.v1",
+  "date": "2026-10-25",
+  "target": "F94 user-authored browser edit to editable Blender scene",
+  "device": "Time Windows",
+  "blender_version": "5.2.2 LTS",
+  "source": "actual generated MGR world GLB + browser-schema edited JSON with newly authored gold building",
+  "export": "new native editable .blend project",
+  "blend_bytes": 102983,
+  "editable_buildings": 5,
+  "object_names": ["building-001-000", "building-002-000", "building-002-001", "building-002-002", "mgr-created-0001"],
+  "source_glb_sha256": "2be21e3be33592455861974dc370e86c6e4e34231bd3018c269b57517cdb6363",
+  "reopen_validation": "PASS: separate Blender process loaded .blend, discovered exactly five MGR ID-bearing objects and an active camera",
+  "render": "PASS: separate Blender 5.2 process wrote real 640x400 EEVEE PNG",
+  "render_file": "evidence/blender/windows-wave17-live-creation-scene.png",
+  "test_count": "233/233 Python tests PASS on Windows; 16/16 Chrome tests previously PASS",
+  "limits": [
+    "Objects are procedural buildings, not a detailed 3D character or arbitrary prompt-generated mesh",
+    "Blender scene is individually editable but Blender modifications are not yet synchronized back to the browser",
+    "Rendered colors and lighting are demonstration-level, not studio-quality acceptance",
+    "Physical voice microphone and image-to-mesh reconstruction remain unverified/not implemented"
+  ]
+}
