@@ -448,3 +448,35 @@ def main(argv=None):
     if args.action == "pipeline":
         from .pipeline import run_pipeline
         result=run_pipeline(WorldSpec(buildings=args.buildings),args.out,
+                  blender_binary=args.blender_binary,visual_baseline=args.baseline,
+                  visual_mae_threshold=args.visual_threshold)
+        print(json.dumps(result,indent=2))
+        return 0 if result["overall"].startswith("PASS") or result["overall"]=="PARTIAL_CPU_ONLY" else 2
+    if args.action == "rehearse-walk":
+        if args.out.exists():
+            raise FileExistsError("walk report already exists; choose a new output")
+        world=json.loads(args.manifest.read_text(encoding="utf-8"))
+        result=rehearse_road_walk(world,args.from_building,args.to_building)
+        args.out.parent.mkdir(parents=True,exist_ok=True)
+        args.out.write_text(json.dumps(result,indent=2,sort_keys=True)+"\n",encoding="utf-8")
+        print(json.dumps({"status":result["status"],"frames":len(result["frames"]),
+                          "distance_m":result["distance_m"]},indent=2))
+        return 0
+    if args.spec and args.prompt:
+        parser.error("choose either --spec or --prompt")
+    base = (WorldSpec.from_json(args.spec).as_dict() if args.spec else
+            plan_neighborhood(args.prompt).spec.as_dict() if args.prompt else
+            WorldSpec().as_dict())
+    for key in ("seed", "buildings", "columns", "rows"):
+        value = getattr(args, key)
+        if value is not None:
+            base[key] = value
+    result = build(WorldSpec(**base), args.out)
+    print(json.dumps({"output": str(args.out.resolve()), "buildings": len(result["buildings"]),
+                      "triangles": result["triangle_count"], "sha256": result["artifact"]["sha256"],
+                      "quality": "PASS" if result["quality"]["passed"] else "FAIL"}, indent=2))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
