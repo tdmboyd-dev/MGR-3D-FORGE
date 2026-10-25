@@ -69,6 +69,8 @@ def main(argv):
     grounds = manifest["grounds"]
     ground.dimensions = (grounds["width"], grounds["depth"], 0.3)
     bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
+    bpy.context.scene["mgr_source_sha256"] = manifest["edit_provenance"]["original_glb_sha256"]
+    bpy.context.scene["mgr_edit_schema"] = "mgr.forge.world-edit.v1"
     lamp_data = bpy.data.lights.new(name="MGR Key Sun", type="SUN")
     lamp_data.energy = 2.0
     lamp = bpy.data.objects.new("MGR Key Sun", lamp_data)

@@ -275,3 +275,9 @@ The initial historical snapshot has been superseded by the current live inventor
 - Five new adversarial tests cover source fingerprint mismatch, absent edit provenance, output overwrite and missing executable. **232/232 local Python tests PASS**; live Blender verification is a separate gate.
 - **Actual Windows Blender 5.2.2 LTS verification PASS:** native 102,983-byte `.blend` created with five independently editable ID-bearing buildings including `mgr-created-0001`; a fresh Blender process reopened it and verified the five object IDs and live camera. Another Blender process rendered a real 640×400 PNG. Fixed a Blender 5.2 EEVEE enum incompatibility and a Blender false-zero-exit without a receipt; added regression, bringing **233/233 tests PASS on Windows**. See `evidence/blender/windows-wave17-live-creation-scene.json` and rendered image.
 
+## 2026-10-25 — Larger connected creation wave, source pixels and Blender roundtrip (F95–F96)
+
+- Built `forge/image_relief.py`: strict bounded PNG parser (CRC, 8-bit grayscale/RGB/RGBA, no interlace, all five standard PNG row filters), reproducible real mesh columns proportional to actual image luminance, independent GLB inspection, OBJ/MTL output, source fingerprint and inventory receipts. This is image-derived **2.5D** geometry; hidden surfaces are **not inferred**.
+- Built two-way fixed-script Blender bridge: Forge world edits → `.blend` with embedded source provenance → edit native buildings in Blender → `blender-to-forge` transforms → SHA-validated original JSON contract → new world GLB. Custom arbitrary Python from text or voice remains forbidden.
+- Added a 59-case generated filter/bounds/corruption PNG regression set plus roundtrip negative tests and separate end-to-end Blender smoke scripts. Acceptance requires an actual Windows Blender invocation; until then, these additions are implementation/test evidence only.
+

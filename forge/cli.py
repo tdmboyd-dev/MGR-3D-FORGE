@@ -34,6 +34,8 @@ from .cell_transport import MGRCellTransport
 from .web_runtime import make_world_flight
 from .world_editor import apply_world_edits
 from .live_blender import create_live_blender_scene
+from .image_relief import export_image_relief
+from .blender_roundtrip import export_blender_edits
 
 
 def build(spec: WorldSpec, output: Path):
@@ -161,6 +163,19 @@ def main(argv=None):
     live_blender.add_argument("--blend",type=Path,required=True,help="new Blender project file")
     live_blender.add_argument("--report",type=Path,required=True,help="new Blender verification JSON")
     live_blender.add_argument("--binary",default="blender")
+    relief=sub.add_parser("image-relief",help="build real image-derived relief 3D geometry from PNG pixels, not hallucinated full mesh")
+    relief.add_argument("--image",type=Path,required=True)
+    relief.add_argument("--out",type=Path,required=True)
+    relief.add_argument("--width",type=float,default=8.0)
+    relief.add_argument("--height",type=float,default=8.0)
+    relief.add_argument("--depth",type=float,default=2.0)
+    relief.add_argument("--grid",type=int,default=32)
+    back=sub.add_parser("blender-to-forge",help="export validated Blender building edits back to Forge JSON")
+    back.add_argument("--blend",type=Path,required=True)
+    back.add_argument("--original",type=Path,required=True)
+    back.add_argument("--out",type=Path,required=True)
+    back.add_argument("--report",type=Path,required=True)
+    back.add_argument("--binary",default="blender")
     blender = sub.add_parser("blender-verify",help="run actual Blender GLB import verification if installed")
     blender.add_argument("path",type=Path)
     blender.add_argument("--report",type=Path,required=True)
@@ -267,6 +282,13 @@ def main(argv=None):
         return 0
     if args.action == "blender-live-scene":
         print(json.dumps(create_live_blender_scene(args.world,args.blend,args.report,binary=args.binary),indent=2))
+        return 0
+    if args.action == "image-relief":
+        print(json.dumps(export_image_relief(args.image,args.out,width=args.width,height=args.height,
+                                             depth=args.depth,grid=args.grid),indent=2))
+        return 0
+    if args.action == "blender-to-forge":
+        print(json.dumps(export_blender_edits(args.binary,args.blend,args.original,args.out,args.report),indent=2))
         return 0
     if args.action == "compose-scene":
         if args.out.exists():
