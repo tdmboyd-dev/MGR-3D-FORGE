@@ -58,6 +58,15 @@ class FantasyForgeTests(unittest.TestCase):
                 blender_fx_render_command("blender",Path(directory)/"missing.glb",
                                           Path(directory)/"image.png",Path(directory)/"report.json")
 
+    def test_blender_fx_scene_has_real_light_and_optical_glow_contract(self):
+        # Blender itself validates version-specific node APIs on Windows.
+        import ast
+        source=(Path(__file__).resolve().parents[1]/"bridge"/"blender_fx_render.py").read_text()
+        ast.parse(source)
+        self.assertIn('"POINT"',source)
+        self.assertIn('"FOG_GLOW"',source)
+        self.assertIn('"MGR_FX_Light_Witness"',source)
+
 
 if __name__=="__main__":
     unittest.main()
