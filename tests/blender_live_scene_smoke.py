@@ -5,6 +5,9 @@ import hashlib
 import json
 from pathlib import Path
 import tempfile
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from forge.cli import build
 from forge.live_blender import create_live_blender_scene
