@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-25",
+  "device": "owner-authorized Windows PC",
+  "blender": "5.2.2 LTS",
+  "tested_commit": "cf8b9a2779c1c5410c14aa70e9ea1f4205a60073",
+  "windows_tests": {"ran": 94, "passed": 94, "status": "PASS"},
+  "source": "generic procedural T-pose mannequin; not approved Tevin identity",
+  "armature_build": {
+    "status": "PASS",
+    "parts": 16,
+    "bones": 11,
+    "method": "rigid modular mesh parts parented to named armature bones",
+    "editable_project": "evidence/blender/modular-rig-example.blend",
+    "blend_file_bytes": 120608,
+    "blender_reopen": "PASS: reopened saved .blend in Blender 5.2.2 and observed 16 mesh objects and one armature",
+    "bone_names": [
+      "head", "left_forearm", "left_hand", "left_leg", "left_upper_arm",
+      "right_forearm", "right_hand", "right_leg", "right_upper_arm", "root", "torso"
+    ],
+    "assignments": {
+      "chain": "torso", "coat": "torso", "hair": "head", "head": "head",
+      "left_boot": "left_leg", "left_forearm": "left_forearm",
+      "left_hand": "left_hand", "left_leg": "left_leg",
+      "left_upper_arm": "left_upper_arm", "right_boot": "right_leg",
+      "right_forearm": "right_forearm", "right_hand": "right_hand",
+      "right_leg": "right_leg", "right_upper_arm": "right_upper_arm",
+      "shirt": "torso", "torso": "torso"
+    }
+  },
+  "limitations": [
+    "No vertex skin weights or smooth deforming joints implemented.",
+    "No animation curves or motion range acceptance tested.",
+    "Visual rig appearance in Blender viewport is not yet independently inspected.",
+    "Character is a generic geometric mannequin, not owner-approved Tevin."
+  ]
+}

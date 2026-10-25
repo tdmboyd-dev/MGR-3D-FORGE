@@ -15,7 +15,7 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F09 | Character DNA measurements | SPECIFIED | PROTOTYPE TESTED | P0 | approved Tevin base | Synthetic proportion comparison only; Tevin not captured |
 | F10 | Anatomy guardian | SPECIFIED | PROTOTYPE TESTED | P0 | F09 | Missing hand and symmetry checks; visual mesh checking pending |
 | F11 | Garment/part separation | SOURCED | PARTIAL: synthetic detachable parts TESTED | P1 | F09, permitted segmentation | Generic 16-part mannequin; real Tevin segmentation absent |
-| F12 | Automated rig/weights | SOURCED | PARTIAL: kinematic pose track + modular Blender armature script TESTED (code) | P1 | clean mesh, rig type | Real `.blend` armature assembly Windows proof pending; no deforming skin weights or animation |
+| F12 | Automated rig/weights | SOURCED | PARTIAL: kinematic pose track + modular armature Blender VERIFIED | P1 | clean mesh, rig type | 16 rigid parts + 11 bones `.blend` opens in Blender 5.2.2; deforming weights/animation open |
 | F13 | Material/UV quality | SOURCED | NOT STARTED | P1 | F06 | PBR/export validation |
 | F14 | Geometry repair/retopo | SOURCED | PARTIAL: triangle repair TESTED | P1 | F06 | Malformed triangle cleanup passed; retopo/manifold repair pending |
 | F15 | Region/world graph | SPECIFIED | PARTIAL: road intersections TESTED | P0 | F02 | Region hierarchy and landmarks pending |
@@ -42,7 +42,7 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F36 | MGR Code Architect | SPECIFIED | PARTIAL: typed workspace file edits and rollback TESTED | P0 | F22,F23,F29 | `forge/code_architect.py`; isolated arbitrary-code executor, policy enforcement, consent UI pending |
 | F37 | MGR Anatomy Guardian Plus | QUEUED | NOT STARTED | P0 | F09,F10,F35 | 3D proportion and deforming-pose inspections |
 | F38 | MGR Fabric Intelligence | QUEUED | NOT STARTED | P1 | F11,F12,F13 | Separable fitted garments, intersections and motion QA |
-| F39 | MGR Rig Intelligence | SPECIFIED | PARTIAL: rigid modular bone-parenting script TESTED (code) | P0 | F09,F12,F37 | `bridge/blender_rig.py`: needs actual Blender import; normalized deform weights and animation remain open |
+| F39 | MGR Rig Intelligence | SPECIFIED | PARTIAL: rigid modular bone-parenting in Blender VERIFIED | P0 | F09,F12,F37 | `bridge/blender_rig.py`: Windows .blend saved/reopened; normalized deform weights and animation remain open |
 | F40 | MGR World Logic | QUEUED | NOT STARTED | P1 | F15,F17,F34 | Door/room/route/navmesh and agent-traversal acceptance |
 | F41 | MGR Cinematic Director | QUEUED | NOT STARTED | P1 | F13,F31,F35 | Reproducible cameras, lighting, material and shot recipes |
 | F42 | MGR Creation Memory | SPECIFIED | PARTIAL: integrity-chained JSON revisions and locks TESTED | P0 | F05,F20,F34 | `forge/creation_memory.py`; concurrent DB, actual owner identity and cross-app replay pending |

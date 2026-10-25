@@ -11,6 +11,7 @@
 - On Time's actual Windows PC, pulled GitHub commit `5e05be7` and verified **93/93 unit tests PASS**. Ran two independent end-to-end CLI pipeline jobs: 10 buildings / 372 triangles / GLB import PASS / Blender render PASS. Second job compared rendered RGB against the first: **MAE 0.0 PASS** even though PNG file SHA differed (nondeterministic metadata/encoding). This establishes stable visible pixel output under the tested render settings, not semantic equality across different poses.
 - Added pose-neutral template hashes to generic T/A mannequin export manifests; shared base confirms **same procedural source template** despite different pose, not an approved real person. New local suite **94/94 PASS**.
 - Added `bridge/blender_rig.py`: 16 independently imported mannequin parts rigidly attached to an 11-bone armature, saved as editable `.blend` with machine-readable assignment receipt. Blender runtime acceptance pending. Rigid parenting is explicitly **not normalized vertex skin weights**.
+- Windows reality check after GitHub commit `cf8b9a2`: **94/94 tests PASS**; Blender 5.2.2 imported all 16 separate GLB parts, built an 11-bone armature, saved a **120,608-byte** editable `.blend`, then reopened it successfully with **16 meshes and one armature**. Actual project preserved in `evidence/blender/modular-rig-example.blend`; proof receipt in `evidence/blender/windows-2026-10-25-rig.json`. This is an early rigid assembly, not deformable skinning.
 
 ## 2026-10-25 — Larger build wave: scene facts, visual pixels, recoverable jobs, continuity
 
