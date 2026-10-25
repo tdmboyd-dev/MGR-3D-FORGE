@@ -19,6 +19,7 @@ from .perception import scene_overview
 from .consciousness import scene_facts
 from .visualqa import compare_pngs
 from .view_identity import compare_view_silhouettes, compare_asset_views, AssetView
+from .traversal import rehearse_road_walk
 from .interiors import generate_interiors
 from .character import build_mannequin
 from .blender_bridge import verify_blender, blender_render_command, blender_facts_command, blender_rig_command
@@ -140,6 +141,11 @@ def main(argv=None):
     flow.add_argument("--baseline",type=Path)
     flow.add_argument("--visual-threshold",type=float,default=0.0)
     flow.add_argument("--buildings",type=int,default=10)
+    walk=sub.add_parser("rehearse-walk",help="simulate collision-checked road-centerline traversal")
+    walk.add_argument("manifest",type=Path)
+    walk.add_argument("--from-building",required=True)
+    walk.add_argument("--to-building",required=True)
+    walk.add_argument("--out",type=Path,required=True)
     args = parser.parse_args(argv)
     if args.action == "inspect":
         print(json.dumps(inspect_glb(args.path.read_bytes()), indent=2))
@@ -210,6 +216,16 @@ def main(argv=None):
                   visual_mae_threshold=args.visual_threshold)
         print(json.dumps(result,indent=2))
         return 0 if result["overall"].startswith("PASS") or result["overall"]=="PARTIAL_CPU_ONLY" else 2
+    if args.action == "rehearse-walk":
+        if args.out.exists():
+            raise FileExistsError("walk report already exists; choose a new output")
+        world=json.loads(args.manifest.read_text(encoding="utf-8"))
+        result=rehearse_road_walk(world,args.from_building,args.to_building)
+        args.out.parent.mkdir(parents=True,exist_ok=True)
+        args.out.write_text(json.dumps(result,indent=2,sort_keys=True)+"\n",encoding="utf-8")
+        print(json.dumps({"status":result["status"],"frames":len(result["frames"]),
+                          "distance_m":result["distance_m"]},indent=2))
+        return 0
     if args.spec and args.prompt:
         parser.error("choose either --spec or --prompt")
     base = (WorldSpec.from_json(args.spec).as_dict() if args.spec else

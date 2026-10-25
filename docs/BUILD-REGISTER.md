@@ -43,7 +43,7 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F37 | MGR Anatomy Guardian Plus | QUEUED | NOT STARTED | P0 | F09,F10,F35 | 3D proportion and deforming-pose inspections |
 | F38 | MGR Fabric Intelligence | QUEUED | NOT STARTED | P1 | F11,F12,F13 | Separable fitted garments, intersections and motion QA |
 | F39 | MGR Rig Intelligence | SPECIFIED | PARTIAL: rigid modular bone-parenting in Blender VERIFIED | P0 | F09,F12,F37 | `bridge/blender_rig.py`: Windows .blend saved/reopened; normalized deform weights and animation remain open |
-| F40 | MGR World Logic | QUEUED | NOT STARTED | P1 | F15,F17,F34 | Door/room/route/navmesh and agent-traversal acceptance |
+| F40 | MGR World Logic | SPECIFIED | PARTIAL: collision-checked road-centerline rehearsal TESTED | P1 | F15,F17,F34 | `forge/traversal.py`; actual navmesh/doors/stairs/dynamic agent game runtime pending |
 | F41 | MGR Cinematic Director | QUEUED | NOT STARTED | P1 | F13,F31,F35 | Reproducible cameras, lighting, material and shot recipes |
 | F42 | MGR Creation Memory | SPECIFIED | PARTIAL: integrity-chained JSON revisions and locks TESTED | P0 | F05,F20,F34 | `forge/creation_memory.py`; concurrent DB, actual owner identity and cross-app replay pending |
 | F43 | MGR Self-Repair Studio | SPECIFIED | PARTIAL: bounded file repair + build→Blender→render receipt pipeline TESTED (CPU stage) | P1 | F23,F30,F35,F36 | `forge/repair.py`, `forge/pipeline.py`; full Blender integrated run and semantic repair pending |
