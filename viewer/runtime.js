@@ -457,7 +457,13 @@
     if(!studioEnabled||!activeStudioJob)return;
     blenderButton.disabled=true;
     try{
-      const result=await studioPost("/api/blender",{job_id:activeStudioJob});
+      let result=await studioPost("/api/blender",{job_id:activeStudioJob});
+      for(let attempt=0;result.status==="RUNNING"&&attempt<180;attempt++){
+        directorMessage.textContent="Building your editable Blender scene locally…";
+        await new Promise(resolve=>setTimeout(resolve,1000));
+        result=await studioPost("/api/blender-status",{job_id:activeStudioJob});
+      }
+      if(result.status!=="PASS")throw new Error(result.error||"Blender did not finish within 3 minutes");
       studioLink(result.blend_url,`Download editable Blender project (${result.editable_buildings} buildings)`);
       directorMessage.textContent="Native Blender project created and verified in the Forge workspace.";
     }catch(error){directorMessage.textContent=`Blender build failed: ${error.message}`;}

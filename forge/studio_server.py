@@ -33,6 +33,8 @@ class ForgeWorkstation:
         self.world = Path(world).resolve(strict=True)
         self.workspace = Path(workspace).resolve()
         self.blender = blender
+        self.blender_jobs = {}
+        self.blender_lock = threading.Lock()
         self.token = secrets.token_urlsafe(32)
         if not (self.world / "world.glb").is_file():
             raise ValueError("original generated world required")
@@ -94,18 +96,40 @@ class ForgeWorkstation:
                     "glb_url": f"/files/{job_id}/edited/world.glb",
                     "html_url": f"/files/{job_id}/edited/world-editor.html",
                     "buildings": result["buildings"]}
-        if route == "/api/blender":
+        if route in ("/api/blender", "/api/blender-status"):
             if set(payload) != {"job_id"}:
                 raise ValueError("expect only authored job identifier")
             job = self.valid_job(payload["job_id"])
             if not (job / "edited" / "manifest.json").is_file():
                 raise ValueError("job does not have an edited MGR world")
+            job_id = payload["job_id"]
+            with self.blender_lock:
+                state = self.blender_jobs.get(job_id)
+                if (job / "scene-report.json").is_file() and (job / "scene.blend").is_file():
+                    proof = json.loads((job / "scene-report.json").read_text(encoding="utf-8"))
+                    if proof.get("status") == "PASS":
+                        return {"status": "PASS", "job_id": job_id,
+                                "blend_url": f"/files/{job_id}/scene.blend",
+                                "editable_buildings": proof["editable_buildings"]}
+                if route == "/api/blender" and state is None:
+                    self.blender_jobs[job_id] = {"status": "RUNNING", "job_id": job_id}
+                    thread = threading.Thread(target=self._build_blender_job, args=(job_id, job), daemon=True)
+                    thread.start()
+                    state = self.blender_jobs[job_id]
+                return state or {"status": "NOT_STARTED", "job_id": job_id}
+        raise ValueError("unknown studio command")
+
+    def _build_blender_job(self, job_id, job):
+        try:
             proof = create_live_blender_scene(job / "edited", job / "scene.blend",
                                               job / "scene-report.json", binary=self.blender)
-            return {"status": proof["status"], "job_id": payload["job_id"],
-                    "blend_url": f"/files/{payload['job_id']}/scene.blend",
-                    "editable_buildings": proof["editable_buildings"]}
-        raise ValueError("unknown studio command")
+            result = {"status": "PASS", "job_id": job_id,
+                      "blend_url": f"/files/{job_id}/scene.blend",
+                      "editable_buildings": proof["editable_buildings"]}
+        except (ValueError, RuntimeError, FileExistsError, OSError) as error:
+            result = {"status": "FAILED", "job_id": job_id, "error": str(error)[:500]}
+        with self.blender_lock:
+            self.blender_jobs[job_id] = result
 
 
 def make_handler(studio):
@@ -142,7 +166,7 @@ def make_handler(studio):
             return self.send_bytes(404, b"not found", "text/plain")
 
         def do_POST(self):
-            if self.path not in ("/api/relief", "/api/world", "/api/blender"):
+            if self.path not in ("/api/relief", "/api/world", "/api/blender", "/api/blender-status"):
                 return self.send_bytes(404, b"not found", "text/plain")
             if self.headers.get("X-MGR-Forge-Token") != studio.token:
                 return self.send_bytes(403, b"forbidden", "text/plain")
