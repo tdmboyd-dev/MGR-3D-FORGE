@@ -30,13 +30,13 @@
 | MGR Asset Vault | Hash-based local dedupe and rights metadata | Tamper/provenance tests | Multiuser DB, revisions, search |
 | MGR Geometry QA | Degenerate/bad index checks and conservative cleanup | Mesh tests | Watertight repair, retopo, UV validation |
 | MGR Delivery Bundle | GLB, OBJ, MTL, LOD1, parks, interiors, scene facts/camera/lighting JSON, preview SVG | 16-file bundle with 15 artifact SHA receipts; Blender world and PBR inspection | Engine/film pipeline, full interoperability and rendered visual QA |
-| MGR Build Ledger | 50-area native register (including directed cinema F44–F50), provenance, **132 current tests**, benchmark receipts | Windows **132/132** and Linux **132/132**; actual 20-part rig, PBR, 3-camera Cycles scene and 7.21726m evaluated dolly PASS | Production CI, game-engine runtime and owner acceptance |
+| MGR Build Ledger | 50-area native register (including directed cinema F44–F50), provenance, **133 current tests**, benchmark receipts | Windows **133/133** and Linux **133/133**; actual 20-part rig, PBR, 3-camera Cycles scene, 7.21726m dolly and four-frame pixel comparison PASS | Production CI, game-engine runtime and owner acceptance |
 
 ## Exact Blender environment and measured Windows receipts
 
 - User-owned device: **Time**, connected through authorized Desktop Commander; test clone in isolated Windows Temp folder. No existing user project overwritten.
 - Blender executable: `C:\Program Files\Blender Foundation\Blender 5.2\blender.exe`; actual version **5.2.2 LTS**.
-- Windows Python **3.14.8**. Current enlarged wave **132/132 PASS** on both Windows and Linux; latest rig, material and director motion receipts: `evidence/blender/windows-wave5-*.json`.
+- Windows Python **3.14.8**. Current enlarged wave **133/133 PASS** on both Windows and Linux; latest rig, material, director motion and four-frame receipts: `evidence/blender/windows-wave5-*.json`.
 - Actual headless import receipts: `world.glb` **372 triangles**, `interiors.glb` **1,200**, `parks.glb` **504**, anonymous T and A mannequins **204 each**; all returned Blender **PASS**.
 - Real import verification includes earlier five GLBs and this wave's new world/20-part rig/materials. A real Windows Cycles PNG and editable `.blend` were generated. **Only narrow skinning mechanics and basic composition are verified; real human anatomy, cloth quality, photorealism and interactive runtime acceptance remain open.**
 

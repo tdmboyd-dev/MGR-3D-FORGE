@@ -3,12 +3,13 @@
 Date: 2026-10-25. This page distinguishes working code from future intent.
 
 **Current wave evidence (supersedes earlier baseline test counts below):**
-**132/132** unit tests passed on Linux and Time's Windows device. On real
+**133/133** unit tests passed on Linux and Time's Windows device. On real
 Blender 5.2.2 LTS, the 20-part/11-bone generic mannequin has 48 dual-bone
 elbow sleeve vertices and passes measured two-pose joint/weight QA; the world
 has verified imported PBR materials; and editable CPU Cycles cinema scenes have
 three distinct cameras, three camera-bound cuts and a measured **7.21726m**
-moving-camera shot. Actual `.blend`, PNG and JSON receipts are stored under
+moving-camera shot, and a real four-frame Cycles timeline proof showed moving
+shot RGB MAE **5.98669**. Actual `.blend`, PNG and JSON receipts are stored under
 `evidence/blender/windows-wave5-*`. The full 50-area feature inventory is in
 `docs/BUILD-REGISTER.md`, including seven newly queued director tracks.
 

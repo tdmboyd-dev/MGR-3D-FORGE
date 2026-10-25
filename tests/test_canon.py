@@ -34,5 +34,5 @@ class MgrCanonTests(unittest.TestCase):
         self.assertIn("Blender 5.2.2",inventory)
         # The current inventory advances with newly evidenced test totals;
         # old 64/64 is preserved in historical logs, not frozen as current.
-        self.assertIn("132/132",inventory)
+        self.assertIn("133/133",inventory)
         self.assertTrue((ROOT/"evidence/blender/windows-2026-10-25.json").is_file())
