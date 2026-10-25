@@ -101,3 +101,10 @@ Measured under CPython 3.12.14, x86_64. This excludes expensive Blender import, 
 - CPU build implementation: `forge/world_editor.py`, `forge/cli.py` action `apply-world-edits`; strict `mgr.forge.world-edit.v1` source fingerprint and building identity checks, immutable original, new GLB/OBJ/MTL/SVG and browser re-packaging.
 - Validation: `tests/test_world_editor.py` (7 positive/negative tests). **223/223 Python tests passed on Linux and Windows.** Actual Windows Chrome rendered the editor and WebGL scene; `tests/browser_editor_smoke.mjs` separately passed actual Chrome automated edit→localStorage→downloaded JSON proof→import→reset interaction, exit code 0. Screenshot and bounded observations in `evidence/browser/windows-wave14-world-editor.json`. Verify outputs via `forge.cli verify-bundle EDITED_DIR`. Manual keyboard movement and third-party GLB playback remain unverified.
 
+## F89 — MGR Spatial Selection and Recoverable History
+
+- Source: `viewer/runtime.js`, `viewer/template.html`, canonical offline `demos/mgr-world-editor.html`.
+- Real browser implementation: screen ray against dynamic building AABBs; click-vs-drag separation; selection synced to editor; 80-entry undo history and redo with buttons and shortcuts. Exports remain compatible with `forge.cli apply-world-edits`.
+- **Real Windows Chrome passed ten CDP interactions**, including actual canvas click, file download verification, undo/redo and W camera movement. Machine screenshot, SHA-256 and evidence bounds: `evidence/browser/windows-wave15-spatial-editor.json` and its PNG. **223/223 Python tests passed** in Linux and on Windows.
+- Open: triangle-precision hit testing, full transform gizmo, object create/delete, terrain sculpting, live renderer tuning, high-fidelity aesthetic acceptance.
+

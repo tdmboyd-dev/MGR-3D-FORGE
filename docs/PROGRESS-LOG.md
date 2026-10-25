@@ -257,5 +257,5 @@ The initial historical snapshot has been superseded by the current live inventor
 
 - Added real browser-screen ray/AABB picking against authored 3D world geometry; click a building to select it without searching its ID in a form. Camera drag still rotates and is distinguished from a click via a five-pixel movement threshold.
 - Added recoverable edit history with bounded 80-entry undo stack, redo stack, Ctrl/Cmd+Z, Ctrl/Cmd+Y, Shift+Ctrl/Cmd+Z and disabled-button state. Changes, resets and imported edits participate; no-op edits do not create false checkpoints.
-- Rebuilt the canonical offline `demos/mgr-world-editor.html` with new controls while preserving its old published version in Git history. Added screenshot/interaction acceptance to `tests/browser_editor_smoke.mjs`. The last acceptance results are in the matching Windows Chrome evidence ledger.
+- Rebuilt the canonical offline `demos/mgr-world-editor.html` with new controls while preserving its old published version in Git history. Windows Chrome now passes **ten real editor checks**: real building edits, history travel, local persistence, downloaded JSON, import, reset, 3D ray selection, canvas mouse click selection and actual KeyW camera navigation. Screenshot + receipt: `evidence/browser/windows-wave15-spatial-editor.json`. **223/223 Python tests PASS on Linux and Windows.**
 

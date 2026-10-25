@@ -1,0 +1,29 @@
+{
+  "schema": "mgr.forge.spatial-editor-browser-proof.v1",
+  "date": "2026-10-25",
+  "target": "MGR Forge F89 Spatial Selection + Recoverable Edit History",
+  "machine": "Time Windows / Chrome headless / ANGLE SwiftShader WebGL2",
+  "browser_test": "node tests/browser_editor_smoke.mjs CHROME_BINARY demos/mgr-world-editor.html",
+  "browser_test_status": "PASS",
+  "verified_checks": [
+    "Real WebGL2 runtime loaded its 10-building authored neighborhood",
+    "Edited real building height and observed changed scene edit document",
+    "Undo and redo restored expected numeric height states",
+    "LocalStorage persisted the modified building",
+    "Chrome downloaded a JSON edit file with verified modified value",
+    "Imported a JSON file and restored authored state",
+    "Reset restored authored state",
+    "Ray cast from on-screen coordinates selected a real building",
+    "Chrome CDP mousePressed/mouseReleased on the canvas selected the expected building",
+    "Chrome CDP KeyW input advanced the real-time camera position by more than 0.1 meters"
+  ],
+  "python_unit_tests": "223/223 PASS on Linux and Windows",
+  "screenshot": "evidence/browser/windows-wave15-spatial-editor.png",
+  "screenshot_sha256": "379ac41c87d131a9881ed1ce6926900936f3d41a3b764ee9116c9f8946b2bc70",
+  "current_limits": [
+    "Click picking uses nearest bounding-box hit rather than per-triangle mesh hit",
+    "Precision edit gizmos, rotation, scaling, object creation/deletion and multiple selection are not built",
+    "Production photorealism, high-detail characters, animation and VFX remain separate incomplete capabilities",
+    "Screenshot is a real rendered image, not a visual-quality acceptance benchmark"
+  ]
+}
