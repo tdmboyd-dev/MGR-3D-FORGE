@@ -338,3 +338,10 @@ The initial historical snapshot has been superseded by the current live inventor
 - Refreshed canonical self-contained `demos/mgr-world-editor.html` from the current source UI and runtime with `scripts/refresh_offline_demo.mjs`. Preserved the prior embedded world's exact SHA-256 and geometry. Offline Chat now visibly contains the new model-upload and game-engine controls, which correctly remain disabled without a localhost workstation. The refresh tool stops on a missing/mismatched original fingerprint.
 - **Windows browser acceptance PASS:** 8/8 CDP checks completed, including real GLB file upload and downloading an untouched `candidate.glb` plus inspection JSON, along with edited world, Godot project and Blender `.blend`. Process exited 0 in **32.78 seconds**. Windows regression first reported one `WinError 10053` socket-abort in a tokenless-upload test; a complete independent rerun passed **364/364** tests in **25.625 seconds**, exit 0, zero skips. The intermittent failure is retained in `evidence/browser/windows-wave23-model-admission.json` rather than concealed.
 
+## 2026-10-25 — F105 private multiview character references
+
+- Added a single-batch PNG reference intake with separate jobs for the body, face, feet and outfit parts; no private image files are checked into this repository.
+- Owner approval is recorded independently of geometric/identity verification. Approval proves the owner selected the visual reference; it does **not** prove orthographic geometry, mesh generation, rigging or an engine import.
+- Validated one private 18-entry, 16-distinct-PNG owner-approved reference batch and produced a SHA-bound local JSON receipt. Six new owner-approved body/face/feet sheets are included, along with prior outfit component sheets. Sheets still require per-view extraction and actual 3D modeling.
+- `python3 -m unittest discover -q` **397 tests OK**, **30 skipped** because of restricted sockets; Blender proof is not newly claimed.
+
