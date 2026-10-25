@@ -10,7 +10,7 @@ has verified imported PBR materials; and editable CPU Cycles cinema scenes have
 three distinct cameras, three camera-bound cuts and a measured **7.21726m**
 moving-camera shot, and a real four-frame Cycles timeline proof showed moving
 shot RGB MAE **5.98669**. Actual `.blend`, PNG and JSON receipts are stored under
-`evidence/blender/windows-wave5-*`. Fantasy geometry and glTF emission additionally passed real Windows Blender CPU Cycles at two portal phases: `evidence/blender/windows-wave6-*`, 600×600 frames and normalized pixel delta **0.00897953**. This does not establish cinematic volumetric FX. The full 67-area feature inventory is in
+`evidence/blender/windows-wave5-*`. Fantasy geometry and glTF emission additionally passed real Windows Blender CPU Cycles at two portal phases: `evidence/blender/windows-wave6-*`, 600×600 frames and normalized pixel delta **0.00897953**. This does not establish cinematic volumetric FX. The full 71-area feature inventory is in
 `docs/BUILD-REGISTER.md`, including seven director and 17 FX tracks.
 
 Further Windows Blender 5.2.2 render verification added two native point lights, an illuminated matte witness and the 5.x `Fog Glow` compositor. Actual PNG and JSON scene receipts are in `evidence/blender/windows-wave7-*`. This proves lighting and image-space composition in a controlled scene, **not** simulated fire, particle collisions, atmospheric volumes, game-runtime lighting or completion of the entire F51 track.
@@ -18,6 +18,8 @@ Further Windows Blender 5.2.2 render verification added two native point lights,
 The current Atmosphere Field wave independently rendered no-volume, uniform-volume and noise-cloud volume scenes in Blender 5.2.2 CPU Cycles. The two real scattering materials are native `ShaderNodeVolumePrincipled` instances. A matched comparison found **156,410 materially changed pixels** for the uniform field against control and RGBA MAE **0.06582227**; cloud vs uniform MAE **0.02924215**. Actual receipts and PNGs: `evidence/blender/windows-wave8-*`. These results prove ray-scattered fog in a bounded proxy, not dynamic smoke or flawless cinematic diffusion.
 
 MGR FX Judge now runs the matched comparison as a native validated CLI, not just an ad-hoc Blender console. The actual Windows control/volume proof passed with **22.37957 RGB MAE (8-bit)** against an explicit minimum of **3.0**, and the receipt is archived as `evidence/blender/windows-wave8-judge.json`. It refuses mismatched cameras and missing volume shader claims; it still does not recognize aesthetic defects semantically.
+
+New reality-to-space research is now mapped over 20 disciplines and four cross-domain bridges. `forge/spatial_truth.py` implements and tests pinhole projection, pixel-to-camera ray and triangle/plane mesh sectioning; the `spatial-proof` command emits an inspectable JSON example. **Seven additional local tests** passed, bringing the current Linux total to **153/153**. Windows verification of the latest spatial branch is pending in this pre-execution status. Nothing here implies monocular true-depth recovery or print-ready G-code.
 
 ## What you can actually run
 

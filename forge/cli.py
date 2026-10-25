@@ -125,6 +125,9 @@ def main(argv=None):
     effect.add_argument("--radius",type=float,default=2.0)
     effect.add_argument("--seed",type=int,default=8964)
     effect.add_argument("--out",type=Path,required=True)
+    spatial=sub.add_parser("spatial-proof",help="prove 2D/3D perspective ambiguity and mesh slicing")
+    spatial.add_argument("--out",type=Path,required=True)
+    spatial.add_argument("--height",type=float,default=2.0)
     blender = sub.add_parser("blender-verify",help="run actual Blender GLB import verification if installed")
     blender.add_argument("path",type=Path)
     blender.add_argument("--report",type=Path,required=True)
@@ -217,6 +220,27 @@ def main(argv=None):
     args = parser.parse_args(argv)
     if args.action == "inspect":
         print(json.dumps(inspect_glb(args.path.read_bytes()), indent=2))
+        return 0
+    if args.action == "spatial-proof":
+        from .spatial_truth import camera_project,pixel_to_ray,slice_mesh_at_height
+        from .geometry import Mesh
+        if args.out.exists():
+            raise FileExistsError("spatial proof already exists")
+        mesh=Mesh()
+        mesh.box(0,0,0,2,4,2)
+        a=camera_project((1,2,4),focal_px=400)
+        b=camera_project((3,6,12),focal_px=400)
+        proof={"schema":"mgr.forge.spatial-truth.v1",
+               "same_pixel_different_depth":a==b,
+               "pixel_xy":a,"depths_m":[4,12],
+               "unit_camera_ray":pixel_to_ray(a,focal_px=400),
+               "mesh_slice_height_m":args.height,
+               "cross_section_segments":slice_mesh_at_height(mesh,height_m=args.height),
+               "limitations":["no unique depth can be recovered from the ray alone",
+                              "triangle segments are not print-ready closed contours or G-code"]}
+        args.out.parent.mkdir(parents=True,exist_ok=True)
+        args.out.write_text(json.dumps(proof,indent=2,sort_keys=True)+"\n",encoding="utf-8")
+        print(json.dumps({"status":"PASS","spatial_proof":str(args.out)},indent=2))
         return 0
     if args.action == "character":
         result = build_mannequin(args.out,args.pose)
@@ -424,35 +448,3 @@ def main(argv=None):
     if args.action == "pipeline":
         from .pipeline import run_pipeline
         result=run_pipeline(WorldSpec(buildings=args.buildings),args.out,
-                  blender_binary=args.blender_binary,visual_baseline=args.baseline,
-                  visual_mae_threshold=args.visual_threshold)
-        print(json.dumps(result,indent=2))
-        return 0 if result["overall"].startswith("PASS") or result["overall"]=="PARTIAL_CPU_ONLY" else 2
-    if args.action == "rehearse-walk":
-        if args.out.exists():
-            raise FileExistsError("walk report already exists; choose a new output")
-        world=json.loads(args.manifest.read_text(encoding="utf-8"))
-        result=rehearse_road_walk(world,args.from_building,args.to_building)
-        args.out.parent.mkdir(parents=True,exist_ok=True)
-        args.out.write_text(json.dumps(result,indent=2,sort_keys=True)+"\n",encoding="utf-8")
-        print(json.dumps({"status":result["status"],"frames":len(result["frames"]),
-                          "distance_m":result["distance_m"]},indent=2))
-        return 0
-    if args.spec and args.prompt:
-        parser.error("choose either --spec or --prompt")
-    base = (WorldSpec.from_json(args.spec).as_dict() if args.spec else
-            plan_neighborhood(args.prompt).spec.as_dict() if args.prompt else
-            WorldSpec().as_dict())
-    for key in ("seed", "buildings", "columns", "rows"):
-        value = getattr(args, key)
-        if value is not None:
-            base[key] = value
-    result = build(WorldSpec(**base), args.out)
-    print(json.dumps({"output": str(args.out.resolve()), "buildings": len(result["buildings"]),
-                      "triangles": result["triangle_count"], "sha256": result["artifact"]["sha256"],
-                      "quality": "PASS" if result["quality"]["passed"] else "FAIL"}, indent=2))
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())

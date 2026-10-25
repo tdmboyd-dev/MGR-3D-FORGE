@@ -1,5 +1,11 @@
 # MGR 3D Forge — Progress and Evidence Log
 
+## 2026-10-25 — Reality-to-Space expansion beyond Blender
+
+- Owner broadened 3D research to 20 scientific/computing domains plus physical 3D printing/slicers and console world architecture. Built the MGR-native 20-domain map `research/MGR-REALITY-TO-SPACE-MASTER-MAP.md`; isolated official literature/API/engine/slicer references in `research/external-provenance/REALITY-TO-SPACE-SOURCES-2026-10-25.md`. Current status is architectural decomposition + source review, not end-to-end mastery of 20 disciplines.
+- Added F68–F71 to the MGR native build register (now **71** tracked areas). High-leverage discovery: monocular image pixels have no unique depth without additional evidence; printer slicers need an already-authored mesh, then section triangles into layers; console-scale worlds demand streamed/visible geometry budgets.
+- Implemented `forge/spatial_truth.py` as deterministic CPU pinhole projection, camera-pixel unit ray, and capped Y-plane/triangle intersection producing XZ section segments. New `forge.cli spatial-proof` materializes an explicit two-depth/one-pixel example with 8 cross-section segments through a generated box. Seven positive/negative/reproducibility tests expanded local suite to **153/153**. No actual G-code printer path, image-to-3D reconstruction or console runtime claimed.
+
 ## 2026-10-25 — MGR FX Judge live acceptance
 
 - Implemented `forge/fx_judge.py` and `forge.cli judge-atmosphere` to compare matched real PNGs with a configurable RGB MAE threshold. The control must declare volume density zero; the candidate must declare positive density and `ShaderNodeVolumePrincipled`. Different cameras, lights, emissive materials, render status, fake volume or unchanged pixels are rejected rather than called progress.

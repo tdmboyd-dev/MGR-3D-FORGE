@@ -71,8 +71,12 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F65 | MGR Destruction Director | SOURCED | QUEUED | P1 | F55,F16 | Fracture, collision/physics, debris, cache and restoration |
 | F66 | MGR Spell Continuity Brain | SOURCED | QUEUED | P0 | F42,F48,F56 | Stable spell/world states, owner approvals and cross-shot replay |
 | F67 | MGR FX Judge | SOURCED | PARTIAL: `forge/fx_judge.py` rejects unmatched cameras, fake volume and static pixels; Windows real 22.37957 RGB MAE PASS | P0 | F35,F49,F54 | Perceptual semantics, volume artifacts and cross-view cinematic scoring open |
+| F68 | MGR Spatial Truth | SOURCED | PARTIAL: CPU pinhole projection, pixel ray and explicit non-unique depth proof, 7 new tests | P0 | F30,F35 | Calibrated multi-view measurement and uncertainty-labeled reconstruction |
+| F69 | MGR Geometric Cross-Section | SOURCED | PARTIAL: bounded Y-plane/triangle section segments on real Mesh, 2D contour outputs in `forge/spatial_truth.py` | P1 | F03,F16,F68 | Watertight loops, polygon topology, mesh repair, 3MF/STL and independent slicer verification |
+| F70 | MGR Perception Inference Guardian | SOURCED | RESEARCHED CONCEPT / QUEUED | P0 | F35,F68 | Distinguish observed pixels, inferred depth, generated hidden surfaces and owner approval on every asset |
+| F71 | MGR World Residency Intelligence | SOURCED | RESEARCHED CONCEPT / QUEUED | P1 | F24,F40,F68 | Console-style visible-cell streaming, budgeted draw/mesh residency, engine and VR performance evidence |
 
-**Scope:** 67 MGR-native areas: original 33, F34–F43, director/camera/motion F44–F50 and fantasy/VFX F51–F67. All new tracks requested on 2026-10-25 remain independently tracked even if partially implemented. Queued is **not** implemented. Technical research is organized by MGR functions in `research/MGR-CREATION-INTELLIGENCE-HOWTO.md`, `research/MGR-DIRECTORS-CAMERAS-MOTION-HOWTO.md` and `research/MGR-FANTASY-CINEMA-CREATION-HOWTO.md`; external provenance remains separate.
+**Scope:** 71 MGR-native areas: original 33, F34–F43, director/camera/motion F44–F50, fantasy/VFX F51–F67 and reality-to-space F68–F71. Queued is **not** implemented. Technical research is organized by MGR functions in `research/MGR-CREATION-INTELLIGENCE-HOWTO.md`, `research/MGR-DIRECTORS-CAMERAS-MOTION-HOWTO.md`, `research/MGR-FANTASY-CINEMA-CREATION-HOWTO.md` and `research/MGR-REALITY-TO-SPACE-MASTER-MAP.md`; external provenance remains separate.
 
 ## Definition of production completeness
 
