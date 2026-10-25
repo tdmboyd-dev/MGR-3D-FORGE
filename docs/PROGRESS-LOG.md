@@ -11,6 +11,7 @@
 - Pulled published commit `35f1b9c` onto Time's Windows machine. **99/99 Windows tests PASS**. Used `forge.cli blender-rig --skin` end to end with installed Blender 5.2.2: **PASS** 16 separate parts/11 bones; used `forge.cli blender-pose-render`: **PASS**, two PNG frames, RGB MAE **0.671411** and visibly different arm poses. This verifies the public CLI workflow, not just ad hoc scripts.
 - Saved actual skinned Blender project and frame PNGs to `evidence/blender/`; full trace is in `evidence/blender/windows-2026-10-25-skinning.json`.
 - Inspected owner PC without changing Windows settings: **Intel Iris Xe**, reported GPU AdapterRAM ~2 GiB (not assumed dedicated VRAM), physical RAM ~15.73 GiB. Added `forge/hardware.py` conservative local-model admission policy and four tests; heavy CUDA/VRAM jobs fail closed pending optional reviewed compute. Research receipt `research/MGR-COMPUTE-ADMISSION-2026-10-25.md`. Local suite **103/103 PASS**; Windows current-code retest pending.
+- After publishing `966cace`, pulled latest source onto the owner Windows device and reran **103/103 tests PASS**. Source, hardware-admission tests, Blender pose outputs and evidence are all preserved on GitHub `main`.
 
 ## 2026-10-25 — Cross-view honesty and integrated creation pipeline
 
