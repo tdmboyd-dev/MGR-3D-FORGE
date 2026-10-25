@@ -32,11 +32,19 @@
   "windows_test_suite_initial": {
     "ran": 82,
     "passed": 81,
-    "error": "Windows lacks symlink-creation privilege for one test fixture, WinError 1314; test fixture revised, rerun pending."
+    "error": "Windows lacked symlink-creation privilege for one test fixture, WinError 1314; the fixture was revised and the final Windows rerun passed."
+  },
+  "windows_test_suite_final": {
+    "repository_commit": "71334763894f008968dad4e5dbf4b734b1d6df06",
+    "ran": 85,
+    "passed": 85,
+    "errors": 0,
+    "status": "PASS",
+    "command": "py -3 -m unittest discover -q"
   },
   "limitations": [
     "Pixel comparison is not semantic visual quality understanding.",
     "The Blender scene-facts receipt is object metadata, not per-building portal understanding.",
-    "Windows full test suite pass must be reverified after the test-fixture correction."
+    "Windows account did not have permission to create symlink test fixtures; the test still runs traversal checks and conditionally exercises symlink rejection where supported."
   ]
 }

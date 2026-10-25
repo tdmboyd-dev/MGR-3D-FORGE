@@ -23,13 +23,13 @@
 | MGR Asset Vault | Hash-based local dedupe and rights metadata | Tamper/provenance tests | Multiuser DB, revisions, search |
 | MGR Geometry QA | Degenerate/bad index checks and conservative cleanup | Mesh tests | Watertight repair, retopo, UV validation |
 | MGR Delivery Bundle | GLB, OBJ, MTL, LOD1, parks, interiors, scene facts/camera JSON, preview SVG | 14-file hash manifest, SHA verification, Blender import of core GLBs | Engine/film pipeline, full interoperability and rendered visual QA |
-| MGR Build Ledger | 43-area native register, provenance, 85 current local tests, benchmark receipts | Windows 64/64 baseline tests + current Linux 85/85; Windows latest rerun pending | Production CI, cross-engine/render/owner acceptance |
+| MGR Build Ledger | 43-area native register, provenance, 85 current tests, benchmark receipts | Windows **85/85** and Linux **85/85** PASS | Production CI, cross-engine/render/owner acceptance |
 
 ## Exact Blender environment and measured Windows receipts
 
 - User-owned device: **Time**, connected through authorized Desktop Commander; test clone in isolated Windows Temp folder. No existing user project overwritten.
 - Blender executable: `C:\Program Files\Blender Foundation\Blender 5.2\blender.exe`; actual version **5.2.2 LTS**.
-- Windows Python **3.14.8**. Test suite **64/64 PASS**.
+- Windows Python **3.14.8**. Original import checkpoint **64/64 PASS**; latest build wave **85/85 PASS**. New wave receipt: `evidence/blender/windows-2026-10-25-wave.json`.
 - Actual headless import receipts: `world.glb` **372 triangles**, `interiors.glb` **1,200**, `parks.glb` **504**, anonymous T and A mannequins **204 each**; all returned Blender **PASS**.
 - Real import verification is complete for those five GLB samples. Two Workbench previews were also rendered on Windows, and the mannequin coat overlap was corrected. Render aesthetics, topology quality, skinning and interactive workflow acceptance remain **unverified**.
 

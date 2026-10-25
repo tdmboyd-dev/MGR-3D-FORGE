@@ -10,8 +10,8 @@
 - Integrated MGR Scene Consciousness facts into generated world bundles (`scene_facts.json` plus integrity manifest), added Blender scene-object inspection script and CLI entrypoint (real Windows Blender validation pending).
 - Built `forge/repair.py` bounded trusted-callback repair loop: failed candidate automatically reverts, successful candidate persists, budgeted attempts stop. No untrusted callback execution or model-driven diagnosis.
 - Reproduced on Time's actual Windows Blender **5.2.2 LTS**: CLI-generated world GLB imported into new scene-facts inspector, `status=PASS` and `objects=1` (GLB combines 3D scene into one mesh). Windows visual judge processed a real fixed-mannequin PNG: self-comparison RGB MAE **0.0 PASS**, comparison to a world PNG MAE **7.153049 FAIL** as expected; silhouette bounds reported. The visual judge cannot semantically identify missing anatomy.
-- Initial Windows suite on commit `da3f6a9` ran 82 tests with one **test-harness error**: Windows symlink creation privilege (`WinError 1314`) prevented the symlink fixture. Fixed the fixture to handle unavailable symlink creation privilege without skipping traversal tests. The corrected Windows rerun is tracked in a subsequent receipt.
-- Expanded negative regression tests; local suite **85/85 PASS** at this checkpoint. This is functional early groundwork, not production acceptance.
+- Initial Windows suite on commit `da3f6a9` ran 82 tests with one **test-harness error**: Windows symlink creation privilege (`WinError 1314`) prevented the symlink fixture. Fixed the fixture to handle unavailable symlink creation privilege without skipping traversal tests. **Re-ran on Windows after GitHub commit `7133476`: 85/85 PASS**.
+- Expanded negative regression tests; local **85/85 PASS** and owner's Windows **85/85 PASS** at this checkpoint. This is functional early groundwork, not production acceptance.
 
 ## 2026-10-25 — Owner autonomy lock, ten-capability extension and F34 starter
 
