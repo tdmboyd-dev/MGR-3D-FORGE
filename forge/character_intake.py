@@ -8,7 +8,7 @@ import shutil
 import struct
 import subprocess
 
-from .glb import inspect_glb
+from .character_glb import parse_character_glb
 
 
 MAX_CHARACTER_BYTES = 80_000_000
@@ -21,9 +21,7 @@ def inspect_candidate(source):
     if not 28 <= path.stat().st_size <= MAX_CHARACTER_BYTES:
         raise ValueError("character candidate size outside safe bounds")
     blob = path.read_bytes()
-    geometry = inspect_glb(blob)
-    json_length = struct.unpack_from("<I", blob, 12)[0]
-    doc = json.loads(blob[20:20 + json_length])
+    doc, geometry = parse_character_glb(blob)
     if geometry["triangles"] < 1 or geometry["triangles"] > 4_000_000:
         raise ValueError("character needs bounded triangle geometry")
     if len(doc.get("nodes", [])) > 10000 or len(doc.get("skins", [])) > 128:
