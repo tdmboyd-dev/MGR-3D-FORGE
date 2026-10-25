@@ -10,6 +10,7 @@ PROBE=Path(__file__).resolve().parent.parent/"bridge"/"blender_probe.py"
 RENDER=Path(__file__).resolve().parent.parent/"bridge"/"blender_render.py"
 SCENE_FACTS=Path(__file__).resolve().parent.parent/"bridge"/"blender_scene_facts.py"
 RIG=Path(__file__).resolve().parent.parent/"bridge"/"blender_rig.py"
+POSE_RENDER=Path(__file__).resolve().parent.parent/"bridge"/"blender_pose_render.py"
 
 
 def blender_command(blender_binary,source,report):
@@ -58,13 +59,26 @@ def blender_facts_command(blender_binary,source,report):
             str(Path(report).resolve())]
 
 
-def blender_rig_command(blender_binary,character_folder,blend_output,report):
+def blender_rig_command(blender_binary,character_folder,blend_output,report,*,skin=False):
     if not (Path(character_folder)/"character.json").is_file():
         raise ValueError("character manifest required")
     if Path(blend_output).suffix.lower()!=".blend":
         raise ValueError("Blender project must end in .blend")
     if not RIG.is_file():
         raise FileNotFoundError("Blender rig assembly script missing")
-    return [str(blender_binary),"--background","--factory-startup",
+    command=[str(blender_binary),"--background","--factory-startup",
             "--python",str(RIG),"--",str(Path(character_folder).resolve()),
             str(Path(blend_output).resolve()),str(Path(report).resolve())]
+    return command+(["SKIN"] if skin else [])
+
+
+def blender_pose_render_command(blender_binary,blend_source,first_image,second_image,report):
+    if not Path(blend_source).is_file() or Path(blend_source).suffix.lower()!=".blend":
+        raise ValueError("Blender project file required")
+    if any(Path(image).suffix.lower()!=".png" for image in (first_image,second_image)):
+        raise ValueError("pose renders must be PNG")
+    if not POSE_RENDER.is_file():
+        raise FileNotFoundError("Blender pose-render script missing")
+    return [str(blender_binary),"--background","--factory-startup",
+            "--python",str(POSE_RENDER),"--",str(Path(blend_source).resolve()),
+            str(Path(first_image).resolve()),str(Path(second_image).resolve()),str(Path(report).resolve())]

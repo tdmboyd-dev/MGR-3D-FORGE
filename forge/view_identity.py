@@ -57,13 +57,20 @@ def compare_asset_views(left: AssetView, right: AssetView):
                            "separately generated models can represent the same person"]}
 
 
-def _foreground_mask(png, *, background=(0,0,0), tolerance=12):
+def _foreground_mask(png, *, background=None, tolerance=12):
+    if background is None:
+        background=tuple(png["rows"][0][:3])
+    transparent=(png["channels"]==4 and
+                 any(row[x*4+3]<255 for row in png["rows"]
+                     for x in range(png["width"])))
     coords=[]
     channels=png["channels"]
     for y,row in enumerate(png["rows"]):
         for x in range(png["width"]):
             rgb=row[x*channels:x*channels+3]
-            if any(abs(rgb[i]-background[i])>tolerance for i in range(3)):
+            present=(row[x*channels+3]>tolerance) if transparent else any(
+                abs(rgb[i]-background[i])>tolerance for i in range(3))
+            if present:
                 coords.append((x,y))
     if not coords:
         return set()

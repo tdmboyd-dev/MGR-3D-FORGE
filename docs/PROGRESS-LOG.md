@@ -2,6 +2,14 @@
 
 **This is a historical sequence, not the current status page.** The canonical current status is `docs/WHAT-WE-HAVE.md` plus `docs/IMPLEMENTATION-EVIDENCE.md`. Superseded historical claims are retained only as dated checkpoints.
 
+## 2026-10-25 — First actual weighted Blender pose proof
+
+- Extended modular armature bridge with optional `SKIN`: each detachable part gets a vertex group with 1.0 bone weights and a real Armature modifier. Added left/right upper-arm quaternion keyframes 1→12 and measured evaluated geometry, **0.428282m maximum left-hand vertex motion**. **This is rigid-segment skin weighting, not smooth production skin**.
+- Blender 5.2.2 actually generated/reopened a **124,099-byte** skinned `.blend` with 16 mesh objects, 11 bones and 16 armature modifiers.
+- Rendered both keyframes from a fixed Blender Workbench camera. Visual inspection confirmed changed arm positions; raw decoded RGB MAE **0.671411**. First QA incorrectly classified the whole image as foreground because of a gradient background; repaired render path to transparent RGBA and QA to use alpha. Corrected foreground: **40,564 / 39,265 pixels**; separate subject bounding boxes recorded.
+- Added two negative/alpha-positive tests. Local Python suite **99/99 PASS**; latest Windows rerun of new source pending at this checkpoint.
+- Saved actual skinned Blender project and frame PNGs to `evidence/blender/`; full trace is in `evidence/blender/windows-2026-10-25-skinning.json`.
+
 ## 2026-10-25 — Cross-view honesty and integrated creation pipeline
 
 - Added `forge/view_identity.py`: cryptographic identity comparison for approved canonical/rest-mesh assets across different recorded camera/pose states, carefully distinguishing same verified **source asset** from merely matching filenames or appearances.

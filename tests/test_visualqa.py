@@ -10,10 +10,13 @@ from forge.visualqa import compare_pngs, read_png, silhouette, PNG_MAGIC
 def png_bytes(rows, *, filter_mode=0):
     width=len(rows[0])
     height=len(rows)
+    channel_count=len(rows[0][0])
+    if channel_count not in (3,4):
+        raise ValueError("RGB/RGBA test data required")
     raw=bytearray()
     for row in rows:
         raw.append(filter_mode)
-        prior=[0,0,0]
+        prior=[0]*channel_count
         for rgb in row:
             for i,channel in enumerate(rgb):
                 if filter_mode==1:
@@ -23,7 +26,8 @@ def png_bytes(rows, *, filter_mode=0):
                 prior[i]=channel
     def chunk(name,data):
         return struct.pack(">I",len(data))+name+data+struct.pack(">I",zlib.crc32(name+data)&0xffffffff)
-    return PNG_MAGIC+chunk(b"IHDR",struct.pack(">IIBBBBB",width,height,8,2,0,0,0))+chunk(b"IDAT",zlib.compress(bytes(raw)))+chunk(b"IEND",b"")
+    color=6 if channel_count==4 else 2
+    return PNG_MAGIC+chunk(b"IHDR",struct.pack(">IIBBBBB",width,height,8,color,0,0,0))+chunk(b"IDAT",zlib.compress(bytes(raw)))+chunk(b"IEND",b"")
 
 
 class VisualJudgeTests(unittest.TestCase):
@@ -63,6 +67,13 @@ class VisualJudgeTests(unittest.TestCase):
         a.write_bytes(corrupt)
         with self.assertRaises(ValueError):
             read_png(a)
+
+    def test_alpha_overrides_bright_background(self):
+        rgba=[[(255,255,255,0),(100,50,10,255)],
+              [(255,255,255,0),(255,255,255,0)]]
+        path=self.root/"transparent.png"
+        path.write_bytes(png_bytes(rgba))
+        self.assertEqual(silhouette(read_png(path))["bbox"],[1,0,1,0])
 
 
 if __name__ == "__main__":

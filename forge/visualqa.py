@@ -86,10 +86,15 @@ def read_png(path, *, max_pixels=12_000_000):
             "sha256":sha256(content).hexdigest()}
 
 
-def silhouette(image, *, background=(0,0,0), tolerance=12):
-    """Bounding box and occupancy against specified RGB background."""
+def silhouette(image, *, background=None, tolerance=12):
+    """Bounding box/occupancy; prefer actual PNG transparency when present."""
     if not 0<=tolerance<=255:
         raise ValueError("bad tolerance")
+    if background is None:
+        background=tuple(image["rows"][0][:3])
+    transparent=(image["channels"]==4 and
+                 any(row[x*4+3]<255 for row in image["rows"]
+                     for x in range(image["width"])))
     count=0
     left=top=math.inf
     right=bottom=-1
@@ -97,7 +102,9 @@ def silhouette(image, *, background=(0,0,0), tolerance=12):
         stride=image["channels"]
         for x in range(image["width"]):
             rgb=row[x*stride:x*stride+3]
-            if any(abs(int(rgb[i])-background[i])>tolerance for i in range(3)):
+            opaque=(row[x*stride+3]>tolerance) if transparent else any(
+                abs(int(rgb[i])-background[i])>tolerance for i in range(3))
+            if opaque:
                 count+=1
                 left,top=min(left,x),min(top,y)
                 right,bottom=max(right,x),max(bottom,y)

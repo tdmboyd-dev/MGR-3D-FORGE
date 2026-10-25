@@ -71,6 +71,19 @@ class ViewIdentityTests(unittest.TestCase):
         blank=self.write("blank.png",set())
         self.assertEqual(compare_view_silhouettes(a,blank)["verdict"],"INSUFFICIENT_FOREGROUND")
 
+    def test_transparent_background_does_not_count_as_subject(self):
+        from tests.test_visualqa import png_bytes
+        a=self.root/"alpha-a.png"
+        b=self.root/"alpha-b.png"
+        def rgba_scene(xshift):
+            return [[(120,120,120,0) if (x,y)!=(xshift,1) else (240,10,10,255)
+                     for x in range(6)] for y in range(4)]
+        a.write_bytes(png_bytes(rgba_scene(1)))
+        b.write_bytes(png_bytes(rgba_scene(4)))
+        result=compare_view_silhouettes(a,b)
+        self.assertEqual(result["verdict"],"APPEARANCE_CONSISTENT")
+        self.assertFalse(result["identity_proven"])
+
 
 if __name__=="__main__":
     unittest.main()

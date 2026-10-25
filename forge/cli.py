@@ -22,7 +22,7 @@ from .view_identity import compare_view_silhouettes, compare_asset_views, AssetV
 from .traversal import rehearse_road_walk
 from .interiors import generate_interiors
 from .character import build_mannequin
-from .blender_bridge import verify_blender, blender_render_command, blender_facts_command, blender_rig_command
+from .blender_bridge import verify_blender, blender_render_command, blender_facts_command, blender_rig_command, blender_pose_render_command
 from .environment import generate_parks, ENVIRONMENT_MATERIALS
 from .receipt import file_receipt, verify_bundle
 
@@ -122,6 +122,13 @@ def main(argv=None):
     rig.add_argument("--blend",type=Path,required=True)
     rig.add_argument("--report",type=Path,required=True)
     rig.add_argument("--binary",default="blender")
+    rig.add_argument("--skin",action="store_true",help="add armature modifier/weights and 2-frame motion proof")
+    poses=sub.add_parser("blender-pose-render",help="render two animated Blender keyframes with transparent background")
+    poses.add_argument("blend",type=Path)
+    poses.add_argument("--first",type=Path,required=True)
+    poses.add_argument("--second",type=Path,required=True)
+    poses.add_argument("--report",type=Path,required=True)
+    poses.add_argument("--binary",default="blender")
     bundle=sub.add_parser("verify-bundle",help="verify artifact hashes in world build folder")
     bundle.add_argument("directory",type=Path)
     visual=sub.add_parser("compare-renders",help="compare fixed-camera RGB PNG frames")
@@ -180,15 +187,37 @@ def main(argv=None):
         return 0
     if args.action == "blender-rig":
         import subprocess
-        command=blender_rig_command(args.binary,args.character_folder,args.blend,args.report)
+        command=blender_rig_command(args.binary,args.character_folder,args.blend,args.report,
+                                    skin=args.skin)
         result=subprocess.run(command,timeout=180,check=False)
         if result.returncode:
             raise RuntimeError(f"Blender modular rig assembly failed with exit code {result.returncode}")
         report=json.loads(args.report.read_text(encoding="utf-8"))
         if report.get("status")!="PASS" or report.get("mesh_parts",0)<1:
             raise RuntimeError("Blender modular rig receipt invalid")
+        if args.skin and (report.get("rig_mode")!="skin" or
+                          report.get("animation_motion_m") is None or
+                          report["animation_motion_m"]<0.01):
+            raise RuntimeError("actual evaluated mesh animation motion not verified")
         print(json.dumps({"status":"PASS","parts":report["mesh_parts"],
                           "bones":len(report["bones"])},indent=2))
+        return 0
+    if args.action == "blender-pose-render":
+        import subprocess
+        command=blender_pose_render_command(args.binary,args.blend,args.first,args.second,args.report)
+        result=subprocess.run(command,timeout=180,check=False)
+        if result.returncode:
+            raise RuntimeError(f"Blender pose rendering failed with exit code {result.returncode}")
+        report=json.loads(args.report.read_text(encoding="utf-8"))
+        if report.get("status")!="PASS" or len(report.get("frames",[]))!=2:
+            raise RuntimeError("Blender pose render receipt invalid")
+        from .visualqa import compare_pngs
+        diff=compare_pngs(args.first,args.second)
+        print(json.dumps({"status":"PASS", "frames":report["frames"],
+                          "rgb_difference_mae":diff["rgb_mae"],
+                          "pose_images_visibly_different":diff["rgb_mae"]>0},indent=2))
+        if diff["rgb_mae"]<=0:
+            raise RuntimeError("animated pose render did not change pixel output")
         return 0
     if args.action == "verify-bundle":
         print(json.dumps(verify_bundle(args.directory),indent=2))

@@ -15,7 +15,7 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F09 | Character DNA measurements | SPECIFIED | PROTOTYPE TESTED | P0 | approved Tevin base | Synthetic proportion comparison only; Tevin not captured |
 | F10 | Anatomy guardian | SPECIFIED | PROTOTYPE TESTED | P0 | F09 | Missing hand and symmetry checks; visual mesh checking pending |
 | F11 | Garment/part separation | SOURCED | PARTIAL: synthetic detachable parts TESTED | P1 | F09, permitted segmentation | Generic 16-part mannequin; real Tevin segmentation absent |
-| F12 | Automated rig/weights | SOURCED | PARTIAL: kinematic pose track + modular armature Blender VERIFIED | P1 | clean mesh, rig type | 16 rigid parts + 11 bones `.blend` opens in Blender 5.2.2; deforming weights/animation open |
+| F12 | Automated rig/weights | SOURCED | PARTIAL: rigid + 1.0-weight skinned armature Blender VERIFIED | P1 | clean mesh, rig type | 16 modifiers, 11 bones, hand mesh moved 0.428m, 2 render frames; smooth joint weights/full animation remain |
 | F13 | Material/UV quality | SOURCED | NOT STARTED | P1 | F06 | PBR/export validation |
 | F14 | Geometry repair/retopo | SOURCED | PARTIAL: triangle repair TESTED | P1 | F06 | Malformed triangle cleanup passed; retopo/manifold repair pending |
 | F15 | Region/world graph | SPECIFIED | PARTIAL: road intersections TESTED | P0 | F02 | Region hierarchy and landmarks pending |
@@ -38,11 +38,11 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F32 | MGR Model Dock | SPECIFIED | PARTIAL: recipe inspection TESTED | P1 | F07,F22,F29 | MGR model manifest; sandboxed installs and model launch pending |
 | F33 | MGR Spatial Eyes | SPECIFIED | PARTIAL: geometry visibility TESTED | P1 | F16,F17,F20 | MGR-authored world occlusion and evidence labels; HUD and reconstruction pending |
 | F34 | MGR Scene Consciousness | SPECIFIED | PARTIAL: generated-world facts/qualified routes TESTED | P0 | F02,F05,F16,F33 | `forge/consciousness.py` emitted in world bundles; Blender object inspection pending machine test; semantic door portals absent |
-| F35 | MGR Visual Judge | SPECIFIED | PARTIAL: pixel+translation/quarter-turn silhouette checks TESTED | P0 | F06,F30,F34 | `forge/visualqa.py`, `forge/view_identity.py`; image-plane comparisons aren't 3D pose/rotation identity proof; semantic evaluator pending |
+| F35 | MGR Visual Judge | SPECIFIED | PARTIAL: pixel/translation/quarter-turn/alpha-aware silhouettes TESTED | P0 | F06,F30,F34 | Real transparent Blender pose images foreground QA; arbitrary 3D pose identity and semantic evaluator pending |
 | F36 | MGR Code Architect | SPECIFIED | PARTIAL: typed workspace file edits and rollback TESTED | P0 | F22,F23,F29 | `forge/code_architect.py`; isolated arbitrary-code executor, policy enforcement, consent UI pending |
 | F37 | MGR Anatomy Guardian Plus | QUEUED | NOT STARTED | P0 | F09,F10,F35 | 3D proportion and deforming-pose inspections |
 | F38 | MGR Fabric Intelligence | QUEUED | NOT STARTED | P1 | F11,F12,F13 | Separable fitted garments, intersections and motion QA |
-| F39 | MGR Rig Intelligence | SPECIFIED | PARTIAL: rigid modular bone-parenting in Blender VERIFIED | P0 | F09,F12,F37 | `bridge/blender_rig.py`: Windows .blend saved/reopened; normalized deform weights and animation remain open |
+| F39 | MGR Rig Intelligence | SPECIFIED | PARTIAL: modular deform modifiers, 1.0 bone weights, keyframes Blender VERIFIED | P0 | F09,F12,F37 | `bridge/blender_rig.py`: Windows .blend saved/reopened, 0.428m hand movement; smooth multi-bone skin and animation acceptance remain |
 | F40 | MGR World Logic | SPECIFIED | PARTIAL: collision-checked road-centerline rehearsal TESTED | P1 | F15,F17,F34 | `forge/traversal.py`; actual navmesh/doors/stairs/dynamic agent game runtime pending |
 | F41 | MGR Cinematic Director | QUEUED | NOT STARTED | P1 | F13,F31,F35 | Reproducible cameras, lighting, material and shot recipes |
 | F42 | MGR Creation Memory | SPECIFIED | PARTIAL: integrity-chained JSON revisions and locks TESTED | P0 | F05,F20,F34 | `forge/creation_memory.py`; concurrent DB, actual owner identity and cross-app replay pending |

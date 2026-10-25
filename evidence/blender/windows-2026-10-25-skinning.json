@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-25",
+  "device": "owner-authorized Windows PC",
+  "blender": "5.2.2 LTS",
+  "status": "PASS_PROTOTYPE",
+  "character": "anonymous geometric T-pose mannequin; no owner-approved Tevin likeness",
+  "project": "evidence/blender/modular-skinned-pose-example.blend",
+  "file_bytes": 124099,
+  "rig": {
+    "parts": 16,
+    "bones": 11,
+    "armature_modifiers": 16,
+    "weights": "each mesh segment's vertices weighted 1.0 to its assigned bone",
+    "animation_frames": [1,12],
+    "left_hand_max_evaluated_vertex_motion_m": 0.428282,
+    "saved_project_reopened_in_Blender": "PASS: 16 meshes, one armature, 16 modifiers"
+  },
+  "renders": {
+    "frame_1": "evidence/blender/modular-pose-frame-1.png",
+    "frame_12": "evidence/blender/modular-pose-frame-12.png",
+    "render_engine": "BLENDER_WORKBENCH",
+    "status": "PASS",
+    "fixed_camera": true,
+    "background": "transparent RGBA",
+    "rgb_mean_absolute_difference": 0.671411,
+    "frame_1_foreground_pixels": 40564,
+    "frame_12_foreground_pixels": 39265,
+    "frame_1_bbox": [298,287,593,624],
+    "frame_12_bbox": [281,287,537,624]
+  },
+  "limitations": [
+    "One-bone rigid weights per mesh do not provide smooth skin blending at joints.",
+    "Only two arm pose endpoints tested, not a walking cycle or full motion range.",
+    "The visual difference proves rendered frames changed, not artistic correctness.",
+    "Facial rigging, hand fingers, cloth skin weights, game-engine animation reimport and likeness remain unverified."
+  ]
+}

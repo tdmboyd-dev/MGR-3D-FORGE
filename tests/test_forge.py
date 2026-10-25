@@ -27,7 +27,7 @@ from forge.character import mannequin, build_mannequin, CHARACTER_MATERIALS
 from forge.animation import arm_pose_clip, pose_landmarks
 from forge.adapters import (AdapterCapabilities, ProceduralWorldAdapter,
                             UnavailableNeuralAdapter, select_adapter)
-from forge.blender_bridge import blender_command, verify_blender, blender_render_command, blender_facts_command, blender_rig_command
+from forge.blender_bridge import blender_command, verify_blender, blender_render_command, blender_facts_command, blender_rig_command, blender_pose_render_command
 from forge.benchmark import run_benchmark
 from forge.environment import generate_parks, ENVIRONMENT_MATERIALS
 from forge.receipt import verify_bundle
@@ -362,6 +362,12 @@ class ForgeTests(unittest.TestCase):
             build_mannequin(character_dir,"T")
             rig=blender_rig_command("blender",character_dir,Path(temp)/"test.blend",Path(temp)/"rig.json")
             self.assertIn("blender_rig.py",rig[4])
+            self.assertEqual(blender_rig_command("blender",character_dir,Path(temp)/"skin.blend",
+                                                 Path(temp)/"skin.json",skin=True)[-1],"SKIN")
+            (Path(temp)/"skin.blend").write_bytes(b"BLENDER")
+            pose_command=blender_pose_render_command("blender",Path(temp)/"skin.blend",
+                Path(temp)/"pose1.png",Path(temp)/"pose12.png",Path(temp)/"pose.json")
+            self.assertIn("blender_pose_render.py",pose_command[4])
 
     def test_character_missing_hand(self):
         landmarks = {name: [0, i, 0] for i, name in enumerate((

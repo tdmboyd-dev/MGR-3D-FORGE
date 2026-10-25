@@ -3,15 +3,19 @@
 Command: blender --background --factory-startup --python THIS --
          character_folder output.blend report.json
 
-Uses rigid separate mesh parts attached to armature bones. This is an
-early articulated assembly, NOT deformation skinning or animation acceptance.
+Default uses rigid mesh/bone parenting. Optional SKIN mode creates actual
+armature modifiers and vertex groups with rigid 1.0 weights, and measures
+evaluated-mesh motion over animation keyframes. Smooth multi-bone deformation
+and production animation remain open.
 """
 
 import json
+import math
 from pathlib import Path
 import sys
 
 import bpy
+from mathutils import Quaternion, Vector
 
 
 RIG_BONES = {
@@ -53,9 +57,10 @@ def main():
     if "--" not in sys.argv:
         raise ValueError("missing arguments")
     args=sys.argv[sys.argv.index("--")+1:]
-    if len(args)!=3:
-        raise ValueError("expected character folder, .blend, JSON report")
-    source,destination,report=map(Path,args)
+    if len(args) not in (3,4) or (len(args)==4 and args[3]!="SKIN"):
+        raise ValueError("expected character folder, .blend, JSON report, optional SKIN")
+    source,destination,report=map(Path,args[:3])
+    skin=len(args)==4
     manifest=json.loads((source/"character.json").read_text(encoding="utf-8"))
     if manifest["pose"]!="T":
         raise ValueError("neutral T mannequin required for initial armature assembly")
@@ -92,20 +97,57 @@ def main():
     assignments={}
     for part,obj in assembled:
         target=bone_for_part(part)
-        matrix=obj.matrix_world.copy()
-        obj.parent=rig
-        obj.parent_type="BONE"
-        obj.parent_bone=target
-        obj.matrix_world=matrix
+        if skin:
+            group=obj.vertex_groups.new(name=target)
+            group.add(list(range(len(obj.data.vertices))),1.0,"REPLACE")
+            modifier=obj.modifiers.new("MGR_Deform_Armature","ARMATURE")
+            modifier.object=rig
+        else:
+            matrix=obj.matrix_world.copy()
+            obj.parent=rig
+            obj.parent_type="BONE"
+            obj.parent_bone=target
+            obj.matrix_world=matrix
         assignments[part]=target
+    movement_m=None
+    if skin:
+        scene=bpy.context.scene
+        scene.frame_start=1
+        scene.frame_end=12
+        for name in ("left_upper_arm","right_upper_arm"):
+            bone=rig.pose.bones[name]
+            bone.rotation_mode="QUATERNION"
+            bone.rotation_quaternion=Quaternion((1,0,0,0))
+            bone.keyframe_insert(data_path="rotation_quaternion",frame=1)
+            bone.rotation_quaternion=Quaternion((0,0,1),math.radians(35 if name.startswith("left") else -35))
+            bone.keyframe_insert(data_path="rotation_quaternion",frame=12)
+        def positions_at(frame):
+            scene.frame_set(frame)
+            depsgraph=bpy.context.evaluated_depsgraph_get()
+            obj=next(mesh for part,mesh in assembled if part=="left_hand")
+            evaluated=obj.evaluated_get(depsgraph)
+            mesh=evaluated.to_mesh()
+            try:
+                return [evaluated.matrix_world @ vertex.co for vertex in mesh.vertices]
+            finally:
+                evaluated.to_mesh_clear()
+        start=positions_at(1)
+        end=positions_at(12)
+        if len(start)!=len(end) or not start:
+            raise RuntimeError("invalid evaluated hand mesh")
+        movement_m=max((a-b).length for a,b in zip(start,end))
+        if movement_m<0.01:
+            raise RuntimeError("pose keyframes did not visibly deform evaluated hand geometry")
+        scene.frame_set(1)
     destination.parent.mkdir(parents=True,exist_ok=True)
     bpy.ops.wm.save_as_mainfile(filepath=str(destination.resolve()))
     result={"schema":"mgr.forge.modular-armature.v1","blender_version":bpy.app.version_string,
             "status":"PASS" if len(assembled)==len(manifest["editable_parts"]) else "FAIL",
             "mesh_parts":len(assembled),"bones":sorted(RIG_BONES),
-            "attachments":assignments,"blend_file":destination.name,
-            "limitations":["rigid bone parenting, no deforming vertex weights",
-                           "no animation curves or full pose deformation acceptance",
+            "attachments":assignments,"blend_file":destination.name,"rig_mode":"skin" if skin else "rigid",
+            "animation_motion_m":round(movement_m,6) if skin else None,
+            "limitations":["single-bone 1.0 weights per rigid segment; no smooth cross-joint skin blending" if skin else "rigid bone parenting, no deforming vertex weights",
+                           "only hand-motion smoke test, no full pose deformation acceptance" if skin else "no animation curves or full pose deformation acceptance",
                            "generic mannequin only, not approved Tevin likeness"]}
     report.parent.mkdir(parents=True,exist_ok=True)
     report.write_text(json.dumps(result,indent=2,sort_keys=True)+"\n",encoding="utf-8")
