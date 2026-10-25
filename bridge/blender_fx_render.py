@@ -1,6 +1,7 @@
 """Render MGR-authored emissive effect GLB on dark background using CPU Cycles."""
 
 import json
+import math
 from pathlib import Path
 import sys
 
@@ -10,9 +11,12 @@ from mathutils import Vector
 
 def main():
     args=sys.argv[sys.argv.index("--")+1:]
-    if len(args)!=3:
-        raise ValueError("expected effect.glb output.png report.json")
-    source,image,report=map(Path,args)
+    if len(args)!=4:
+        raise ValueError("expected effect.glb output.png report.json volume_density")
+    source,image,report=map(Path,args[:3])
+    density=float(args[3])
+    if not math.isfinite(density) or not 0<=density<=.25:
+        raise ValueError("MGR volume density must be in 0..0.25")
     bpy.ops.wm.read_factory_settings(use_empty=True)
     bpy.ops.import_scene.gltf(filepath=str(source.resolve()))
     objects=[obj for obj in bpy.data.objects if obj.type=="MESH"]
@@ -58,6 +62,26 @@ def main():
     witness_material=bpy.data.materials.new("MGR_FX_Matte_Witness")
     witness_material.diffuse_color=(.22,.22,.22,1)
     witness.data.materials.append(witness_material)
+    atmosphere=None
+    if density>0:
+        # Real Cycles participating medium: ray-path absorption/scattering
+        # with existing scene point lights. This is a homogeneous atmospheric
+        # proxy, not a smoke simulation or authored OpenVDB grid.
+        bpy.ops.mesh.primitive_cube_add(size=1,location=center)
+        atmosphere=bpy.context.object
+        atmosphere.name="MGR_FX_Atmosphere_Field"
+        atmosphere.scale=(span*1.15,span*1.15,span*.85)
+        atmosphere_material=bpy.data.materials.new("MGR_FX_Scattering_Medium")
+        atmosphere_material.use_nodes=True
+        nodes=atmosphere_material.node_tree.nodes
+        nodes.clear()
+        output=nodes.new("ShaderNodeOutputMaterial")
+        volume=nodes.new("ShaderNodeVolumePrincipled")
+        volume.inputs["Density"].default_value=density
+        volume.inputs["Anisotropy"].default_value=.25
+        volume.inputs["Color"].default_value=(.48,.7,1,1)
+        atmosphere_material.node_tree.links.new(volume.outputs["Volume"],output.inputs["Volume"])
+        atmosphere.data.materials.append(atmosphere_material)
     scene.render.engine="CYCLES"
     scene.cycles.device="CPU"
     scene.cycles.samples=8
@@ -91,16 +115,18 @@ def main():
                         socket=node.inputs.get("Emission Color")
                         if socket:
                             emissive.append(list(socket.default_value))
-    result={"schema":"mgr.forge.fx-blender-render.v2","blender_version":bpy.app.version_string,
+    result={"schema":"mgr.forge.fx-blender-render.v3","blender_version":bpy.app.version_string,
             "status":"PASS" if image.exists() and image.stat().st_size>0 else "FAIL",
             "source":source.name,"mesh_count":len(objects),
             "emission_socket_colors":emissive,"camera":"MGR_FX_Camera",
             "render_engine":"CYCLES","render_device":"CPU",
             "point_light_count":2,"light_witness":witness.name,
             "compositor_glare":glare.inputs["Type"].default_value,
+            "volume_density":density,"volume_object":atmosphere.name if atmosphere else None,
+            "volume_shader":"ShaderNodeVolumePrincipled" if atmosphere else None,
             "image_bytes":image.stat().st_size if image.exists() else 0,
             "limitations":["basic emissive geometry, not physically simulated effects",
-                           "optical glare is not physical volume scattering",
+                           "uniform volume scattering is not simulated animated smoke",
                            "no collision-driven particles or fluid simulation"]}
     report.write_text(json.dumps(result,indent=2,sort_keys=True)+"\n",encoding="utf-8")
     if result["status"]!="PASS":

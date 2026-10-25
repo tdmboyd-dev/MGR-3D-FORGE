@@ -66,6 +66,19 @@ class FantasyForgeTests(unittest.TestCase):
         self.assertIn('"POINT"',source)
         self.assertIn('"Fog Glow"',source)
         self.assertIn('"MGR_FX_Light_Witness"',source)
+        self.assertIn('"ShaderNodeVolumePrincipled"',source)
+
+    def test_volume_density_is_strictly_bounded(self):
+        with tempfile.TemporaryDirectory() as directory:
+            glb=Path(directory)/"effect.glb"
+            glb.write_bytes(b"glb")
+            img=Path(directory)/"out.png"
+            report=Path(directory)/"out.json"
+            for bad in (-1,.251,float("nan"),float("inf"),True):
+                with self.subTest(value=bad),self.assertRaises(ValueError):
+                    blender_fx_render_command("blender",glb,img,report,bad)
+            command=blender_fx_render_command("blender",glb,img,report,.075)
+            self.assertEqual(command[-1],"0.075")
 
 
 if __name__=="__main__":

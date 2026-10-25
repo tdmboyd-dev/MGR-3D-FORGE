@@ -180,6 +180,8 @@ def main(argv=None):
     fxrender.add_argument("--image",type=Path,required=True)
     fxrender.add_argument("--report",type=Path,required=True)
     fxrender.add_argument("--binary",default="blender")
+    fxrender.add_argument("--volume-density",type=float,default=0.0,
+                          help="bounded MGR physical atmosphere density 0..0.25 (0 disables volume)")
     bundle=sub.add_parser("verify-bundle",help="verify artifact hashes in world build folder")
     bundle.add_argument("directory",type=Path)
     visual=sub.add_parser("compare-renders",help="compare fixed-camera RGB PNG frames")
@@ -372,7 +374,7 @@ def main(argv=None):
         import subprocess
         if args.image.exists() or args.report.exists():
             raise FileExistsError("FX proof output already exists")
-        cmd=blender_fx_render_command(args.binary,args.glb,args.image,args.report)
+        cmd=blender_fx_render_command(args.binary,args.glb,args.image,args.report,args.volume_density)
         result=subprocess.run(cmd,timeout=600,capture_output=True,text=True,check=False)
         if result.returncode or not args.report.is_file() or not args.image.is_file():
             details=(result.stderr+"\n"+result.stdout).strip()
