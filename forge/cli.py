@@ -36,6 +36,7 @@ from .world_editor import apply_world_edits
 from .live_blender import create_live_blender_scene
 from .image_relief import export_image_relief
 from .blender_roundtrip import export_blender_edits
+from .studio_server import start_server
 
 
 def build(spec: WorldSpec, output: Path):
@@ -176,6 +177,11 @@ def main(argv=None):
     back.add_argument("--out",type=Path,required=True)
     back.add_argument("--report",type=Path,required=True)
     back.add_argument("--binary",default="blender")
+    studio=sub.add_parser("serve-studio",help="start private localhost Forge creation workstation")
+    studio.add_argument("--world",type=Path,required=True)
+    studio.add_argument("--workspace",type=Path,required=True)
+    studio.add_argument("--port",type=int,default=8765)
+    studio.add_argument("--blender",default="blender")
     blender = sub.add_parser("blender-verify",help="run actual Blender GLB import verification if installed")
     blender.add_argument("path",type=Path)
     blender.add_argument("--report",type=Path,required=True)
@@ -289,6 +295,16 @@ def main(argv=None):
         return 0
     if args.action == "blender-to-forge":
         print(json.dumps(export_blender_edits(args.binary,args.blend,args.original,args.out,args.report),indent=2))
+        return 0
+    if args.action == "serve-studio":
+        server, _studio = start_server(args.world,args.workspace,port=args.port,blender=args.blender)
+        print(f"MGR Forge Studio: http://127.0.0.1:{server.server_port}/",flush=True)
+        try:
+            server.serve_forever(poll_interval=0.25)
+        except KeyboardInterrupt:
+            pass
+        finally:
+            server.server_close()
         return 0
     if args.action == "compose-scene":
         if args.out.exists():

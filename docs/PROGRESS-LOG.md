@@ -281,3 +281,10 @@ The initial historical snapshot has been superseded by the current live inventor
 - Built two-way fixed-script Blender bridge: Forge world edits → `.blend` with embedded source provenance → edit native buildings in Blender → `blender-to-forge` transforms → SHA-validated original JSON contract → new world GLB. Custom arbitrary Python from text or voice remains forbidden.
 - Added a 59-case generated filter/bounds/corruption PNG regression set plus roundtrip negative tests and separate end-to-end Blender smoke scripts. Acceptance requires an actual Windows Blender invocation; until then, these additions are implementation/test evidence only.
 
+## 2026-10-25 — MGR Local Creation Workstation (F97)
+
+- Connected the previously separate browser and CPU tools with a loopback-only HTTP Studio in `forge/studio_server.py`. A per-session random token, exact JSON routes, origin check, bounded requests and separate per-job storage guard against unrelated personal-file access.
+- Browser Creation Chat now exposes optional `Create 3D Relief (PNG)`, `Build Edited World`, and `Open in Blender Project` actions **when served from the local workstation**. Offline self-contained HTML still works without a server; advanced buttons remain disabled there.
+- Added `python -m forge.cli serve-studio --world WORLD_FOLDER --workspace NEW_FORGE_WORKSPACE --port 8765 --blender BLENDER_EXE`. Generated GLB/Blender output is downloadable through job-scoped URLs; no paid API, no arbitrary user script execution.
+- Added HTTP authorization, path, upload and actual GLB-response test coverage. The local Linux runner forbids localhost sockets; HTTP checks are skipped there and must pass on Windows. Existing local executable tests remain green.
+

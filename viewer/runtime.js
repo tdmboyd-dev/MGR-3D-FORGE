@@ -401,6 +401,67 @@
     imagePreview.src=referenceUrl;imagePreview.hidden=false;
     directorMessage.textContent="Image reference loaded locally. Describe what you want created; image-to-3D inference is not yet connected.";
   });
+  // Optional same-origin localhost workstation. Offline files retain all existing editor behavior.
+  const forgeToken=window.MGR_FORGE_STUDIO_TOKEN;
+  const reliefButton=document.getElementById("director-generate-relief");
+  const worldButton=document.getElementById("director-build-world");
+  const blenderButton=document.getElementById("director-build-blender");
+  const downloadLinks=document.getElementById("director-downloads");
+  let activeStudioJob=null;
+  const studioEnabled=typeof forgeToken==="string"&&forgeToken.length>=20&&
+    location.protocol==="http:"&&location.hostname==="127.0.0.1";
+  if(studioEnabled){worldButton.disabled=false;}
+  const studioPost=async(path,data)=>{
+    const response=await fetch(path,{method:"POST",headers:{"Content-Type":"application/json",
+      "X-MGR-Forge-Token":forgeToken},body:JSON.stringify(data)});
+    const result=await response.json();
+    if(!response.ok)throw new Error(result.error||`Studio error ${response.status}`);
+    return result;
+  };
+  const studioLink=(url,label)=>{
+    const anchor=document.createElement("a");
+    anchor.href=url;anchor.textContent=label;anchor.rel="noopener";
+    anchor.style.cssText="display:block;color:#9af4cd;padding:3px";
+    downloadLinks.prepend(anchor);
+  };
+  document.getElementById("director-image").addEventListener("change",e=>{
+    reliefButton.disabled=!studioEnabled||e.target.files?.[0]?.type!=="image/png"||
+      e.target.files[0].size>900_000;
+  });
+  reliefButton.addEventListener("click",async()=>{
+    const file=document.getElementById("director-image").files?.[0];
+    if(!file||!studioEnabled||file.type!=="image/png"||file.size>900_000)return;
+    reliefButton.disabled=true;
+    try{
+      const bytes=new Uint8Array(await file.arrayBuffer());let binary="";
+      for(let i=0;i<bytes.length;i+=16384)binary+=String.fromCharCode(...bytes.subarray(i,i+16384));
+      const result=await studioPost("/api/relief",{png_base64:btoa(binary)});
+      studioLink(result.glb_url,`Download image-derived 3D relief (${result.triangles} triangles)`);
+      directorMessage.textContent="True 3D relief file created from your pixels (2.5D). Hidden geometry is not inferred.";
+    }catch(error){directorMessage.textContent=`3D relief failed: ${error.message}`;}
+    finally{reliefButton.disabled=false;}
+  });
+  worldButton.addEventListener("click",async()=>{
+    if(!studioEnabled)return;
+    worldButton.disabled=true;
+    try{
+      const result=await studioPost("/api/world",{edits:projectDocument()});
+      activeStudioJob=result.job_id;blenderButton.disabled=false;
+      studioLink(result.glb_url,"Download edited 3D world (GLB)");
+      studioLink(result.html_url,"Open rebuilt editable 3D world");
+      directorMessage.textContent=`Saved actual ${result.buildings}-building world in local Forge workspace.`;
+    }catch(error){directorMessage.textContent=`World build failed: ${error.message}`;}
+    finally{worldButton.disabled=false;}
+  });
+  blenderButton.addEventListener("click",async()=>{
+    if(!studioEnabled||!activeStudioJob)return;
+    blenderButton.disabled=true;
+    try{
+      const result=await studioPost("/api/blender",{job_id:activeStudioJob});
+      studioLink(result.blend_url,`Download editable Blender project (${result.editable_buildings} buildings)`);
+      directorMessage.textContent="Native Blender project created and verified in the Forge workspace.";
+    }catch(error){directorMessage.textContent=`Blender build failed: ${error.message}`;}
+  });
   resetGpuBuildings();refreshEditor();
   const halfDepth=manifest.grounds.depth/2;
   const camera={x:0,y:Math.max(9,manifest.spec.lot_size*0.6),z:halfDepth+12,yaw:0,pitch:0.12};

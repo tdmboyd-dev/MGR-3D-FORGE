@@ -33,6 +33,10 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opaci
   <label for="director-image">Optional picture reference (local preview, not image reconstruction)</label>
   <input id="director-image" type="file" accept="image/png,image/jpeg,image/webp"><img id="director-preview" alt="Your private local picture reference" hidden>
   <button id="director-sample-color" type="button" disabled>Use image color on building</button>
+  <button id="director-generate-relief" type="button" disabled>Create 3D Relief (PNG)</button>
+  <button id="director-build-world" type="button" disabled>Build Edited World</button>
+  <button id="director-build-blender" type="button" disabled>Open in Blender Project</button>
+  <div id="director-downloads" aria-live="polite"></div>
   <p id="director-msg" role="status" aria-live="polite">Ready. No external AI call or GPU required for supported commands.</p>
 </aside>
 <aside id="editor" aria-label="MGR World Editor">
