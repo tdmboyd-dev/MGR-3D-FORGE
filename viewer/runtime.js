@@ -404,6 +404,7 @@
   // Optional same-origin localhost workstation. Offline files retain all existing editor behavior.
   const forgeToken=window.MGR_FORGE_STUDIO_TOKEN;
   const reliefButton=document.getElementById("director-generate-relief");
+  const checkModelButton=document.getElementById("director-check-model");
   const worldButton=document.getElementById("director-build-world");
   const blenderButton=document.getElementById("director-build-blender");
   const godotButton=document.getElementById("director-build-godot");
@@ -441,6 +442,24 @@
       directorMessage.textContent="True 3D relief file created from your pixels (2.5D). Hidden geometry is not inferred.";
     }catch(error){directorMessage.textContent=`3D relief failed: ${error.message}`;}
     finally{reliefButton.disabled=false;}
+  });
+  document.getElementById("director-model").addEventListener("change",e=>{
+    const file=e.target.files?.[0];
+    checkModelButton.disabled=!studioEnabled||!file||!file.name.toLowerCase().endsWith(".glb")||file.size>900_000;
+  });
+  checkModelButton.addEventListener("click",async()=>{
+    const file=document.getElementById("director-model").files?.[0];
+    if(!studioEnabled||!file||file.size>900_000)return;
+    checkModelButton.disabled=true;
+    try{
+      const bytes=new Uint8Array(await file.arrayBuffer());let binary="";
+      for(let i=0;i<bytes.length;i+=16384)binary+=String.fromCharCode(...bytes.subarray(i,i+16384));
+      const result=await studioPost("/api/character",{glb_base64:btoa(binary)});
+      studioLink(result.glb_url,"Download preserved original 3D model (GLB)");
+      studioLink(result.report_url,"Download 3D model inspection report");
+      directorMessage.textContent=`Inspected ${result.triangles} triangles; ${result.mesh_containers} mesh container(s); ${result.skins} skin(s). ${result.warnings.join(" · ") || "No structural warnings."} Human likeness still requires approval.`;
+    }catch(error){directorMessage.textContent=`3D model inspection failed: ${error.message}`;}
+    finally{checkModelButton.disabled=false;}
   });
   worldButton.addEventListener("click",async()=>{
     if(!studioEnabled)return;

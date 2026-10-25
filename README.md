@@ -17,6 +17,8 @@ python -m forge.cli character-intake --source path/to/character.glb --out path/t
 python -m forge.cli character-blender --candidate path/to/new-intake --blend path/to/new-character.blend --report path/to/new-character-proof.json --binary blender
 # Independently reopen the .blend to verify the original source SHA on every mesh:
 python -m forge.cli character-reopen --blend path/to/new-character.blend --sha256 ORIGINAL_64_DIGIT_SHA --report path/to/reopen.json --binary blender
+# Alternatively, open the loopback Creation Chat and select a small existing .glb
+# under "Existing 3D model"; "Inspect / Preserve 3D Model" gives GLB and JSON downloads.
 ```
 
 Open the `http://127.0.0.1:PORT/` address printed in your terminal on the same computer. Port `0` lets Windows select an available port automatically. The service binds **only** to loopback and generates a fresh session token; it does not grant access to arbitrary directories or execute free-form code.

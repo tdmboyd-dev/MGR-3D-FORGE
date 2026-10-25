@@ -17,6 +17,7 @@ from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 from forge.cli import build
+from forge.character import build_mannequin
 from forge.spec import WorldSpec
 from forge.studio_server import ForgeWorkstation, start_server
 
@@ -113,6 +114,33 @@ class StudioServerTests(unittest.TestCase):
         code, _, _ = self.fetch("/api/relief", {"png_base64": "!!!!"})
         self.assertEqual(code, 400)
         self.assertEqual(before, list(self.studio.jobs.iterdir()))
+
+    def test_uploaded_real_glb_is_preserved_and_inspected(self):
+        build_mannequin(self.root / "generic-character")
+        original = (self.root / "generic-character" / "mannequin.glb").read_bytes()
+        code, data, _ = self.fetch("/api/character", {"glb_base64": base64.b64encode(original).decode()})
+        self.assertEqual(code, 200)
+        result = json.loads(data)
+        self.assertEqual(result["status"], "INSPECTED")
+        self.assertGreater(result["triangles"], 0)
+        self.assertEqual(result["skins"], 0)
+        self.assertEqual(self.fetch(result["glb_url"])[1], original)
+        report = json.loads(self.fetch(result["report_url"])[1])
+        self.assertFalse(report["identity_verified"])
+
+    def test_character_upload_refuses_invalid_base64(self):
+        prior = list(self.studio.jobs.iterdir())
+        code, _, _ = self.fetch("/api/character", {"glb_base64": "!!!!"})
+        self.assertEqual(code, 400)
+        self.assertEqual(prior, list(self.studio.jobs.iterdir()))
+
+    def test_character_upload_refuses_other_keys(self):
+        code, _, _ = self.fetch("/api/character", {"python": "print('unsafe')"})
+        self.assertEqual(code, 400)
+
+    def test_character_upload_token_required(self):
+        code, _, _ = self.fetch("/api/character", {"glb_base64": "bad"}, token=False)
+        self.assertEqual(code, 403)
 
     def test_world_json_materialization_and_download(self):
         manifest = json.loads((self.world / "manifest.json").read_text())

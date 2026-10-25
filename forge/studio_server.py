@@ -16,6 +16,7 @@ from urllib.parse import urlparse
 from zipfile import ZipFile, ZIP_DEFLATED
 
 from .image_relief import export_image_relief
+from .character_intake import admit_candidate
 from .engine_handoff import export_godot_project
 from .live_blender import create_live_blender_scene
 from .web_runtime import make_world_flight
@@ -29,7 +30,8 @@ FILES = {"relief.glb": "model/gltf-binary", "relief.obj": "text/plain",
          "world.glb": "model/gltf-binary", "world.obj": "text/plain",
          "world.mtl": "text/plain", "world-editor.html": "text/html",
          "scene.blend": "application/octet-stream", "scene-report.json": "application/json",
-         "godot-project.zip": "application/zip"}
+         "godot-project.zip": "application/zip", "candidate.glb": "model/gltf-binary",
+         "candidate.json": "application/json"}
 
 
 class ForgeWorkstation:
@@ -108,6 +110,29 @@ class ForgeWorkstation:
             return {"status": "MATERIALIZED", "job_id": job_id,
                     "glb_url": f"/files/{job_id}/relief/relief.glb",
                     "triangles": report["triangles"], "kind": "2.5D image relief"}
+        if route == "/api/character":
+            if set(payload) != {"glb_base64"} or type(payload["glb_base64"]) is not str:
+                raise ValueError("expect only GLB base64")
+            try:
+                raw = base64.b64decode(payload["glb_base64"], validate=True)
+            except (ValueError, binascii.Error) as error:
+                raise ValueError("invalid model base64") from error
+            from .character_intake import inspect_candidate
+            # Validate the payload first to avoid allocating a persistent job for junk.
+            # File-backed validation is required by the canonical candidate contract.
+            from tempfile import TemporaryDirectory
+            with TemporaryDirectory(dir=self.workspace) as scratch:
+                staging = Path(scratch) / "upload.glb"
+                staging.write_bytes(raw)
+                inspected = inspect_candidate(staging)
+                job_id, folder = self.create_job()
+                admitted = admit_candidate(staging, folder / "candidate")
+            return {"status": "INSPECTED", "job_id": job_id,
+                    "glb_url": f"/files/{job_id}/candidate/candidate.glb",
+                    "report_url": f"/files/{job_id}/candidate/candidate.json",
+                    "triangles": inspected["geometry"]["triangles"],
+                    "mesh_containers": inspected["geometry"]["meshes"],
+                    "skins": admitted["skin_count"], "warnings": inspected["warnings"]}
         if route == "/api/world":
             if set(payload) != {"edits"} or not isinstance(payload["edits"], dict):
                 raise ValueError("expect only world edits document")
@@ -202,7 +227,7 @@ def make_handler(studio):
             path = urlparse(self.path).path
             if path in ("/", "/studio"):
                 return self.send_bytes(200, studio.page.encode("utf-8"), "text/html; charset=utf-8")
-            match = re.fullmatch(r"/files/([a-f0-9]{24})/(relief|edited)?/?([a-z-]+\.(?:glb|obj|mtl|json|html|zip)|scene\.blend)", path)
+            match = re.fullmatch(r"/files/([a-f0-9]{24})/(relief|edited|candidate)?/?([a-z-]+\.(?:glb|obj|mtl|json|html|zip)|scene\.blend)", path)
             if match:
                 jid, subfolder, name = match.groups()
                 if name not in FILES:
@@ -218,7 +243,7 @@ def make_handler(studio):
             return self.send_bytes(404, b"not found", "text/plain")
 
         def do_POST(self):
-            if self.path not in ("/api/relief", "/api/world", "/api/godot", "/api/blender", "/api/blender-status"):
+            if self.path not in ("/api/relief", "/api/character", "/api/world", "/api/godot", "/api/blender", "/api/blender-status"):
                 return self.send_bytes(404, b"not found", "text/plain")
             if self.headers.get("X-MGR-Forge-Token") != studio.token:
                 return self.send_bytes(403, b"forbidden", "text/plain")

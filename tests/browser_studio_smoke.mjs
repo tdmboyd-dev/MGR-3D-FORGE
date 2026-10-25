@@ -64,6 +64,20 @@ try{
     if(relief)break;await pause(200);
   }
   assert.ok(relief,'local PNG must produce real relief link');
+  const modelSize=await evaluate(`(async()=>{
+    const raw=atob(window.MGR_WORLD_BASE64),bytes=Uint8Array.from(raw,c=>c.charCodeAt(0));
+    const input=document.getElementById('director-model'),transfer=new DataTransfer();
+    transfer.items.add(new File([bytes],'actual-source.glb',{type:'model/gltf-binary'}));
+    input.files=transfer.files;input.dispatchEvent(new Event('change',{bubbles:true}));
+    document.getElementById('director-check-model').click();return bytes.length;
+  })()`);
+  assert.ok(modelSize>100);
+  let inspected=false;
+  for(let n=0;n<100;n++){
+    inspected=await evaluate("Boolean(document.querySelector('#director-downloads a[href$=\"candidate.json\"]'))");
+    if(inspected)break;await pause(250);
+  }
+  assert.ok(inspected,'real GLB admission report must be downloadable');
   await evaluate("document.getElementById('director-build-world').click()");
   let world=false;
   for(let n=0;n<80;n++){
@@ -97,7 +111,7 @@ try{
     assert.ok((await answer.arrayBuffer()).byteLength>100);
   }
   console.log(JSON.stringify({schema:'mgr.forge.browser-studio-smoke.v1',status:'PASS',
-    checks:['localhost token session','browser PNG upload','generated relief GLB','live edited world GLB',
+    checks:['localhost token session','browser PNG upload','generated relief GLB','original GLB admission','live edited world GLB',
       'Godot project package','full Blender project conversion','downloadable real artifacts'],links}));
 }finally{
   socket?.close();child.kill();await pause(300);await rm(profile,{recursive:true,force:true,maxRetries:4,retryDelay:200});
