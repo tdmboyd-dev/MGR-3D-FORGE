@@ -175,6 +175,9 @@ def main(argv=None):
     intake_verify.add_argument("--sha256",required=True)
     intake_verify.add_argument("--report",type=Path,required=True)
     intake_verify.add_argument("--binary",default="blender")
+    readiness=sub.add_parser("character-readiness",help="audit independent GLB meshes, materials and structural skin readiness")
+    readiness.add_argument("--source",type=Path,required=True)
+    readiness.add_argument("--out",type=Path,required=True)
     live_blender=sub.add_parser("blender-live-scene",help="turn verified edited world into an actual individually editable Blender project")
     live_blender.add_argument("--world",type=Path,required=True,help="materialized edited world directory")
     live_blender.add_argument("--blend",type=Path,required=True,help="new Blender project file")
@@ -317,6 +320,10 @@ def main(argv=None):
     if args.action == "character-reopen":
         from .character_intake import verify_character_blend
         print(json.dumps(verify_character_blend(args.blend,args.sha256,args.report,binary=args.binary),indent=2))
+        return 0
+    if args.action == "character-readiness":
+        from .character_readiness import write_character_readiness
+        print(json.dumps(write_character_readiness(args.source,args.out),indent=2))
         return 0
     if args.action == "blender-live-scene":
         print(json.dumps(create_live_blender_scene(args.world,args.blend,args.report,binary=args.binary),indent=2))

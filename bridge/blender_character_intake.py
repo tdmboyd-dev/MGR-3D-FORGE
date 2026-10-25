@@ -29,10 +29,25 @@ def main():
         raise RuntimeError("import contains no triangles")
     bpy.context.scene["mgr_character_source_sha256"] = expected_sha
     bpy.context.scene["mgr_source_status"] = "unapproved-character-candidate"
+    part_inventory = []
+    for obj in sorted(objects, key=lambda o: o.name):
+        materials = [slot.material.name if slot.material else None for slot in obj.material_slots]
+        armature_modifiers = [mod.object.name if mod.object else None for mod in obj.modifiers
+                              if mod.type == "ARMATURE"]
+        part_inventory.append({"object": obj.name, "vertices": len(obj.data.vertices),
+                               "triangles": len(obj.data.loop_triangles),
+                               "material_slots": materials,
+                               "armature_modifiers": armature_modifiers,
+                               "vertex_groups": len(obj.vertex_groups),
+                               "shape_keys": len(obj.data.shape_keys.key_blocks)
+                               if obj.data.shape_keys else 0})
     bpy.ops.wm.save_as_mainfile(filepath=str(Path(output).resolve()))
     receipt = {"schema": "mgr.forge.blender-character-intake.v1", "status": "PASS",
                "source_sha256": expected_sha, "mesh_objects": len(objects),
                "triangles": triangle_count,
+               "editable_parts": part_inventory,
+               "garments_semantically_verified": False,
+               "pose_deformation_verified": False,
                "armature_objects": sum(obj.type == "ARMATURE" for obj in bpy.data.objects),
                "blender_version": bpy.app.version_string,
                "owner_approved_likeness": False}

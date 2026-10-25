@@ -1,5 +1,13 @@
 # MGR 3D Forge — Progress and Evidence Log
 
+## 2026-10-25 — F101/F102 character evidence and rig readiness
+
+- Added original `character-readiness` report: source SHA, named mesh and primitive/material inventory, UV presence, per-primitive joint-weight signals and skin bindings.
+- Added negative structural gates for unbound/broken skins and mismatched inverse-bind matrices. Mesh names do not automatically prove garment identity; structural rig data does not prove pose deformation or anatomical likeness.
+- Blender intake now records every imported editable mesh object's materials, armature modifiers, vertex groups and shape keys. External Blender rerun pending at creation of this entry.
+- Relevant original Khronos/Blender research and legal traceability: `research/external-provenance/CHARACTER-READINESS-SOURCES-2026-10-25.md`.
+
+
 ## 2026-10-25 — First end-to-end interactive world program (F87)
 
 - Replaced the checkpoint-only finish line for this slice with a user-openable **offline WebGL2 world**: actual Forge world GLB + metadata compile into one portable HTML with 3D triangles, direct movement, mouse look, bounds-based building collision and FPS telemetry. No CDN, paid API or server needed.

@@ -39,6 +39,19 @@ def glb_fixture(*, with_uv=True, invalid_index=False, compression=False, sparse=
             struct.pack("<I4s", len(binary), b"BIN\0") + binary)
 
 
+def edit_fixture(transform):
+    raw = glb_fixture()
+    original_length = struct.unpack_from("<I", raw, 12)[0]
+    doc = json.loads(raw[20:20 + original_length])
+    transform(doc)
+    packed = json.dumps(doc, separators=(",", ":")).encode()
+    packed += b" " * (-len(packed) % 4)
+    binary = raw[28 + original_length:]
+    return (struct.pack("<4sII", b"glTF", 2, 12 + 8 + len(packed) + 8 + len(binary))
+            + struct.pack("<I4s", len(packed), b"JSON") + packed
+            + struct.pack("<I4s", len(binary), b"BIN\0") + binary)
+
+
 class CharacterGLBTests(unittest.TestCase):
     def test_unsigned_short_indices_and_uv_accepted(self):
         doc, quality = parse_character_glb(glb_fixture())
@@ -73,6 +86,18 @@ class CharacterGLBTests(unittest.TestCase):
     def test_index_exceeding_vertex_count_refused(self):
         with self.assertRaisesRegex(ValueError, "index exceeds"):
             parse_character_glb(glb_fixture(invalid_index=True))
+
+    def test_negative_bufferview_not_python_negative_index(self):
+        with self.assertRaisesRegex(ValueError, "bufferView"):
+            parse_character_glb(edit_fixture(lambda d: d["accessors"][0].update(bufferView=-1)))
+
+    def test_negative_position_accessor_rejected(self):
+        with self.assertRaisesRegex(ValueError, "position accessor"):
+            parse_character_glb(edit_fixture(lambda d: d["meshes"][0]["primitives"][0]["attributes"].update(POSITION=-1)))
+
+    def test_negative_index_accessor_rejected(self):
+        with self.assertRaisesRegex(ValueError, "indices accessor"):
+            parse_character_glb(edit_fixture(lambda d: d["meshes"][0]["primitives"][0].update(indices=-1)))
 
 
 if __name__ == "__main__":

@@ -56,6 +56,9 @@ def parse_character_glb(blob):
                 raise ValueError("accessor count outside limits")
             if "bufferView" not in accessor:
                 raise ValueError("non-sparse accessor without bufferView")
+            if (type(accessor["bufferView"]) is not int or
+                    not 0 <= accessor["bufferView"] < len(views)):
+                raise ValueError("accessor references nonexistent bufferView")
             view = views[accessor["bufferView"]]
             item_bytes = COMPONENT_BYTES[accessor["componentType"]] * DIMENSIONS[accessor["type"]]
             stride = view.get("byteStride", item_bytes)
@@ -76,13 +79,18 @@ def parse_character_glb(blob):
                     raise ValueError("Draco compression not admitted without decoder")
                 if primitive.get("mode", 4) != 4:
                     raise ValueError("only triangles accepted for editable candidate")
-                pos = accessors[primitive["attributes"]["POSITION"]]
+                position_index = primitive["attributes"]["POSITION"]
+                if type(position_index) is not int or not 0 <= position_index < len(accessors):
+                    raise ValueError("mesh position accessor reference is invalid")
+                pos = accessors[position_index]
                 if pos["type"] != "VEC3" or pos["componentType"] != 5126:
                     raise ValueError("position vertices must be float VEC3")
                 indices = primitive.get("indices")
                 if indices is None:
                     count = pos["count"]
                 else:
+                    if type(indices) is not int or not 0 <= indices < len(accessors):
+                        raise ValueError("mesh indices accessor reference is invalid")
                     element = accessors[indices]
                     if element["type"] != "SCALAR" or element["componentType"] not in (5121, 5123, 5125):
                         raise ValueError("mesh indices must be unsigned integers")
