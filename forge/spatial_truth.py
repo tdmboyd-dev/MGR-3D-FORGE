@@ -32,6 +32,56 @@ def pixel_to_ray(pixel, *, focal_px, center_px=(0,0)):
     return tuple(v/norm for v in ray)
 
 
+def triangulate_parallel_views(pixel_a, pixel_b, *, camera_a, camera_b,
+                               focal_px, center_px=(0,0),
+                               max_separation_m=0.05, max_reprojection_px=2.0):
+    """Triangulate two calibrated, *parallel-facing* cameras viewing +Z.
+
+    This is the closest-point solution for two rays. It fails closed for poor
+    parallax, points behind the cameras, inconsistent image correspondence,
+    and invented/unobserved depth. It does not estimate camera orientation.
+    """
+    if len(camera_a)!=3 or len(camera_b)!=3 or not all(
+        type(v) in (float,int) and math.isfinite(v) for v in (*camera_a,*camera_b)):
+        raise ValueError("finite camera world positions required")
+    for value in (max_separation_m,max_reprojection_px):
+        if type(value) not in (float,int) or not math.isfinite(value) or value<=0:
+            raise ValueError("positive finite error tolerances required")
+    d1=pixel_to_ray(pixel_a,focal_px=focal_px,center_px=center_px)
+    d2=pixel_to_ray(pixel_b,focal_px=focal_px,center_px=center_px)
+    difference=[camera_a[i]-camera_b[i] for i in range(3)]
+    dot=sum(d1[i]*d2[i] for i in range(3))
+    denominator=1-dot*dot
+    if denominator<1e-8 or sum(v*v for v in difference)<1e-10:
+        raise ValueError("unobservable depth: absent or insufficient parallax")
+    d=sum(d1[i]*difference[i] for i in range(3))
+    e=sum(d2[i]*difference[i] for i in range(3))
+    t=(dot*e-d)/denominator
+    u=(e-dot*d)/denominator
+    if t<=0 or u<=0:
+        raise ValueError("triangulated point lies behind a camera")
+    p=[camera_a[i]+t*d1[i] for i in range(3)]
+    q=[camera_b[i]+u*d2[i] for i in range(3)]
+    separation=math.sqrt(sum((p[i]-q[i])**2 for i in range(3)))
+    if separation>max_separation_m:
+        raise ValueError("rays disagree in world space")
+    point=tuple((p[i]+q[i])/2 for i in range(3))
+    projections=[camera_project(tuple(point[i]-camera[i] for i in range(3)),
+                                focal_px=focal_px,center_px=center_px)
+                 for camera in (camera_a,camera_b)]
+    errors=[math.dist(projections[i],pixel) for i,pixel in enumerate((pixel_a,pixel_b))]
+    if max(errors)>max_reprojection_px:
+        raise ValueError("triangulated point failed image reprojection")
+    return {"schema":"mgr.forge.stereo-depth.v1","point_m":point,
+            "ray_separation_m":round(separation,8),
+            "reprojection_errors_px":[round(v,6) for v in errors],
+            "baseline_m":round(math.sqrt(sum(v*v for v in difference)),8),
+            "observation":"two matched calibrated rays",
+            "limitations":["assumes both camera optical axes parallel along +Z",
+                           "correspondences and focal length must be measured, not guessed",
+                           "a fit is not proof of unseen geometry"]}
+
+
 def slice_mesh_at_height(mesh, *, height_m, max_triangles=500_000):
     """Intersect triangles with a horizontal Y plane; return XZ line segments.
 

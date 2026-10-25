@@ -222,7 +222,8 @@ def main(argv=None):
         print(json.dumps(inspect_glb(args.path.read_bytes()), indent=2))
         return 0
     if args.action == "spatial-proof":
-        from .spatial_truth import camera_project,pixel_to_ray,slice_mesh_at_height
+        from .spatial_truth import camera_project,pixel_to_ray,slice_mesh_at_height,triangulate_parallel_views
+        from .surface_truth import inspect_surface_edges
         from .geometry import Mesh
         if args.out.exists():
             raise FileExistsError("spatial proof already exists")
@@ -230,12 +231,16 @@ def main(argv=None):
         mesh.box(0,0,0,2,4,2)
         a=camera_project((1,2,4),focal_px=400)
         b=camera_project((3,6,12),focal_px=400)
+        stereo=triangulate_parallel_views((100,100),(-100,100),
+            camera_a=(-1,0,0),camera_b=(1,0,0),focal_px=400)
         proof={"schema":"mgr.forge.spatial-truth.v1",
                "same_pixel_different_depth":a==b,
                "pixel_xy":a,"depths_m":[4,12],
                "unit_camera_ray":pixel_to_ray(a,focal_px=400),
+               "stereo_calibrated_example":stereo,
                "mesh_slice_height_m":args.height,
                "cross_section_segments":slice_mesh_at_height(mesh,height_m=args.height),
+               "surface_edge_audit":inspect_surface_edges(mesh),
                "limitations":["no unique depth can be recovered from the ray alone",
                               "triangle segments are not print-ready closed contours or G-code"]}
         args.out.parent.mkdir(parents=True,exist_ok=True)

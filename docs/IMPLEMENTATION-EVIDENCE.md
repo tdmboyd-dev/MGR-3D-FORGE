@@ -2,6 +2,8 @@
 
 Date: 2026-10-25. This page distinguishes working code from future intent.
 
+**Foundation S01–S05 proof:** Linux **168/168 PASS** on current code (previous Windows verified **153/153**, new Windows run pending). New positive/negative tests cover parallel calibrated stereo ray intersection (`forge/spatial_truth.py`), topology edge incidence (`forge/surface_truth.py`), and bounded sampled velocity/acceleration (`forge/motion_truth.py`). Research packets at `research/chapters/S01*`–`S05*` each have separately recorded source provenance. These **do not certify** rotated-camera calibration, watertight printing, continuous-time physics, Tevin likeness or photoreal production.
+
 **Current wave evidence (supersedes earlier baseline test counts below):**
 **153/153** unit tests passed on Linux and Time's Windows device. On real
 Blender 5.2.2 LTS, the 20-part/11-bone generic mannequin has 48 dual-bone

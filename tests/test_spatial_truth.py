@@ -7,7 +7,7 @@ import tempfile
 import unittest
 
 from forge.geometry import Mesh
-from forge.spatial_truth import camera_project,pixel_to_ray,slice_mesh_at_height
+from forge.spatial_truth import camera_project,pixel_to_ray,slice_mesh_at_height,triangulate_parallel_views
 from forge.cli import main
 
 
@@ -62,8 +62,35 @@ class SpatialTruthTests(unittest.TestCase):
             self.assertTrue(data["same_pixel_different_depth"])
             self.assertEqual(data["depths_m"],[4,12])
             self.assertEqual(len(data["cross_section_segments"]),8)
+            self.assertEqual(data["surface_edge_audit"]["status"],"PASS")
+            for actual,expected in zip(data["stereo_calibrated_example"]["point_m"],(0,1,4)):
+                self.assertAlmostEqual(actual,expected,places=6)
             with self.assertRaises(FileExistsError):
                 main(["spatial-proof","--out",str(path)])
+
+    def test_stereo_recovers_known_point_from_two_views(self):
+        world=(0,1,4)
+        first=(-1,0,0)
+        second=(1,0,0)
+        a=camera_project((world[0]-first[0],world[1],world[2]),focal_px=400)
+        b=camera_project((world[0]-second[0],world[1],world[2]),focal_px=400)
+        result=triangulate_parallel_views(a,b,camera_a=first,camera_b=second,focal_px=400)
+        for got,want in zip(result["point_m"],world):
+            self.assertAlmostEqual(got,want,places=6)
+        self.assertEqual(result["baseline_m"],2)
+        self.assertLess(result["ray_separation_m"],.000001)
+
+    def test_stereo_rejects_zero_parallax(self):
+        with self.assertRaises(ValueError):
+            triangulate_parallel_views((100,0),(100,0),camera_a=(0,0,0),camera_b=(1,0,0),focal_px=400)
+
+    def test_stereo_rejects_mismatched_correspondences(self):
+        with self.assertRaises(ValueError):
+            triangulate_parallel_views((100,0),(-100,100),camera_a=(-1,0,0),camera_b=(1,0,0),focal_px=400)
+
+    def test_stereo_rejects_backwards_point(self):
+        with self.assertRaises(ValueError):
+            triangulate_parallel_views((-100,0),(100,0),camera_a=(-1,0,0),camera_b=(1,0,0),focal_px=400)
 
 
 if __name__=="__main__":

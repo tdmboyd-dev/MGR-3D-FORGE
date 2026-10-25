@@ -1,6 +1,6 @@
 # MGR Reality-to-Space Intelligence — Native Master Research Map
 
-Date: 2026-10-25. Owner: MGR. **Status: research decomposition plus first coded proof, NOT a completed end-to-end audit of 20 scientific disciplines.** This is the map governing further research before locking the next creation architecture. External sources stay in the provenance ledger.
+Date: 2026-10-25. Owner: MGR. **Status: five 16-field research packets (S01–S05) plus native CPU proofs; NOT a completed end-to-end audit of 20 scientific disciplines.** This map governs research alongside implementation. External sources stay in the provenance ledger.
 
 ## Central design finding
 
@@ -16,11 +16,11 @@ Console game worlds are a **runtime systems** challenge: content streaming, occl
 
 | ID | Domain | What matters underneath | Native MGR translation / proof needed | Evidence maturity |
 |---|---|---|---|---|
-| S01 | Human vision | Stereo disparity, monocular perspective, occlusion, motion parallax, convergence, retinal/cortical limits | MGR Perception Judge: multi-cue depth/conflict detector; compare viewpoint motion, not one still | SOURCED; controlled protocol open |
-| S02 | Optics and light | Reflection, refraction, lens focus, diffraction, BRDF/light transport | MGR Light Witness: calibrated source-object-camera observations and glare/volume separation | PARTIAL coded + Blender-proof; measurements open |
-| S03 | Geometry | Coordinates, surfaces, topology, intersections, volume representation | MGR Spatial Truth: ray, plane, shell, manifold and cross-section operators | PARTIAL coded and unit-tested |
-| S04 | Linear algebra | Matrices, camera calibration, transforms, quaternion stability | MGR Transform Guardian: right/left-handed, scale and inverse-transform invariants | PARTIAL existing; complete coordinate-contract audit open |
-| S05 | Calculus | Continuous motion and differential physics | MGR Continuous Motion: bounded velocity, acceleration, derivatives and smooth interpolation | PARTIAL camera motion; advanced constraints open |
+| S01 | Human vision | Stereo disparity, monocular perspective, occlusion, motion parallax, convergence, retinal/cortical limits | MGR Perception Judge: multi-cue depth/conflict detector; compare viewpoint motion, not one still | 16-field packet; stereo proof; perceptual study open |
+| S02 | Optics and light | Reflection, refraction, lens focus, diffraction, BRDF/light transport | MGR Light Witness: calibrated source-object-camera observations and glare/volume separation | 16-field packet; Blender render proof; calibrated EXR measurements open |
+| S03 | Geometry | Coordinates, surfaces, topology, intersections, volume representation | MGR Spatial Truth: ray, plane, shell, manifold and cross-section operators | 16-field packet; edge topology proof; self-intersections open |
+| S04 | Linear algebra | Matrices, camera calibration, transforms, quaternion stability | MGR Transform Guardian: right/left-handed, scale and inverse-transform invariants | 16-field packet; parallel calibrated stereo proof; rotated cameras open |
+| S05 | Calculus | Continuous motion and differential physics | MGR Continuous Motion: bounded velocity, acceleration, derivatives and smooth interpolation | 16-field packet; sampled speed/acceleration guard; continuous solver open |
 | S06 | Physics | Rigid constraints, collision, cloth, smoke and fluids | MGR Simulation Reality Gate: solver vs fake effect, cache, conservation/energy checks | PROTOTYPE volumes only; dynamics open |
 | S07 | Computer graphics | Visibility, rasterization, PBR, ray tracing, shading and time budgets | MGR Renderer Independence: CPU reference image, Blender render, future GPU parity | PARTIAL; independent engine proof open |
 | S08 | Game architecture | World cells, streaming, visibility, virtualized geometry, networking | MGR World Residency: measurable chunks, occlusion sets and runtime budgets | PARTIAL chunks/path graph; live engine open |
@@ -41,12 +41,16 @@ Console game worlds are a **runtime systems** challenge: content streaming, occl
 
 | ID | Bridge | Why it is high leverage | First build | Next acceptance |
 |---|---|---|---|---|
-| B01 | Printer/slicer/CAD → game and character geometry | 3D shape quality is not only a screenshot: section integrity, thickness and watertightness matter | Deterministic triangle/plane intersection in `forge/spatial_truth.py` | Close contours, detect gaps, manifold classification; prove in an independent slicer before claiming print-ready |
-| B02 | Human visual inference → image-to-3D truth | Pixels underdetermine depth; the model must label unseen areas as hypotheses | Pixel→3D camera ray, two-distinct-depths/one-pixel proof | Stereo or multi-view triangulation with calibrated cameras and robust outlier/reprojection tests |
+| B01 | Printer/slicer/CAD → game and character geometry | 3D shape quality is not only a screenshot: section integrity, thickness and watertightness matter | Triangle/plane cross-sections and bounded edge-incidence tests in `forge/spatial_truth.py`, `forge/surface_truth.py` | Closed contours, oriented manifold proof, self-intersection and independent slicer verification before print-ready claims |
+| B02 | Human visual inference → image-to-3D truth | Pixels underdetermine depth; the model must label unseen areas as hypotheses | Pixel ray plus parallel calibrated two-view triangulation with depth and reprojection guards | General rotated/intrinsic cameras, robust correspondence search, uncertainty propagation and multiview reconstruction |
 | B03 | Console runtime → MGR persistent world | Gigantic scenes need visibility/streaming and fixed budgets, not blindly higher mesh counts | Existing MGR chunk/LOD paths as starting point | Measure camera-driven residency, draw counts, collisions and memory at 60 FPS in an actual target runtime |
 | B04 | Scientific field representations → fantasy creation | One field can drive volume density, terrain, growth, particles, and material masks | Noise-modulated volume plus CPU procedural geometry | Portable typed field graph, physically informed sampling and visual/failure receipts |
 
 ## Research-to-build gate for these tracks
+
+**Parallel packet ledger:** S01 [`chapters/S01-HUMAN-VISION.md`](chapters/S01-HUMAN-VISION.md), S02 [`chapters/S02-OPTICS-LIGHT.md`](chapters/S02-OPTICS-LIGHT.md), S03 [`chapters/S03-GEOMETRY-SLICING.md`](chapters/S03-GEOMETRY-SLICING.md), S04 [`chapters/S04-TRANSFORM-MATH.md`](chapters/S04-TRANSFORM-MATH.md), S05 [`chapters/S05-CONTINUOUS-MOTION-MATH.md`](chapters/S05-CONTINUOUS-MOTION-MATH.md). Each has a separate S01–S05 source ledger under `research/external-provenance/`. These are actionable sourced packets, **not** claims that every linked upstream repository, research method or scientific field has been fully reverse engineered.
+
+**Next five at once:** S06 dynamics/physics, S07 rendering/math, S08 game engine/console-world runtime, S09 sculpt/topology/garments, S10 skeletons/motion. S11–S15 follow together, then S16–S20. Scientific research and native negative tests run in the same wave; no research-only completion label substitutes for a working proof.
 
 Each track must recursively collect (1) definition, (2) production usage, (3) standards, (4) current research, (5) code architecture, (6) applicable models, (7) datasets, (8) code/model/data rights, (9) APIs, (10) native alternative, (11) CPU/GPU/runtime, (12) cost, (13) failure modes, (14) evaluation, (15) MGR integration owner, (16) acceptance tests. **SOURCED** means a useful official reference exists; it does not mean those 16 fields are complete. Track source-tree/read depth and experiment outcomes separately.
 
@@ -62,8 +66,8 @@ Each track must recursively collect (1) definition, (2) production usage, (3) st
 ## Immediate work order
 
 1. Complete camera ray and plane/triangle section primitive **(first coded proof)**.
-2. Calibrated multi-view triangulation, reprojection error, incomplete geometry and outlier rejection.
-3. Mesh section closure, physical surface/volume validation and optional STL/3MF export after rights/unit QA.
+2. Parallel-camera triangulation and reprojection **now coded**; extend to rotated cameras, robust correspondences, uncertainty, incomplete geometry and outlier rejection.
+3. Edge-incidence checks **now coded**, not watertightness certification; add mesh section closure, self-intersections, physical volume validation and optional STL/3MF export after rights/unit QA.
 4. Camera-driven geometry residency/LOD and actual browser or game-runtime walkthrough.
 5. Reuse field graphs for volume, particles, terrain and procedural anatomy, with repeatable visual comparisons.
 6. Return to full rig, modular clothing and approved Tevin likeness; research should help assets reach owner acceptance, not become a permanent research detour.

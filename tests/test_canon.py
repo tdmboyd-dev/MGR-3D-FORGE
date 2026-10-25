@@ -37,3 +37,9 @@ class MgrCanonTests(unittest.TestCase):
         self.assertIn("153/153",inventory)
         self.assertTrue((ROOT/"evidence/blender/windows-wave6-fantasy-motion.json").is_file())
         self.assertTrue((ROOT/"evidence/blender/windows-2026-10-25.json").is_file())
+
+    def test_cli_source_is_complete_after_publication(self):
+        """Regression: a prior GitHub upload silently truncated cli.py."""
+        source=(ROOT/"forge/cli.py").read_text(encoding="utf-8")
+        compile(source,"forge/cli.py","exec")
+        self.assertTrue(source.rstrip().endswith("raise SystemExit(main())"))

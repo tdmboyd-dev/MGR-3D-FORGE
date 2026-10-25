@@ -2,6 +2,8 @@
 
 **Updated 2026-10-25. Owner: Money Grind Religion Corp. Canon: `docs/MGR-NATIVE-CANON.md`.** This is a current status document, not the historical creation baseline.
 
+**New foundation wave:** five sourced 16-field packets (S01–S05) and CPU tests for parallel-camera depth triangulation, triangle-edge surface defects, and sampled motion speed/acceleration are now implemented. Linux **168/168 PASS**; Windows verification on this new code is still pending (previous Windows run **153/153 PASS**). These checks are partial safeguards, not proof of reconstructed photoreal characters, printable watertight meshes or a full physics solver.
+
 ## What MGR owns and can run now
 
 | MGR capability | Native implementation | Verified proof | Production gap |

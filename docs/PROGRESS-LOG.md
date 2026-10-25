@@ -1,5 +1,12 @@
 # MGR 3D Forge — Progress and Evidence Log
 
+## 2026-10-25 — Five simultaneous foundations plus native validation
+
+- Five distinct 16-field sourced research packets and source ledgers now cover S01 vision, S02 optics, S03 geometry/slicing, S04 camera-transform algebra and S05 continuous motion/calculus. These are foundations, **not** full upstream audits or a claim S06–S20 are finished.
+- Native checks expanded: calibrated parallel-camera stereo triangulation with depth/reprojection rejection; surface edge-incidence checks for open/degenerate/nonmanifold triangle meshes; sampled movement speed and acceleration guard. Full rotated cameras, oriented watertight meshes, robust correspondence and physically solved trajectories remain open.
+- Complete-source CLI compilation/tail regression prevents the previous truncated GitHub upload defect. **168/168 local Linux tests PASS**. The last confirmed Windows run was 153/153; new Windows verification is pending publication.
+- Next simultaneous research batch is S06 physics, S07 rendering, S08 game runtime, S09 sculpting/modeling and S10 skeletal motion, alongside production coding.
+
 ## 2026-10-25 — Reality-to-Space expansion beyond Blender
 
 - Owner broadened 3D research to 20 scientific/computing domains plus physical 3D printing/slicers and console world architecture. Built the MGR-native 20-domain map `research/MGR-REALITY-TO-SPACE-MASTER-MAP.md`; isolated official literature/API/engine/slicer references in `research/external-provenance/REALITY-TO-SPACE-SOURCES-2026-10-25.md`. Current status is architectural decomposition + source review, not end-to-end mastery of 20 disciplines.
