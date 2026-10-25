@@ -30,3 +30,9 @@ support, and cross-device VR/real-time platform limitations.
 - Primary: Blender 5.0 compositor release notes, https://developer.blender.org/docs/release_notes/5.0/compositor/ — reusable compositor node groups, updated render output flow.
 - Primary: Blender 5.2 LTS compositor glare manual, https://docs.blender.org/manual/en/5.2/compositing/types/filter/glare.html — `Fog Glow` is optical/post-processing, not simulated physical fog.
 - Exact live Blender 5.2.2 API introspection on user's authorized Windows machine: `CompositorNodeGlare` has `inputs["Type"]` menu accepting `Fog Glow` and does not expose the former `glare_type` property; `NodeGroupOutput` with a declared `Image` interface output works. Source implementation `bridge/blender_fx_render.py` is independently authored MGR code. No upstream code copied.
+# Atmosphere Field production principles verified 2026-10-25
+
+- Primary: Blender 5.2 LTS Principled Volume shader, https://docs.blender.org/manual/en/5.2/render/shader_nodes/shader/volume_principled.html — Volume material output supports density, anisotropy, color, absorption, scattering and emission.
+- Primary: Blender 5.2 LTS Cycles volume rendering, https://docs.blender.org/manual/en/5.2/render/cycles/render_settings/volumes.html — ray volume step sizes and computational quality/cost matter; step-rate settings are not proof of fluid simulation.
+- MGR implementation uses native authored simple bounded volume meshes and noise-modulated density. No external source code copied; Blender-native nodes as a runtime dependency. The exact user Windows Blender 5.2.2 accepted `ShaderNodeVolumePrincipled` on both `uniform` and `cloud` modes, proving live API compatibility.
+- Remaining study: OpenVDB caches, physically consistent density units, smooth boundary masks, animation advection, volume light paths, denoising and film-grade color pipelines; no borrowed source naming in MGR capability canon.

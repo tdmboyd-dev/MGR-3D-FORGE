@@ -1,5 +1,11 @@
 # MGR 3D Forge — Progress and Evidence Log
 
+## 2026-10-25 — MGR Atmosphere Field Windows volume acceptance
+
+- Built `--volume-density` (strict finite `0..0.25`, 0 disables medium) and `--volume-style uniform|cloud` in the Blender FX command. Windows Blender 5.2.2 Cycles accepted a real `ShaderNodeVolumePrincipled` participating medium, anisotropy and point-light illumination. Cloud mode adds a bounded procedural noise-driven density material in an ellipsoidal volume proxy.
+- Actual matched 600×600 Windows renders: no-volume control, uniform atmosphere, and cloud-style atmosphere. Visual inspection showed distinct blue/warm scattering through the authored portal scene; uniform cube had a hard rectangular edge, while cloud was curved but still clearly bounded. Blender image comparison: uniform vs control **0.06582227** normalized RGBA MAE, with **156,410 / 360,000 pixels** differing by more than .05 in an RGB channel; cloud vs uniform **0.02924215** normalized RGBA MAE.
+- **141/141** Windows and Linux tests PASS, including negative density and style validation. Actual images and JSON scene receipts are under `evidence/blender/windows-wave8-*`. This is real volume light scattering in Cycles, **not** simulated smoke dynamics, soft volumetric boundaries, physically authored weather or playable real-time atmospheric lighting.
+
 ## 2026-10-25 — MGR Light Sculptor + Optical FX live Windows proof
 
 - Implemented two physically instantiated Blender point lights and a separate neutral witness mesh, plus Blender 5.2 node-based `Fog Glow` optical compositor. This verifies **light interaction and image-space compositing**, not light-transport physics or atmospheric scattering.

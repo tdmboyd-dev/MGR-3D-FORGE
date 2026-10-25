@@ -1,0 +1,28 @@
+{
+  "schema": "mgr.forge.atmosphere-visual-acceptance.v1",
+  "date": "2026-10-25",
+  "device": "Time Windows",
+  "blender": "5.2.2 LTS",
+  "renderer": "Cycles CPU",
+  "image_size": [600, 600],
+  "effect": "portal",
+  "matched_conditions": "Same GLB, camera, lighting, compositor, resolution and frame; only volume configuration differs",
+  "renders": {
+    "control": {"volume_density": 0, "style": "uniform", "path": "windows-wave8-control.png"},
+    "uniform": {"volume_density": 0.075, "style": "uniform", "path": "windows-wave8-atmosphere.png"},
+    "cloud": {"volume_density": 0.075, "style": "cloud", "path": "windows-wave8-cloud.png"}
+  },
+  "uniform_vs_control": {
+    "mean_absolute_difference_normalized_rgba": 0.06582227,
+    "pixels_with_any_rgb_channel_difference_over_0_05": 156410,
+    "total_pixels": 360000
+  },
+  "cloud_vs_uniform": {
+    "mean_absolute_difference_normalized_rgba": 0.02924215,
+    "total_pixels": 360000
+  },
+  "test_suite": {"windows": "141/141 PASS", "linux": "141/141 PASS"},
+  "visual_inspection": "Visible colored scattering, box-shaped boundary on uniform field, curved noisy-density proxy on cloud field; both effects controlled and stylized, not production smoke",
+  "status": "PASS",
+  "limitations": ["Hard volume boundaries remain visible", "No smoke simulation/advection", "No real-time engine proof", "No film-quality artistic acceptance"]
+}
