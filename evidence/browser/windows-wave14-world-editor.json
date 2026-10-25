@@ -1,0 +1,20 @@
+{
+  "schema": "mgr.forge.browser-proof.v1",
+  "date": "2026-10-25",
+  "device": "Time Windows",
+  "browser": "Google Chrome headless (ANGLE SwiftShader WebGL2)",
+  "command": "chrome.exe --headless=new --no-first-run --disable-extensions --enable-unsafe-swiftshader --use-gl=angle --use-angle=swiftshader --window-size=1280,720 --virtual-time-budget=6000 --screenshot=... demos/mgr-world-editor.html",
+  "demo": "demos/mgr-world-editor.html",
+  "screenshot": "evidence/browser/windows-wave14-world-editor.png",
+  "screenshot_sha256": "5d0184a9ac0a619b7d201cd2fbd8f893116953aaaebeb02f9ce3d19464e281a5",
+  "observed": [
+    "Actual WebGL2 3D scene with buildings, roads and ground rendered in Chrome",
+    "Right-hand editor presents building selection, editable X/Z/height/material, download, reset and import controls",
+    "Windows Python unittest discovery completed with exit code 0 (223 tests)"
+  ],
+  "not_verified": [
+    "Physical clicks, form change handlers, localStorage persistence, browser import/export download",
+    "Camera keyboard navigation and sustained frame-rate measurements",
+    "High-fidelity production visual quality"
+  ]
+}
