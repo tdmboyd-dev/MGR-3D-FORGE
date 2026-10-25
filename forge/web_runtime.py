@@ -36,6 +36,7 @@ def make_world_flight(world_dir, output):
     html = (VIEWER_DIR / "template.html").read_text(encoding="utf-8")
     html = html.replace("__MGR_MANIFEST__", json_data)
     html = html.replace("__MGR_GLB_BASE64__", base64.b64encode(asset).decode("ascii"))
+    html = html.replace("__MGR_WORLD_SHA__", hashlib.sha256(asset).hexdigest())
     html = html.replace("__MGR_RUNTIME_JS__", script)
     output.parent.mkdir(parents=True, exist_ok=True)
     with output.open("x", encoding="utf-8") as handle:
@@ -45,6 +46,6 @@ def make_world_flight(world_dir, output):
             "glb_sha256":hashlib.sha256(asset).hexdigest(),
             "triangles":geometry["triangles"], "buildings":len(world["buildings"]),
             "runtime":"offline-browser-WebGL2",
-            "limitations":["browser GPU/WebGL2 capability required", "static generated city geometry",
+            "limitations":["browser GPU/WebGL2 capability required", "procedural editor changes do not modify embedded GLB until apply-world-edits",
                            "bounds-based building collision, no navmesh or full physics",
                            "browser performance and visual QA require actual browser execution"]}

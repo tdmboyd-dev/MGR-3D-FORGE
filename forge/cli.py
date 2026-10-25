@@ -32,6 +32,7 @@ from .scene_layers import compose_scene_layers
 from .asset_parity import audit_export_parity
 from .cell_transport import MGRCellTransport
 from .web_runtime import make_world_flight
+from .world_editor import apply_world_edits
 
 
 def build(spec: WorldSpec, output: Path):
@@ -150,6 +151,10 @@ def main(argv=None):
     flight=sub.add_parser("world-flight",help="package a generated world into an offline interactive 3D HTML world")
     flight.add_argument("--world",type=Path,required=True,help="directory holding generated Forge world")
     flight.add_argument("--out",type=Path,required=True,help="new self-contained HTML file")
+    edited=sub.add_parser("apply-world-edits",help="materialize saved browser world edits into genuine GLB/OBJ/preview and viewer")
+    edited.add_argument("--world",type=Path,required=True,help="original generated world directory")
+    edited.add_argument("--edits",type=Path,required=True,help="downloaded browser world edits JSON")
+    edited.add_argument("--out",type=Path,required=True,help="new output directory (must not exist)")
     blender = sub.add_parser("blender-verify",help="run actual Blender GLB import verification if installed")
     blender.add_argument("path",type=Path)
     blender.add_argument("--report",type=Path,required=True)
@@ -250,6 +255,9 @@ def main(argv=None):
         return 0
     if args.action == "world-flight":
         print(json.dumps(make_world_flight(args.world,args.out),indent=2))
+        return 0
+    if args.action == "apply-world-edits":
+        print(json.dumps(apply_world_edits(args.world,args.edits,args.out),indent=2))
         return 0
     if args.action == "compose-scene":
         if args.out.exists():

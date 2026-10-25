@@ -95,3 +95,9 @@ Measured under CPython 3.12.14, x86_64. This excludes expensive Blender import, 
 3. Add versioned job persistence, cancellation, approval, asset reuse and licensed model adapters.
 4. Ingest owner-approved Tevin base privately; compare anatomy, detachable wardrobe and animation deformation.
 5. Connect to actual Creation OS and MGR-ONE consumers only after ownership/interface audit.
+## F88 — MGR Live World Editor + genuine 3D export
+
+- Browser implementation: `viewer/runtime.js`, `viewer/template.html`, `demos/mgr-world-editor.html` (self-contained WebGL2 with embedded verified 10-building world GLB). Bounded form editor changes real WebGL geometry; local persistence and JSON import/export.
+- CPU build implementation: `forge/world_editor.py`, `forge/cli.py` action `apply-world-edits`; strict `mgr.forge.world-edit.v1` source fingerprint and building identity checks, immutable original, new GLB/OBJ/MTL/SVG and browser re-packaging.
+- Validation: `tests/test_world_editor.py` (7 positive/negative tests). Verify the output via `forge.cli verify-bundle EDITED_DIR` and inspect `world.glb` independently. Browser mouse/keyboard workflow acceptance on Windows is **not yet verified**.
+

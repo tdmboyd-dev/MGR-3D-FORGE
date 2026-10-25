@@ -29,6 +29,7 @@ python3 -m forge.cli inspect artifacts/prompt-25/world.glb
 python3 -m forge.cli studio-proof --out artifacts/studio-proof.json
 python3 -m forge.cli compose-scene --layers examples/layered-scene.json --out artifacts/composed-scene.json
 python3 -m forge.cli world-flight --world artifacts/prompt-25 --out artifacts/prompt-25-flight.html
+python3 -m forge.cli apply-world-edits --world artifacts/prompt-25 --edits artifacts/mgr-world-edits.json --out artifacts/edited-city
 python3 -m forge.cli audit-export --glb artifacts/prompt-25/world.glb --obj artifacts/prompt-25/world.obj --out artifacts/export-parity.json
 # For prepared cell files and SHA manifests:
 python3 -m forge.cli load-cells --root artifacts/cells --manifest artifacts/cell-manifest.json --plan artifacts/residency-plan.json --out artifacts/cell-load.json
@@ -95,7 +96,8 @@ Code lives under `forge/`, tests under `tests/`; [implementation evidence](docs/
 
 ## Current truth
 
-- **New interactive runtime slice:** `forge.cli world-flight` packages real GLB and world facts into a self-contained offline HTML with WebGL2 triangles, movement controls, simple collision and an FPS HUD. Open [`demos/mgr-world-flight.html`](demos/mgr-world-flight.html). **Real Chrome on Windows rendered the 3D scene**; see [`evidence/browser/windows-wave13-world-flight.png`](evidence/browser/windows-wave13-world-flight.png). All **216/216 Python tests PASS on Linux and Windows**. Keyboard interaction and sustained FPS remain unverified, so this is not yet a production playable world.
+- **Interactive editable world:** Open [`demos/mgr-world-editor.html`](demos/mgr-world-editor.html). Select any of the ten buildings, change its X/Z position, height or color, download/import edit JSON, reset, and keep changes in local browser storage when available. The new `forge.cli apply-world-edits --world ORIGINAL --edits mgr-world-edits.json --out NEW` command transforms those edits into **real replacement GLB, OBJ/MTL, SVG, manifest SHA receipts and an independently openable `world-editor.html`**, without changing the original. This is a working bounded building editor, **not** full modeling/sculpting or production-quality city construction. Browser editor interactions still require independent Windows acceptance; the Python export roundtrip is unit-tested.
+- **First browser-rendered runtime:** `forge.cli world-flight` packages real GLB and world facts into a self-contained offline HTML with WebGL2 triangles, movement, simple collision and an FPS HUD. Open [`demos/mgr-world-flight.html`](demos/mgr-world-flight.html). **Real Chrome on Windows rendered the 3D scene**; see [original Windows browser screenshot on GitHub](https://github.com/tdmboyd-dev/MGR-3D-FORGE/blob/main/evidence/browser/windows-wave13-world-flight.png). Original **216/216 Python tests PASS on Linux and Windows**; new editor tests were run on Linux. Keyboard interaction and sustained FPS remain unverified, so this is not yet a production playable world.
 
 - **Latest native runtime foundation: 212/212 tests PASS on Linux AND Windows.** An actual generated-world GLB/OBJ export passed the new geometry-parity command; the cell transport exercises real disk I/O, SHA-256 and bounded RAM, and a swept-contact guard catches thin-wall motion. A real Blender 5.2.2 studio witness render is recorded under `evidence/blender/windows-wave12-studio-witness.json`. F83–F85 remain CPU-prototype quality, not independently playable/renderer-proven. Full new engineering contract: `research/MGR-RUNTIME-FOUNDATIONS-WAVE.md`.
 

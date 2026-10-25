@@ -92,8 +92,9 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F85 | MGR Dynamics Binding | SELECTED RESEARCH | PARTIAL: conservative swept actor segment vs obstacle contact; TESTED | P1 | F39,F40 | Physics-engine capsule, stairs/slopes, rig contact, impulses and deterministic replay |
 | F86 | MGR Render Truth Lab | RESEARCH QUEUED | NOT BUILT | P1 | F72,F73,F74 | Real engine lighting/material parity and performance |
 | F87 | MGR World Flight Runtime | SELECTED WEBGL/GLB SPEC RESEARCH | IMPLEMENTED and Windows BROWSER RENDER VERIFIED: self-contained WebGL2 city, actual GLB meshes, screenshot receipt; input/FPS still UNVERIFIED | P0 | F04,F18,F40,F83 | Keyboard/collision/fps telemetry acceptance, independent second backend, full asset/animation/rendering |
+| F88 | MGR Live World Editor + Export Roundtrip | MGR AUTHORED EDITING CONTRACT | IMPLEMENTED AND LINUX UNIT-VERIFIED: position, height, material edits with browser persistence, JSON import/export, CPU GLB/OBJ/MTL/SVG re-export, receipt and standalone WebGL editor; Windows editor input unverified | P0 | F87,F04,F83 | Real browser edit/import interaction, selection rays, undo/redo, full scene graph and non-box modeling |
 
-**Scope:** 87 MGR-native areas: original 33, F34–F43, director/camera/motion F44–F50, fantasy/VFX F51–F67, reality-to-space F68–F71, ten studio-quality CPU contracts F72–F81, open-systems F82–F86 and offline interactive World Flight F87. Queued is **not** implemented. Detailed MGR-native research remains in `research/` and external attribution/rights under `research/external-provenance/`.
+**Scope:** 88 MGR-native areas: original 33, F34–F43, director/camera/motion F44–F50, fantasy/VFX F51–F67, reality-to-space F68–F71, ten studio-quality CPU contracts F72–F81, open-systems F82–F86, offline interactive World Flight F87 and bounded live editor/export roundtrip F88. Queued is **not** implemented. Detailed MGR-native research remains in `research/` and external attribution/rights under `research/external-provenance/`.
 
 ## Definition of production completeness
 

@@ -6,10 +6,27 @@ html,body{height:100%;margin:0;background:#101521;color:#f8f1e5;font:15px system
 h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opacity:.82}
 #status{display:inline-block;margin-top:12px;padding:9px 13px;border-radius:8px;background:#111c2bd9;color:#93f5c8}
 #help{position:absolute;bottom:18px;left:18px;background:#111c2bdd;padding:10px 14px;border-radius:8px;color:#fff}
+#editor{position:absolute;right:16px;top:16px;width:246px;max-height:calc(100vh - 40px);overflow:auto;background:#131b2be9;border:1px solid #58677e;border-radius:12px;padding:16px;box-shadow:0 14px 45px #0008}
+#editor h2{font-size:17px;margin:0 0 8px}#editor label{font-size:12px;display:block;margin:8px 0 4px;color:#b8c8dd}
+#editor input,#editor select{box-sizing:border-box;width:100%;background:#29364a;border:1px solid #64778f;border-radius:6px;padding:8px;color:#fff;font:inherit}
+#editor .split{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#editor button{cursor:pointer;background:#1d7e75;color:#fff;border:0;border-radius:6px;padding:9px 11px;margin:10px 5px 0 0;font-weight:600}
+#editor button.secondary{background:#37465f}#editor-msg{font-size:12px;min-height:30px;margin-top:10px;color:#a6f4d7}
+@media(max-width:650px){#editor{top:auto;bottom:48px;right:8px;left:8px;width:auto;max-height:32vh;padding:10px}#editor .split{grid-template-columns:repeat(3,1fr)}#help{font-size:10px;left:8px;bottom:4px}#overlay{top:8px;left:8px}h1{font-size:16px}}
 </style></head><body>
 <canvas id="world" aria-label="Interactive three-dimensional MGR world"></canvas>
 <div id="overlay"><h1>MGR // WORLD FLIGHT</h1><small>OWNED WORLD · LOCAL RENDER · LIVE NAVIGATION</small><div><span id="status">Loading world…</span></div></div>
 <div id="help">W/S: forward/back &nbsp; A/D: strafe &nbsp; E/Q: up/down &nbsp; ←/→: turn &nbsp; Drag: look &nbsp; Shift: move faster</div>
-<script>window.MGR_WORLD_MANIFEST=__MGR_MANIFEST__;window.MGR_WORLD_BASE64="__MGR_GLB_BASE64__";</script>
+<aside id="editor" aria-label="MGR World Editor">
+  <h2>WORLD EDITOR</h2><small>Change buildings. Save the world you create.</small>
+  <label for="building">Building</label><select id="building"></select>
+  <div class="split"><div><label for="edit-x">X (meters)</label><input id="edit-x" type="number" step="1"></div><div><label for="edit-z">Z (meters)</label><input id="edit-z" type="number" step="1"></div></div>
+  <label for="edit-height">Height (meters)</label><input id="edit-height" type="number" min="2" max="100" step="1">
+  <label for="edit-color">Material color</label><select id="edit-color"><option value="building-brick">Warm Brick</option><option value="building-stone">Stone</option><option value="building-blue">Blue</option><option value="building-gold">Gold</option><option value="building-emerald">Emerald</option></select>
+  <button id="save-world" type="button">Download World</button><button class="secondary" id="reset-world" type="button">Reset</button>
+  <label for="import-world">Load a saved world (.json)</label><input id="import-world" type="file" accept="application/json,.json">
+  <div id="editor-msg" role="status" aria-live="polite">Ready to edit.</div>
+</aside>
+<script>window.MGR_WORLD_MANIFEST=__MGR_MANIFEST__;window.MGR_WORLD_BASE64="__MGR_GLB_BASE64__";window.MGR_WORLD_SHA="__MGR_WORLD_SHA__";</script>
 <script>__MGR_RUNTIME_JS__</script>
 </body></html>

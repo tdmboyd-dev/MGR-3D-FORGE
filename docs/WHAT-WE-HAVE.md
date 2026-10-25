@@ -71,3 +71,5 @@
 - Technical external code/data licensing: `research/external-provenance/` only; external projects **do not name or define MGR capabilities**.
 
 **Honest verdict:** MGR Forge has working, tested native 3D prototypes and actual Blender 5.2.2 import, character, camera and fantasy FX renders. The full production creation platform, photorealistic content and owner-approved Tevin remain unfinished.
+**NEW WORLD EDITOR (F88):** A runnable offline WebGL2 world now includes building position, height and color editing with browser JSON export/import and bounded local persistence. `forge.cli apply-world-edits` independently reconstructs edited GLB, OBJ, MTL, preview, hashed manifest and playable HTML without touching the source. Seven new Python roundtrip tests passed; **no claim yet of independently witnessed Windows clicking/selection workflow**. Demo: `demos/mgr-world-editor.html`.
+

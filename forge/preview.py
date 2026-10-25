@@ -9,7 +9,9 @@ import math
 
 PALETTE = {"building-brick": ("#d48165", "#8e4535", "#ad5d49"),
            "building-stone": ("#d3d1c7", "#83817d", "#aaa8a2"),
-           "building-blue": ("#648eaf", "#2c4d6e", "#3f6586")}
+           "building-blue": ("#648eaf", "#2c4d6e", "#3f6586"),
+           "building-gold": ("#d7ac54", "#8a5a20", "#ac7c2d"),
+           "building-emerald": ("#56b18b", "#276c57", "#32846b")}
 
 
 def render_world_svg(world, *, width=1200, height=820):

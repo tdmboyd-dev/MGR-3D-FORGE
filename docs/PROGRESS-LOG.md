@@ -246,3 +246,10 @@
 - External source tree audits, full candidate code inspection, 16-field packets, actual hardware test, model licenses and owner acceptance remain OPEN.
 
 The initial historical snapshot has been superseded by the current live inventory in `docs/WHAT-WE-HAVE.md`; Git history preserves its original wording if needed for audit.
+## 2026-10-25 — Editable world to actual 3D re-export (F88)
+
+- Delivered the **MGR Live World Editor** in `viewer/runtime.js`, `viewer/template.html`, and self-contained `demos/mgr-world-editor.html`: choose a building, move it along X/Z, adjust its height and material (brick, stone, blue, gold, emerald), reset, save/reload JSON, and preserve current edits locally where browser storage allows.
+- Delivered `forge/world_editor.py` and `forge.cli apply-world-edits`. Exported browser JSON is checked against original SHA-256 and strict building identity/size bounds, then CPU rebuilds genuine geometry and new GLB/OBJ/MTL/SVG, a complete artifact inventory and new offline WebGL2 page. No paid API or AI inference. Input world is not changed and target directory must be new.
+- Extended OBJ custom material support and SVG palettes. Seven new unit tests cover the real generated-file loop, deterministic exports, tamper rejection, invalid geometry/identity, oversized input, non-overwrite and original immutability. Full Linux suite latest test count verified separately; **actual Windows editor interaction and its visual comparison remain pending**.
+- Scope honesty: this creates editable cuboid buildings and material presets, not arbitrary sculpting, photoreal effects, animation editing or studio parity.
+
