@@ -37,15 +37,15 @@ Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RES
 | F31 | MGR World Flight | SPECIFIED | PARTIAL: keyframe plan TESTED | P1 | F16,F17 | MGR 3D camera paths exported; actual camera player pending |
 | F32 | MGR Model Dock | SPECIFIED | PARTIAL: recipe inspection TESTED | P1 | F07,F22,F29 | MGR model manifest; sandboxed installs and model launch pending |
 | F33 | MGR Spatial Eyes | SPECIFIED | PARTIAL: geometry visibility TESTED | P1 | F16,F17,F20 | MGR-authored world occlusion and evidence labels; HUD and reconstruction pending |
-| F34 | MGR Scene Consciousness | SPECIFIED | PARTIAL: generated-world facts and qualified road queries TESTED | P0 | F02,F05,F16,F33 | `forge/consciousness.py`; Blender object/portal semantics and image vision pending |
-| F35 | MGR Visual Judge | QUEUED | NOT STARTED | P0 | F06,F30,F34 | Golden-view render comparison and bounded visual defect reporting |
-| F36 | MGR Code Architect | QUEUED | NOT STARTED | P0 | F22,F23,F29 | Task-scoped coding runner with dry-run, audit, rollback and allowlisted tools |
+| F34 | MGR Scene Consciousness | SPECIFIED | PARTIAL: generated-world facts/qualified routes TESTED | P0 | F02,F05,F16,F33 | `forge/consciousness.py` emitted in world bundles; Blender object inspection pending machine test; semantic door portals absent |
+| F35 | MGR Visual Judge | SPECIFIED | PARTIAL: PNG decoder, silhouette and exact image comparison TESTED | P0 | F06,F30,F34 | `forge/visualqa.py`; actual Blender PNG receipt, qualitative vision and defect localization pending |
+| F36 | MGR Code Architect | SPECIFIED | PARTIAL: typed workspace file edits and rollback TESTED | P0 | F22,F23,F29 | `forge/code_architect.py`; isolated arbitrary-code executor, policy enforcement, consent UI pending |
 | F37 | MGR Anatomy Guardian Plus | QUEUED | NOT STARTED | P0 | F09,F10,F35 | 3D proportion and deforming-pose inspections |
 | F38 | MGR Fabric Intelligence | QUEUED | NOT STARTED | P1 | F11,F12,F13 | Separable fitted garments, intersections and motion QA |
 | F39 | MGR Rig Intelligence | QUEUED | NOT STARTED | P0 | F09,F12,F37 | Exportable armatures, normalized weights, full-range deformation QA |
 | F40 | MGR World Logic | QUEUED | NOT STARTED | P1 | F15,F17,F34 | Door/room/route/navmesh and agent-traversal acceptance |
 | F41 | MGR Cinematic Director | QUEUED | NOT STARTED | P1 | F13,F31,F35 | Reproducible cameras, lighting, material and shot recipes |
-| F42 | MGR Creation Memory | QUEUED | NOT STARTED | P0 | F05,F20,F34 | Approved scene/character decisions and asset continuity replay |
+| F42 | MGR Creation Memory | SPECIFIED | PARTIAL: integrity-chained JSON revisions and locks TESTED | P0 | F05,F20,F34 | `forge/creation_memory.py`; concurrent DB, actual owner identity and cross-app replay pending |
 | F43 | MGR Self-Repair Studio | QUEUED | NOT STARTED | P1 | F23,F30,F35,F36 | Detect→repair→render→recheck with rollback and stop budgets |
 
 **Scope:** 43 MGR-native areas: original 33 plus F34–F43 approved for the implementation queue on 2026-10-25. Queued is **not** implemented. Technical research is organized by MGR functions in `research/MGR-CREATION-INTELLIGENCE-HOWTO.md`; necessary external provenance stays under `research/external-provenance/`.

@@ -2,6 +2,14 @@
 
 **This is a historical sequence, not the current status page.** The canonical current status is `docs/WHAT-WE-HAVE.md` plus `docs/IMPLEMENTATION-EVIDENCE.md`. Superseded historical claims are retained only as dated checkpoints.
 
+## 2026-10-25 — Larger build wave: scene facts, visual pixels, recoverable jobs, continuity
+
+- Built MGR Code Architect starter (`forge/code_architect.py`): preview scoped multi-file text edits, enforce old-file SHA preconditions, block traversal/symlink paths, size/file budgets, atomic replacement and collision-aware rollback. **Not an OS sandbox or arbitrary Python/shell code runner.**
+- Built MGR Visual Judge deterministic PNG engine (`forge/visualqa.py`): RGB/RGBA PNG decode with filter/CRC validation, exact RGB mean-absolute difference, foreground bounds and occupancy; strict camera/render-setting equivalence remains caller responsibility. **Not a semantic image model**.
+- Built MGR Creation Memory starter (`forge/creation_memory.py`): SHA-chained JSON revisions, approved property locks, stale-head rejection, tamper detection. No authenticated owner identity or concurrent backing store yet.
+- Integrated MGR Scene Consciousness facts into generated world bundles (`scene_facts.json` plus integrity manifest), added Blender scene-object inspection script and CLI entrypoint (real Windows Blender validation pending).
+- Extended negative regression tests; local suite **82/82 PASS** at this checkpoint. This is functional early groundwork, not production acceptance.
+
 ## 2026-10-25 — Owner autonomy lock, ten-capability extension and F34 starter
 
 - Locked approved **hands-off within Forge workspace** policy in MGR Native Canon and `AGENTS.md`; other personal files, credentials, destructive actions and spending remain authorization boundaries. The complete policy-enforcing task runner (F36) is not built yet.

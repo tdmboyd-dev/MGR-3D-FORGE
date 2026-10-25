@@ -16,9 +16,11 @@ from .preview import render_world_svg
 from .streaming import chunk_world, simple_building_lod
 from .cinematic import camera_tour
 from .perception import scene_overview
+from .consciousness import scene_facts
+from .visualqa import compare_pngs
 from .interiors import generate_interiors
 from .character import build_mannequin
-from .blender_bridge import verify_blender, blender_render_command
+from .blender_bridge import verify_blender, blender_render_command, blender_facts_command
 from .environment import generate_parks, ENVIRONMENT_MATERIALS
 from .receipt import file_receipt, verify_bundle
 
@@ -49,6 +51,8 @@ def build(spec: WorldSpec, output: Path):
         json.dumps(camera_tour(manifest), indent=2, sort_keys=True) + "\n", encoding="utf-8")
     (output / "spatial_overview.json").write_text(
         json.dumps(scene_overview(manifest), indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    (output / "scene_facts.json").write_text(
+        json.dumps(scene_facts(manifest), indent=2, sort_keys=True) + "\n", encoding="utf-8")
     interior_meshes, interior_plan = generate_interiors(manifest)
     (output / "interiors.glb").write_bytes(export_glb(interior_meshes, name=f"{spec.name} Interiors"))
     (output / "interiors.json").write_text(
@@ -68,6 +72,7 @@ def build(spec: WorldSpec, output: Path):
         "obj": "world.obj", "mtl": "world.mtl", "road_graph": "navigation.json",
         "preview": "preview.svg", "chunks": "chunks.json", "lod1": "world_lod1.glb",
         "camera_tour": "camera_tour.json", "spatial_overview": "spatial_overview.json",
+        "scene_facts": "scene_facts.json",
         "interiors": "interiors.glb", "interior_plan": "interiors.json",
         "parks":"parks.glb", "parks_manifest":"parks.json"}
     manifest["lod1_quality"] = inspect_glb(lod1_payload)
@@ -106,8 +111,16 @@ def main(argv=None):
     render.add_argument("--image",type=Path,required=True)
     render.add_argument("--report",type=Path,required=True)
     render.add_argument("--binary",default="blender")
+    facts=sub.add_parser("blender-facts",help="inspect real Blender GLB object facts")
+    facts.add_argument("path",type=Path)
+    facts.add_argument("--report",type=Path,required=True)
+    facts.add_argument("--binary",default="blender")
     bundle=sub.add_parser("verify-bundle",help="verify artifact hashes in world build folder")
     bundle.add_argument("directory",type=Path)
+    visual=sub.add_parser("compare-renders",help="compare fixed-camera RGB PNG frames")
+    visual.add_argument("reference",type=Path)
+    visual.add_argument("candidate",type=Path)
+    visual.add_argument("--threshold",type=float,default=0)
     args = parser.parse_args(argv)
     if args.action == "inspect":
         print(json.dumps(inspect_glb(args.path.read_bytes()), indent=2))
@@ -129,9 +142,25 @@ def main(argv=None):
             raise RuntimeError(f"Blender render failed with exit code {result.returncode}")
         print(json.dumps({"status":"PASS","image":str(args.image.resolve())},indent=2))
         return 0
+    if args.action == "blender-facts":
+        import subprocess
+        command=blender_facts_command(args.binary,args.path,args.report)
+        result=subprocess.run(command,timeout=180,check=False)
+        if result.returncode:
+            raise RuntimeError(f"Blender scene inspection failed with exit code {result.returncode}")
+        report=json.loads(args.report.read_text(encoding="utf-8"))
+        if report.get("status")!="PASS":
+            raise RuntimeError("Blender scene facts receipt invalid")
+        print(json.dumps({"status":"PASS","objects":len(report["objects"])},indent=2))
+        return 0
     if args.action == "verify-bundle":
         print(json.dumps(verify_bundle(args.directory),indent=2))
         return 0
+    if args.action == "compare-renders":
+        report=compare_pngs(args.reference,args.candidate,
+                            max_mean_absolute_error=args.threshold)
+        print(json.dumps(report,indent=2))
+        return 0 if report["pass"] else 2
     if args.spec and args.prompt:
         parser.error("choose either --spec or --prompt")
     base = (WorldSpec.from_json(args.spec).as_dict() if args.spec else

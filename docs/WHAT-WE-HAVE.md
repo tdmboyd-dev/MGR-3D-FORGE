@@ -14,11 +14,15 @@
 | MGR Motion Blueprint | Bone-length-preserving T→A→T landmark samples | Pose validation tests | Actual skinned rig, weights, deformation, animation playback |
 | MGR World Flight | World-coordinate camera keyframes | Deterministic tests + JSON output | Playback controller, world walkthrough |
 | MGR Spatial Eyes | Known-object center ray occlusion, distances and evidence labels | Geometry test suite + JSON output | Visual scene comprehension and 3D reconstruction |
+| MGR Scene Consciousness | Authored-object dimensional inventory and road-route facts, exported `scene_facts.json` | Deterministic and negative unit tests | Full Blender scene semantics, door portals, actual visual understanding |
+| MGR Visual Judge | Exact 8-bit PNG decode, RGB image delta, silhouette occupancy | Synthetic image tests; real Blender preview images already saved separately | Semantic visual diagnosis, camera calibration, production render thresholds |
+| MGR Code Architect | Scoped multi-file text changes, digest preconditions and recoverable rollback | Multi-file, traversal, symlink, size, stale-change and rollback tests | OS-level isolation and safe arbitrary code execution, job UI and approvals |
+| MGR Creation Memory | Integrity-chained identity revisions and property locks | Lock, stale write and tamper tests | Authenticated owner approvals, concurrent DB, consumer replay |
 | MGR Model Dock | Offline recipe schema, CPU adapter, license/spend guards | Mock/CPU adapter tests | Real installed licensed neural models and isolated execution |
 | MGR Asset Vault | Hash-based local dedupe and rights metadata | Tamper/provenance tests | Multiuser DB, revisions, search |
 | MGR Geometry QA | Degenerate/bad index checks and conservative cleanup | Mesh tests | Watertight repair, retopo, UV validation |
-| MGR Delivery Bundle | GLB, OBJ, MTL, LOD1, parks, interiors, scene and camera JSON, preview SVG | 13-file hash manifest, SHA verification, Blender import of core GLBs | Engine/film pipeline, full interoperability and rendered visual QA |
-| MGR Build Ledger | 43-area native register, provenance, 71 current local tests, benchmark receipts | Windows 64/64 baseline tests + current Linux 71/71 | Production CI, cross-engine/render/owner acceptance |
+| MGR Delivery Bundle | GLB, OBJ, MTL, LOD1, parks, interiors, scene facts/camera JSON, preview SVG | 14-file hash manifest, SHA verification, Blender import of core GLBs | Engine/film pipeline, full interoperability and rendered visual QA |
+| MGR Build Ledger | 43-area native register, provenance, 82 current local tests, benchmark receipts | Windows 64/64 baseline tests + current Linux 82/82 | Production CI, cross-engine/render/owner acceptance |
 
 ## Exact Blender environment and measured Windows receipts
 
@@ -26,7 +30,7 @@
 - Blender executable: `C:\Program Files\Blender Foundation\Blender 5.2\blender.exe`; actual version **5.2.2 LTS**.
 - Windows Python **3.14.8**. Test suite **64/64 PASS**.
 - Actual headless import receipts: `world.glb` **372 triangles**, `interiors.glb` **1,200**, `parks.glb` **504**, anonymous T and A mannequins **204 each**; all returned Blender **PASS**.
-- Real import verification is complete for those five GLB samples; render aesthetics, topology quality, skinning and interactive workflow acceptance remain **unverified**.
+- Real import verification is complete for those five GLB samples. Two Workbench previews were also rendered on Windows, and the mannequin coat overlap was corrected. Render aesthetics, topology quality, skinning and interactive workflow acceptance remain **unverified**.
 
 ## What is still open
 

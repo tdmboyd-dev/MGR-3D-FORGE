@@ -27,7 +27,7 @@ from forge.character import mannequin, build_mannequin, CHARACTER_MATERIALS
 from forge.animation import arm_pose_clip, pose_landmarks
 from forge.adapters import (AdapterCapabilities, ProceduralWorldAdapter,
                             UnavailableNeuralAdapter, select_adapter)
-from forge.blender_bridge import blender_command, verify_blender, blender_render_command
+from forge.blender_bridge import blender_command, verify_blender, blender_render_command, blender_facts_command
 from forge.benchmark import run_benchmark
 from forge.environment import generate_parks, ENVIRONMENT_MATERIALS
 from forge.receipt import verify_bundle
@@ -112,6 +112,7 @@ class ForgeTests(unittest.TestCase):
             self.assertTrue((Path(temp) / "chunks.json").is_file())
             self.assertTrue((Path(temp) / "camera_tour.json").is_file())
             self.assertTrue((Path(temp) / "spatial_overview.json").is_file())
+            self.assertTrue((Path(temp) / "scene_facts.json").is_file())
             self.assertTrue((Path(temp) / "interiors.glb").is_file())
             self.assertTrue((Path(temp) / "interiors.json").is_file())
             self.assertTrue((Path(temp) / "parks.glb").is_file())
@@ -120,6 +121,8 @@ class ForgeTests(unittest.TestCase):
             self.assertFalse(manifest["execution"]["blender_verified"])
             saved = json.loads((Path(temp) / "manifest.json").read_text())
             self.assertEqual(saved["artifact"], manifest["artifact"])
+            self.assertEqual(json.loads((Path(temp) / "scene_facts.json").read_text())["schema"],
+                             "mgr.forge.scene-consciousness.v1")
             self.assertTrue(verify_bundle(Path(temp))["passed"])
 
     def test_world_bundle_detects_tampering(self):
@@ -353,6 +356,8 @@ class ForgeTests(unittest.TestCase):
                 verify_blender(source,Path(temp)/"report.json",blender_binary="nonexistent-blender-mgr-test")
             render=blender_render_command("blender",source,Path(temp)/"preview.png",Path(temp)/"preview.json")
             self.assertIn("blender_render.py",render[4])
+            facts=blender_facts_command("blender",source,Path(temp)/"facts.json")
+            self.assertIn("blender_scene_facts.py",facts[4])
 
     def test_character_missing_hand(self):
         landmarks = {name: [0, i, 0] for i, name in enumerate((

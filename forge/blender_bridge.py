@@ -8,6 +8,7 @@ import subprocess
 
 PROBE=Path(__file__).resolve().parent.parent/"bridge"/"blender_probe.py"
 RENDER=Path(__file__).resolve().parent.parent/"bridge"/"blender_render.py"
+SCENE_FACTS=Path(__file__).resolve().parent.parent/"bridge"/"blender_scene_facts.py"
 
 
 def blender_command(blender_binary,source,report):
@@ -44,3 +45,13 @@ def blender_render_command(blender_binary,source,image,report):
     return [str(blender_binary),"--background","--factory-startup",
             "--python",str(RENDER),"--",str(Path(source).resolve()),
             str(Path(image).resolve()),str(Path(report).resolve())]
+
+
+def blender_facts_command(blender_binary,source,report):
+    if not Path(source).is_file() or Path(source).suffix.lower()!=".glb":
+        raise ValueError("a real GLB path is required")
+    if not SCENE_FACTS.is_file():
+        raise FileNotFoundError("Blender scene facts script missing")
+    return [str(blender_binary),"--background","--factory-startup",
+            "--python",str(SCENE_FACTS),"--",str(Path(source).resolve()),
+            str(Path(report).resolve())]
