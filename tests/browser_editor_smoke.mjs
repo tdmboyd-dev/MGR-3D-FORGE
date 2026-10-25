@@ -134,16 +134,22 @@ try{
   assert.equal(await evaluate('window.MGR_FORGE_RUNTIME.getEdits().buildings.length'),12);
   await evaluate("document.getElementById('delete-building').click()");
   assert.equal(await evaluate('window.MGR_FORGE_RUNTIME.getEdits().buildings.length'),11);
-  const reference=await evaluate(`(()=>{
+  const reference=await evaluate(`(async()=>{
+    const canvas=document.createElement('canvas');canvas.width=16;canvas.height=16;
+    const ctx=canvas.getContext('2d');ctx.fillStyle='#854030';ctx.fillRect(0,0,16,16);
+    const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));
     const input=document.getElementById('director-image'),transfer=new DataTransfer();
-    transfer.items.add(new File([new Uint8Array([137,80,78,71,13,10,26,10])],
-      'reference.png',{type:'image/png'}));input.files=transfer.files;
-    input.dispatchEvent(new Event('change',{bubbles:true}));
+    transfer.items.add(new File([blob],'reference.png',{type:'image/png'}));input.files=transfer.files;
+    const loaded=new Promise(resolve=>document.getElementById('director-preview').addEventListener('load',resolve,{once:true}));
+    input.dispatchEvent(new Event('change',{bubbles:true}));await loaded;
+    document.getElementById('director-sample-color').click();
     return {hidden:document.getElementById('director-preview').hidden,
-      message:document.getElementById('director-msg').textContent};
+      message:document.getElementById('director-msg').textContent,
+      material:window.MGR_FORGE_RUNTIME.getEdits().buildings.find(b=>b.id===document.getElementById('building').value).material};
   })()`);
   assert.equal(reference.hidden,false);
-  assert.ok(reference.message.includes('not yet connected'));
+  assert.equal(reference.material,'building-brick');
+  assert.ok(reference.message.includes('did not create 3D geometry'));
   await evaluate("document.getElementById('director-toggle').click()");
   assert.equal(await evaluate("document.getElementById('director').hidden"),true);
   console.log(JSON.stringify({schema:'mgr.forge.browser-editor-smoke.v1',status:'PASS',
@@ -152,7 +158,7 @@ try{
       'JSON import restored','reset restored','ray-picked actual building','canvas mouse clicked actual building',
       'keyboard navigated real 3D camera','expand/collapse creation chat','text generated new building',
       'text changed dimensions/material/position','arbitrary-code request rejected',
-      'duplicated and deleted building','local image reference loaded']}));
+      'duplicated and deleted building','local image sampled into actual 3D material']}));
 }finally{
   for(const waiter of pending.values())waiter.reject?.(new Error('browser ending'));
   socket?.close();child.kill();await rm(profile,{recursive:true,force:true,maxRetries:3,retryDelay:150});

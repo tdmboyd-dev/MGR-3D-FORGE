@@ -362,6 +362,32 @@
     }catch(error){directorMessage.textContent="Speech input couldn't start. Type the command instead.";}
   });
   let referenceUrl=null;
+  const imageColorButton=document.getElementById("director-sample-color");
+  const imagePreview=document.getElementById("director-preview");
+  imageColorButton.addEventListener("click",()=>{
+    const b=selected();if(!b||!referenceUrl||!imagePreview.complete||!imagePreview.naturalWidth){
+      directorMessage.textContent="Choose a building and a valid loaded image first.";return;
+    }
+    const sample=document.createElement("canvas");sample.width=32;sample.height=32;
+    const ctx=sample.getContext("2d",{willReadFrequently:true});
+    ctx.drawImage(imagePreview,0,0,32,32);
+    const data=ctx.getImageData(0,0,32,32).data,totals=[0,0,0];let count=0;
+    for(let i=0;i<data.length;i+=4){
+      if(data[i+3]<128)continue;
+      for(let j=0;j<3;j++)totals[j]+=data[i+j]/255;
+      count++;
+    }
+    if(!count){directorMessage.textContent="Image has no visible color pixels.";return;}
+    const rgb=totals.map(v=>v/count);
+    const closest=Object.entries(palette).sort((a,b)=>{
+        const distance=(item)=>item[1].slice(0,3).reduce((sum,v,i)=>sum+(v-rgb[i])**2,0);
+        return distance(a)-distance(b);
+      })[0][0];
+    const proposed=snapshot().map(item=>item.id===b.id?{...item,material:closest}:item);
+    if(applyScene(proposed,`Image-sampled material: ${closest}.`,b.id)){
+      directorMessage.textContent=`Applied closest MGR material: ${closest}. The photo did not create 3D geometry.`;
+    }
+  });
   document.getElementById("director-image").addEventListener("change",e=>{
     const file=e.target.files?.[0];if(!file)return;
     if(file.size>5_000_000||!["image/png","image/jpeg","image/webp"].includes(file.type)){
@@ -369,7 +395,10 @@
     }
     if(referenceUrl)URL.revokeObjectURL(referenceUrl);
     referenceUrl=URL.createObjectURL(file);
-    const preview=document.getElementById("director-preview");preview.src=referenceUrl;preview.hidden=false;
+    imageColorButton.disabled=true;
+    imagePreview.onload=()=>{imageColorButton.disabled=false;};
+    imagePreview.onerror=()=>{imageColorButton.disabled=true;directorMessage.textContent="Image decode failed.";};
+    imagePreview.src=referenceUrl;imagePreview.hidden=false;
     directorMessage.textContent="Image reference loaded locally. Describe what you want created; image-to-3D inference is not yet connected.";
   });
   resetGpuBuildings();refreshEditor();

@@ -6,7 +6,7 @@ Date: 2026-10-25. Status: specified and limited implementation; no open-ended te
 
 **Text/voice/image must feed the SAME persistent editable scene**. The initial deterministic command compiler translates bounded natural phrases into typed building operations. Browser speech can transcribe into the text field; it **does not run arbitrary Python**, and its transcription must be reviewed before execution. The Python `apply-world-edits` path converts the resulting typed JSON into actual GLB/OBJ/SVG geometry. Uploaded pictures remain **local references**; extracting geometry from their pixels is a separate researched and unverified capability.
 
-Canonical flow: typed instruction → allowlisted parse → proposed typed geometry edit → bounds, identity and material validation → undo checkpoint → WebGL render → saved JSON → verified Python GLB export. Optional microphone → browser speech recognition → editable instruction. Optional image → local object URL/preview → human-authored instruction (no inference claim).
+Canonical flow: typed instruction → allowlisted parse → proposed typed geometry edit → bounds, identity and material validation → undo checkpoint → WebGL render → saved JSON → verified Python GLB export. Optional microphone → browser speech recognition → editable instruction. Optional image → local object URL/preview → bounded pixel-average → closest MGR building material; this transfers color, **not** image-derived mesh geometry.
 
 ## Research-to-build packet (16 fields)
 
@@ -25,7 +25,7 @@ Canonical flow: typed instruction → allowlisted parse → proposed typed geome
 13. **Failures:** ambiguous phrases, invalid dimensions, occupied/colliding lots, adversarial code instructions, unsupported speech implementation, microphone denial, invalid image format, export SHA mismatch.
 14. **Evaluation:** actual Chrome command execution, negative input and undo/reimport, independent GLB/OBJ validation with artifact receipts.
 15. **Placement:** browser `director` sidecar writes the existing canonical world-edit JSON; the Python exporter is the geometry authority. Image references are not persisted into the 3D asset by implication.
-16. **Acceptance:** prove bounded text changes, create/delete/duplicate/resize, browser persistence, downloaded JSON and Python GLB materialization. Browser speech engine recognition and image-to-mesh reconstruction require their own actual evidence and remain open.
+16. **Acceptance:** prove bounded text changes, create/delete/duplicate/resize, browser persistence, downloaded JSON and Python GLB materialization. For image input, verify an actual decoded image selects a bounded material. Browser speech-engine recognition and image-to-mesh reconstruction require their own actual evidence and remain open.
 
 ## Locked safety and truth boundaries
 
