@@ -31,6 +31,7 @@ from .fx import create_magic_effect, export_effect_glb
 from .scene_layers import compose_scene_layers
 from .asset_parity import audit_export_parity
 from .cell_transport import MGRCellTransport
+from .web_runtime import make_world_flight
 
 
 def build(spec: WorldSpec, output: Path):
@@ -146,6 +147,9 @@ def main(argv=None):
     transport.add_argument("--plan",type=Path,required=True)
     transport.add_argument("--budget-bytes",type=int,default=8_000_000)
     transport.add_argument("--out",type=Path,required=True)
+    flight=sub.add_parser("world-flight",help="package a generated world into an offline interactive 3D HTML world")
+    flight.add_argument("--world",type=Path,required=True,help="directory holding generated Forge world")
+    flight.add_argument("--out",type=Path,required=True,help="new self-contained HTML file")
     blender = sub.add_parser("blender-verify",help="run actual Blender GLB import verification if installed")
     blender.add_argument("path",type=Path)
     blender.add_argument("--report",type=Path,required=True)
@@ -243,6 +247,9 @@ def main(argv=None):
     args = parser.parse_args(argv)
     if args.action == "inspect":
         print(json.dumps(inspect_glb(args.path.read_bytes()), indent=2))
+        return 0
+    if args.action == "world-flight":
+        print(json.dumps(make_world_flight(args.world,args.out),indent=2))
         return 0
     if args.action == "compose-scene":
         if args.out.exists():

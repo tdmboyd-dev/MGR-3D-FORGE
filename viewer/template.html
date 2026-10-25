@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MGR Forge World Flight</title><style>
+html,body{height:100%;margin:0;background:#101521;color:#f8f1e5;font:15px system-ui,Arial,sans-serif;overflow:hidden}
+#world{display:block;width:100vw;height:100vh}#overlay{position:absolute;top:18px;left:18px;right:18px;pointer-events:none}
+h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opacity:.82}
+#status{display:inline-block;margin-top:12px;padding:9px 13px;border-radius:8px;background:#111c2bd9;color:#93f5c8}
+#help{position:absolute;bottom:18px;left:18px;background:#111c2bdd;padding:10px 14px;border-radius:8px;color:#fff}
+</style></head><body>
+<canvas id="world" aria-label="Interactive three-dimensional MGR world"></canvas>
+<div id="overlay"><h1>MGR // WORLD FLIGHT</h1><small>OWNED WORLD · LOCAL RENDER · LIVE NAVIGATION</small><div><span id="status">Loading world…</span></div></div>
+<div id="help">W/S: forward/back &nbsp; A/D: strafe &nbsp; E/Q: up/down &nbsp; ←/→: turn &nbsp; Drag: look &nbsp; Shift: move faster</div>
+<script>window.MGR_WORLD_MANIFEST=__MGR_MANIFEST__;window.MGR_WORLD_BASE64="__MGR_GLB_BASE64__";</script>
+<script>__MGR_RUNTIME_JS__</script>
+</body></html>

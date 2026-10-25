@@ -1,5 +1,11 @@
 # MGR 3D Forge — Progress and Evidence Log
 
+## 2026-10-25 — First end-to-end interactive world program (F87)
+
+- Replaced the checkpoint-only finish line for this slice with a user-openable **offline WebGL2 world**: actual Forge world GLB + metadata compile into one portable HTML with 3D triangles, direct movement, mouse look, bounds-based building collision and FPS telemetry. No CDN, paid API or server needed.
+- Added original `viewer/runtime.js`, `viewer/template.html`, `forge/web_runtime.py`, `forge.cli world-flight`, `tests/test_web_runtime.py` and `demos/mgr-world-flight.html`. Generated a deterministic example from `examples/neighborhood.json` with **10 buildings, 372 triangles**, GLB SHA-256 `7c799190167d1255a5cbfbbb01fb4959a39b1441a8db78509365fcaa673c6cfa`. The packaged offline HTML contains the complete actual 3D geometry (46,592 bytes).
+- Compiler guards: strict GLB receipt, model size cap, no overwrite, malformed world rejection. `node --check viewer/runtime.js` PASS; Python tests pass. **A browser/GPU visual test is required next** before declaring real-time playback verified. See `research/MGR-LIVE-WORLD-RUNTIME-CONTRACT.md` for honest limits.
+
 ## 2026-10-25 — Native asset transport, format parity and motion-contact wave
 
 - **F83:** Built `forge/asset_parity.py`; validates independent counts of actual GLB and OBJ vertices/triangles, compares three-axis geometric bounds under a strict numeric tolerance, and detects tampering and invalid input. `forge.cli audit-export` emits a nonoverwriting JSON receipt. Actual generated six-building world passed the CLI parity audit. This does not demonstrate material or game-engine render parity.

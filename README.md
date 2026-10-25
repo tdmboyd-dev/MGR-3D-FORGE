@@ -28,6 +28,7 @@ python3 -m forge.cli build --prompt "Create 25 buildings and streets" --out arti
 python3 -m forge.cli inspect artifacts/prompt-25/world.glb
 python3 -m forge.cli studio-proof --out artifacts/studio-proof.json
 python3 -m forge.cli compose-scene --layers examples/layered-scene.json --out artifacts/composed-scene.json
+python3 -m forge.cli world-flight --world artifacts/prompt-25 --out artifacts/prompt-25-flight.html
 python3 -m forge.cli audit-export --glb artifacts/prompt-25/world.glb --obj artifacts/prompt-25/world.obj --out artifacts/export-parity.json
 # For prepared cell files and SHA manifests:
 python3 -m forge.cli load-cells --root artifacts/cells --manifest artifacts/cell-manifest.json --plan artifacts/residency-plan.json --out artifacts/cell-load.json
@@ -65,6 +66,7 @@ Code lives under `forge/`, tests under `tests/`; [implementation evidence](docs/
 | [Open systems research queue](research/OPEN-SYSTEMS-RESEARCH-QUEUE.md) | 24 additional open engine, physics, world and AI research branches |
 | [Open systems rights ledger](research/external-provenance/OPEN-SYSTEMS-SOURCES.md) | Official sources and rights separated from native product canon |
 | [Runtime foundations research](research/MGR-RUNTIME-FOUNDATIONS-WAVE.md) | F82–F86 native contracts, 16 research/build fields and remaining engine proofs |
+| [World Flight runtime contract](research/MGR-LIVE-WORLD-RUNTIME-CONTRACT.md) | Actual bundled interactive WebGL2 world acceptance, controls and open work |
 | [MGR-NATIVE-CANON.md](docs/MGR-NATIVE-CANON.md) | Ownership, feature identity, creative sovereignty and source-of-truth precedence |
 | [External provenance ledger](research/external-provenance/) | Isolated licensing and audit references only; not product definitions |
 | [DEEP-DIVE-NATIVE-CPU.md](research/DEEP-DIVE-NATIVE-CPU.md) | 16-field native procedural research packet |
@@ -92,6 +94,8 @@ Code lives under `forge/`, tests under `tests/`; [implementation evidence](docs/
 10. **Tevin is a locked identity.** Character DNA, proportions and detachable outfits must be measured and verified.
 
 ## Current truth
+
+- **New interactive runtime slice:** `forge.cli world-flight` now packages generated GLB and world facts into a fully self-contained offline `viewer.html` that draws real WebGL2 triangles, responds to keyboard/mouse controls, avoids simple building bounds and reports live FPS. A ready-to-open example is [`demos/mgr-world-flight.html`](demos/mgr-world-flight.html). It does not use an external 3D API. Unit/package and JavaScript syntax checks are passing; an actual browser visual/runtime acceptance still must be recorded before declaring it proven playable.
 
 - **Latest native runtime foundation: 212/212 tests PASS on Linux AND Windows.** An actual generated-world GLB/OBJ export passed the new geometry-parity command; the cell transport exercises real disk I/O, SHA-256 and bounded RAM, and a swept-contact guard catches thin-wall motion. A real Blender 5.2.2 studio witness render is recorded under `evidence/blender/windows-wave12-studio-witness.json`. F83–F85 remain CPU-prototype quality, not independently playable/renderer-proven. Full new engineering contract: `research/MGR-RUNTIME-FOUNDATIONS-WAVE.md`.
 
