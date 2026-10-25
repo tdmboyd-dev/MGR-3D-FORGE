@@ -1,7 +1,7 @@
 /** End-to-end browser editing smoke proof. Node 22+; Chrome with CDP; no npm packages. */
 import assert from 'node:assert/strict';
 import {spawn} from 'node:child_process';
-import {mkdtemp, rm} from 'node:fs/promises';
+import {mkdtemp, rm, readdir, readFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join, resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
@@ -17,15 +17,16 @@ const child=spawn(chrome,['--headless=new','--no-first-run','--disable-extension
   `--user-data-dir=${profile}`,pathToFileURL(resolve(html)).href],{stdio:'ignore'});
 const pause=(ms)=>new Promise(r=>setTimeout(r,ms));
 let socket,seq=0;const pending=new Map();
-const evaluate=async expression=>{
+const call=async(method,params={})=>{
   const id=++seq;
   const result=new Promise((resolve,reject)=>pending.set(id,{resolve,reject}));
-  socket.send(JSON.stringify({id,method:'Runtime.evaluate',params:{expression,
-    returnByValue:true,awaitPromise:true}}));
+  socket.send(JSON.stringify({id,method,params}));
   const response=await Promise.race([result,pause(10000).then(()=>{throw Error('CDP timed out');})]);
   if(response.error||response.result?.exceptionDetails)throw Error(JSON.stringify(response));
-  return response.result.result.value;
+  return response.result;
 };
+const evaluate=async expression=>(await call('Runtime.evaluate',{expression,
+  returnByValue:true,awaitPromise:true})).result.value;
 try{
   let endpoint;
   for(let i=0;i<60;i++){
@@ -56,6 +57,15 @@ try{
     return window.MGR_FORGE_RUNTIME.getEdits();})()`);
   assert.equal(modified.buildings[0].size[1],42);
   assert.equal(await evaluate(`JSON.parse(localStorage.getItem('mgr.forge.world-edits.v1.'+window.MGR_WORLD_SHA)??'null')?.buildings?.[0]?.size?.[1]`),42);
+  await call('Page.setDownloadBehavior',{behavior:'allow',downloadPath:profile});
+  await evaluate("document.getElementById('save-world').click()");
+  let downloaded;
+  for(let i=0;i<30;i++){
+    if((await readdir(profile)).includes('mgr-world-edits.json')){
+      downloaded=JSON.parse(await readFile(join(profile,'mgr-world-edits.json'),'utf8'));break;}
+    await pause(150);
+  }
+  assert.equal(downloaded?.buildings?.[0]?.size?.[1],42);
   const restored=await evaluate(`(async()=>{
     const input=document.getElementById('import-world');
     const transfer=new DataTransfer();
@@ -74,7 +84,7 @@ try{
   assert.equal(reset,first.size[1]);
   console.log(JSON.stringify({schema:'mgr.forge.browser-editor-smoke.v1',status:'PASS',
     browser:'Chrome headless WebGL2',buildings:base.buildings.length,
-    checks:['runtime boot','building changed','local persistence','JSON import restored','reset restored']}));
+    checks:['runtime boot','building changed','local persistence','downloaded edit JSON','JSON import restored','reset restored']}));
 }finally{
   for(const waiter of pending.values())waiter.reject?.(new Error('browser ending'));
   socket?.close();child.kill();await rm(profile,{recursive:true,force:true,maxRetries:3,retryDelay:150});
