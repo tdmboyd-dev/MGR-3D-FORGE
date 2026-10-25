@@ -70,10 +70,11 @@ def main():
     # it is not equivalent to physically simulated atmosphere or volumes.
     comp=bpy.data.node_groups.new("MGR_FX_Optical_Glow", "CompositorNodeTree")
     scene.compositing_node_group=comp
+    comp.interface.new_socket(name="Image",in_out="OUTPUT",socket_type="NodeSocketColor")
     render_layers=comp.nodes.new("CompositorNodeRLayers")
     glare=comp.nodes.new("CompositorNodeGlare")
     glare.inputs["Type"].default_value="Fog Glow"
-    composite=comp.nodes.new("CompositorNodeComposite")
+    composite=comp.nodes.new("NodeGroupOutput")
     comp.links.new(render_layers.outputs["Image"],glare.inputs["Image"])
     comp.links.new(glare.outputs["Image"],composite.inputs["Image"])
     scene.render.film_transparent=False
