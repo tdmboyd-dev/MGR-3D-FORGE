@@ -8,7 +8,7 @@ import unittest
 from unittest.mock import patch
 
 from forge.character import build_mannequin
-from forge.character_intake import admit_candidate, create_character_blend, inspect_candidate
+from forge.character_intake import admit_candidate, create_character_blend, inspect_candidate, verify_character_blend
 from forge.cli import main
 
 
@@ -93,6 +93,32 @@ class CharacterIntakeTests(unittest.TestCase):
         self.assertEqual(main(["character-intake", "--source", str(self.source),
                                "--out", str(self.root / "intake")]), 0)
         self.assertTrue((self.root / "intake" / "candidate.glb").exists())
+
+    def test_reopen_requires_existing_blend(self):
+        with self.assertRaises(ValueError):
+            verify_character_blend(self.root / "missing.blend", "a" * 64,
+                                   self.root / "reopened.json")
+
+    def test_reopen_rejects_invalid_fingerprint(self):
+        file = self.root / "scene.blend"
+        file.write_bytes(b"synthetic fixture")
+        with self.assertRaises(ValueError):
+            verify_character_blend(file, "unknown", self.root / "reopened.json")
+
+    def test_reopen_requires_new_receipt(self):
+        file = self.root / "scene.blend"
+        file.write_bytes(b"synthetic fixture")
+        report = self.root / "reopened.json"
+        report.write_text("{}")
+        with self.assertRaises(ValueError):
+            verify_character_blend(file, "a" * 64, report)
+
+    def test_reopen_requires_native_blender_binary(self):
+        file = self.root / "scene.blend"
+        file.write_bytes(b"synthetic fixture")
+        with self.assertRaises(RuntimeError):
+            verify_character_blend(file, "a" * 64, self.root / "reopened.json",
+                                   binary="definitely-no-blender")
 
 
 if __name__ == "__main__":

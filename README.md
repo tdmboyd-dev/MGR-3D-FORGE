@@ -15,6 +15,8 @@ python -m forge.cli godot-handoff --world path/to/world --out path/to/new-godot-
 python -m forge.cli character-intake --source path/to/character.glb --out path/to/new-intake
 # Import that admitted source into an individually editable Blender .blend:
 python -m forge.cli character-blender --candidate path/to/new-intake --blend path/to/new-character.blend --report path/to/new-character-proof.json --binary blender
+# Independently reopen the .blend to verify the original source SHA on every mesh:
+python -m forge.cli character-reopen --blend path/to/new-character.blend --sha256 ORIGINAL_64_DIGIT_SHA --report path/to/reopen.json --binary blender
 ```
 
 Open the `http://127.0.0.1:PORT/` address printed in your terminal on the same computer. Port `0` lets Windows select an available port automatically. The service binds **only** to loopback and generates a fresh session token; it does not grant access to arbitrary directories or execute free-form code.

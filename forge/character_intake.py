@@ -109,3 +109,31 @@ def create_character_blend(admitted, blend, report, *, binary="blender", timeout
             or output.stat().st_size < 1000):
         raise RuntimeError("Blender character project validation failed")
     return result
+
+
+def verify_character_blend(blend, expected_sha256, report, *, binary="blender", timeout=180):
+    """Reopen a saved project in an independent Blender process, not the creator."""
+    source, target = Path(blend), Path(report)
+    if not source.is_file() or source.suffix.lower() != ".blend":
+        raise ValueError("existing Blender character project required")
+    if target.exists() or target.suffix.lower() != ".json":
+        raise ValueError("new JSON reopen receipt required")
+    if (type(expected_sha256) is not str or len(expected_sha256) != 64
+            or any(c not in "0123456789abcdef" for c in expected_sha256)):
+        raise ValueError("expected real lowercase SHA-256 fingerprint")
+    if not shutil.which(str(binary)):
+        raise RuntimeError("Blender executable unavailable")
+    script = Path(__file__).resolve().parent.parent / "bridge" / "blender_character_reopen.py"
+    try:
+        process = subprocess.run([str(binary), "--background", "--factory-startup", "--python",
+                                  str(script), "--", str(source.resolve()), str(target.resolve()),
+                                  expected_sha256], timeout=timeout, capture_output=True, text=True)
+    except subprocess.TimeoutExpired as error:
+        raise RuntimeError("Blender character reopen timed out") from error
+    if process.returncode or not target.is_file():
+        raise RuntimeError("Independent character reopen failed: " +
+                           (process.stderr + process.stdout)[-500:])
+    result = json.loads(target.read_text(encoding="utf-8"))
+    if result.get("status") != "PASS" or result.get("source_sha256") != expected_sha256:
+        raise RuntimeError("Character reopen proof mismatch")
+    return result
