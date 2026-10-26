@@ -201,6 +201,10 @@ def main(argv=None):
     unclothe_extract=sub.add_parser("unclothe-extract",help="isolate only owner-approved visible pixels for separate 3D jobs")
     unclothe_extract.add_argument("--spec",type=Path,required=True)
     unclothe_extract.add_argument("--out",type=Path,required=True)
+    unclothe_proxy=sub.add_parser("unclothe-proxy",help="make independent real GLB silhouette proxies from approved extracted parts")
+    unclothe_proxy.add_argument("--parts",type=Path,required=True)
+    unclothe_proxy.add_argument("--out",type=Path,required=True)
+    unclothe_proxy.add_argument("--grid",type=int,default=48)
     live_blender=sub.add_parser("blender-live-scene",help="turn verified edited world into an actual individually editable Blender project")
     live_blender.add_argument("--world",type=Path,required=True,help="materialized edited world directory")
     live_blender.add_argument("--blend",type=Path,required=True,help="new Blender project file")
@@ -372,6 +376,10 @@ def main(argv=None):
     if args.action == "unclothe-extract":
         from .unclothe_3d import extract_approved_parts
         print(json.dumps(extract_approved_parts(args.spec,args.out),indent=2))
+        return 0
+    if args.action == "unclothe-proxy":
+        from .unclothe_3d import materialize_unclothe_proxies
+        print(json.dumps(materialize_unclothe_proxies(args.parts,args.out,grid=args.grid),indent=2))
         return 0
     if args.action == "blender-live-scene":
         print(json.dumps(create_live_blender_scene(args.world,args.blend,args.report,binary=args.binary),indent=2))

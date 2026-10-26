@@ -117,8 +117,100 @@ def extract_approved_parts(spec_file, output_directory):
                         "owner_approved": True})
     report = {"schema": "mgr.forge.unclothe-extraction.v1", "source_sha256":
               summary["source_sha256"], "part_count": len(tickets),
+              "source_dimensions": [image.width, image.height],
               "parts": tickets, "separate_transparent_assets_generated": True,
               "image_to_3d_ran": False, "rigging_performed": False,
               "status": "APPROVED_2D_PARTS_READY_FOR_3D_ADAPTER"}
     (target / "manifest.json").write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
+    return report
+
+
+def materialize_unclothe_proxies(extracted_directory, output_directory, *, grid=48,
+                                 pixels_per_unit=200.0, thickness=0.015):
+    """Create real, editable silhouette *proxy* GLBs in shared image coordinates.
+
+    This reconstructs only the observed mask outline with a fixed extrusion depth.
+    It does NOT claim realistic 3D backside, garment volume, skinning or textures.
+    """
+    from .geometry import Mesh
+    from .glb import export_glb, inspect_glb
+
+    source = Path(extracted_directory)
+    target = Path(output_directory)
+    if target.exists():
+        raise FileExistsError("refusing to overwrite proxy meshes")
+    if type(grid) is not int or not 4 <= grid <= 64:
+        raise ValueError("proxy grid must be 4..64")
+    if not 10 <= pixels_per_unit <= 1000 or not 0.001 <= thickness <= 0.5:
+        raise ValueError("invalid proxy dimensions")
+    manifest = json.loads((source / "manifest.json").read_text(encoding="utf-8"))
+    if manifest.get("schema") != "mgr.forge.unclothe-extraction.v1":
+        raise ValueError("invalid approved extraction manifest")
+    size = manifest.get("source_dimensions")
+    if (not isinstance(size, list) or len(size) != 2 or any(type(v) is not int or
+            not 64 <= v <= 8192 for v in size)):
+        raise ValueError("invalid source dimensions")
+    try:
+        from PIL import Image
+    except ImportError as exc:
+        raise RuntimeError("Pillow is required for silhouette geometry") from exc
+    results = []
+    for part in manifest["parts"]:
+        name = part["id"]
+        if not isinstance(name, str) or not NAME.fullmatch(name) or not part.get("owner_approved"):
+            raise ValueError("only approved safe part IDs allowed")
+        source_file = _local_png(source, part.get("isolated_png"))
+        bounds = part.get("visible_pixel_bbox_xyxy")
+        if (not isinstance(bounds, list) or len(bounds) != 4 or
+            any(type(v) is not int for v in bounds) or
+            not 0 <= bounds[0] < bounds[2] <= size[0] or
+            not 0 <= bounds[1] < bounds[3] <= size[1]):
+            raise ValueError("invalid original source bounds")
+        with Image.open(source_file) as image:
+            if image.size != (bounds[2] - bounds[0], bounds[3] - bounds[1]):
+                raise ValueError("isolated image and original bounds differ")
+            alpha = image.convert("RGBA").getchannel("A")
+        nx = max(1, round(grid * alpha.width / max(alpha.size)))
+        ny = max(1, round(grid * alpha.height / max(alpha.size)))
+        sample = alpha.resize((nx, ny), Image.Resampling.BOX)
+        occupied = [[sample.getpixel((x, y)) >= 64 for x in range(nx)] for y in range(ny)]
+        if not any(any(row) for row in occupied):
+            raise ValueError("isolated part contains no sampled geometry")
+        mesh = Mesh()
+        width = (bounds[2] - bounds[0]) / nx / pixels_per_unit
+        height = (bounds[3] - bounds[1]) / ny / pixels_per_unit
+        for y, row in enumerate(occupied):
+            for x, yes in enumerate(row):
+                if not yes:
+                    continue
+                x0 = (bounds[0] + x * width * pixels_per_unit - size[0] / 2) / pixels_per_unit
+                x1 = x0 + width
+                y1 = (size[1] / 2 - bounds[1] - y * height * pixels_per_unit) / pixels_per_unit
+                y0 = y1 - height
+                z0, z1 = -thickness / 2, thickness / 2
+                mesh.quad((x0,y0,z1),(x1,y0,z1),(x1,y1,z1),(x0,y1,z1))
+                mesh.quad((x1,y0,z0),(x0,y0,z0),(x0,y1,z0),(x1,y1,z0))
+                if x == 0 or not occupied[y][x-1]:
+                    mesh.quad((x0,y0,z0),(x0,y0,z1),(x0,y1,z1),(x0,y1,z0))
+                if x == nx-1 or not occupied[y][x+1]:
+                    mesh.quad((x1,y0,z1),(x1,y0,z0),(x1,y1,z0),(x1,y1,z1))
+                if y == 0 or not occupied[y-1][x]:
+                    mesh.quad((x0,y1,z1),(x1,y1,z1),(x1,y1,z0),(x0,y1,z0))
+                if y == ny-1 or not occupied[y+1][x]:
+                    mesh.quad((x0,y0,z0),(x1,y0,z0),(x1,y0,z1),(x0,y0,z1))
+        blob = export_glb([mesh],name=name,materials=((name,[0.64,0.65,0.67,1]),))
+        geometry = inspect_glb(blob)
+        results.append((name,blob,geometry))
+    target.mkdir(parents=True,exist_ok=False)
+    files = []
+    for name, blob, geometry in results:
+        filename = name + ".glb"
+        (target / filename).write_bytes(blob)
+        files.append({"id":name,"filename":filename,"sha256":hashlib.sha256(blob).hexdigest(),
+                      "geometry":geometry,"fidelity":"OBSERVED_SILHOUETTE_2_5D_PROXY"})
+    report = {"schema":"mgr.forge.unclothe-proxies.v1","parts":files,
+              "source_sha256":manifest["source_sha256"],
+              "body_rig_attached":False,"photorealistic_3d_reconstruction":False,
+              "independent_glb_parsing_passed":True}
+    (target / "manifest.json").write_text(json.dumps(report,indent=2,sort_keys=True)+"\n")
     return report

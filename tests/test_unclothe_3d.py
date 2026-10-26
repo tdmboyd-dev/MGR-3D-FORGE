@@ -2,12 +2,14 @@
 
 import json
 from pathlib import Path
+import subprocess
+import sys
 import tempfile
 import unittest
 
 from PIL import Image
 
-from forge.unclothe_3d import extract_approved_parts, inspect_unclothe
+from forge.unclothe_3d import extract_approved_parts, inspect_unclothe, materialize_unclothe_proxies
 
 
 class UnclotheTests(unittest.TestCase):
@@ -95,6 +97,54 @@ class UnclotheTests(unittest.TestCase):
         self.write(schema="other")
         with self.assertRaisesRegex(ValueError, "schema"):
             inspect_unclothe(self.spec)
+
+    def test_separate_real_glb_proxy_after_approval(self):
+        self.write()
+        extract_approved_parts(self.spec, self.root / "output")
+        report = materialize_unclothe_proxies(self.root / "output", self.root / "proxies")
+        self.assertEqual(len(report["parts"]), 1)
+        self.assertGreater(report["parts"][0]["geometry"]["triangles"], 0)
+        self.assertTrue(report["independent_glb_parsing_passed"])
+        self.assertFalse(report["photorealistic_3d_reconstruction"])
+        self.assertTrue((self.root / "proxies" / "hair_1.glb").is_file())
+
+    def test_proxy_rejects_second_write(self):
+        self.write()
+        extract_approved_parts(self.spec, self.root / "output")
+        materialize_unclothe_proxies(self.root / "output", self.root / "proxies")
+        with self.assertRaises(FileExistsError):
+            materialize_unclothe_proxies(self.root / "output", self.root / "proxies")
+
+    def test_proxy_rejects_tampered_bounds(self):
+        self.write()
+        extract_approved_parts(self.spec, self.root / "output")
+        manifest = self.root / "output" / "manifest.json"
+        payload = json.loads(manifest.read_text())
+        payload["parts"][0]["visible_pixel_bbox_xyxy"] = [0, 0, 128, 128]
+        manifest.write_text(json.dumps(payload))
+        with self.assertRaisesRegex(ValueError, "bounds differ"):
+            materialize_unclothe_proxies(self.root / "output", self.root / "proxies")
+
+    def test_proxy_invalid_grid(self):
+        self.write()
+        extract_approved_parts(self.spec, self.root / "output")
+        with self.assertRaisesRegex(ValueError, "grid"):
+            materialize_unclothe_proxies(self.root / "output", self.root / "proxies", grid=200)
+
+    def test_cli_three_stage_real_files(self):
+        self.write()
+        root = Path(__file__).resolve().parent.parent
+        steps = [
+            ["unclothe-review", "--spec", str(self.spec)],
+            ["unclothe-extract", "--spec", str(self.spec), "--out", str(self.root / "output")],
+            ["unclothe-proxy", "--parts", str(self.root / "output"),
+             "--out", str(self.root / "proxies")],
+        ]
+        for command in steps:
+            result = subprocess.run([sys.executable, "-m", "forge.cli", *command],
+                                    cwd=root, capture_output=True, text=True, timeout=30)
+            self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertTrue((self.root / "proxies" / "hair_1.glb").is_file())
 
 
 if __name__ == "__main__":
