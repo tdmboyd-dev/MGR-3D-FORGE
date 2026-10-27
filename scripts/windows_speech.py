@@ -23,6 +23,7 @@ except ImportError:
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--file", default=None, help="transcribe from WAV file instead of mic")
     parser.add_argument("--duration", type=float, default=5.0)
     args = parser.parse_args(argv)
 
@@ -34,14 +35,23 @@ def main(argv=None):
         return 1
 
     r = sr.Recognizer()
-    try:
-        with sr.Microphone() as source:
-            r.adjust_for_ambient_noise(source, duration=1)
-            audio = r.listen(source, timeout=args.duration, phrase_time_limit=args.duration)
-    except Exception as e:
-        print(json.dumps({"schema": "mgr.forge.voice-worker.v1", "status": "CAPTURE_FAILED",
-                          "error": str(e), "transcript": None}))
-        return 1
+    if args.file:
+        try:
+            with sr.AudioFile(args.file) as source:
+                audio = r.record(source)
+        except Exception as e:
+            print(json.dumps({"schema": "mgr.forge.voice-worker.v1", "status": "FILE_FAILED",
+                              "error": str(e), "transcript": None}))
+            return 1
+    else:
+        try:
+            with sr.Microphone() as source:
+                r.adjust_for_ambient_noise(source, duration=1)
+                audio = r.listen(source, timeout=args.duration, phrase_time_limit=args.duration)
+        except Exception as e:
+            print(json.dumps({"schema": "mgr.forge.voice-worker.v1", "status": "CAPTURE_FAILED",
+                              "error": str(e), "transcript": None}))
+            return 1
 
     try:
         text = r.recognize_google(audio)  # requires internet
