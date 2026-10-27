@@ -87,5 +87,16 @@ class SamAdapterGatingTests(unittest.TestCase):
         self.assertTrue(registry.get("sam").available())
 
 
-if __name__ == "__main__":
-    unittest.main()
+    def test_segment_parts_when_available(self):
+        adapter = SamAdapter()
+        if not adapter.available():
+            self.skipTest("SAM not available")
+        src = Path("artifacts/test_subject.png")
+        if not src.is_file():
+            self.skipTest("test subject missing")
+        out = Path("artifacts/test_parts")
+        prompts = [{"name": "subject", "point": [128, 128]}]
+        results = adapter.segment_parts(str(src), out_dir=str(out), prompts=prompts)
+        self.assertEqual(len(results), 1)
+        self.assertTrue(Path(results[0].mask_path).is_file())
+        self.assertIsNotNone(results[0].confidence)

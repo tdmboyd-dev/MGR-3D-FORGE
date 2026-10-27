@@ -1,3 +1,9 @@
+## 2026-10-27 - F111/F112 part-level segmentation, oblique rectification, GPU lifecycle
+
+- F111: Added segment_parts() to SamAdapter and --prompts mode to sam_segment.py worker. Point or box prompts produce per-part mask PNGs with confidence. Tested on red/blue subject (2 parts segmented).
+- F112: Added forge/rectify.py (4-point homography perspective-to-orthographic, pure Python, no OpenCV) and forge/gpu_lifecycle.py (instance tracking + per-user billing ledger). 5 + 13 tests PASS.
+- Total suite now 502 PASS (2 skipped).
+
 ## 2026-10-27 - F110 GPU rental planner (dry-run, spend-guarded)
 
 - Added forge/gpu_packer.py: pure-CPU job packer (first-fit-decreasing + shadow backfill). Shadow jobs never create a new rental block; they fill spare time inside purchased blocks. choose_gpu() selects cheapest/best-performance/best-value GPU meeting VRAM and budget.

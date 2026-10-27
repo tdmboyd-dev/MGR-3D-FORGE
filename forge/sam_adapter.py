@@ -252,6 +252,76 @@ class SamAdapter:
             return self._segment_inprocess(source_path, out_path)
         return self._segment_worker(source_path, out_path)
 
+    def segment_parts(self, source_path: str, *, out_dir: str, prompts: list[dict]) -> list[MaskResult]:
+        """Segment multiple parts using point/box prompts.
+
+        prompts: list of dicts with keys:
+            - "name": part name (e.g. "hair", "face")
+            - "point": [x, y] (optional) center point prompt
+            - "box": [x0, y0, x1, y1] (optional) bounding box prompt
+        Returns a list of MaskResult, one per prompt, with per-part mask PNGs.
+        """
+        if not prompts:
+            raise SegmentationError("at least one prompt required")
+        src = Path(source_path)
+        if not src.is_file():
+            raise SegmentationError(f"missing source image: {src.name}")
+
+        if not self.available():
+            raise SegmentationError("SAM is unavailable")
+
+        # Build prompts file
+        import json as _json
+        import tempfile
+        prompts_file = Path(tempfile.mkdtemp()) / "prompts.json"
+        prompts_file.write_text(_json.dumps(prompts), encoding="utf-8")
+
+        worker = _resolve_worker_python()
+        if worker is None:
+            raise SegmentationError("no Python 3.12 worker available (set MGR_SAM_PYTHON)")
+        script = Path(WORKER_SCRIPT)
+        if not script.is_file():
+            raise SegmentationError(f"missing worker script: {script}")
+
+        out_dir = Path(out_dir)
+        out_dir.mkdir(parents=True, exist_ok=True)
+        cmd = [worker, str(script), "--image", source_path, "--out", str(out_dir / "dummy.png"),
+               "--mode", "center", "--weights", str(self._weights),
+               "--prompts", str(prompts_file), "--out-dir", str(out_dir)]
+        try:
+            proc = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
+        except subprocess.TimeoutExpired:
+            raise SegmentationError("SAM worker timed out")
+        if proc.returncode != 0:
+            raise SegmentationError(f"SAM worker failed: {proc.stderr.strip() or proc.stdout.strip()}")
+        try:
+            data = _json.loads(proc.stdout.strip().splitlines()[-1])
+        except (_json.JSONDecodeError, IndexError):
+            raise SegmentationError(f"SAM worker returned invalid JSON: {proc.stdout[:500]}")
+
+        results = []
+        for part in data.get("parts", []):
+            results.append(MaskResult(
+                mask_path=part["mask_path"],
+                adapter=self.name,
+                evidence_level=self.evidence_level,
+                confidence=part.get("confidence"),
+                notes=(f"part={part.get('name', 'part')}",
+                       f"mask_pixels={part.get('mask_pixels')}",
+                       "part-level: prompted segmentation via worker"),
+            ))
+        return results
+        src = Path(source_path)
+        if not src.is_file():
+            raise SegmentationError(f"missing source image: {src.name}")
+        if not self.available():
+            raise SegmentationError(
+                "SAM is unavailable: install torch + segment_anything and provide "
+                "weights (env MGR_SAM_WEIGHTS or models/sam_vit_*.pth), and clear the licence")
+        if _IMPORT_OK:
+            return self._segment_inprocess(source_path, out_path)
+        return self._segment_worker(source_path, out_path)
+
 
 def register_sam_if_available(registry, weights_path: Optional[str] = None,
                               mode: str = "center") -> bool:

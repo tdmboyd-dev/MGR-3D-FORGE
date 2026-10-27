@@ -35,7 +35,9 @@ def main(argv=None):
     parser.add_argument("--mode", choices=("center", "auto"), default="center")
     parser.add_argument("--weights", required=True)
     parser.add_argument("--model-type", default=None)
+    parser.add_argument("--prompts", default=None, help="JSON file with list of part prompts: [{name, point:[x,y] or box:[x0,y0,x1,y1]}]")
     parser.add_argument("--json-out", default=None)
+    parser.add_argument("--out-dir", default=None, help="directory for per-part mask PNGs (required with --prompts)")
     args = parser.parse_args(argv)
 
     weights = Path(args.weights)
@@ -51,6 +53,58 @@ def main(argv=None):
     image = Image.open(args.image).convert("RGB")
     arr = np.array(image)
     h, w = arr.shape[:2]
+
+    if args.prompts:
+        if not args.out_dir:
+            raise SystemExit("--out-dir required with --prompts")
+        prompts = json.loads(Path(args.prompts).read_text(encoding="utf-8"))
+        predictor = SamPredictor(sam)
+        predictor.set_image(arr)
+        out_dir = Path(args.out_dir)
+        out_dir.mkdir(parents=True, exist_ok=True)
+        results = []
+        for prompt in prompts:
+            name = prompt.get("name", "part")
+            safe = "".join(c if c.isalnum() or c in "-_" else "_" for c in name)
+            box = prompt.get("box")
+            point = prompt.get("point")
+            if box is not None:
+                input_box = np.array(box, dtype=float)
+                masks, scores, _ = predictor.predict(box=input_box, multimask_output=True)
+            elif point is not None:
+                pts = np.array([point], dtype=float)
+                labels = np.array([1])
+                masks, scores, _ = predictor.predict(point_coords=pts, point_labels=labels, multimask_output=True)
+            else:
+                raise SystemExit(f"prompt {name!r} needs 'point' or 'box'")
+            if masks is None or len(masks) == 0:
+                raise SystemExit(f"SAM produced no mask for {name}")
+            idx = int(np.argmax(scores)) if scores is not None and len(scores) else 0
+            mask_arr = masks[idx].astype("uint8") * 255
+            score = float(scores[idx]) if scores is not None and len(scores) else None
+            part_path = out_dir / f"{safe}.png"
+            Image.fromarray(mask_arr, mode="L").save(part_path)
+            results.append({
+                "name": name,
+                "mask_path": str(part_path.resolve()),
+                "confidence": score,
+                "mask_pixels": int((mask_arr > 0).sum()),
+            })
+        result = {
+            "schema": "mgr.forge.sam-worker.v1",
+            "status": "MATERIALIZED",
+            "mode": "parts",
+            "model_type": model_type,
+            "device": device,
+            "image_size": [w, h],
+            "parts": results,
+            "notes": ["part-level: prompted segmentation", "licence: Apache 2.0 (SAM)"],
+        }
+        if args.json_out:
+            Path(args.json_out).parent.mkdir(parents=True, exist_ok=True)
+            Path(args.json_out).write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+        print(json.dumps(result))
+        raise SystemExit(0)
 
     if args.mode == "auto":
         gen = SamAutomaticMaskGenerator(sam)
