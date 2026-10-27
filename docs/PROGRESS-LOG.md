@@ -1,3 +1,10 @@
+## 2026-10-27 - F110 GPU rental planner (dry-run, spend-guarded)
+
+- Added forge/gpu_packer.py: pure-CPU job packer (first-fit-decreasing + shadow backfill). Shadow jobs never create a new rental block; they fill spare time inside purchased blocks. choose_gpu() selects cheapest/best-performance/best-value GPU meeting VRAM and budget.
+- Added forge/gpu_rental.py: provider contract (GpuProvider protocol), DryRunProvider, UnavailableProvider, build_provider_catalog (RunPod/Vast/Lambda offers), plan_rental (combines choose_gpu + plan_packing), spend guard requiring confirm_spend=True AND MGR_GPU_SPEND_CONFIRMED=yes.
+- Added gpu-plan CLI for dry-run cost estimates. gpu-plan never spends money.
+- 28 new tests (21 packer + 7 rental). Total suite now 483 PASS (2 skipped).
+
 # MGR 3D Forge - Progress and Evidence Log
 
 ## 2026-10-27 - F109 SAM segmentation adapter (optional, gated, working)

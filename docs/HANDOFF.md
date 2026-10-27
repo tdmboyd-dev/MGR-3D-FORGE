@@ -9,7 +9,7 @@ receipt, the receipt wins and this file must be corrected before anything else.
 - **Branch:** `main` (synced with origin at `fe75ecd`; push verified via python subprocess)
 - **Last verified:** 2026-10-27
 - **Working tree:** clean after the F107 commit (see git log)
-- **Tests:** `python -m unittest discover -s tests` -> **455 PASS** (Python 3.14.8, Windows; 2 skipped in test_sam_adapter)
+- **Tests:** `python -m unittest discover -s tests` -> **483 PASS** (Python 3.14.8, Windows; 2 skipped in test_sam_adapter)
 - **Blender:** 5.2.2 (headless MCP), scene "Scene", 1143 objects, cameras Tevin-Cam / Tevin-Cam-Full / Camera, EEVEE
 - **Owner:** tdmboyd-dev (gh authenticated, repo scope)
 
@@ -65,6 +65,12 @@ receipt, the receipt wins and this file must be corrected before anything else.
     scene restored to 1143 objects, not saved.
 - Interpretation: visual hull bounds; does not invent. The 12% overfill is dominated by
   arm-depth ambiguity between 4 orthogonal views (arms carved with torso-depth z-extent).
+
+### F110 - MGR GPU Rental Planner (dry-run, spend-guarded)
+- forge/gpu_packer.py, forge/gpu_rental.py, gpu-plan, tests
+- Pure-CPU job packer + GPU provider contract. Shadow jobs fill spare time in
+  purchased blocks. Spend guard requires double confirmation. Tevin auto-selects
+  cheapest GPU meeting VRAM. 28 tests PASS. No money spent by planning.
 
 ### F109 - MGR SAM Segmentation Adapter (optional, gated, working)
 - `forge/sam_adapter.py`, `scripts/sam_segment.py`, `tests/test_sam_adapter.py`
