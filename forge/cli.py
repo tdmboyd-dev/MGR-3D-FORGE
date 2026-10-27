@@ -210,6 +210,12 @@ def main(argv=None):
     reconstruct.add_argument("--out",type=Path,required=True,help="new output directory (must not exist)")
     reconstruct.add_argument("--smooth",action="store_true",help="average vertex normals for smooth shading (geometry unchanged)")
     reconstruct.add_argument("--marching",action="store_true",help="extract a smooth marching-cubes surface instead of voxel quads")
+    rectify=sub.add_parser("rectify-mask",help="rectify a perspective mask to orthographic using 4-point correspondences")
+    rectify.add_argument("--image",type=Path,required=True,help="source perspective mask PNG")
+    rectify.add_argument("--out",type=Path,required=True,help="output orthographic mask PNG")
+    rectify.add_argument("--src-quad",type=Path,required=True,help="JSON file with 4 source points [[x,y],...]")
+    rectify.add_argument("--dst-quad",type=Path,required=True,help="JSON file with 4 destination points [[x,y],...]")
+    rectify.add_argument("--size",type=int,nargs=2,required=True,metavar=("W","H"),help="output size")
     gpu_plan=sub.add_parser("gpu-plan",help="dry-run cost plan for renting a GPU (no money spent)")
     gpu_plan.add_argument("--jobs",type=Path,required=True,help="JSON file with a list of job objects")
     gpu_plan.add_argument("--min-vram",type=float,default=0.0)
@@ -406,6 +412,24 @@ def main(argv=None):
                           "triangles":manifest["triangles"],"volume_m3":manifest["volume_m3"],
                           "fit":manifest["fit"],"glb":str(result["glb_path"]),
                           "manifest":str(result["manifest_path"])},indent=2))
+        return 0
+    if args.action == 'rectify-mask':
+        from .rectify import rectify_mask
+        from PIL import Image
+        img = Image.open(args.image).convert('L')
+        w0, h0 = img.size
+        src_pixels = [list(img.getdata()[y*w0:(y+1)*w0]) for y in range(h0)]
+        src_quad = __import__('json').loads(args.src_quad.read_text(encoding='utf-8'))
+        dst_quad = __import__('json').loads(args.dst_quad.read_text(encoding='utf-8'))
+        out_rows = rectify_mask(src_pixels, (w0, h0), tuple(args.size), src_quad, dst_quad)
+        out_img = Image.new('L', tuple(args.size))
+        for y, row in enumerate(out_rows):
+            for x, v in enumerate(row):
+                out_img.putpixel((x, y), v)
+        args.out.parent.mkdir(parents=True, exist_ok=True)
+        out_img.save(args.out)
+        print(__import__('json').dumps({'status': 'MATERIALIZED', 'out': str(args.out),
+                          'size': list(args.size)}, indent=2))
         return 0
     if args.action == "reconstruct-score":
         from .multiview import score_against_solid
