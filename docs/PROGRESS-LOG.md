@@ -1,3 +1,10 @@
+## 2026-10-27 - Godot 4.3 portable install + import proof; Tevin refs received
+
+- Downloaded Godot 4.3 stable portable (54.7 MB) to tools/godot/ (gitignored). No system install needed.
+- Verified: --headless --import EXIT 0, --quit EXIT 0 on a Forge-generated Godot project (3 buildings, colliders, camera, light).
+- F98 updated: target-engine import now VERIFIED (was NOT VERIFIED).
+- Received 6 Tevin private reference images (facial structure, bare feet anatomy, front/side/back T-pose, photorealistic side profile). Copied to .private/tevin-refs/ (gitignored). Will NOT be committed. Ready for SAM segmentation + reconstruction pipeline.
+
 ## 2026-10-27 - F113 surface nets smooth extraction
 
 - Added forge/marching.py implementing surface nets (Gibson 1998) for smooth iso-surface extraction from voxel occupancy. Produces manifold meshes with averaged normals, replacing voxel staircases. --marching flag on reconstruct-silhouette.

@@ -4,5 +4,7 @@ __pycache__/
 .venv/
 artifacts/
 models/
+.private/
+tools/
 *.blend1
 *.blend2
