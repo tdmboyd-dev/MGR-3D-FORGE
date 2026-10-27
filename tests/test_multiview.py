@@ -12,7 +12,7 @@ import zlib
 
 from forge.glb import inspect_glb
 from forge.multiview import (EVIDENCE_LEVEL, LIMITATIONS, MAX_FACES, MAX_GRID,
-                             SCORE_EVIDENCE, SCORE_SCHEMA, SCHEMA,
+                             SCORE_EVIDENCE, SCORE_SCHEMA, SCHEMA, _prepare, carve,
                              export_reconstruction, reconstruct, score_against_solid)
 
 PNG_MAGIC = b"\x89PNG\r\n\x1a\n"
@@ -355,6 +355,37 @@ class MultiViewTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         manifest = json.loads((out / "reconstruction.json").read_text(encoding="utf-8"))
         self.assertEqual(manifest["smoothing"], "taubin-averaged-normals")
+        self.assertTrue((out / "hull.glb").is_file())
+
+    def test_marching_cubes_produces_smooth_mesh(self):
+        from forge.marching import marching_cubes
+        _mesh, manifest = reconstruct(self.spec())
+        grid, bounds, loaded, axes = _prepare(self.spec())
+        occupancy = carve(loaded, bounds, grid)
+        mc_mesh = marching_cubes(occupancy, bounds, grid)
+        self.assertGreater(len(mc_mesh.indices) // 3, 0)
+        self.assertGreater(len(mc_mesh.positions) // 3, 0)
+        self.assertEqual(len(mc_mesh.normals) // 3, len(mc_mesh.positions) // 3)
+        # manifold check: every edge shared by exactly 2 triangles
+        from collections import Counter
+        edges = Counter()
+        for t in range(0, len(mc_mesh.indices), 3):
+            a, b, c = (mc_mesh.indices[t], mc_mesh.indices[t+1], mc_mesh.indices[t+2])
+            for e in ((a,b),(b,c),(a,c)):
+                edges[tuple(sorted(e))] += 1
+        non_manifold = [e for e, n in edges.items() if n != 2]
+        self.assertEqual(len(non_manifold), 0, f"non-manifold edges: {len(non_manifold)}")
+
+    def test_cli_marching_flag(self):
+        spec_path = self.write_spec("spec.json", self.spec())
+        out = self.root / "mc_hull"
+        root = Path(__file__).resolve().parent.parent
+        result = subprocess.run([sys.executable, "-m", "forge.cli", "reconstruct-silhouette",
+                                 "--spec", str(spec_path), "--out", str(out), "--marching"],
+                                cwd=root, capture_output=True, text=True, timeout=120)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        manifest = json.loads((out / "reconstruction.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["surface"], "marching-cubes-fan")
         self.assertTrue((out / "hull.glb").is_file())
 
     def test_cli_reconstructs_real_files_end_to_end(self):

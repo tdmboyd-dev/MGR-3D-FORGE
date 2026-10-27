@@ -1,3 +1,9 @@
+## 2026-10-27 - F113 surface nets smooth extraction
+
+- Added forge/marching.py implementing surface nets (Gibson 1998) for smooth iso-surface extraction from voxel occupancy. Produces manifold meshes with averaged normals, replacing voxel staircases. --marching flag on reconstruct-silhouette.
+- Manifold check (every edge shared by exactly 2 triangles) included in tests.
+- Total suite now 504 PASS (2 skipped).
+
 ## 2026-10-27 - F111/F112 part-level segmentation, oblique rectification, GPU lifecycle
 
 - F111: Added segment_parts() to SamAdapter and --prompts mode to sam_segment.py worker. Point or box prompts produce per-part mask PNGs with confidence. Tested on red/blue subject (2 parts segmented).

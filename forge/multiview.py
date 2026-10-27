@@ -453,7 +453,7 @@ def score_against_solid(spec, boxes):
     }
 
 
-def export_reconstruction(spec_path, output, *, smooth=False):
+def export_reconstruction(spec_path, output, *, smooth=False, marching=False):
     """Write hull.glb, hull.obj/mtl and reconstruction.json into a new directory."""
     target = Path(output)
     if target.exists():
@@ -469,13 +469,22 @@ def export_reconstruction(spec_path, output, *, smooth=False):
     mesh, manifest = reconstruct(spec)
 
     target.mkdir(parents=True)
-    if smooth:
+    if marching:
+        from .marching import marching_cubes
+        _grid, _bounds, _loaded, _axes = _prepare(spec)
+        _occupancy = carve(_loaded, _bounds, _grid)
+        mesh = marching_cubes(_occupancy, _bounds, _grid)
+        manifest["surface"] = "marching-cubes-fan"
+        manifest["vertices"] = len(mesh.positions) // 3
+        manifest["triangles"] = len(mesh.indices) // 3
+    elif smooth:
         from .smooth import smooth_normals
         mesh = smooth_normals(mesh)
         manifest["smoothing"] = "taubin-averaged-normals"
         manifest["vertices"] = len(mesh.positions) // 3
     else:
         manifest["smoothing"] = "flat-per-quad"
+        manifest["surface"] = "voxel-quads"
     payload = export_glb([mesh], name="MGR Multi-View Silhouette Hull",
                          materials=HULL_MATERIALS)
     quality = inspect_glb(payload)

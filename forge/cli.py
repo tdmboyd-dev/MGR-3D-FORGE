@@ -209,6 +209,14 @@ def main(argv=None):
     reconstruct.add_argument("--spec",type=Path,required=True,help="reconstruction spec JSON naming orthographic masks and bounds")
     reconstruct.add_argument("--out",type=Path,required=True,help="new output directory (must not exist)")
     reconstruct.add_argument("--smooth",action="store_true",help="average vertex normals for smooth shading (geometry unchanged)")
+    reconstruct.add_argument("--marching",action="store_true",help="extract a smooth marching-cubes surface instead of voxel quads")
+    gpu_plan=sub.add_parser("gpu-plan",help="dry-run cost plan for renting a GPU (no money spent)")
+    gpu_plan.add_argument("--jobs",type=Path,required=True,help="JSON file with a list of job objects")
+    gpu_plan.add_argument("--min-vram",type=float,default=0.0)
+    gpu_plan.add_argument("--max-cost",type=float,default=1e9)
+    gpu_plan.add_argument("--prefer",choices=("cost","performance","value"),default="cost")
+    gpu_plan.add_argument("--block-hours",type=float,default=1.0)
+    gpu_plan.add_argument("--out",type=Path,required=True,help="new plan JSON file (must not exist)")
     reconstruct_score=sub.add_parser("reconstruct-score",help="measure a carved hull against an analytic solid at voxel resolution")
     reconstruct_score.add_argument("--spec",type=Path,required=True,help="reconstruction spec JSON")
     reconstruct_score.add_argument("--truth",type=Path,required=True,help="truth JSON containing solid boxes")
@@ -391,7 +399,7 @@ def main(argv=None):
         return 0
     if args.action == "reconstruct-silhouette":
         from .multiview import export_reconstruction
-        result=export_reconstruction(args.spec,args.out,smooth=args.smooth)
+        result=export_reconstruction(args.spec,args.out,smooth=args.smooth,marching=args.marching)
         manifest=result["manifest"]
         print(json.dumps({"status":manifest["status"],"schema":manifest["schema"],
                           "evidence_level":manifest["evidence_level"],
@@ -416,6 +424,23 @@ def main(argv=None):
         print(json.dumps({"status":score["status"],"hull_vs_solid_iou":score["hull_vs_solid_iou"],
                           "overfill_volume_m3":score["overfill_volume_m3"],
                           "missed_volume_m3":score["missed_volume_m3"],
+                          "receipt":str(args.out)},indent=2))
+        return 0
+    if args.action == "gpu-plan":
+        from .gpu_rental import plan_rental
+        jobs=json.loads(args.jobs.read_text(encoding="utf-8"))
+        if not isinstance(jobs,list):
+            raise ValueError("jobs file must contain a list")
+        plan=plan_rental(jobs,min_vram_gb=args.min_vram,max_cost_per_hour=args.max_cost,
+                         prefer=args.prefer,block_hours=args.block_hours)
+        if args.out.exists():
+            raise FileExistsError("plan receipt already exists")
+        args.out.parent.mkdir(parents=True,exist_ok=True)
+        args.out.write_text(json.dumps(plan,indent=2,sort_keys=True)+"\n",encoding="utf-8")
+        print(json.dumps({"status":plan["status"],"selected_gpu":plan["selected_gpu"]["name"],
+                          "total_estimated_cost":plan["total_estimated_cost"],
+                          "blocks":plan["packing"]["totals"]["blocks"],
+                          "shadow_use_seconds":plan["shadow_use_seconds"],
                           "receipt":str(args.out)},indent=2))
         return 0
     if args.action == "blender-live-scene":
