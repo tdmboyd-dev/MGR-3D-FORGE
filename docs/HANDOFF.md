@@ -9,7 +9,7 @@ receipt, the receipt wins and this file must be corrected before anything else.
 - **Branch:** `main` (synced with origin at `fe75ecd`; push verified via python subprocess)
 - **Last verified:** 2026-10-27
 - **Working tree:** clean after the F107 commit (see git log)
-- **Tests:** `python -m unittest discover -s tests` -> **447 PASS** (Python 3.14.8, Windows)
+- **Tests:** `python -m unittest discover -s tests` -> **455 PASS** (Python 3.14.8, Windows; 2 skipped in test_sam_adapter)
 - **Blender:** 5.2.2 (headless MCP), scene "Scene", 1143 objects, cameras Tevin-Cam / Tevin-Cam-Full / Camera, EEVEE
 - **Owner:** tdmboyd-dev (gh authenticated, repo scope)
 
@@ -65,6 +65,12 @@ receipt, the receipt wins and this file must be corrected before anything else.
     scene restored to 1143 objects, not saved.
 - Interpretation: visual hull bounds; does not invent. The 12% overfill is dominated by
   arm-depth ambiguity between 4 orthogonal views (arms carved with torso-depth z-extent).
+
+### F109 - MGR SAM Segmentation Adapter (optional, gated, working)
+- `forge/sam_adapter.py`, `scripts/sam_segment.py`, `tests/test_sam_adapter.py`
+- SAM ViT-B (Apache 2.0) connected via Python 3.12 worker. Center mode segments a
+  256x256 subject in seconds on CPU; auto mode works but slow. available() True.
+- 8 tests (2 skip on env). Manual masks remain default.
 
 ### F108 - MGR Segmentation Adapter Contract
 - `forge/segmentation.py`, `tests/test_segmentation.py`
@@ -157,7 +163,7 @@ receipt, the receipt wins and this file must be corrected before anything else.
 ## 4. NOT DONE (honest open gaps)
 
 ### Reconstruction (F107 follow-ups)
-- Neural segmentation adapters (SAM3) for automatic mask inference
+- Neural segmentation adapters: SAM ViT-B shipped (F109); SAM2/SAM3 upgrades, part-level segmentation open
 - Oblique/perspective view carving (currently orthographic only)
 - Smooth surface extraction (marching cubes) instead of voxel cubes
 - Fitted textured full-volume mesh assembly
@@ -245,7 +251,7 @@ No force push. No large binary artifacts unless justified (artifacts/ is gitigno
 ## 8. Next build order (continue from here)
 
 1. F107 follow-ups: marching-cubes smoothing on the carved occupancy; oblique-view carving;
-   SAM3 adapter behind the F108 contract (gated optional dependency).
+   SAM2 upgrade + part-level segmentation (hair/face/body/clothing) using prompted masks.
 2. F104: obtain explicit authorization and run the Blender motion export/re-import proof.
 3. F98: install Godot, run engine import/play proof.
 4. F99-F106: smooth multi-bone skinning, fitted garments, full-pose anatomical checks on generic models.

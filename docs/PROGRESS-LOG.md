@@ -1,5 +1,13 @@
 # MGR 3D Forge - Progress and Evidence Log
 
+## 2026-10-27 - F109 SAM segmentation adapter (optional, gated, working)
+
+- SAM (Meta, Apache 2.0) is now connected to the pipeline. Installed torch 2.14.1+cpu + segment-anything on the existing Python 3.12 interpreter (C:\\Users\\cool\\.local\\bin\\python3.12.exe); downloaded sam_vit_b_01ec64.pth (357.7 MB) to models/ (gitignored).
+- Added scripts/sam_segment.py worker (runs under 3.12) and rewrote forge/sam_adapter.py to use it via subprocess when torch is not importable in the running interpreter (3.14). available() is True on this machine.
+- Center mode segments a 256x256 subject in a few seconds on CPU (mask 12995 px, score 1.016). Auto mode works but is slow on CPU (~3 min for 256x256).
+- Evidence level MODEL_INFERRED_MASK with confidence. Manual masks remain default and primary. Licence Apache 2.0; provenance must be recorded before production use.
+- 8 tests in tests/test_sam_adapter.py (2 skip on env). Total suite now 455 PASS (2 skipped).
+
 ## 2026-10-27 - F108 segmentation adapter contract
 
 - Added `forge/segmentation.py`: runtime-checkable `SegmentationAdapter` protocol, `ManualMaskAdapter` (always available, never claims inference), `UnavailableAdapter` (honest refusal), `AdapterRegistry`, `build_default_registry()` (manual only), `describe_registry()`. No neural model shipped; `neural_adapter_installed` is False unless an inferred adapter is registered and available. 7 tests in `tests/test_segmentation.py`. Test count now 445 PASS.
