@@ -453,7 +453,7 @@ def score_against_solid(spec, boxes):
     }
 
 
-def export_reconstruction(spec_path, output):
+def export_reconstruction(spec_path, output, *, smooth=False):
     """Write hull.glb, hull.obj/mtl and reconstruction.json into a new directory."""
     target = Path(output)
     if target.exists():
@@ -469,6 +469,13 @@ def export_reconstruction(spec_path, output):
     mesh, manifest = reconstruct(spec)
 
     target.mkdir(parents=True)
+    if smooth:
+        from .smooth import smooth_normals
+        mesh = smooth_normals(mesh)
+        manifest["smoothing"] = "taubin-averaged-normals"
+        manifest["vertices"] = len(mesh.positions) // 3
+    else:
+        manifest["smoothing"] = "flat-per-quad"
     payload = export_glb([mesh], name="MGR Multi-View Silhouette Hull",
                          materials=HULL_MATERIALS)
     quality = inspect_glb(payload)

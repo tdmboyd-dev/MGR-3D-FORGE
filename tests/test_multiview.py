@@ -331,6 +331,32 @@ class MultiViewTests(unittest.TestCase):
             score_against_solid(spec, [{"min": [float("nan"), 0.5, -0.5],
                                         "max": [0.5, 1.5, 0.5]}])
 
+    def test_smooth_normals_preserves_triangles_and_dedups_vertices(self):
+        from forge.smooth import smooth_normals
+        mesh, _manifest = reconstruct(self.spec())
+        original_vertices = len(mesh.positions) // 3
+        original_triangles = len(mesh.indices) // 3
+        smoothed = smooth_normals(mesh)
+        self.assertEqual(len(smoothed.indices) // 3, original_triangles)
+        self.assertLessEqual(len(smoothed.positions) // 3, original_vertices)
+        self.assertEqual(len(smoothed.normals) // 3, len(smoothed.positions) // 3)
+        # averaged normals are unit length
+        for i in range(0, len(smoothed.normals), 3):
+            nx, ny, nz = smoothed.normals[i:i + 3]
+            self.assertAlmostEqual((nx * nx + ny * ny + nz * nz) ** 0.5, 1.0, places=6)
+
+    def test_cli_smooth_flag_produces_smoothed_manifest(self):
+        spec_path = self.write_spec("spec.json", self.spec())
+        out = self.root / "smooth_hull"
+        root = Path(__file__).resolve().parent.parent
+        result = subprocess.run([sys.executable, "-m", "forge.cli", "reconstruct-silhouette",
+                                 "--spec", str(spec_path), "--out", str(out), "--smooth"],
+                                cwd=root, capture_output=True, text=True, timeout=120)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        manifest = json.loads((out / "reconstruction.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["smoothing"], "taubin-averaged-normals")
+        self.assertTrue((out / "hull.glb").is_file())
+
     def test_cli_reconstructs_real_files_end_to_end(self):
         spec_path = self.write_spec("spec.json", self.spec())
         root = Path(__file__).resolve().parent.parent

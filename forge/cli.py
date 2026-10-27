@@ -208,6 +208,7 @@ def main(argv=None):
     reconstruct=sub.add_parser("reconstruct-silhouette",help="carve real measured triangle geometry from multi-view silhouette masks")
     reconstruct.add_argument("--spec",type=Path,required=True,help="reconstruction spec JSON naming orthographic masks and bounds")
     reconstruct.add_argument("--out",type=Path,required=True,help="new output directory (must not exist)")
+    reconstruct.add_argument("--smooth",action="store_true",help="average vertex normals for smooth shading (geometry unchanged)")
     reconstruct_score=sub.add_parser("reconstruct-score",help="measure a carved hull against an analytic solid at voxel resolution")
     reconstruct_score.add_argument("--spec",type=Path,required=True,help="reconstruction spec JSON")
     reconstruct_score.add_argument("--truth",type=Path,required=True,help="truth JSON containing solid boxes")
@@ -390,7 +391,7 @@ def main(argv=None):
         return 0
     if args.action == "reconstruct-silhouette":
         from .multiview import export_reconstruction
-        result=export_reconstruction(args.spec,args.out)
+        result=export_reconstruction(args.spec,args.out,smooth=args.smooth)
         manifest=result["manifest"]
         print(json.dumps({"status":manifest["status"],"schema":manifest["schema"],
                           "evidence_level":manifest["evidence_level"],

@@ -9,7 +9,7 @@ receipt, the receipt wins and this file must be corrected before anything else.
 - **Branch:** `main` (commit `10fcffb` local; push to origin pending — harness blocks network shell; run `git push origin main` from a local terminal)
 - **Last verified:** 2026-10-27
 - **Working tree:** clean after the F107 commit (see git log)
-- **Tests:** `python -m unittest discover -s tests` -> **445 PASS** (Python 3.14.8, Windows)
+- **Tests:** `python -m unittest discover -s tests` -> **447 PASS** (Python 3.14.8, Windows)
 - **Blender:** 5.2.2 (headless MCP), scene "Scene", 1143 objects, cameras Tevin-Cam / Tevin-Cam-Full / Camera, EEVEE
 - **Owner:** tdmboyd-dev (gh authenticated, repo scope)
 
