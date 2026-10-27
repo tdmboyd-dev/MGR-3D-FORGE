@@ -1,3 +1,9 @@
+## 2026-10-27 - Tevin reference segmentation (private, not committed)
+
+- Received 6 Tevin private reference images (facial structure, bare feet anatomy, front/side/back T-pose, photorealistic side profile). Stored in .private/tevin-refs/ (gitignored).
+- Segmented all 6 with SAM ViT-B center mode. Masks saved to .private/tevin-segmented/. Confidence: front 0.935, back 0.952, side 0.991, side2 0.987, face 0.872, feet 0.808.
+- Reconstruction requires perspective rectification (forge/rectify.py) + consistent scale across views. Manual step pending owner input on 4-point correspondences.
+
 ## 2026-10-27 - Godot 4.3 portable install + import proof; Tevin refs received
 
 - Downloaded Godot 4.3 stable portable (54.7 MB) to tools/godot/ (gitignored). No system install needed.
