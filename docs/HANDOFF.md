@@ -6,7 +6,7 @@ the same commit as any feature change. If a claim here disagrees with
 receipt, the receipt wins and this file must be corrected before anything else.
 
 - **Repo:** MGR-3D-FORGE (sibling of MGR-ONE; the ONE WORK ORDER lives in MGR-ONE)
-- **Branch:** `main` (keep current after local verification; no force push)
+- **Branch:** `main` (commit `10fcffb` local; push to origin pending — harness blocks network shell; run `git push origin main` from a local terminal)
 - **Last verified:** 2026-10-27
 - **Working tree:** clean after the F107 commit (see git log)
 - **Tests:** `python -m unittest discover -s tests` -> **438 PASS** (Python 3.14.8, Windows)
