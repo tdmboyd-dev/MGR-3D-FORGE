@@ -1,3 +1,8 @@
+## 2026-10-27 - F117 GPU account management
+
+- Added forge/gpu_accounts.py: per-user GPU provider credential store (encrypted at rest, never committed), founder pooled account for shadow use, Tevin auto-selects best account. 26 tests PASS.
+- Total suite now 546 PASS (2 skipped).
+
 ## 2026-10-27 - F114/F115/F116 durable queue, voice capture, garment fitting
 
 - F114: Added forge/durable_queue.py — file-based durable job queue with enqueue/claim/complete/fail/recover. Survives process restarts. 12 tests PASS.
