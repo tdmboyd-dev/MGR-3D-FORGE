@@ -419,8 +419,8 @@ def main(argv=None):
         img = Image.open(args.image).convert('L')
         w0, h0 = img.size
         src_pixels = [list(img.getdata()[y*w0:(y+1)*w0]) for y in range(h0)]
-        src_quad = __import__('json').loads(args.src_quad.read_text(encoding='utf-8'))
-        dst_quad = __import__('json').loads(args.dst_quad.read_text(encoding='utf-8'))
+        src_quad = json.loads(args.src_quad.read_text(encoding='utf-8'))
+        dst_quad = json.loads(args.dst_quad.read_text(encoding='utf-8'))
         out_rows = rectify_mask(src_pixels, (w0, h0), tuple(args.size), src_quad, dst_quad)
         out_img = Image.new('L', tuple(args.size))
         for y, row in enumerate(out_rows):
@@ -428,7 +428,7 @@ def main(argv=None):
                 out_img.putpixel((x, y), v)
         args.out.parent.mkdir(parents=True, exist_ok=True)
         out_img.save(args.out)
-        print(__import__('json').dumps({'status': 'MATERIALIZED', 'out': str(args.out),
+        print(json.dumps({'status': 'MATERIALIZED', 'out': str(args.out),
                           'size': list(args.size)}, indent=2))
         return 0
     if args.action == "reconstruct-score":

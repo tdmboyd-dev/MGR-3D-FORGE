@@ -188,10 +188,11 @@ class SamAdapter:
             confidence = float(best.get("predicted_iou", 0.0)) if "predicted_iou" in best else None
         else:
             self._predictor.set_image(arr)
+            import numpy as _np
             cx, cy = w // 2, h // 2
             masks, scores, _ = self._predictor.predict(
-                point_coords=__import__("numpy").array([[cx, cy]]),
-                point_labels=__import__("numpy").array([1]),
+                point_coords=_np.array([[cx, cy]]),
+                point_labels=_np.array([1]),
                 multimask_output=True)
             if masks is None or len(masks) == 0:
                 raise SegmentationError("SAM produced no mask")
