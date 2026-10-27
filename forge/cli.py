@@ -205,6 +205,13 @@ def main(argv=None):
     unclothe_proxy.add_argument("--parts",type=Path,required=True)
     unclothe_proxy.add_argument("--out",type=Path,required=True)
     unclothe_proxy.add_argument("--grid",type=int,default=48)
+    reconstruct=sub.add_parser("reconstruct-silhouette",help="carve real measured triangle geometry from multi-view silhouette masks")
+    reconstruct.add_argument("--spec",type=Path,required=True,help="reconstruction spec JSON naming orthographic masks and bounds")
+    reconstruct.add_argument("--out",type=Path,required=True,help="new output directory (must not exist)")
+    reconstruct_score=sub.add_parser("reconstruct-score",help="measure a carved hull against an analytic solid at voxel resolution")
+    reconstruct_score.add_argument("--spec",type=Path,required=True,help="reconstruction spec JSON")
+    reconstruct_score.add_argument("--truth",type=Path,required=True,help="truth JSON containing solid boxes")
+    reconstruct_score.add_argument("--out",type=Path,required=True,help="new accuracy JSON file")
     live_blender=sub.add_parser("blender-live-scene",help="turn verified edited world into an actual individually editable Blender project")
     live_blender.add_argument("--world",type=Path,required=True,help="materialized edited world directory")
     live_blender.add_argument("--blend",type=Path,required=True,help="new Blender project file")
@@ -380,6 +387,35 @@ def main(argv=None):
     if args.action == "unclothe-proxy":
         from .unclothe_3d import materialize_unclothe_proxies
         print(json.dumps(materialize_unclothe_proxies(args.parts,args.out,grid=args.grid),indent=2))
+        return 0
+    if args.action == "reconstruct-silhouette":
+        from .multiview import export_reconstruction
+        result=export_reconstruction(args.spec,args.out)
+        manifest=result["manifest"]
+        print(json.dumps({"status":manifest["status"],"schema":manifest["schema"],
+                          "evidence_level":manifest["evidence_level"],
+                          "triangles":manifest["triangles"],"volume_m3":manifest["volume_m3"],
+                          "fit":manifest["fit"],"glb":str(result["glb_path"]),
+                          "manifest":str(result["manifest_path"])},indent=2))
+        return 0
+    if args.action == "reconstruct-score":
+        from .multiview import score_against_solid
+        truth=json.loads(args.truth.read_text(encoding="utf-8"))
+        if not isinstance(truth,dict) or "boxes" not in truth:
+            raise ValueError("truth file must contain solid boxes")
+        spec=json.loads(args.spec.read_text(encoding="utf-8"))
+        if not isinstance(spec,dict):
+            raise ValueError("reconstruction spec object required")
+        spec.setdefault("base_dir",str(args.spec.resolve().parent))
+        score=score_against_solid(spec,truth["boxes"])
+        if args.out.exists():
+            raise FileExistsError("accuracy receipt already exists")
+        args.out.parent.mkdir(parents=True,exist_ok=True)
+        args.out.write_text(json.dumps(score,indent=2,sort_keys=True)+"\n",encoding="utf-8")
+        print(json.dumps({"status":score["status"],"hull_vs_solid_iou":score["hull_vs_solid_iou"],
+                          "overfill_volume_m3":score["overfill_volume_m3"],
+                          "missed_volume_m3":score["missed_volume_m3"],
+                          "receipt":str(args.out)},indent=2))
         return 0
     if args.action == "blender-live-scene":
         print(json.dumps(create_live_blender_scene(args.world,args.blend,args.report,binary=args.binary),indent=2))

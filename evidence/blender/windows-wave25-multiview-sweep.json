@@ -1,0 +1,110 @@
+{
+  "analytic_volume_m3": 0.108574,
+  "best_hull_vs_solid_iou": 0.878101,
+  "evidence_level": "RESOLUTION_SWEEP_VS_ANALYTIC_SOLID",
+  "example": "multiview-phantom",
+  "grids": [
+    40,
+    48,
+    56,
+    64,
+    72,
+    80,
+    96
+  ],
+  "notes": [
+    "silhouette fit is measured per view at mask resolution",
+    "hull accuracy is measured per voxel against the analytic solid",
+    "a plateau in accuracy while triangles grow means the remaining error is view ambiguity, not voxel size",
+    "coarse grids are refused by the fit gate instead of returning a blobby hull"
+  ],
+  "rows": [
+    {
+      "grid": 40,
+      "refused": "reconstructed hull does not reproduce the measured silhouettes",
+      "seconds": 0.35
+    },
+    {
+      "fit": "PASS",
+      "grid": 48,
+      "hull_volume_m3": 0.120520833,
+      "hull_vs_solid_iou": 0.878101,
+      "missed_volume_m3": 0.00125,
+      "overfill_volume_m3": 0.01359375,
+      "seconds": 1.138,
+      "solid_volume_m3": 0.108177083,
+      "triangles": 14664,
+      "vertices": 29328,
+      "worst_view_iou": 0.988176
+    },
+    {
+      "fit": "PASS",
+      "grid": 56,
+      "hull_volume_m3": 0.117518222,
+      "hull_vs_solid_iou": 0.846578,
+      "missed_volume_m3": 0.004444242,
+      "overfill_volume_m3": 0.014267493,
+      "seconds": 1.571,
+      "solid_volume_m3": 0.107694971,
+      "triangles": 19512,
+      "vertices": 39024,
+      "worst_view_iou": 0.974874
+    },
+    {
+      "fit": "PASS",
+      "grid": 64,
+      "hull_volume_m3": 0.12135498,
+      "hull_vs_solid_iou": 0.869697,
+      "missed_volume_m3": 0.002164307,
+      "overfill_volume_m3": 0.013930664,
+      "seconds": 2.312,
+      "solid_volume_m3": 0.109588623,
+      "triangles": 25744,
+      "vertices": 51488,
+      "worst_view_iou": 0.989359
+    },
+    {
+      "fit": "PASS",
+      "grid": 72,
+      "hull_volume_m3": 0.117299383,
+      "hull_vs_solid_iou": 0.84873,
+      "missed_volume_m3": 0.004560185,
+      "overfill_volume_m3": 0.013873457,
+      "seconds": 3.09,
+      "solid_volume_m3": 0.107986111,
+      "triangles": 32248,
+      "vertices": 64496,
+      "worst_view_iou": 0.982855
+    },
+    {
+      "fit": "PASS",
+      "grid": 80,
+      "hull_volume_m3": 0.11889,
+      "hull_vs_solid_iou": 0.863748,
+      "missed_volume_m3": 0.002896875,
+      "overfill_volume_m3": 0.013696875,
+      "seconds": 4.471,
+      "solid_volume_m3": 0.10809,
+      "triangles": 39872,
+      "vertices": 79744,
+      "worst_view_iou": 0.979604
+    },
+    {
+      "fit": "PASS",
+      "grid": 96,
+      "hull_volume_m3": 0.11804362,
+      "hull_vs_solid_iou": 0.861243,
+      "missed_volume_m3": 0.003642578,
+      "overfill_volume_m3": 0.013242187,
+      "seconds": 7.671,
+      "solid_volume_m3": 0.10844401,
+      "triangles": 57088,
+      "vertices": 114176,
+      "worst_view_iou": 0.982855
+    }
+  ],
+  "schema": "mgr.forge.hull-vs-solid-score.v1",
+  "status": "MEASURED",
+  "subject": "synthetic-box-humanoid",
+  "worst_hull_vs_solid_iou": 0.846578
+}

@@ -1,0 +1,145 @@
+{
+  "accuracy_vs_analytic_solid": {
+    "evidence_level": "MEASURED_HULL_VS_ANALYTIC_SOLID",
+    "grid": 64,
+    "hull_volume_m3": 0.12135498,
+    "hull_voxels": 44184,
+    "hull_vs_solid_iou": 0.869697,
+    "missed_volume_m3": 0.002164307,
+    "missed_voxels": 788,
+    "overfill_volume_m3": 0.013930664,
+    "overfill_voxels": 5072,
+    "schema": "mgr.forge.hull-vs-solid-score.v1",
+    "solid_volume_m3": 0.109588623,
+    "solid_voxels": 39900
+  },
+  "analytic_truth": {
+    "analytic_volume_m3": 0.108574,
+    "box_count": 13,
+    "provenance": "self-authored analytic solid; no owner-private references",
+    "subject": "synthetic-box-humanoid"
+  },
+  "blender": {
+    "bbox_forge_space_m": {
+      "max": [
+        0.3,
+        0.132812,
+        1.74375
+      ],
+      "min": [
+        -0.3,
+        -0.132812,
+        0.0
+      ],
+      "note": "Blender is Z-up; Forge is Y-up. Extents: width 0.6, depth 0.265625, height 1.74375."
+    },
+    "engine": "Blender 5.2.2",
+    "import_seconds": 0.31,
+    "imported_objects": 1,
+    "materials": [
+      "mgr-measured-hull"
+    ],
+    "meshes": 1,
+    "orphan_purge_performed": true,
+    "restored": true,
+    "saved_blend": false,
+    "scene_after_cleanup": 1143,
+    "scene_before": 1143,
+    "triangles": 25744,
+    "vertices": 51488
+  },
+  "date": "2026-10-27",
+  "feature": "F107 multi-view silhouette reconstruction (space carving)",
+  "honesty": [
+    "the phantom is synthetic and self-authored; it is a method harness, not a character",
+    "no owner-private reference image or model was used",
+    "no neural model, external API, or GPU was involved",
+    "the hull is a visual hull: it bounds, it does not invent, unseen concavities are not measured",
+    "the hull was imported into the live Blender 5.2.2 scene into an isolated collection, measured, and removed; the scene was not saved and object count was restored to 1143"
+  ],
+  "interpretation": {
+    "accuracy_ceiling": "0.87 hull-vs-solid IoU is inherent to the 4-orthogonal-view visual hull, not a voxel-resolution problem: it plateaus between 0.847 and 0.878 across grids 48..96 while triangles grow from 14664 to 57088.",
+    "dominant_ambiguity": "Arm columns are carved with torso-depth z-extent because the front/back views cannot separate arm depth from torso depth. Predicted overfill ~0.016 m^3 vs measured 0.0139 m^3 at grid 64.",
+    "no_hidden_surface_invention": true,
+    "no_identity_claim": true,
+    "silhouette_fit_passes": true,
+    "worst_view_iou": 0.989359
+  },
+  "reconstruction": {
+    "bbox_max_m": [
+      0.3,
+      1.74375,
+      0.132812
+    ],
+    "bbox_min_m": [
+      -0.3,
+      0.0,
+      -0.132812
+    ],
+    "bounds_m": [
+      0.8,
+      1.8,
+      0.5
+    ],
+    "evidence_level": "MEASURED_SILHOUETTE_HULL",
+    "external_api_calls": 0,
+    "fit": {
+      "status": "PASS",
+      "threshold": 0.97,
+      "worst_view_iou": 0.989359
+    },
+    "glb_bytes": 1545704,
+    "glb_sha256": "862249a77e8b689813e1f679b975a58d215e273383e6f0c34d2bf8bc01abfbac",
+    "grid": 64,
+    "hidden_surface_inference": false,
+    "identity_verified": false,
+    "internally_consistent": true,
+    "limitations": [
+      "orthographic silhouettes only; perspective references need rectification",
+      "concave detail no view can see is bounded by the hull, not measured",
+      "a silhouette set constrains shape; it does not prove identity or likeness",
+      "masks must be pre-segmented by the owner/segmentation stage",
+      "voxel resolution bounds surface fidelity"
+    ],
+    "method": "orthographic-silhouette-space-carving",
+    "mirrored_axes": [
+      "back",
+      "right"
+    ],
+    "occupied_voxels": 44184,
+    "schema": "mgr.forge.multiview-silhouette.v1",
+    "status": "MATERIALIZED",
+    "triangles": 25744,
+    "vertices": 51488,
+    "view_axes": [
+      "front",
+      "back",
+      "left",
+      "right"
+    ],
+    "volume_m3": 0.121355,
+    "voxel_size_m": [
+      0.0125,
+      0.028125,
+      0.007812
+    ]
+  },
+  "reproduction": {
+    "expected_glb_sha256": "862249a77e8b689813e1f679b975a58d215e273383e6f0c34d2bf8bc01abfbac",
+    "phantom": "python scripts/make_phantom_silhouettes.py --out examples/multiview-phantom",
+    "reconstruct": "python -m forge.cli reconstruct-silhouette --spec examples/multiview-phantom/spec.json --out build/multiview-hull",
+    "score": "python -m forge.cli reconstruct-score --spec examples/multiview-phantom/spec.json --truth examples/multiview-phantom/truth.json --out build/multiview-accuracy.json",
+    "sweep": "python scripts/hull_resolution_sweep.py --example examples/multiview-phantom --out evidence/blender/windows-wave25-multiview-sweep.json"
+  },
+  "resolution_sweep": {
+    "best_hull_vs_solid_iou": 0.878101,
+    "receipt": "evidence/blender/windows-wave25-multiview-sweep.json",
+    "refused_grids": [
+      40
+    ],
+    "worst_hull_vs_solid_iou": 0.846578
+  },
+  "schema": "mgr.forge.windows-wave25-multiview-hull.v1",
+  "status": "VERIFIED",
+  "subject": "synthetic-box-humanoid phantom (self-authored analytic solid; no owner-private references)"
+}

@@ -1,0 +1,30 @@
+{
+  "bounds": {
+    "width": 0.8,
+    "height": 1.8,
+    "depth": 0.5
+  },
+  "grid": 64,
+  "views": [
+    {
+      "axis": "front",
+      "mask": "front.png",
+      "threshold": 128
+    },
+    {
+      "axis": "back",
+      "mask": "back.png",
+      "threshold": 128
+    },
+    {
+      "axis": "left",
+      "mask": "left.png",
+      "threshold": 128
+    },
+    {
+      "axis": "right",
+      "mask": "right.png",
+      "threshold": 128
+    }
+  ]
+}

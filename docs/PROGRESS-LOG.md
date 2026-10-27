@@ -1,4 +1,14 @@
-# MGR 3D Forge — Progress and Evidence Log
+# MGR 3D Forge - Progress and Evidence Log
+
+## 2026-10-27 - F107 multi-view silhouette reconstruction (space carving)
+
+- Added `forge/multiview.py`: measured orthographic silhouettes become a real triangle GLB/OBJ visual hull through CPU space carving. Back/right masks are mirrored before carving (they are seen from the far side); front/back and left/right scale/height consistency is checked; a voxel fit gate requires worst-view IoU >= 0.97 or the export is refused. Honesty fields are hard-coded `hidden_surface_inference=False`, `identity_verified=False`, `external_api_calls=0`. Export is byte-deterministic and writes `hull.glb`, `hull.obj`, `hull.mtl`, `reconstruction.json` with SHA receipts.
+- Added `tests/test_multiview.py` (25 tests) covering cube/humanoid phantom recovery, mirror handling, scale/size/height rejection, empty/missing masks, threshold validation, determinism, CLI end-to-end, and `score_against_solid` against an analytic solid (exact cube = 1.0 IoU; T-shaped overfill case = 0.625 IoU; rejection of unusable solids).
+- Added CLI actions `reconstruct-silhouette` and `reconstruct-score`, plus `scripts/make_phantom_silhouettes.py` (self-authored analytic box-humanoid phantom, no private references) and `scripts/hull_resolution_sweep.py`.
+- Added `examples/multiview-phantom/` (front/back/left/right PNG masks + spec + truth). Independent accuracy: 0.8697 hull-vs-solid IoU at grid 64, 0.01393 m^3 overfill (12%), 0.00216 m^3 missed. Resolution sweep shows 0.847-0.878 IoU across grids 48-96 while triangles grow 14664 to 57088: the residual is view ambiguity, not voxel size. Grid 40 is refused by the fit gate.
+- Live Blender 5.2.2 verification: imported `hull.glb` into an isolated collection, measured 1 mesh / 25744 triangles / 51488 vertices / bbox 0.6 x 0.265625 x 1.74375 m, then removed the collection and purged orphans; scene restored to 1143 objects and was not saved. Evidence: `evidence/blender/windows-wave25-multiview-hull.json` and `...-sweep.json`.
+- Test count: 438 PASS (413 prior + 25 new F107 tests). No fabricated QA; every claim above is backed by a committed receipt or a reproducible command.
+- Open next: neural segmentation adapters, oblique-view carving, marching-cubes smoothing, fitted textured full-volume mesh, identity likeness proof, engine import/play, owner-approved Tevin reconstruction.
 
 ## 2026-10-25 — F104 deforming animation export research and implementation
 

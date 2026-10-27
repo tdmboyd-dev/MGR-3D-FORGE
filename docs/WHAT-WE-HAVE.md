@@ -1,6 +1,6 @@
 # MGR 3D FORGE — Current Native Inventory
 
-**Updated 2026-10-25. Owner: Money Grind Religion Corp. Canon: `docs/MGR-NATIVE-CANON.md`.** This is a current status document, not the historical creation baseline.
+**Updated 2026-10-27. Owner: Money Grind Religion Corp. Canon: `docs/MGR-NATIVE-CANON.md`.** This is a current status document, not the historical creation baseline. **Current verified: 438/438 tests PASS on Windows (Python 3.14.8)** including F107 multi-view reconstruction; living status in `docs/HANDOFF.md`.
 
 **FIRST LIVE WEBGL WORLD:** Windows Google Chrome actually rendered the standalone `demos/mgr-world-flight.html` on ANGLE software WebGL2. Screenshot `evidence/browser/windows-wave13-world-flight.png` visually confirms 10 generated buildings, roads and world perspective; independent machine receipt in matching JSON. **216/216 Python tests PASS on both Windows and Linux.** The world is visually blocky, and keyboard controls/sustained FPS have not yet been independently automated. This is the first user-openable runtime slice, not the completed photoreal Forge engine.
 
