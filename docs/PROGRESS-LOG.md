@@ -1,5 +1,10 @@
 # MGR 3D Forge - Progress and Evidence Log
 
+## 2026-10-27 - F108 segmentation adapter contract
+
+- Added `forge/segmentation.py`: runtime-checkable `SegmentationAdapter` protocol, `ManualMaskAdapter` (always available, never claims inference), `UnavailableAdapter` (honest refusal), `AdapterRegistry`, `build_default_registry()` (manual only), `describe_registry()`. No neural model shipped; `neural_adapter_installed` is False unless an inferred adapter is registered and available. 7 tests in `tests/test_segmentation.py`. Test count now 445 PASS.
+- Open: SAM3 adapter behind a gated optional dependency with model version + licence record under `research/external-provenance/`.
+
 ## 2026-10-27 - F107 multi-view silhouette reconstruction (space carving)
 
 - Added `forge/multiview.py`: measured orthographic silhouettes become a real triangle GLB/OBJ visual hull through CPU space carving. Back/right masks are mirrored before carving (they are seen from the far side); front/back and left/right scale/height consistency is checked; a voxel fit gate requires worst-view IoU >= 0.97 or the export is refused. Honesty fields are hard-coded `hidden_surface_inference=False`, `identity_verified=False`, `external_api_calls=0`. Export is byte-deterministic and writes `hull.glb`, `hull.obj`, `hull.mtl`, `reconstruction.json` with SHA receipts.

@@ -9,7 +9,7 @@ receipt, the receipt wins and this file must be corrected before anything else.
 - **Branch:** `main` (commit `10fcffb` local; push to origin pending — harness blocks network shell; run `git push origin main` from a local terminal)
 - **Last verified:** 2026-10-27
 - **Working tree:** clean after the F107 commit (see git log)
-- **Tests:** `python -m unittest discover -s tests` -> **438 PASS** (Python 3.14.8, Windows)
+- **Tests:** `python -m unittest discover -s tests` -> **445 PASS** (Python 3.14.8, Windows)
 - **Blender:** 5.2.2 (headless MCP), scene "Scene", 1143 objects, cameras Tevin-Cam / Tevin-Cam-Full / Camera, EEVEE
 - **Owner:** tdmboyd-dev (gh authenticated, repo scope)
 
@@ -65,6 +65,13 @@ receipt, the receipt wins and this file must be corrected before anything else.
     scene restored to 1143 objects, not saved.
 - Interpretation: visual hull bounds; does not invent. The 12% overfill is dominated by
   arm-depth ambiguity between 4 orthogonal views (arms carved with torso-depth z-extent).
+
+### F108 - MGR Segmentation Adapter Contract
+- `forge/segmentation.py`, `tests/test_segmentation.py`
+- Protocol + registry for segmentation backends. Manual owner mask always available;
+  never claims inference. Neural backends deliberately not registered; `available()`
+  must be True on this machine and licence cleared before use. No model shipped.
+- 7 tests PASS. Test count: 445.
 
 ### F106 - MGR Unclothe 3D Visible-Part Extraction
 - `forge/unclothe_3d.py`, `unclothe-review`, `unclothe-extract`, `unclothe-proxy`
@@ -238,7 +245,7 @@ No force push. No large binary artifacts unless justified (artifacts/ is gitigno
 ## 8. Next build order (continue from here)
 
 1. F107 follow-ups: marching-cubes smoothing on the carved occupancy; oblique-view carving;
-   neural segmentation adapter interface (SAM3) behind a gated optional dependency.
+   SAM3 adapter behind the F108 contract (gated optional dependency).
 2. F104: obtain explicit authorization and run the Blender motion export/re-import proof.
 3. F98: install Godot, run engine import/play proof.
 4. F99-F106: smooth multi-bone skinning, fitted garments, full-pose anatomical checks on generic models.
