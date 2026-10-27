@@ -1,3 +1,10 @@
+## 2026-10-27 - F114/F115/F116 durable queue, voice capture, garment fitting
+
+- F114: Added forge/durable_queue.py — file-based durable job queue with enqueue/claim/complete/fail/recover. Survives process restarts. 12 tests PASS.
+- F115: Added forge/voice.py + scripts/windows_speech.py — voice capture contract + Windows Speech Recognition worker. Gated, honest (unproven until mic exercised).
+- F116: Added forge/garment_fit.py — vertex-to-body-surface fitting with offset + coverage report. Rigid fit, not cloth simulation. 4 tests PASS.
+- Total suite now 520 PASS (2 skipped).
+
 ## 2026-10-27 - Tevin reference segmentation (private, not committed)
 
 - Received 6 Tevin private reference images (facial structure, bare feet anatomy, front/side/back T-pose, photorealistic side profile). Stored in .private/tevin-refs/ (gitignored).

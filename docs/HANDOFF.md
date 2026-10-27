@@ -9,7 +9,7 @@ receipt, the receipt wins and this file must be corrected before anything else.
 - **Branch:** `main` (synced with origin at `fe75ecd`; push verified via python subprocess)
 - **Last verified:** 2026-10-27
 - **Working tree:** clean after the F107 commit (see git log)
-- **Tests:** `python -m unittest discover -s tests` -> **504 PASS** (Python 3.14.8, Windows; 2 skipped in test_sam_adapter)
+- **Tests:** `python -m unittest discover -s tests` -> **520 PASS** (Python 3.14.8, Windows; 2 skipped in test_sam_adapter)
 - **Blender:** 5.2.2 (headless MCP), scene "Scene", 1143 objects, cameras Tevin-Cam / Tevin-Cam-Full / Camera, EEVEE
 - **Owner:** tdmboyd-dev (gh authenticated, repo scope)
 
