@@ -282,3 +282,8 @@ When you finish a unit of work:
 - MGR-ONE repo contains the ONE WORK ORDER and the ai-bridge coordination notes.
 - External research segregated under `research/external-provenance/`.
 - All receipts under `evidence/` are JSON; Blender receipts under `evidence/blender/`.
+
+
+## Ecosystem review — October 27, 2026
+
+Additive source-pinned ecosystem context: [human handoff](ecosystem/HUMAN-HANDOFF.md). This review branch preserves the default-branch baseline and existing work orders. Domain runtime/production acceptance is separate.
