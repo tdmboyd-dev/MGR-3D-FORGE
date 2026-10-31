@@ -22,6 +22,7 @@ from .live_blender import create_live_blender_scene
 from .web_runtime import make_world_flight
 from .world_editor import apply_world_edits
 from .asset_atlas import MGRAssetCatalog, MGRSourceAtlas
+from .world_jobs import create_world_job, world_job_status
 
 
 MAX_REQUEST = 1_800_000
@@ -42,6 +43,7 @@ class ForgeWorkstation:
         self.blender = blender
         self.blender_jobs = {}
         self.blender_lock = threading.Lock()
+        self.world_job_lock = threading.RLock()
         self.token = secrets.token_urlsafe(32)
         if not (self.world / "world.glb").is_file():
             raise ValueError("original generated world required")
@@ -115,13 +117,16 @@ class ForgeWorkstation:
             if len(payload.get("query", "")) > 120 or len(payload.get("category", "")) > 48:
                 raise ValueError("asset filters outside limit")
             provider, kind = payload.get("provider", "3dassets"), payload.get("kind", "models")
-            if provider not in ("3dassets", "polyhaven") or kind not in ("models", "textures", "hdris"):
+            if provider not in ("3dassets", "polyhaven", "ambientcg") or kind not in ("models", "textures", "hdris"):
                 raise ValueError("unknown asset source or kind")
             catalog = MGRAssetCatalog(self.workspace / "asset-catalog")
             if payload.get("live", False):
                 try:
                     if provider == "polyhaven":
                         return catalog.search_live_polyhaven(payload.get("query", ""),
+                            kind=kind, limit=payload.get("limit", 6))
+                    if provider == "ambientcg":
+                        return catalog.search_live_ambientcg(payload.get("query", ""),
                             kind=kind, limit=payload.get("limit", 6))
                     return catalog.search_live_3dassets(payload.get("query", ""),
                          category=payload.get("category", ""), limit=payload.get("limit", 6))
@@ -168,6 +173,14 @@ class ForgeWorkstation:
                     "triangles": inspected["geometry"]["triangles"],
                     "mesh_containers": inspected["geometry"]["meshes"],
                     "skins": admitted["skin_count"], "warnings": inspected["warnings"]}
+        if route == "/api/world-job":
+            if set(payload) != {"request_id", "edits"}:
+                raise ValueError("world-job requires stable request_id and edits")
+            return create_world_job(self, payload["request_id"], payload["edits"])
+        if route == "/api/world-job-status":
+            if set(payload) != {"request_id"}:
+                raise ValueError("world-job-status requires only request_id")
+            return world_job_status(self, payload["request_id"])
         if route == "/api/world":
             if set(payload) != {"edits"} or not isinstance(payload["edits"], dict):
                 raise ValueError("expect only world edits document")
@@ -278,7 +291,7 @@ def make_handler(studio):
             return self.send_bytes(404, b"not found", "text/plain")
 
         def do_POST(self):
-            if self.path not in ("/api/asset-sources", "/api/asset-search", "/api/relief", "/api/character", "/api/world", "/api/godot", "/api/blender", "/api/blender-status"):
+            if self.path not in ("/api/asset-sources", "/api/asset-search", "/api/relief", "/api/character", "/api/world", "/api/world-job", "/api/world-job-status", "/api/godot", "/api/blender", "/api/blender-status"):
                 return self.send_bytes(404, b"not found", "text/plain")
             if self.headers.get("X-MGR-Forge-Token") != studio.token:
                 return self.send_bytes(403, b"forbidden", "text/plain")

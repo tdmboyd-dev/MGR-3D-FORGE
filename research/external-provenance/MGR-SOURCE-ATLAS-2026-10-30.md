@@ -11,7 +11,7 @@ service defines what MGR Forge can ultimately create.
 |---|---|---|---|
 | 3DAssets.dev | https://3dassets.dev/docs/api and https://3dassets.dev/docs/mcp | ADAPT as read-only searchable GLB source; bounded direct download | Site asserts CC0, but attribution/source rights remain asset-level assertions. API and actual dragon GLB checked, not Blender visual quality. AI generated flag retained. |
 | Poly Haven | https://polyhaven.com/license and https://polyhaven.com/uk/our-api and https://github.com/Poly-Haven/Public-API/blob/master/swagger.yml | ADAPT official live search for models, textures, HDRIs; no raw package imports yet | Assets CC0; using live API requires visible Poly Haven source credit and specific User-Agent. Actual model and texture searches checked. |
-| ambientCG | https://docs.ambientcg.com/license/ and https://docs.ambientcg.com/api/ | NEXT: material/HDRI source adapter | Recheck exact API download semantics and texture set integrity before import. |
+| ambientCG | https://docs.ambientcg.com/license/ and https://docs.ambientcg.com/api/ | **OFFICIAL LIVE METADATA v3 ADAPTER DONE (2026-10-31)** | Live Leather037/038 search verified; material ZIP/PBR import still OPEN. |
 | MakeHuman / MPFB | https://www.makehumancommunity.org/about/license.html and https://extensions.blender.org/add-ons/mpfb/ | NEXT: character-shape/body/skin generator | Core asset/data CC0, software has separate GPL/AGPL obligations, third-party packs separate. Do not embed copyleft code indiscriminately. |
 | Kenney | https://kenney.nl/support | NEXT: modular game kit import | Asset pages described as CC0; confirm per-pack license and component inventory. |
 | Quaternius | https://quaternius.com/license.html | STUDY/ADAPT for finished products, **reject raw redistributable vault mirroring** | Current QAL v1 (2026-08-28) prohibits standalone asset resale/redistribution even when modified. Older pack/license copies may differ, so record acquisition version. |
@@ -48,3 +48,15 @@ license and use-rights review before integration. Do not mirror their catalogs.
 - Next: expand source adapters (not just static directory entries), review exact
   file rights, sample independent engine import/visual QA, asset placement,
   human/creature morph/skin/rig factory and selective kit extraction.
+
+## 2026-10-31 optional neural engines and package rights
+
+Candidate models referenced by code in `forge/data/generative_engines.json`, none installed:
+- TRELLIS.2 (MIT main code/model; separate third-party dependencies, official Linux 24+ GB NVIDIA GPU): https://github.com/microsoft/TRELLIS.2
+- Pixal3D (MIT public code/weights per publisher NOTICE, dependencies separate; multiview inference Sep 2026): https://github.com/TencentARC/Pixal3D
+- TripoSR (single-image reconstruction, code and separately pinned checkpoint review): https://github.com/VAST-AI-Research/TripoSR
+- Microsoft TRELLIS original (text/image-to-3D and variation, exact checkpoints/VRAM not validated): https://github.com/microsoft/TRELLIS
+- Hunyuan3D 2.1 (Tencent restrictive community license includes territorial/commercial and output restrictions; **not** default unrestricted MGR commercial backend): https://github.com/Tencent-Hunyuan/Hunyuan3D-2.1/blob/main/LICENSE
+- MPFB / MakeHuman (code GPL, official core assets CC0, community packs mixed): https://www.makehumancommunity.org/about/license.html
+
+Provider free/unlimited is NOT proof of no restrictions: Meshy API has rate/concurrency/credit limits https://docs.meshy.ai/en/api/rate-limits and https://docs.meshy.ai/en/api/pricing ; local open-weight inference has no API quota but GPU/memory/runtime/storage are finite. Never scrape/download entire external sites or weights without license review + pinned commits/digests. The MGR-native procedural geometry and morph kernel requires no external kit/model/credits.

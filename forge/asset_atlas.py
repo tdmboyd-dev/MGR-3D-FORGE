@@ -130,7 +130,7 @@ class MGRAssetCatalog:
         return data["items"]
 
     def remember(self, listings):
-        if len(listings) > 100 or any(record.get("provider_id") not in ("3dassets", "polyhaven")
+        if len(listings) > 100 or any(record.get("provider_id") not in ("3dassets", "polyhaven", "ambientcg")
                                       for record in listings):
             raise ValueError("unsupported provider catalog batch")
         items = self._read()
@@ -277,6 +277,10 @@ class MGRAssetCatalog:
                 "returned": len(found), "skipped_unadmittable": len(results) - len(found),
                 "listings": found, "assets_downloaded": 0,
                 "api_credit": "Powered by Poly Haven"}
+
+    def search_live_ambientcg(self, query, *, kind="textures", limit=6, opener=urlopen):
+        from .ambientcg_source import search_ambientcg
+        return search_ambientcg(self, query, kind=kind, limit=limit, opener=opener)
 
     def acquire_3dassets(self, slug, store_root, *, opener=urlopen):
         """Explicitly download to local quarantine; never advertise as usable/cleared."""

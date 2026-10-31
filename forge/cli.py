@@ -123,7 +123,7 @@ def main(argv=None):
     asset_search.add_argument("--query", default="", help="model text, e.g. dragon")
     asset_search.add_argument("--category", default="", help="upstream category when live; cached category when offline")
     asset_search.add_argument("--live", action="store_true", help="make one read-only remote API call; no model download")
-    asset_search.add_argument("--provider", choices=("3dassets", "polyhaven"), default="3dassets")
+    asset_search.add_argument("--provider", choices=("3dassets", "polyhaven", "ambientcg"), default="3dassets")
     asset_search.add_argument("--kind", choices=("models", "textures", "hdris"), default="models",
                               help="Poly Haven asset family; other provider ignores")
     asset_search.add_argument("--limit", type=int, default=6)
@@ -131,6 +131,22 @@ def main(argv=None):
     asset_acquire.add_argument("--catalog", type=Path, required=True, help="catalog containing previously discovered asset")
     asset_acquire.add_argument("--slug", required=True, help="exact returned 3DAssets.dev source slug")
     asset_acquire.add_argument("--store", type=Path, required=True, help="content-addressed local Forge asset vault")
+    mirror = sub.add_parser("kit-mirror", help="preserve a pinned official KayKit CC0 archive in quarantined local vault; no extraction")
+    mirror.add_argument("--repo", required=True, help="allowlisted official KayKit repository name")
+    mirror.add_argument("--commit", required=True, help="exact 40-digit Git commit SHA")
+    mirror.add_argument("--store", type=Path, required=True, help="private asset-vault directory; not source Git")
+    mirror.add_argument("--sha256", default=None, help="optional expected archive SHA-256")
+    model_engines = sub.add_parser("model-engines", help="show verified native vs uninstalled optional AI 3D engines and license gates")
+    imagine = sub.add_parser("imagine-creature", help="create procedural creature mesh and design DNA; not neural inference")
+    imagine.add_argument("--prompt", required=True, help="brief describing the creature, 8..500 chars")
+    imagine.add_argument("--seed", type=int, default=42)
+    imagine.add_argument("--variants", type=int, default=6, help="1..12 alternate anatomy designs to evaluate")
+    imagine.add_argument("--out", type=Path, required=True, help="new directory with GLB, DNA variants and proof")
+    imagine.add_argument("--morph", type=Path, help="optional JSON morph recipe (length/height/width/twist_degrees)")
+    rig_creature = sub.add_parser("rig-creature", help="fit DNA skeleton, weighted skin and test real animation in independent Blender processes")
+    rig_creature.add_argument("--source", type=Path, required=True, help="MGR generated creature directory")
+    rig_creature.add_argument("--out", type=Path, required=True, help="new directory for editable rigged .blend + GLB")
+    rig_creature.add_argument("--blender", default="blender", help="Blender 5.x binary")
     create = sub.add_parser("build", help="generate real GLB geometry + manifest")
     create.add_argument("--spec", type=Path, help="optional WorldSpec JSON")
     create.add_argument("--out", type=Path, required=True, help="output directory")
@@ -235,6 +251,7 @@ def main(argv=None):
     rectify.add_argument("--size",type=int,nargs=2,required=True,metavar=("W","H"),help="output size")
     gpu_plan=sub.add_parser("gpu-plan",help="dry-run cost plan for renting a GPU (no money spent)")
     gpu_plan.add_argument("--jobs",type=Path,required=True,help="JSON file with a list of job objects")
+    gpu_plan.add_argument("--offers",type=Path,help="optional current provider quotes JSON; omitted means UNPRICED")
     gpu_plan.add_argument("--min-vram",type=float,default=0.0)
     gpu_plan.add_argument("--max-cost",type=float,default=1e9)
     gpu_plan.add_argument("--prefer",choices=("cost","performance","value"),default="cost")
@@ -374,6 +391,8 @@ def main(argv=None):
         if args.live:
             if args.provider == "polyhaven":
                 result = catalog.search_live_polyhaven(args.query, kind=args.kind, limit=args.limit)
+            elif args.provider == "ambientcg":
+                result = catalog.search_live_ambientcg(args.query, kind=args.kind, limit=args.limit)
             else:
                 result = catalog.search_live_3dassets(args.query, category=args.category, limit=args.limit)
         else:
@@ -385,6 +404,33 @@ def main(argv=None):
     if args.action == "asset-acquire":
         from .asset_atlas import MGRAssetCatalog
         print(json.dumps(MGRAssetCatalog(args.catalog).acquire_3dassets(args.slug, args.store), indent=2))
+        return 0
+    if args.action == "kit-mirror":
+        from .pack_mirror import mirror_kaykit_pack
+        print(json.dumps(mirror_kaykit_pack(args.repo, args.commit, args.store,
+                      expected_sha256=args.sha256), indent=2))
+        return 0
+    if args.action == "model-engines":
+        from .generative_backends import load_engine_profiles
+        profiles=load_engine_profiles()
+        print(json.dumps({"schema":"mgr.forge.engines-status.v1",
+                          "engines":profiles,"ready":sum(bool(x["runtime_ready"]) for x in profiles)},indent=2))
+        return 0
+    if args.action == "imagine-creature":
+        from .imagination import create_original_creature
+        recipe=json.loads(args.morph.read_text(encoding="utf-8")) if args.morph else None
+        result=create_original_creature(args.prompt,args.out,seed=args.seed,variants=args.variants,morph=recipe)
+        print(json.dumps({"status": result["status"], "mesh_sha256": result["artifact"]["sha256"],
+                          "design_candidates": len(result["candidates"]), "out": str(args.out),
+                          "neural_inference": False, "rigged": False},indent=2))
+        return 0
+    if args.action == "rig-creature":
+        from .creature_rig import rig_creature as run_creature_rig
+        result=run_creature_rig(args.source,args.out,blender=args.blender)
+        print(json.dumps({"status":result["status"],"bones":result["bones"],
+                          "rigged_glb_sha256":result["rigged_glb_sha256"],
+                          "animation_motion_m":result["max_evaluated_vertex_motion_m"],
+                          "production_accepted":False},indent=2))
         return 0
     if args.action == "inspect":
         print(json.dumps(inspect_glb(args.path.read_bytes()), indent=2))
@@ -496,13 +542,14 @@ def main(argv=None):
         jobs=json.loads(args.jobs.read_text(encoding="utf-8"))
         if not isinstance(jobs,list):
             raise ValueError("jobs file must contain a list")
+        offers=json.loads(args.offers.read_text(encoding="utf-8")) if args.offers else None
         plan=plan_rental(jobs,min_vram_gb=args.min_vram,max_cost_per_hour=args.max_cost,
-                         prefer=args.prefer,block_hours=args.block_hours)
+                         prefer=args.prefer,block_hours=args.block_hours,offers=offers)
         if args.out.exists():
             raise FileExistsError("plan receipt already exists")
         args.out.parent.mkdir(parents=True,exist_ok=True)
         args.out.write_text(json.dumps(plan,indent=2,sort_keys=True)+"\n",encoding="utf-8")
-        print(json.dumps({"status":plan["status"],"selected_gpu":plan["selected_gpu"]["name"],
+        print(json.dumps({"status":plan["status"],"selected_gpu":plan["selected_gpu"]["name"] if plan["selected_gpu"] else None,
                           "total_estimated_cost":plan["total_estimated_cost"],
                           "blocks":plan["packing"]["totals"]["blocks"],
                           "shadow_use_seconds":plan["shadow_use_seconds"],

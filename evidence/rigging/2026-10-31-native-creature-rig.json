@@ -1,0 +1,34 @@
+{
+  "animated_bones": [
+    "tail_01",
+    "tail_02",
+    "left_wing_01",
+    "right_wing_01"
+  ],
+  "art_quality_accepted": false,
+  "blender_version": "5.2.2 LTS",
+  "bones": 19,
+  "date": "2026-10-31",
+  "external_api_spend_usd": 0,
+  "external_gpu_calls": 0,
+  "independent_blender_preview_sha256": "f7634aa7452a3f96ef9d38d254f78eb44cc0fb25c01e54e0fec1daf8e634a407",
+  "independent_blender_reopen": true,
+  "initial_dna_mesh_sha256": "bf7efa3f972a80bdcd69e163b31fc1e3935189431b4c1a6f7c2a9f735cdbffa4",
+  "known_limits": [
+    "nearest-segment weights only; no joint-aware anatomical skin",
+    "no locomotion, cloth, facial controls or game-performance acceptance",
+    "fixed skeleton family derived from generated creature DNA"
+  ],
+  "local_reproduction": "python -m forge.cli imagine-creature ... ; python -m forge.cli rig-creature --source path --out path --blender path; see tests and bridge scripts",
+  "max_vertex_motion_m": 1.8415,
+  "mesh_objects": 1,
+  "model_inference_used": false,
+  "production_rig_accepted": false,
+  "reimported_animation_actions": 1,
+  "rigged_glb_bytes": 232672,
+  "rigged_glb_sha256": "c96a5a6e83ca18b3b3ac9d16f03a4cbc01b82b485faf02442d198d73ad7b25ea",
+  "schema": "mgr.forge.local-creature-morph-rig-evidence.v1",
+  "source": "MGR-native-generated, no purchased or copied character",
+  "vertices": 3840,
+  "weighted_vertices": 3840
+}

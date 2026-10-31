@@ -1,3 +1,22 @@
+## 2026-10-31 — Advanced MorphRig plus pinned-license source research (F124–F127)
+
+- Detected and repaired inconsistent twist fields across independent material meshes; tied creature geometry and joint positions to one global deformation extent; fixed word parsing for winged/horned anatomy, then ran focused regressions.
+- New DNA rig blueprint and Blender scripts generate a 19-bone creature skeleton and weight 3,840 vertices, animate four appendage bones, save and export a 232,672-byte GLB (SHA c96a5a6e83ca18b3b3ac9d16f03a4cbc01b82b485faf02442d198d73ad7b25ea), independently reimport and render under Blender 5.2.2. Rig visual is crude; production weights/character appearance not approved. Exact measured proof in evidence/rigging/2026-10-31-native-creature-rig.json.
+- Corrected Blender receiver false negative caused by picking an imported helper Icosphere rather than the one truly skinned creature mesh. Reopened with 19 bones, one animation action and one armature-skinned mesh.
+- Expanded generative profile candidate list from 7 to 14 and researched exact license variants/third-party folder restrictions for AniGen, UniRig, Rigger, Higgsfield CLI (proprietary remote models), TRELLIS.2, Pixal3D, Adobe RigAnything, MeshAnythingV2, SAM3D. No restricted code or weights installed; not declaring beyond-Meshy visual quality.
+- KayKit exact CC0 scope: new v2 private archive receipt tags all 302 historical files inside the LICENSE-bearing Assets subtree; maintains older v1 receipt. No automatic individual-asset clearance or offsite backup. Public summary in evidence/asset-atlas/2026-10-31-official-kit-license-scope.json.
+- On this final code, `python -m unittest discover -q`: **586 run, 583 passed, 3 skipped, 0 failures**. API/MCP 60/60 and Creation OS 122/122 rerun in clean sibling clones. No paid GPU, paid API or GitHub Actions launched.
+- See one canonical `docs/HANDOFF.md`, `docs/BUILD-REGISTER.md` F124-F127, `docs/IMAGINATION-FORGE-ROADMAP.md` and the external-provenance source matrix. The older 2026-10-31 entry below is a prior stage of the same wave.
+
+## 2026-10-31 — standalone direct Forge creation, official pack persistence, and native imagination
+
+- Inspected clean GitHub main 25006182ab41bdcc254e2d2aab0d7c2f74a46d89, not unrelated dirty Windows repair branch. Rebuilt broken F110 GPU planner with FFD + shadow backfill and no-spend UNPRICED defaults; original historical source/28-test claim remains archived.
+- Source Atlas third official live provider ambientCG returned genuine leather material listings; no actual texture ZIP mounted. Official pinned KayKit Prototype Bits archive: 773,696 bytes, SHA 17985aed..., 302 entries, 72 distinct glTF models, nested Assets-only CC0 license scope; private vault, not GitHub. One official asset Barrel_A glTF imported, saved, reopened and preview-rendered in Windows Blender 5.2.2, quality/rights approval open.
+- Direct new durable Studio world jobs + API/MCP tools reuse the existing tools:execute permission, stable IDs and tenant/actor; actual HTTP Python→Node real GLB 13,964 bytes SHA 89144125..., duplicate replay verified/denied wrong tenant/missing scope. Creation OS 3D false-success reference was blocked (122 tests). API/MCP 60 tests PASS.
+- Native imagination v1 generates original CPU creature triangle geometry from prompt/morph variants without stock kit, provider or paid GPU. Eight-candidate fantasy creature GLB SHA fb03416..., independently Blender 5.2.2 imported and reopened/rendered: 1 mesh, 2,528 faces, 5 materials, 0 armatures. Preview visually rough low-poly; NOT art or rig approved. Added morph geometry kernel, candidate model/weight/license catalog only; no heavyweight AI engine or weight installed.
+- See one active `docs/HANDOFF.md`, `docs/IMAGINATION-FORGE-ROADMAP.md` and feature rows F121–F123. Local tests and acceptance evidence are precise, not broad production claims.
+
+
 ## 2026-10-27 - F117 GPU account management
 
 - Added forge/gpu_accounts.py: per-user GPU provider credential store (encrypted at rest, never committed), founder pooled account for shadow use, Tevin auto-selects best account. 26 tests PASS.

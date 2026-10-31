@@ -1,0 +1,22 @@
+{
+  "actual_blender_scoped_asset": "Assets/gltf/Barrel_A.gltf",
+  "archive_bytes": 773696,
+  "archive_sha256": "17985aed180fe2f658c526e92dc300f2fde72db09494433153c7e808c6137afe",
+  "blender_import_reopen_render_verified": true,
+  "cc0_scope_file_claim_count": 302,
+  "commit": "bb159596f4f5106b663741d002c8eb45c80c0f41",
+  "date": "2026-10-31",
+  "file_count": 302,
+  "files_outside_this_license_scope": 0,
+  "future_human_clearance_required": true,
+  "license_notice_path": "KayKit-Prototype-Bits-1.0-bb159596f4f5106b663741d002c8eb45c80c0f41/addons/kaykit_prototype_bits/Assets/LICENSE.txt",
+  "license_notice_sha256": "1706d3369ecd7676320c03c25a898cc29fd1bb83bd3136646c45e6f400058887",
+  "license_scope": "KayKit-Prototype-Bits-1.0-bb159596f4f5106b663741d002c8eb45c80c0f41/addons/kaykit_prototype_bits/Assets",
+  "private_receipt_version": "mgr.forge.pack-preservation.v2",
+  "raw_assets_in_git": false,
+  "raw_v1_receipt_preserved": true,
+  "rights_reviewed": false,
+  "safe_to_redistribute": false,
+  "schema": "mgr.forge.license-scope-evidence.v2",
+  "source": "https://github.com/KayKit-Game-Assets/KayKit-Prototype-Bits-1.0/tree/bb159596f4f5106b663741d002c8eb45c80c0f41"
+}

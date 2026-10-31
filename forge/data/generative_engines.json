@@ -1,0 +1,292 @@
+{
+  "schema": "mgr.forge.generative-engine-candidates.v1",
+  "reviewed_at": "2026-10-31",
+  "note": "Profiles, not installed backends. Root licenses DO NOT override nested code, weights, encoders, model cards, territories or hosted API fees. Only MGR-native geometry is runnable.",
+  "engines": [
+    {
+      "id": "mgr-native-imagination",
+      "source": "forge/imagination.py",
+      "tasks": [
+        "text-to-stylized-creature",
+        "procedural-morph"
+      ],
+      "license": "MGR-OWNED_CODE",
+      "license_status": "OWNED",
+      "min_vram_gb": 0,
+      "platform": [
+        "Windows",
+        "Linux",
+        "macOS"
+      ],
+      "network_required": false,
+      "source_code_present": true,
+      "model_weights_present": false,
+      "runtime_ready": true,
+      "release_notes": "Generates novel parameter combinations and triangle geometry; not a neural generator, real rig or photoreal model"
+    },
+    {
+      "id": "trellis-2",
+      "source": "https://github.com/microsoft/TRELLIS.2",
+      "tasks": [
+        "image-to-3d",
+        "pbr-mesh",
+        "geometry-material-generation"
+      ],
+      "license": "MIT (code/model, dependencies separately checked)",
+      "license_status": "THIRD_PARTY_DEPENDENCY_REVIEW_PENDING",
+      "min_vram_gb": 24,
+      "platform": [
+        "Linux"
+      ],
+      "network_required": false,
+      "source_code_present": false,
+      "model_weights_present": false,
+      "runtime_ready": false,
+      "release_notes": "4B image-to-3D model; H100 benchmark not a customer runtime promise"
+    },
+    {
+      "id": "pixal3d",
+      "source": "https://github.com/TencentARC/Pixal3D",
+      "tasks": [
+        "image-to-3d",
+        "multiview-image-to-3d",
+        "pbr-mesh"
+      ],
+      "license": "MIT declared for public code/weights; dependencies separately licensed",
+      "license_status": "THIRD_PARTY_DEPENDENCY_REVIEW_PENDING",
+      "min_vram_gb": null,
+      "platform": [
+        "Linux"
+      ],
+      "network_required": false,
+      "source_code_present": false,
+      "model_weights_present": false,
+      "runtime_ready": false,
+      "release_notes": "SIGGRAPH 2026 multi-view code; GPU fit and source image consistency pilot required"
+    },
+    {
+      "id": "triposr",
+      "source": "https://github.com/VAST-AI-Research/TripoSR",
+      "tasks": [
+        "single-image-to-3d"
+      ],
+      "license": "MIT code, separately verify pinned weights/model card",
+      "license_status": "MODEL_WEIGHTS_REVIEW_PENDING",
+      "min_vram_gb": null,
+      "platform": [
+        "Linux",
+        "Windows"
+      ],
+      "network_required": false,
+      "source_code_present": false,
+      "model_weights_present": false,
+      "runtime_ready": false,
+      "release_notes": "Fast reconstruction, not prompt-only imagination or character rigging"
+    },
+    {
+      "id": "trellis-original",
+      "source": "https://github.com/microsoft/TRELLIS",
+      "tasks": [
+        "text-to-3d",
+        "image-to-3d",
+        "asset-variation"
+      ],
+      "license": "CHECK_PINNED_CODE_AND_WEIGHTS",
+      "license_status": "MODEL_WEIGHTS_REVIEW_PENDING",
+      "min_vram_gb": null,
+      "platform": [
+        "Linux"
+      ],
+      "network_required": false,
+      "source_code_present": false,
+      "model_weights_present": false,
+      "runtime_ready": false,
+      "release_notes": "Candidate text-to-3D model with mesh output and local editing; test weights/VRAM"
+    },
+    {
+      "id": "hunyuan3d-2.1",
+      "source": "https://github.com/Tencent-Hunyuan/Hunyuan3D-2.1",
+      "tasks": [
+        "image-to-3d",
+        "pbr-texture"
+      ],
+      "license": "Tencent Hunyuan 3D 2.1 Community License",
+      "license_status": "RESTRICTED_TERRITORY_AND_COMMERCIAL_GATE",
+      "min_vram_gb": 29,
+      "platform": [
+        "Linux",
+        "Windows"
+      ],
+      "network_required": false,
+      "source_code_present": false,
+      "model_weights_present": false,
+      "runtime_ready": false,
+      "release_notes": "Official readme cites ~10GB shape/21GB texture/29GB combined; restricted territory/third-party service license; no automatic embedding"
+    },
+    {
+      "id": "makehuman-mpfb",
+      "source": "https://www.makehumancommunity.org/mpfb/index.html",
+      "tasks": [
+        "parametric-human-body",
+        "face-morph",
+        "skin",
+        "body-proportions"
+      ],
+      "license": "GPL software, CC0 core assets; external packs separate",
+      "license_status": "CODE_ASSET_SPLIT_LICENSE_REVIEW",
+      "min_vram_gb": 0,
+      "platform": [
+        "Windows",
+        "Linux",
+        "macOS"
+      ],
+      "network_required": false,
+      "source_code_present": false,
+      "model_weights_present": false,
+      "runtime_ready": false,
+      "release_notes": "Human morph foundation; not a diffusion prompt generator or guaranteed photoreal engine"
+    },
+    {
+      "id": "anigen",
+      "source": "https://github.com/VAST-AI-Research/AniGen",
+      "tasks": [
+        "image-to-3d-rigged",
+        "skeleton-skin-joint-generation"
+      ],
+      "license": "MIT core; NVIDIA NONCOMMERCIAL in extensions/CUBVH",
+      "license_status": "RESTRICTED_SUBTREE_EXCLUDE_AND_REVIEW",
+      "min_vram_gb": 18,
+      "platform": [
+        "Linux"
+      ],
+      "network_required": false,
+      "source_code_present": false,
+      "model_weights_present": false,
+      "runtime_ready": false,
+      "source_commit": "c49db3d6b466537a02ccf2286688903d77af7e4f",
+      "excluded_path": "extensions/CUBVH",
+      "release_notes": "Joint geometry/rig flow; image-conditioned, not prompt-only; training restricted subtree must not be bundled"
+    },
+    {
+      "id": "unirig",
+      "source": "https://github.com/VAST-AI-Research/UniRig",
+      "tasks": [
+        "mesh-to-skeleton",
+        "automatic-skin-weights"
+      ],
+      "license": "MIT code; HF weights MIT claim, partial release",
+      "license_status": "EXACT_WEIGHTS_RELEASE_SCOPE_REVIEW",
+      "min_vram_gb": null,
+      "platform": [
+        "Linux"
+      ],
+      "network_required": false,
+      "source_code_present": false,
+      "model_weights_present": false,
+      "runtime_ready": false,
+      "source_commit": "6793c6640ff01c8fb389f3993434124bb43d2933",
+      "release_notes": "Available checkpoint not entire published framework; independent imported rig QA required"
+    },
+    {
+      "id": "hunyuan3d-omni",
+      "source": "https://github.com/Tencent-Hunyuan/Hunyuan3D-Omni",
+      "tasks": [
+        "pose-conditioned-3d",
+        "voxel-conditioned-3d",
+        "bbox-conditioned-3d",
+        "pointcloud-conditioned-3d"
+      ],
+      "license": "Tencent Hunyuan 3D Omni Community License",
+      "license_status": "RESTRICTED_TERRITORY_OUTPUT_AND_SERVICE",
+      "min_vram_gb": 10,
+      "platform": [
+        "Linux"
+      ],
+      "network_required": false,
+      "source_code_present": false,
+      "model_weights_present": false,
+      "runtime_ready": false,
+      "release_notes": "Commercial and territorial restrictions; cannot default to unrestricted 3D backend"
+    },
+    {
+      "id": "sam-3d-objects",
+      "source": "https://github.com/facebookresearch/sam-3d-objects",
+      "tasks": [
+        "image-scene-object-to-3d",
+        "occlusion-reconstruction"
+      ],
+      "license": "SAM License; gated weights",
+      "license_status": "SAM_RESTRICTED_AND_GATED",
+      "min_vram_gb": null,
+      "platform": [
+        "Linux"
+      ],
+      "network_required": false,
+      "source_code_present": false,
+      "model_weights_present": false,
+      "runtime_ready": false,
+      "release_notes": "Individual checkpoint licenses and allowed jurisdiction require approval; not simply MIT"
+    },
+    {
+      "id": "meshanything-v2",
+      "source": "https://github.com/buaacyw/MeshAnythingV2",
+      "tasks": [
+        "mesh-retopology",
+        "mesh-to-artist-topology"
+      ],
+      "license": "S-Lab License 1.0, noncommercial without permission",
+      "license_status": "NONCOMMERCIAL_EXCLUDE_FROM_PRODUCT",
+      "min_vram_gb": 8,
+      "platform": [
+        "Linux"
+      ],
+      "network_required": false,
+      "source_code_present": false,
+      "model_weights_present": false,
+      "runtime_ready": false,
+      "source_commit": "461d3b6ed750ab3443281b2e4a0e30e8ee98097e",
+      "release_notes": "About 1600-face output limit; not a general high-detail replacement"
+    },
+    {
+      "id": "riganything-research",
+      "source": "https://github.com/Isabella98Liu/RigAnything",
+      "tasks": [
+        "research-template-free-autorigger"
+      ],
+      "license": "Adobe Research License, noncommercial research",
+      "license_status": "NONCOMMERCIAL_RESEARCH_ONLY",
+      "min_vram_gb": null,
+      "platform": [
+        "Linux"
+      ],
+      "network_required": false,
+      "source_code_present": false,
+      "model_weights_present": false,
+      "runtime_ready": false,
+      "source_commit": "d03cdb21dd134fa81df6b0947522469db3f78bd2",
+      "release_notes": "No commercial embedding. Study paper concepts for clean-room native design only"
+    },
+    {
+      "id": "higgsfield-3d-service",
+      "source": "https://github.com/higgsfield-ai/cli",
+      "tasks": [
+        "provider-image-to-3d",
+        "provider-3d-rigging"
+      ],
+      "license": "MIT command-line client; proprietary hosted models",
+      "license_status": "PROPRIETARY_PAID_SERVICE_NO_LOCAL_WEIGHTS",
+      "min_vram_gb": null,
+      "platform": [
+        "Windows",
+        "Linux",
+        "macOS"
+      ],
+      "network_required": true,
+      "source_code_present": false,
+      "model_weights_present": false,
+      "runtime_ready": false,
+      "source_commit": "fd21e7cb550b5835cc00c6b4abfea0c02fe77ff2",
+      "release_notes": "CLI is not a downloadable free Higgsfield 3D Jutsu model or unlimited provider"
+    }
+  ]
+}
