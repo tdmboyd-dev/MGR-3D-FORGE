@@ -40,6 +40,13 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opaci
   <button id="director-build-world" type="button" disabled>Build Edited World</button>
   <button id="director-build-blender" type="button" disabled>Open in Blender Project</button>
   <button id="director-build-godot" type="button" disabled>Download Game Engine Project</button>
+  <hr><h2>MGR SOURCE ATLAS</h2><small>Find faces, creatures, textures, game kits and creation tools. Source discovery is not a rights or quality approval.</small>
+  <label for="director-asset-query">What do you need?</label>
+  <input id="director-asset-query" type="search" maxlength="120" placeholder="dragon, skin, modular city, hair" style="width:100%;background:#29364a;color:#fff;padding:8px;border:1px solid #64778f;border-radius:7px">
+  <select id="director-asset-provider" aria-label="Asset source" style="width:100%;background:#29364a;color:#fff;padding:8px;border:1px solid #64778f;border-radius:7px"><option value="3dassets">3DAssets.dev · CC0 models</option><option value="polyhaven-models">Poly Haven · 3D models</option><option value="polyhaven-textures">Poly Haven · textures</option><option value="polyhaven-hdris">Poly Haven · lighting/HDRIs</option></select>
+  <button id="director-source-search" type="button" disabled>Find Source Libraries</button>
+  <button id="director-asset-search" type="button" disabled>Search Free 3D Models</button>
+  <div id="director-asset-results" aria-live="polite"></div>
   <div id="director-downloads" aria-live="polite"></div>
   <p id="director-msg" role="status" aria-live="polite">Ready. No external AI call or GPU required for supported commands.</p>
 </aside>

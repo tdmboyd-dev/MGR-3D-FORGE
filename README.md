@@ -1,6 +1,39 @@
 # MGR 3D FORGE
 
-> **Latest connected creation wave (2026-10-25):** The Creation Director creates/changes/deletes real 3D buildings, exports edited worlds to Blender, packages Godot 4 projects and now inspects existing GLB models directly from Creation Chat. **364/364 Python tests PASS on Time's Windows PC on full rerun**; connected Chrome passed **8/8 checks**, including GLB upload and its preservation/report downloads. Blender 5.2.2 imported a generic character test model into an editable `.blend` and a second Blender process reopened it with the original SHA intact. See `evidence/browser/windows-wave23-model-admission.json` and `evidence/blender/windows-wave22-character-intake.json`. Godot receiving-engine import, owner-approved Tevin likeness, full image-to-character reconstruction, hardware microphone validation and unrestricted voice-to-Python remain **unverified/unbuilt**.
+**Current Source Atlas wave (2026-10-30):** Forge now has a 17-source, rights-aware discovery directory, live free-model search from 3DAssets.dev and live models/textures/HDRIs search from Poly Haven. Its Creation Chat can look for those sources and public model metadata through the token-protected localhost Studio. A selected GLB can be downloaded explicitly into the existing content-addressed Forge vault and stays **quarantined for license and independent visual/geometry acceptance**, not automatically approved for resale or world use. A read-only API/MCP bridge tool is implemented in the sibling MGR-API-MCP repository and verified against an actual local Forge Studio, but a hosted Tevin session is **not** claimed. On this checkout **543 Python tests ran, 540 passed, 3 skipped, 0 failed**; proof: `evidence/asset-atlas/2026-10-30-proof.json`.
+
+> **Historical connected creation wave (2026-10-25):** The Creation Director creates/changes/deletes real 3D buildings, exports edited worlds to Blender, packages Godot 4 projects and inspects existing GLBs from Creation Chat. Its **364/364 Windows Python tests** and **8/8 Chrome checks** belong to the historical candidate at that date. Blender 5.2.2 imported a generic character test model into an editable `.blend` and a second process reopened its original SHA. See `evidence/browser/windows-wave23-model-admission.json` and `evidence/blender/windows-wave22-character-intake.json`. **Godot 4.3 headless import/play later passed on Windows on 2026-10-27**; visual play acceptance, approved Tevin likeness, complete image-to-character reconstruction and real mic testing remain open.
+
+## Explore free creation sources and 3D models
+
+The offline source directory covers humans/faces, skin materials, clothing,
+creatures, animals, fantasy models, rigs, motion, worlds, architecture, props,
+vehicles, textures, HDRIs, 3D scans, AI shape tools and game kits. It does
+**not** mean those 17 sites' files are already installed or license-cleared.
+
+```bash
+# Find source libraries and their exact redistribution warning:
+python3 -m forge.cli asset-sources --category fantasy-creatures
+python3 -m forge.cli asset-sources --category skin-materials
+
+# Query official free read APIs; metadata persists for search after restart:
+python3 -m forge.cli asset-search --catalog artifacts/source-atlas --query dragon --live --limit 6
+python3 -m forge.cli asset-search --catalog artifacts/source-atlas --provider polyhaven --kind models --query rock --live --limit 4
+python3 -m forge.cli asset-search --catalog artifacts/source-atlas --provider polyhaven --kind textures --query leather --live --limit 4
+python3 -m forge.cli asset-search --catalog artifacts/source-atlas --query dragon
+
+# Only for an exact previously discovered 3DAssets.dev slug; downloads ONE
+# GLB into the local vault in an UNAPPROVED/quarantined state, not into Git:
+python3 -m forge.cli asset-acquire --catalog artifacts/source-atlas --slug EXACT_DISCOVERED_SLUG --store artifacts/asset-vault
+```
+
+The Source Atlas is also available through the local Studio's **Creation
+Chat**. Public Poly Haven API searches retain the required visible
+`Powered by Poly Haven` attribution; its asset files are CC0, but no download
+or independent Blender proof is implied by a search result. The Quaternius
+2026 QAL permits use inside products but forbids raw standalone asset
+redistribution. MGR's full external source decisions live in
+`research/external-provenance/MGR-SOURCE-ATLAS-2026-10-30.md`.
 
 **Connected local workstation:** Use the creation chat's PNG-to-3D-relief, Build Edited World and Blender Project buttons from a locally served session. The Blender conversion runs in a background job with status polling so the browser stays responsive. Full one-shot figure reconstruction remains unbuilt. Sample CLI (port 0 picks a free local port; open the URL it prints):
 

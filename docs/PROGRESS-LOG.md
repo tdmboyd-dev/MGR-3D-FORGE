@@ -5,9 +5,9 @@
 
 ## 2026-10-27 - F114/F115/F116 durable queue, voice capture, garment fitting
 
-- F114: Added forge/durable_queue.py � file-based durable job queue with enqueue/claim/complete/fail/recover. Survives process restarts. 12 tests PASS.
-- F115: Added forge/voice.py + scripts/windows_speech.py � voice capture contract + Windows Speech Recognition worker. Gated, honest (unproven until mic exercised).
-- F116: Added forge/garment_fit.py � vertex-to-body-surface fitting with offset + coverage report. Rigid fit, not cloth simulation. 4 tests PASS.
+- F114: Added forge/durable_queue.py — file-based durable job queue with enqueue/claim/complete/fail/recover. Survives process restarts. 12 tests PASS.
+- F115: Added forge/voice.py + scripts/windows_speech.py — voice capture contract + Windows Speech Recognition worker. Gated, honest (unproven until mic exercised).
+- F116: Added forge/garment_fit.py — vertex-to-body-surface fitting with offset + coverage report. Rigid fit, not cloth simulation. 4 tests PASS.
 - Total suite now 520 PASS (2 skipped).
 
 ## 2026-10-27 - Tevin reference segmentation (private, not committed)
@@ -420,4 +420,14 @@ The initial historical snapshot has been superseded by the current live inventor
 - 11 new tests for real mask extraction, missing approval, rejection, invalid kinds/paths, duplicate IDs, mismatched dimensions, empty masks, overwrite and schema errors. **408/408 tests OK (30 environment skips)** using `python3 -m unittest discover -q`.
 - Continued the same wave with a deterministic `unclothe-proxy` step: converts actual approved alpha silhouettes to bounded watertight-style front/back/sides thickness geometry with shared source-image coordinates, exports each part as a separate standard GLB, checks it with the independent GLB parser, saves SHA receipts. No synthetic depth claim. 4 more real geometry/tamper/no-overwrite tests: **412 tests OK, 30 environment skips**.
 - Added an independent executable CLI three-step smoke test (review → approved 2D extraction → GLB proxy materialization), raising the total to **413 tests OK (30 environment skips)**.
+
+## 2026-10-30 — F118–F120 Source Atlas / quarantined intake / MGR API/MCP source bridge
+
+- Recovered actual Forge and sibling API/MCP GitHub `main` before changing code; inspected existing Forge source/vault/Studio, native canon, API authenticated MCP and Creation OS ownership.
+- F118: `forge/data/asset_sources.json` now records 17 candidate source families with categories and explicit access/rights status, covering faces/skin/humans, real and fantasy animals, worlds/kits, props, motion, materials and 3D generation. Live bounded **3DAssets.dev model** and **Poly Haven model/texture/HDRI** search, caching, CLI, token-protected Studio endpoints and Creation Chat source panel added. Other 15 remain directory leads, not fetched/validated.
+- F119: explicit 3DAssets.dev GLB fetch into SHA-addressed existing vault, stable source URL/license metadata, malicious redirect/overlarge input refusal, no hidden raw redistribution. Real published Western Dragon 198,252-byte GLB acquired, 6 mesh containers inspected and SHA `e6d97b12ff47d996025af6f75fa7bc1670d0747ae81b86a83ed6d4247f789172`. **Quarantined**; independent Blender import, visual quality, rights adjudication and rigging not proven. Raw asset intentionally not committed.
+- F120: sibling `MGR-API-MCP` gained conditionally registered, **read-only** `mgr_forge_asset_discover` behind its existing MCP auth/tenant/scope. An actual local Forge Studio HTTP process was called from the Node adapter and authorized MCP read function; wrong tenant denied. 55 API tests passed; hosted Tevin client and Creation OS execution integration unverified.
+- Current Forge complete local suite: `python3 -m unittest discover -q` **543 run, 540 pass, 3 skipped, 0 failures** with local sockets allowed; 21 Source Atlas tests pass; `node --check viewer/runtime.js` passes. Machine details: `evidence/asset-atlas/2026-10-30-proof.json`.
+- **Recovered discrepancy, not erased:** F110's historical 28 passing tests and GPU rental planner are absent from current GitHub `main` (four missing files); `gpu-plan` currently broken by missing import. Marked reopened in register/handoff. Prior device/Windows proofs have their original scope, not current checkout revalidation.
+- Remaining: Chrome panel interaction, Blender acceptance of source asset, real per-asset license rights, 15 additional provider adapters, human/creature/skin/rig generators, multi-object/world composition, production Tevin/MCP execution and F110 source repair.
 

@@ -1,6 +1,15 @@
 # MGR 3D Forge — Native Architecture
 
-**Status: proposed, no production code.** Never infer deployed capability from this document.
+**Status as of 2026-10-30: partial native code + locally verified Studio and API/MCP read-only bridge; no production Tevin creative execution.** Never infer deployed capability from a proposed contract.
+
+## Implemented source / bridge boundary (2026-10-30)
+
+1. `forge/data/asset_sources.json` lists 17 candidate source families without silently installing third-party assets, code or model weights. `forge/asset_atlas.py` provides two bounded live official *read* adapters, persistent metadata search and explicit 3DAssets.dev GLB intake under `forge/assets.py` hash/vault ownership; fetched files are marked **quarantined**, not approved.
+2. `forge/studio_server.py` and `viewer/` expose token-protected source discovery to the local Creation Chat. This does not imply full interactive browser Chrome verification or a semantic 3D creator.
+3. In sibling `MGR-API-MCP`, `src/forge-catalog-client.ts` invokes the local Studio read endpoint; `src/forge-mcp-tools.ts` conditionally registers **`mgr_forge_asset_discover`** only with URL, token and exact tenant configured. Existing HTTP/stdio MCP authorization enforces read scope and correct audience. There is no new duplicate routing brain or direct API/MCP download/mutation tool.
+4. **Not yet built/verified end to end:** Tevin/ONE live MCP client → authorized Creation OS execution → durable Forge worker → composed, Blender/engine-accepted model/world → immutable source and business receipt. MGR API/MCP owns transport/auth; Creation OS owns creation-domain orchestration; Forge owns 3D asset jobs, artifacts and local QA.
+
+The date-specific source rights and proof levels are in `research/external-provenance/MGR-SOURCE-ATLAS-2026-10-30.md` and `evidence/asset-atlas/2026-10-30-proof.json`. The canonical current status is `docs/HANDOFF.md`.
 
 ## Ownership
 

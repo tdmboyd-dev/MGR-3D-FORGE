@@ -74,6 +74,33 @@ class StudioServerTests(unittest.TestCase):
         self.assertIn(b"MGR CREATION DIRECTOR", data)
         self.assertIn(b"MGR_FORGE_STUDIO_TOKEN", data)
         self.assertIn(b"director-generate-relief", data)
+        self.assertIn(b"director-asset-search", data)
+
+    def test_source_atlas_search_authenticated_over_local_http(self):
+        code, raw, _ = self.fetch("/api/asset-sources", {"query": "quaternius"})
+        self.assertEqual(code, 200)
+        found = json.loads(raw)
+        self.assertEqual(found["count"], 1)
+        self.assertIn("NO_STANDALONE_REDISTRIBUTION", found["sources"][0]["rights"])
+        self.assertEqual(self.fetch("/api/asset-sources", {"query": "skin"}, token=False)[0], 403)
+
+    def test_source_atlas_rejects_unbounded_live_search(self):
+        code, _, _ = self.fetch("/api/asset-search", {"query": "x" * 121, "live": True})
+        self.assertEqual(code, 400)
+
+    def test_source_atlas_cached_search_no_external_network(self):
+        code, raw, _ = self.fetch("/api/asset-search", {"query": "dragon", "live": False})
+        self.assertEqual(code, 200)
+        self.assertEqual(json.loads(raw)["listings"], [])
+
+    def test_source_atlas_polyhaven_routed_to_matching_read_adapter(self):
+        expected = {"status": "CACHED_SOURCE_METADATA", "provider": "polyhaven", "listings": []}
+        with patch("forge.studio_server.MGRAssetCatalog.search_live_polyhaven", return_value=expected) as vendor:
+            code, raw, _ = self.fetch("/api/asset-search", {
+                "query": "rock", "live": True, "provider": "polyhaven", "kind": "models", "limit": 3})
+        self.assertEqual(code, 200)
+        self.assertEqual(json.loads(raw), expected)
+        vendor.assert_called_once_with("rock", kind="models", limit=3)
 
     def test_no_public_tokenless_post(self):
         code, _, _ = self.fetch("/api/world", {"edits": {}}, token=False)

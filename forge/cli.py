@@ -114,6 +114,23 @@ def build(spec: WorldSpec, output: Path):
 def main(argv=None):
     parser = argparse.ArgumentParser(description="MGR Forge: deterministic, GPU-free 3D neighborhood")
     sub = parser.add_subparsers(dest="action", required=True)
+    source_atlas = sub.add_parser("asset-sources", help="browse rights-labeled 3D kits, creators and tool sources without network")
+    source_atlas.add_argument("--category", default="", help="e.g. fantasy-creatures, skin-materials, game-kits")
+    source_atlas.add_argument("--query", default="", help="source name or supported creation category")
+    source_atlas.add_argument("--kind", default="", help="optional source family")
+    asset_search = sub.add_parser("asset-search", help="search cached models or explicitly fetch fresh CC0 source metadata")
+    asset_search.add_argument("--catalog", type=Path, required=True, help="persistent local metadata directory")
+    asset_search.add_argument("--query", default="", help="model text, e.g. dragon")
+    asset_search.add_argument("--category", default="", help="upstream category when live; cached category when offline")
+    asset_search.add_argument("--live", action="store_true", help="make one read-only remote API call; no model download")
+    asset_search.add_argument("--provider", choices=("3dassets", "polyhaven"), default="3dassets")
+    asset_search.add_argument("--kind", choices=("models", "textures", "hdris"), default="models",
+                              help="Poly Haven asset family; other provider ignores")
+    asset_search.add_argument("--limit", type=int, default=6)
+    asset_acquire = sub.add_parser("asset-acquire", help="explicitly fetch one discovered CC0 GLB into local rights/quality quarantine")
+    asset_acquire.add_argument("--catalog", type=Path, required=True, help="catalog containing previously discovered asset")
+    asset_acquire.add_argument("--slug", required=True, help="exact returned 3DAssets.dev source slug")
+    asset_acquire.add_argument("--store", type=Path, required=True, help="content-addressed local Forge asset vault")
     create = sub.add_parser("build", help="generate real GLB geometry + manifest")
     create.add_argument("--spec", type=Path, help="optional WorldSpec JSON")
     create.add_argument("--out", type=Path, required=True, help="output directory")
@@ -345,6 +362,30 @@ def main(argv=None):
     walk.add_argument("--to-building",required=True)
     walk.add_argument("--out",type=Path,required=True)
     args = parser.parse_args(argv)
+    if args.action == "asset-sources":
+        from .asset_atlas import MGRSourceAtlas
+        found = MGRSourceAtlas().find(category=args.category, text=args.query, kind=args.kind)
+        print(json.dumps({"schema": "mgr.forge.source-atlas.v1", "count": len(found),
+                          "sources": found, "assets_installed": 0}, indent=2))
+        return 0
+    if args.action == "asset-search":
+        from .asset_atlas import MGRAssetCatalog
+        catalog = MGRAssetCatalog(args.catalog)
+        if args.live:
+            if args.provider == "polyhaven":
+                result = catalog.search_live_polyhaven(args.query, kind=args.kind, limit=args.limit)
+            else:
+                result = catalog.search_live_3dassets(args.query, category=args.category, limit=args.limit)
+        else:
+            found = catalog.search(text=args.query, category=args.category, provider=args.provider)
+            result = {"status": "CACHED_SOURCE_METADATA", "count": len(found),
+                      "listings": found, "assets_downloaded": 0}
+        print(json.dumps(result, indent=2))
+        return 0
+    if args.action == "asset-acquire":
+        from .asset_atlas import MGRAssetCatalog
+        print(json.dumps(MGRAssetCatalog(args.catalog).acquire_3dassets(args.slug, args.store), indent=2))
+        return 0
     if args.action == "inspect":
         print(json.dumps(inspect_glb(args.path.read_bytes()), indent=2))
         return 0

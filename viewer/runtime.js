@@ -420,6 +420,53 @@
     if(!response.ok)throw new Error(result.error||`Studio error ${response.status}`);
     return result;
   };
+  const sourceSearchButton=document.getElementById("director-source-search");
+  const assetSearchButton=document.getElementById("director-asset-search");
+  const assetQuery=document.getElementById("director-asset-query");
+  const assetProvider=document.getElementById("director-asset-provider");
+  const assetResults=document.getElementById("director-asset-results");
+  sourceSearchButton.disabled=!studioEnabled;
+  assetSearchButton.disabled=!studioEnabled;
+  const showSourceHits=(items,sourceMode)=>{
+    assetResults.replaceChildren();
+    const status=document.createElement("p");status.textContent=`${items.length} ${sourceMode?"source libraries":"model listings"} found. Model downloads are separate and require review.`;
+    assetResults.append(status);
+    for(const item of items.slice(0,25)){
+      const entry=document.createElement("div");entry.style.cssText="margin:6px 0;padding:5px;border:1px solid #64778f;border-radius:6px";
+      const link=document.createElement("a");link.href=sourceMode?item.homepage:item.source_url;
+      link.target="_blank";link.rel="noopener noreferrer";link.style.color="#9af4cd";
+      link.textContent=sourceMode?item.name:item.title;
+      const detail=document.createElement("small");detail.style.display="block";
+      detail.textContent=sourceMode?`${item.kind} · ${item.rights} · ${item.access}`:
+        `${item.category} · ${item.license} claimed · ${item.quality_status}${item.api_credit?" · Powered by Poly Haven":""}${item.ai_generated_claimed===true?" · AI-generated (source claim)":""}`;
+      entry.append(link,detail);assetResults.append(entry);
+    }
+  };
+  sourceSearchButton.addEventListener("click",async()=>{
+    if(!studioEnabled)return;
+    sourceSearchButton.disabled=true;
+    try{
+      const result=await studioPost("/api/asset-sources",{query:assetQuery.value.trim()});
+      showSourceHits(result.sources,true);
+      directorMessage.textContent="Source libraries found. Their licenses must be checked on the exact files before reuse.";
+    }catch(error){directorMessage.textContent=`Source Atlas unavailable: ${error.message}`;}
+    finally{sourceSearchButton.disabled=false;}
+  });
+  assetSearchButton.addEventListener("click",async()=>{
+    if(!studioEnabled)return;
+    if(!assetQuery.value.trim()){directorMessage.textContent="Enter a model search such as dragon or cabin.";return;}
+    assetSearchButton.disabled=true;
+    try{
+      const selected=assetProvider.value;
+      const provider=selected.startsWith("polyhaven-")?"polyhaven":"3dassets";
+      const kind=provider==="polyhaven"?selected.slice("polyhaven-".length):"models";
+      const result=await studioPost("/api/asset-search",{query:assetQuery.value.trim(),live:true,
+        provider,kind,limit:provider==="polyhaven"?6:20});
+      showSourceHits(result.listings,false);
+      directorMessage.textContent="Public source metadata cached in Forge. Models are not downloaded, rigged or quality-approved.";
+    }catch(error){directorMessage.textContent=`Live model search failed: ${error.message}`;}
+    finally{assetSearchButton.disabled=false;}
+  });
   const studioLink=(url,label)=>{
     const anchor=document.createElement("a");
     anchor.href=url;anchor.textContent=label;anchor.rel="noopener";

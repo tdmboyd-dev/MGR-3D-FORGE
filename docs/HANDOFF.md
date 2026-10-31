@@ -6,12 +6,34 @@ the same commit as any feature change. If a claim here disagrees with
 receipt, the receipt wins and this file must be corrected before anything else.
 
 - **Repo:** MGR-3D-FORGE (sibling of MGR-ONE; the ONE WORK ORDER lives in MGR-ONE)
-- **Branch:** `main` (synced with origin at `fe75ecd`; push verified via python subprocess)
-- **Last verified:** 2026-10-27
-- **Working tree:** clean after the F107 commit (see git log)
-- **Tests:** `python -m unittest discover -s tests` -> **546 PASS** (Python 3.14.8, Windows; 2 skipped in test_sam_adapter)
-- **Blender:** 5.2.2 (headless MCP), scene "Scene", 1143 objects, cameras Tevin-Cam / Tevin-Cam-Full / Camera, EEVEE
-- **Owner:** tdmboyd-dev (gh authenticated, repo scope)
+- **Branch:** `main`; inspected remote base `60c3a1317d77abe36f6e8ffa0c6db7dbcd308456` (2026-10-30 wave; publish SHA recorded in git after push)
+- **Last verified:** 2026-10-30, Linux workspace and actual local HTTP bridge; Windows device receipts below are historical
+- **Tests:** `python3 -m unittest discover -q` -> **543 executed, 540 passed, 3 skipped, 0 failed** with loopback enabled; 21 focused Source Atlas tests passed
+- **Blender:** Historical Windows 5.2.2 independent witness is preserved; **not run with the new source atlas**
+- **Owner:** tdmboyd-dev; no private weights/images/credentials committed
+
+## Current recovery checkpoint — F118–F120, 2026-10-30 (supersedes outdated claims below)
+
+| Outcome | Current fact | Independent proof / next closure |
+|---|---|---|
+| **F118 Source Atlas** | 17 categorized source families for faces, bodies, skin, animals, fantasy, props, kits, worlds, materials, animation and AI modeling; only 3DAssets.dev and Poly Haven have live read adapters. New Creation Chat Source Atlas panel, CLI and authenticated Studio read-only endpoints. | Live official dragon/rock/leather queries; local Forge Studio route tests, current full Python suite. **Actual Chrome click/visual acceptance still open.** |
+| **F119 Forge Vault intake** | An explicitly selected 3DAssets.dev CC0-claimed small GLB can be fetched into the existing hashed vault, with URL, rights and container provenance; no automatic world use. | Actual 198,252-byte Western Dragon GLB / SHA `e6d97b12ff47d996025af6f75fa7bc1670d0747ae81b86a83ed6d4247f789172`, kept in disposable local quarantine; 6 mesh containers structurally parsed. **License adjudication, Blender visual QA and rig proof not done.** |
+| **F120 MGR API/MCP source lookup** | Sibling `MGR-API-MCP` exposes conditional `mgr_forge_asset_discover` under the existing authenticated MCP route, source-only/read-only; never builds a competing router. | 55 API tests and actual Forge Studio HTTP ↔ API client + MCP read/tenant gate passed. **No live hosted Tevin client, creation worker, or paid action proven.** |
+| **F110 missing-source discrepancy** | Previous 2026-10-27 handoff said GPU rental planner was implemented and 28 tests passed. On inspected GitHub `main`, `forge/gpu_packer.py`, `forge/gpu_rental.py` and their two tests are **missing**, and CLI `gpu-plan` imports a missing module. | **REOPENED/SOURCE GAP.** Recover verified source or rebuild and re-test. Do not quote its historical 28-test proof as current checkout success. |
+| **Other previous proof** | The Windows SAM, Godot import, Chrome/WebGL and Blender outcomes below are retained as historical device receipts, not independently rerun in this workspace. | Reproduce current head on Time's PC before upgrading device/production acceptance. |
+
+The required source ledger is `research/external-provenance/MGR-SOURCE-ATLAS-2026-10-30.md`; the machine receipt is `evidence/asset-atlas/2026-10-30-proof.json`. This handoff is the single resume file; `docs/BUILD-REGISTER.md` tracks detailed state and `docs/PROGRESS-LOG.md` tracks chronology. No second handoff file.
+
+### Six concurrent Forge build lanes (next work, not claimed done)
+
+1. **Vault and rights:** add audited ambientCG, Kenney, MakeHuman and other source adapters only where upstream APIs/licensing permit; verify individual pack rights, size, completeness, duplicates and actual Blender imports.
+2. **Creation / World Forge:** usable asset preview, semantic category/sizing, part sockets and transforms, procedural terrain/biomes, native snap kits, layered scene editing and exports.
+3. **Human / Creature Forge:** configurable diverse face shapes, skin undertones/PBR textures, hair, nails, body proportions, clothes, real/fantasy animal morphs and rigs; use immutable identity/approval baselines and independent visual/pose verification.
+4. **AI Shape / Motion / FX Lab:** optional gated text/photo/multiview-to-geometry and segmentation adapters, geometry cleanup/retopo/UV, rig retargeting, animation, lighting/FX; weigh local CPU vs rented GPU vs paid only after resource/license/cost proof.
+5. **MGR API/MCP → Creation OS → Tevin:** authenticated tool discovery exists; next join actual Creation OS execution ownership, Tevin/ONE client calls, scoped approvals, job receipts and recovery without a second brain/router.
+6. **Acceptance / cleanup:** independently test browser interaction and real Blender/Godot round-trips, ownership/license, security/auth negative cases, actual consumer acceptance; restore missing F110 source and update this file/ledger as code changes.
+
+**Never call the entire program completed based on a catalog, a downloaded asset or a successful local bridge.** The earlier numbered sections contain preserved dated history; the table and build lanes above define current status.
 
 ## 1. Mission and naming
 
@@ -66,11 +88,9 @@ receipt, the receipt wins and this file must be corrected before anything else.
 - Interpretation: visual hull bounds; does not invent. The 12% overfill is dominated by
   arm-depth ambiguity between 4 orthogonal views (arms carved with torso-depth z-extent).
 
-### F110 - MGR GPU Rental Planner (dry-run, spend-guarded)
-- forge/gpu_packer.py, forge/gpu_rental.py, gpu-plan, tests
-- Pure-CPU job packer + GPU provider contract. Shadow jobs fill spare time in
-  purchased blocks. Spend guard requires double confirmation. Tevin auto-selects
-  cheapest GPU meeting VRAM. 28 tests PASS. No money spent by planning.
+### F110 - MGR GPU Rental Planner (historical log ONLY; source missing on current main)
+- Previous Windows work recorded a pure-CPU packer, CLI and 28 passing tests. Those four source/test files were **not in the inspected 2026-10-30 checkout** and the CLI presently imports a missing module.
+- Current outcome is **SOURCE GAP / REOPENED** until source recovery and reproducible checks; no live GPU spend is claimed.
 
 ### F109 - MGR SAM Segmentation Adapter (optional, gated, working)
 - `forge/sam_adapter.py`, `scripts/sam_segment.py`, `tests/test_sam_adapter.py`
@@ -124,8 +144,8 @@ receipt, the receipt wins and this file must be corrected before anything else.
 
 ### F98 - MGR Godot Handoff
 - `forge/engine_handoff.py` export_godot_project
-- Package verified Forge world for Godot 4 with collision bodies and camera. Godot not
-  installed on this PC; import/play proof open.
+- Package verified Forge world for Godot 4 with collision bodies and camera.
+- **Historical 2026-10-27 Windows Godot 4.3 portable headless import/scene-quit receipt passed**; actual current-world interactive play/visual/collision proof remains open. Portable binary is not bundled in Git.
 
 ### F97 - MGR Local Studio
 - `forge/studio_server.py` serve-studio
@@ -169,12 +189,12 @@ receipt, the receipt wins and this file must be corrected before anything else.
 ## 4. NOT DONE (honest open gaps)
 
 ### Reconstruction (F107 follow-ups)
-- Neural segmentation adapters: SAM ViT-B shipped (F109); SAM2/SAM3 upgrades, part-level segmentation open
+- Neural segmentation adapters: historical device-proven SAM ViT-B (F109) and prompted part-level F111; SAM2/SAM3 upgrade, native correction and full hair/skin/clothes pipeline still open
 - Oblique/perspective view carving (currently orthographic only)
-- Smooth surface extraction (marching cubes) instead of voxel cubes
+- Surface Nets smoothing is implemented as F113; full marching-cubes path / adaptive resolution / visual and topology acceptance remain open
 - Fitted textured full-volume mesh assembly
 - Identity likeness proof (silhouettes never prove identity)
-- Multi-view calibration / rectification for perspective references
+- F112 four-point rectification exists; real consistent-camera multiview calibration and likeness proof remain open
 
 ### Character (F99-F106)
 - Smooth multi-bone skinning (current: 0.428 m hand travel measured, but full pose suite open)
@@ -185,12 +205,12 @@ receipt, the receipt wins and this file must be corrected before anything else.
 - Rigged-source deformation check
 
 ### Engine
-- Godot not installed: F98 receiving-engine proof open
+- Historical Windows Godot 4.3 headless import and scene-quit passed; latest full viewer/play-mode acceptance remains open
 - Engine-level visual verification open
-- No game-engine import/play proof
+- No measured on-device real-time game-world play/collision proof for this build
 
 ### Runtime / platform
-- Durable Studio worker orchestration
+- F114 file-backed durable queue exists and F97 runs locally; authenticated hosted durable concurrent Studio worker orchestration remains open
 - Real Tevin 3D reconstruction blocked on owner-approved masks/references
   (exist only in the old ChatGPT sandbox, not on this PC, must not enter the repo)
 - Tevin private references must stay out of GitHub
@@ -198,7 +218,9 @@ receipt, the receipt wins and this file must be corrected before anything else.
 ### Verification
 - F104 Windows Blender motion run was permission-denied (UNVERIFIED)
 - Voice mic test unproven
-- No SAM/neural segmentation installed
+- Historical SAM ViT-B installed on Time's device; availability on this Linux checkout is **unverified/unavailable without device-specific model worker/weights**
+- Source Atlas browser panel real Chrome interaction and accepted-art Blender import remain open
+- F110 GPU planner source gap: imported by CLI but missing from current Git checkout
 
 ## 5. Knowledge and decisions (do not re-litigate without new evidence)
 
@@ -217,9 +239,9 @@ receipt, the receipt wins and this file must be corrected before anything else.
 
 ### Test
 ```
-python -m unittest discover -s tests
+python3 -m unittest discover -q
 ```
-Expected: 438 PASS (Python 3.14.8). Pillow 13.0.0 required (pip install pillow).
+Latest witnessed 2026-10-30 Linux execution with local sockets enabled: **543 run / 540 passed / 3 skipped / 0 failed**. The old 438 Python 3.14.8 Windows count was historical and not current coverage.
 
 ### Reconstruct (F107)
 ```
@@ -248,7 +270,7 @@ No force push. No large binary artifacts unless justified (artifacts/ is gitigno
 
 ## 7. Blockers (external decisions needed)
 
-- Target runtime/game engine (Godot likely, not installed)
+- Target shipping runtime/game engine and quality bar; Godot 4.3 portable *historical import proof* exists, not approved interactive runtime acceptance
 - Production hardware inventory
 - User-approved Tevin references in a private store (never committed)
 - Commercial license clearance for restricted models
@@ -256,13 +278,7 @@ No force push. No large binary artifacts unless justified (artifacts/ is gitigno
 
 ## 8. Next build order (continue from here)
 
-1. F107 follow-ups: marching-cubes smoothing on the carved occupancy; oblique-view carving;
-   SAM2 upgrade + part-level segmentation (hair/face/body/clothing) using prompted masks.
-2. F104: obtain explicit authorization and run the Blender motion export/re-import proof.
-3. F98: install Godot, run engine import/play proof.
-4. F99-F106: smooth multi-bone skinning, fitted garments, full-pose anatomical checks on generic models.
-5. F97: durable Studio worker orchestration.
-6. Tevin reconstruction only after owner-approved private reference pack is available locally.
+Use the six concurrent, owner-approved lanes in the **current recovery checkpoint** at the top of this file. Concrete next acceptance targets: source-to-approved-kit and Blender import; face/skin/creature part libraries; source-to-scene placement and visual acceptance; F104 animation export/reimport; real Godot play; authorized hosted MGR API/Tevin; and F110 source recovery. Keep owner-private Tevin references outside public Git.
 
 ## 9. Update protocol
 

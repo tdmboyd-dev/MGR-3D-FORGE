@@ -21,6 +21,7 @@ from .engine_handoff import export_godot_project
 from .live_blender import create_live_blender_scene
 from .web_runtime import make_world_flight
 from .world_editor import apply_world_edits
+from .asset_atlas import MGRAssetCatalog, MGRSourceAtlas
 
 
 MAX_REQUEST = 1_800_000
@@ -95,6 +96,40 @@ class ForgeWorkstation:
     def command(self, route, payload):
         if not isinstance(payload, dict):
             raise ValueError("JSON object required")
+        if route == "/api/asset-sources":
+            if set(payload) - {"category", "query", "kind"}:
+                raise ValueError("unsupported source filter")
+            if any(type(value) is not str or len(value) > 120 for value in payload.values()):
+                raise ValueError("source filters must be bounded strings")
+            found = MGRSourceAtlas().find(category=payload.get("category", ""),
+                                          text=payload.get("query", ""), kind=payload.get("kind", ""))
+            return {"status": "DIRECTORY_ONLY", "count": len(found), "sources": found}
+        if route == "/api/asset-search":
+            if set(payload) - {"query", "category", "live", "limit", "provider", "kind"}:
+                raise ValueError("unsupported asset search option")
+            if (type(payload.get("query", "")) is not str or
+                    type(payload.get("category", "")) is not str or
+                    type(payload.get("live", False)) is not bool or
+                    type(payload.get("limit", 6)) is not int):
+                raise ValueError("asset search fields are invalid")
+            if len(payload.get("query", "")) > 120 or len(payload.get("category", "")) > 48:
+                raise ValueError("asset filters outside limit")
+            provider, kind = payload.get("provider", "3dassets"), payload.get("kind", "models")
+            if provider not in ("3dassets", "polyhaven") or kind not in ("models", "textures", "hdris"):
+                raise ValueError("unknown asset source or kind")
+            catalog = MGRAssetCatalog(self.workspace / "asset-catalog")
+            if payload.get("live", False):
+                try:
+                    if provider == "polyhaven":
+                        return catalog.search_live_polyhaven(payload.get("query", ""),
+                            kind=kind, limit=payload.get("limit", 6))
+                    return catalog.search_live_3dassets(payload.get("query", ""),
+                         category=payload.get("category", ""), limit=payload.get("limit", 6))
+                except OSError as error:
+                    raise RuntimeError("remote model directory unavailable; cached search still works") from error
+            entries = catalog.search(text=payload.get("query", ""), category=payload.get("category", ""), provider=provider)
+            return {"status": "CACHED_SOURCE_METADATA", "count": len(entries),
+                    "listings": entries, "assets_downloaded": 0}
         if route == "/api/relief":
             if set(payload) != {"png_base64"} or type(payload["png_base64"]) is not str:
                 raise ValueError("expect only PNG base64")
@@ -243,7 +278,7 @@ def make_handler(studio):
             return self.send_bytes(404, b"not found", "text/plain")
 
         def do_POST(self):
-            if self.path not in ("/api/relief", "/api/character", "/api/world", "/api/godot", "/api/blender", "/api/blender-status"):
+            if self.path not in ("/api/asset-sources", "/api/asset-search", "/api/relief", "/api/character", "/api/world", "/api/godot", "/api/blender", "/api/blender-status"):
                 return self.send_bytes(404, b"not found", "text/plain")
             if self.headers.get("X-MGR-Forge-Token") != studio.token:
                 return self.send_bytes(403, b"forbidden", "text/plain")

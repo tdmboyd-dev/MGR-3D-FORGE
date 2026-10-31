@@ -1,0 +1,38 @@
+{
+  "schema": "mgr.forge.source-atlas-proof.v1",
+  "as_of": "2026-10-30",
+  "inspected_base_commit": "60c3a1317d77abe36f6e8ffa0c6db7dbcd308456",
+  "source_count": 17,
+  "installed_provider_adapters": ["3dassets-live-search-bounded-glb-fetch", "polyhaven-live-search-metadata-only"],
+  "live_search_samples": [
+    {"provider": "3dassets", "query": "dragon", "returned": 2, "asset_type": "GLB models"},
+    {"provider": "polyhaven", "query": "rock", "kind": "models", "returned": 2},
+    {"provider": "polyhaven", "query": "leather", "kind": "textures", "returned": 2}
+  ],
+  "real_download_sample": {
+    "source": "https://3dassets.dev/assets/dragons-and-wyverns-western-dragon-wings-spread-8d633362",
+    "title": "Western Dragon With Wings Spread (Dragons and Wyverns)",
+    "sha256": "e6d97b12ff47d996025af6f75fa7bc1670d0747ae81b86a83ed6d4247f789172",
+    "bytes": 198252,
+    "glb_containers": 6,
+    "required_extensions": ["KHR_mesh_quantization"],
+    "reported_geometry_status": "STRUCTURE_INSPECTED",
+    "license": "PROVIDER_CC0_CLAIM_REVIEW_PENDING",
+    "status": "QUARANTINED_RIGHTS_AND_QUALITY",
+    "saved_in_public_repo": false,
+    "independent_blender_import": false,
+    "rig_or_likeness_verified": false
+  },
+  "local_verification": {
+    "forge_python": {"command": "python3 -m unittest discover -q", "ran": 543, "passed": 540, "skipped": 3, "failed": 0, "localhost_sockets_allowed": true},
+    "forge_atlas_focused": {"ran": 21, "failed": 0},
+    "api_mcp": {"command": "npm run verify", "passed": 55, "failed": 0, "typecheck": "PASS", "hosted_plugin_checker": "PASS"},
+    "forge_mcp_cross_process": {"command": "python3 scripts/verify-forge-studio.py (from API-MCP)", "status": "PASS", "actual_forge_http": true, "wrong_tenant_denied": true, "public_mcp_deployment": false}
+  },
+  "limitations": [
+    "Browser Source Atlas panel has code and syntax checks; actual Chrome visual interaction not independently exercised in this environment",
+    "This is a local bridge path, not a publicly hosted MCP or Tevin session",
+    "Remaining 15 source directories have not been imported and are not claimed licensed",
+    "Older recorded Windows checks apply only to their historical source and environment"
+  ]
+}

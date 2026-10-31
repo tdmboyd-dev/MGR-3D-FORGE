@@ -1,6 +1,8 @@
 # MGR 3D FORGE — Product Bible
 
-Status: SPECIFIED / NOT IMPLEMENTED. Updated 2026-10-25.
+Status: TARGET SPECIFICATION WITH VERIFIED PARTIAL PROTOTYPES, not a production release.
+Updated 2026-10-30. Code state and acceptance live in `docs/BUILD-REGISTER.md`;
+the single live progress handoff is `docs/HANDOFF.md`.
 
 ## What it is
 
@@ -54,6 +56,58 @@ Text description; reference image(s); multi-angle turnaround; existing GLB/FBX/O
 | N20 | Project Export Packs | Deliver consumer-specific material, mesh and metadata | Engine import with correct scale, animation, PBR |
 
 ## Proposed creative workflows
+
+## The full MGR Forge creation universe — approved direction
+
+The first six owner-selected Forge ideas are **not the limit**. The systems
+below are MGR-native destinations, with existing tested pieces reused wherever
+possible. An item in this map is a planned product lane, **not** a build claim.
+
+| MGR-owned system | What Time asks Forge to do | What exists / first honest next result |
+|---|---|---|
+| **MGR Forge Vault / Source Atlas** | Find free/approved kits, faces, animals, materials and source models, with exact rights and search | F05/F118/F119: hash vault, two live search providers, one real quarantined dragon; next per-file rights review and production search index |
+| **MGR Human Forge** | Build varied faces, body types, realistic skin tones/textures, hair, clothes, anatomy and character DNA | F09–F12/F99–F116: generic geometry, reference intake/segmentation and part tools; next generator/morph library + real face/skin/hair/rig QA |
+| **MGR Creature Forge** | Create ordinary and fantasy animals, hybrids, anatomy variants, skin/fur/feathers/scales, creature rigs | Source directory exists; species anatomy, modular creature base meshes, rig/retarget and deformation acceptance remain open |
+| **MGR Creation Forge** | Turn plain-English concepts, image references and approved kits into editable objects and scenes | F87–F97: world edit/chat/GLB/Blender flow works locally; next reusable component placement and multi-object scene graph |
+| **MGR World Forge** | Author villages, cities, biomes, terrain, interiors, dungeons, sky, weather and portals at different scales | CPU buildings, basic parks/rooms, world flight and Godot handoff exist; high-detail worlds, terrain and navigation remain open |
+| **MGR AI Shape Lab** | From text, 1–4 views or existing models, construct/smooth/retopo/UV new editable forms | F95/F106–F113: relief, mask extraction, visual hull, surface nets; no licensed photoreal neural model execution proven |
+| **MGR Material & Skin Lab** | Build realistic skin undertones, PBR fabric/leather, fur, stone, metals, scars, makeup and weathering | PBR contract and Source Atlas material search exist; next actual UV texture download/use/visual shader tests |
+| **MGR Motion & Performance Forge** | Rig/animate humans and beasts, retarget motions, lip-sync and hundreds of moves | Generic mannequin and constrained Blender rig proof; production rig, 200+ accepted moves and voice/lip proof remain open |
+| **MGR Kit / Prop Forge** | Snap modular buildings, furniture, vehicles, weapons, wearables and props into reusable kits | Procedural pieces and Source Atlas candidates exist; connector sockets, dimensions, dependencies and source-license admission next |
+| **MGR Reality & Scan Forge** | Turn allowed video, photogrammetry, lidar and object scans into measured editable geometry | Depth/camera math and silhouette methods exist; capture calibration and full scan-to-mesh acceptance open |
+| **MGR FX & Cinematic Forge** | Make lighting, atmospheres, magic, fantasy worlds, camera moves and rendered sequences | CPU FX, lights and Windows Blender witnesses exist; production simulation and live cinematic interaction open |
+| **MGR Export / Runtime Forge** | Deliver reusable GLB/OBJ/.blend/Godot and later Unreal, Unity, USD, VR and AR projects | GLB/Blender and Godot headless proof exist; independent multi-engine/visual/mobile acceptance open |
+| **MGR Tevin Command Bridge** | Let Tevin search Forge, request bounded creation, inspect proofs, save/reopen assets | F120 read-only catalog through existing API/MCP edge works locally; creation dispatch remains Creation OS-owned, hosted Tevin session unverified |
+| **MGR Verification / Recovery Lab** | Detect broken models, wrong faces, bad licensing, missing parts, visual defects, repeated jobs and spend overruns | Existing QA, durable queue, hashes and new quarantine; end-to-end rights/visual/device acceptance remains open |
+
+**How finished 3D creation works:** source kits + parametric templates + modeling
+operations + learned models are different parts of the stack. A model builder
+may reuse a known mesh, deform a human base to match face/body controls, grow
+procedural geometry, reconstruct viewed shapes, or synthesize a new mesh. Forge
+must identify which method produced each surface and keep invented hidden
+geometry separate from measured reference data. A catalog alone is not the
+creator; source selection, assembly, rigging, textures and independent visual
+validation make it a usable 3D result.
+
+### Delivery order (parallel lanes, shared acceptance contracts)
+
+1. **Inventory + rights:** discover selected assets/kits, cite exact source and
+   license, hash small samples, preserve private/purchased sources outside Git.
+2. **Source-to-scene:** inspect, normalize orientation/scale/topology, build a
+   recoverable prefab and place it into an actual world/character part, then
+   reopen in Blender/Godot with a provenance receipt.
+3. **Humans/creatures:** integrate an approved human generator and legal base
+   shape packs, then species templates, face/skin/fur/wardrobe, anatomy and rig.
+4. **AI creation:** install optional approved model+weights behind Model Dock,
+   benchmark output and cost, maintain a procedural/asset-reuse fallback.
+5. **MCP + Tevin:** the shared MGR-API-MCP edge performs verified auth and
+   read access; Creation OS routes creation-domain effects into Forge-owned
+   jobs. Tevin consumes receipts/previews, with no duplicate policy engine.
+6. **Runtime acceptance:** real browser, Blender, Godot and future engine
+   interoperability with source SHA, scene preview, rights and recovery proof.
+
+Run these lanes together when independent, but do not promote any feature past
+its acceptance gate merely because another lane's tests passed.
 
 ### Tevin
 1. Load owner-approved base model and references. Record identity landmarks.

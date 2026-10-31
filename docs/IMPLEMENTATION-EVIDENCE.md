@@ -1,6 +1,8 @@
 # MGR Forge — Native Prototype Implementation Evidence
 
-Date: 2026-10-25. This page distinguishes working code from future intent.
+Baseline: 2026-10-25; current addendum 2026-10-30. This page distinguishes working code from future intent. The older counts and source summaries retained below are historical snapshots, not current head.
+
+**Latest measured local addendum — F118/F119/F120:** 17 source families are documented with rights states (15 directory-only); 3DAssets.dev and Poly Haven live metadata search returns actual results, and one real dragon GLB was downloaded into a separate local quarantined vault, structurally inspected and SHA-checked. `forge/asset_atlas.py`, CLI and Studio APIs exist; Source Atlas UI code is syntactically valid but actual Chrome interaction untested. The sibling `MGR-API-MCP` read-only discovery tool passed actual local HTTP Forge Studio cross-process proof and 55 tests with wrong-tenant denial. Forge `python3 -m unittest discover -q`: **543 run / 540 pass / 3 skip / 0 fail**. See `evidence/asset-atlas/2026-10-30-proof.json` and source ledger. **No Blender asset import, hosted Tevin, production creation or individual rights approval claimed.** F110 planner historical files are absent and its CLI is currently broken; see register/handoff.
 
 **Latest F82–F85 CPU proof:** **212/212 tests PASS on Linux and Windows** (Windows `unittest` runtime 2.291s, exit 0); `forge.cli audit-export` passed on an actually generated six-building GLB/OBJ scene. `forge.cli load-cells` exercised actual synchronous hashed disk reads under a bounded memory cap and returned an explicit failure receipt when bytes were corrupted. Continuous segment contact proved a thin-wall collision without frame-step tunneling. See `tests/test_asset_parity.py`, `tests/test_cell_transport.py`, `tests/test_dynamics.py` and `research/MGR-RUNTIME-FOUNDATIONS-WAVE.md`. No claim of independent second game-engine rendering.
 
