@@ -136,6 +136,10 @@ def main(argv=None):
     mirror.add_argument("--commit", required=True, help="exact 40-digit Git commit SHA")
     mirror.add_argument("--store", type=Path, required=True, help="private asset-vault directory; not source Git")
     mirror.add_argument("--sha256", default=None, help="optional expected archive SHA-256")
+    xray = sub.add_parser("rea-kit-audit", help="crosscheck archived kit file hashes with real REA Evidence; no rights promotion")
+    xray.add_argument("--rea-evidence", type=Path, required=True, help="complete REA get_evidence_bundle JSON file")
+    xray.add_argument("--pack-receipt", type=Path, required=True, help="Forge Vault pinned source/license manifest")
+    xray.add_argument("--out", type=Path, required=True, help="new MGR-native evidence and capability-gap receipt")
     model_engines = sub.add_parser("model-engines", help="show verified native vs uninstalled optional AI 3D engines and license gates")
     imagine = sub.add_parser("imagine-creature", help="create procedural creature mesh and design DNA; not neural inference")
     imagine.add_argument("--prompt", required=True, help="brief describing the creature, 8..500 chars")
@@ -409,6 +413,14 @@ def main(argv=None):
         from .pack_mirror import mirror_kaykit_pack
         print(json.dumps(mirror_kaykit_pack(args.repo, args.commit, args.store,
                       expected_sha256=args.sha256), indent=2))
+        return 0
+    if args.action == "rea-kit-audit":
+        from .xray_kit import write_xray_kit_receipt
+        result=write_xray_kit_receipt(args.rea_evidence,args.pack_receipt,args.out)
+        print(json.dumps({"status":result["status"],
+                          "files_verified":result["source_file_sha256_matched"],
+                          "rights_reviewed":result["rights_reviewed"],
+                          "receipt":str(args.out)},indent=2))
         return 0
     if args.action == "model-engines":
         from .generative_backends import load_engine_profiles

@@ -1,0 +1,61 @@
+{
+  "actual_glb_import_verified": false,
+  "actual_skinning_or_animation_verified": false,
+  "archive_sha256": "17985aed180fe2f658c526e92dc300f2fde72db09494433153c7e808c6137afe",
+  "categories": {
+    "animation_candidates": 0,
+    "gltf_candidates": 72,
+    "obj_candidates": 77,
+    "other_files": 150,
+    "texture_candidates": 3
+  },
+  "code_copying_permitted_by_analysis": false,
+  "extension_counts": {
+    ".bin": 72,
+    ".gltf": 72,
+    ".mtl": 77,
+    ".obj": 77,
+    ".png": 3,
+    ".txt": 1
+  },
+  "feature_build_targets": [
+    {
+      "outcome": "portable pinned asset intake with scoped rights and original-file digests",
+      "owner": "Forge Vault"
+    },
+    {
+      "outcome": "import glTF models with dependency closure and original editor-compatible source",
+      "owner": "Creation Forge"
+    },
+    {
+      "outcome": "original parametric body mesh, morph DNA, joint-aware rig and animation acceptance",
+      "owner": "Human/Creature Forge"
+    },
+    {
+      "outcome": "original scene-placement, geometry synthesis, material pairing and engine round-trip",
+      "owner": "World Forge"
+    },
+    {
+      "outcome": "repeat evidence comparison when a source archive changes",
+      "owner": "MGR Beast X-Ray"
+    }
+  ],
+  "limitations": [
+    "REA confirms recorded ZIP bytes, not third-party license clearance",
+    "Filename extensions do not prove rigged/animated/visually acceptable geometry",
+    "MGR-native implementations must use permitted methods and separately created original work",
+    "ReA analysis does not reveal inaccessible original generation source code"
+  ],
+  "rea_coverage": {
+    "scope": "container-entries",
+    "status": "complete"
+  },
+  "rea_source_record": "ev_36210c5dcb7bfec53cba57f5f390590e23e889bbc3716aa35513cdb3bcc42804",
+  "rights_reviewed": false,
+  "safe_to_redistribute": false,
+  "schema": "mgr.forge.xray-kit-audit.v1",
+  "source": "https://github.com/KayKit-Game-Assets/KayKit-Prototype-Bits-1.0/tree/bb159596f4f5106b663741d002c8eb45c80c0f41",
+  "source_file_count": 302,
+  "source_file_sha256_matched": 302,
+  "status": "INDEPENDENT_BYTES_MATCH_RIGHTS_AND_ART_REVIEW_PENDING"
+}

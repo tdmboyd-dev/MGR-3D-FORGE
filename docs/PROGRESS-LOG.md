@@ -1,3 +1,10 @@
+## 2026-10-31 — REA X-Ray optional source-evidence bridge F128
+
+- Identified official REA `morluto/rea` (observed SHA 6e9ee97a...), `rea-agents@6.8.0` (npm integrity pinned), Windows portable Node 24.22.1 (publisher SHA verified), installed without modifying global Node and ran real static `inspect-artifact` on the pinned owner KayKit ZIP. Corrected the required REA CLI `--evidence_output` contract after initial `invalid_request`.
+- Built Forge `forge/xray_kit.py`, CLI `rea-kit-audit`, 3 negative/positive tests. Read REA full Evidence (source coverage complete within ZIP container) and existing Forge private Vault receipt, matching **302/302 child file hashes+lengths**. Public result: `evidence/asset-atlas/2026-10-31-rea-official-kaykit-proof.json`. License/visual approval remains false; no raw pack/code embedded in Git.
+- Private ChatGPT `MGR REA X-Ray` local plugin v0.1.0 saved; independently tested its downloaded account release using MCP stdio on owner Windows and real REA CLI, including denied non-workspace file. Source and runtime pins live in sibling MGR-API-MCP.
+- Full current Forge suite: **589 run, 586 PASS, 3 skips, no failures**; sibling API/MCP **62/62 PASS**. Source material in `research/external-provenance/REA-XRAY-NATIVE-IMPLEMENTATION-2026-10-31.md`. This is local connected artifact intelligence, NOT unrestricted kit copyright, premium neural 3D output or hosted Tevin acceptance.
+
 ## 2026-10-31 — Advanced MorphRig plus pinned-license source research (F124–F127)
 
 - Detected and repaired inconsistent twist fields across independent material meshes; tied creature geometry and joint positions to one global deformation extent; fixed word parsing for winged/horned anatomy, then ran focused regressions.
