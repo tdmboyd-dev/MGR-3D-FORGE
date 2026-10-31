@@ -140,6 +140,13 @@ def main(argv=None):
     xray.add_argument("--rea-evidence", type=Path, required=True, help="complete REA get_evidence_bundle JSON file")
     xray.add_argument("--pack-receipt", type=Path, required=True, help="Forge Vault pinned source/license manifest")
     xray.add_argument("--out", type=Path, required=True, help="new MGR-native evidence and capability-gap receipt")
+    seal = sub.add_parser("rambler-seal", help="write an unsigned, SHA-256 release byte-integrity roster; NO anti-inspection claim")
+    seal.add_argument("--root", type=Path, required=True)
+    seal.add_argument("--files-json", type=Path, required=True, help="JSON array of allowed relative paths")
+    seal.add_argument("--out", type=Path, required=True, help="new manifest OUTSIDE the source directory")
+    check = sub.add_parser("rambler-verify", help="verify file bytes and roster completeness against supplied manifest")
+    check.add_argument("--root", type=Path, required=True)
+    check.add_argument("--manifest", type=Path, required=True)
     model_engines = sub.add_parser("model-engines", help="show verified native vs uninstalled optional AI 3D engines and license gates")
     imagine = sub.add_parser("imagine-creature", help="create procedural creature mesh and design DNA; not neural inference")
     imagine.add_argument("--prompt", required=True, help="brief describing the creature, 8..500 chars")
@@ -421,6 +428,17 @@ def main(argv=None):
                           "files_verified":result["source_file_sha256_matched"],
                           "rights_reviewed":result["rights_reviewed"],
                           "receipt":str(args.out)},indent=2))
+        return 0
+    if args.action == "rambler-seal":
+        from .security.rambler import save_roster
+        listed=json.loads(args.files_json.read_text(encoding="utf-8"))
+        result=save_roster(args.root,listed,args.out)
+        print(json.dumps({"status":result["status"],"roster_sha256":result["roster_sha256"],
+                          "file_count":result["file_count"],"signed":False},indent=2))
+        return 0
+    if args.action == "rambler-verify":
+        from .security.rambler import verify_roster
+        print(json.dumps(verify_roster(args.root,args.manifest),indent=2))
         return 0
     if args.action == "model-engines":
         from .generative_backends import load_engine_profiles

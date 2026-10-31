@@ -1,0 +1,78 @@
+{
+  "carrier_expanded_bytes": 49251336,
+  "carrier_sha256": "ac5389f44b61064f47b36e944cb87727cd04db1e530f701ab08dc29f8d8cc054",
+  "carrier_type": "ZIP DERIVED FROM PUBLISHED NPM TGZ - NOT THE ORIGINAL RELEASE FORMAT",
+  "date": "2026-10-31",
+  "error_repaired": "REA does not support .tgz as artifact format: verified official release converted to bounded inspectable ZIP",
+  "full_evidence_private_pointer": "~/.mgr-tools/rea/workspace/.rea-evidence/rea-6.8.0-self-zip-full.json",
+  "full_evidence_sha256": "c9af10d6f62ead974baf8d85554f7e8ce0954f79a16b5104203c49aee17de83b",
+  "max_one_real_method_observed": true,
+  "next_requirements": [
+    "inspect REA MCP tool effects/allowlists and evidence ID contracts from published source",
+    "compare source version and releases without assuming identical Git HEAD",
+    "establish optional X-Ray adapters for original MGR feature gaps; do not create duplicate brain"
+  ],
+  "observed_upstream_commit": "6e9ee97a69cb16c7150d8b550e705cba055ee4f0",
+  "original_npm_sha512_integrity": "sha512-9QDeRnGqEDzABZyr04eLnBXBv/c6I9/TWu/6M0MD4pEfkySI/BIgwTODIbAReX3C1x6hjw9+Jlx4A2yUSPZ9ww==",
+  "original_release": "rea-agents@6.8.0",
+  "original_tgz_bytes": 9944902,
+  "original_tgz_sha256": "8d542ec76a9cb350584b60a6c9c088706ff812d5bb5b094c20c95b6dc25698bb",
+  "package_extensions_top_10": {
+    "(no extension)": 2,
+    ".cjs": 2,
+    ".java": 11,
+    ".js": 2314,
+    ".json": 5,
+    ".md": 19,
+    ".mjs": 6,
+    ".py": 13,
+    ".swift": 5,
+    ".txt": 19
+  },
+  "rea_coverage": {
+    "scope": "container-entries",
+    "status": "complete"
+  },
+  "rea_evidence_id": "ev_3b821ed464c2f9ec31a9a5af0920aee6cd344f4cc3d3fa840a20c8135138e17a",
+  "rea_zip_observed_files": 2398,
+  "rights": "REA MIT authored code; third-party dependencies licensed separately; no rights transfer to target assets",
+  "schema": "mgr.forge.rea-self-study.v1",
+  "self_audit_result": "SHIPPED_CODE_FILES_OBSERVED_NOT_RUNTIME_BEHAVIOR_VERIFIED",
+  "self_investigation_scope": "Static shipment inventory only; no decompiler or hostile package execution",
+  "self_runtime_executed_other_than_rea": false,
+  "total_package_files": 2398,
+  "upstream_repository": "https://github.com/morluto/rea",
+  "verified_entrypoints": {
+    "package/.codex-plugin/mcp.json": {
+      "present": false
+    },
+    "package/LICENSE": {
+      "bytes": 1064,
+      "present": true,
+      "sha256": "798f9e4d18e49b30bf2f12696c8ced73dc4e1413da375a333d01281543a1ea8b"
+    },
+    "package/THIRD_PARTY_NOTICES.md": {
+      "bytes": 26493,
+      "present": true,
+      "sha256": "d2fa6973ee32ec2c3ef2d214cd5b8482f50511dcf9ba84937da3385920ebd1e6"
+    },
+    "package/dist/mcp/main.js": {
+      "bytes": 21882,
+      "present": true,
+      "sha256": "2af98f5f6190a3374218c283eba99c60822dbf7c093d2b1ba7dd31c5f54c56c9"
+    },
+    "package/package.json": {
+      "bytes": 27209,
+      "present": true,
+      "sha256": "b0fc212f6bea9b4ee6e2b3ab0b52dd95402c229da3b8652127e5f131c3445b39"
+    },
+    "package/scripts/plugin-mcp-launcher.mjs": {
+      "present": false
+    },
+    "package/scripts/rea.mjs": {
+      "bytes": 10109,
+      "present": true,
+      "sha256": "67ca7682986ff2b90678e1797e625caca6026a1732d9cad1a1088253c7bb45e5"
+    }
+  }
+}

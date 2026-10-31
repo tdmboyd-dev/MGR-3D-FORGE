@@ -119,3 +119,7 @@ Wave H — PRODUCT/SERVICE ACCEPTANCE: offline PC + authenticated hosted Tevin +
 ## 10. Current verification limits
 
 This is PLANNING, not proof of 184 scans or a globally unbeatable platform. The initial commit of Wave A should be published independently before any new REA execution. Existing F01-F128 results are historical tested slices; F129+ programs begin as SPECIFIED or QUEUED until their exact implementation and live results are demonstrated.
+
+## Wave B first verified slice (as of 2026-10-31)
+
+The REA self-release was inspected with supported ZIP carrier after independent official npm TGZ hash check: 2,398 shipped files, complete container scope, source-level semantics not fully proven. MGR Rambler v0 unsigned roster and verification is real but public-key signing/not-inspectable claims are false. Exact code and evidence: forge/security/rambler.py, tests/test_rambler.py, evidence/security/2026-10-31-rambler-smoke.json, evidence/xray/2026-10-31-rea-self-static.json and docs/MGR-RAMBLER-SECURITY.md. Prior phases and unexecuted items remain OPEN.

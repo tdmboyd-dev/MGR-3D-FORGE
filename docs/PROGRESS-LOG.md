@@ -1,3 +1,9 @@
+## 2026-10-31 — REA self-inspection + MGR Rambler integrity implementation
+
+- Resolved self-study REA limitation: official npm TGZ verified against SHA-512 but REA inspect-artifact refused its binary type. Bounded derived ZIP carrier then passed REA 6.8.0 full ZIP inventory on **2,398 source files**, exact hashes and private complete evidence retained, safe summary in evidence/xray/2026-10-31-rea-self-static.json. Inspected source/license/mcp entry files, flagged absent package-listed plugin launcher for independent provenance check (not declared an upstream bug).
+- Added forge/security/rambler.py, CLI rambler-seal / rambler-verify, tests/test_rambler.py. Defends portable release byte integrity and rejects manipulated files, symlinks, secret filenames and malicious path changes. Three focused tests + local CLI correct/tampered two-file exercise passed. Does **not** claim cryptographic signature or impossible source inspection. Public receipt evidence/security/2026-10-31-rambler-smoke.json.
+- Kept 184 candidate studies QUEUED. Next Forge Creator remote-availability and native user-to-GLB integration remains OPEN. Fresh full Forge suite on this change: 595 tests run, 592 PASS, 3 skip, zero failed; Windows local. No GitHub Actions/GPU spending.
+
 ## 2026-10-31 — owner-approved master program is staged before REA wave
 
 - Inspected current Forge repo at GitHub main 1d4c1235c79cce65acb6a1d75fa6a59bdfd46804. Existing 128 numbered capability areas and audited local REA/KayKit evidence retained unchanged.

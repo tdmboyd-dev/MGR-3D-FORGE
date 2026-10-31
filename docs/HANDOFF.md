@@ -1,5 +1,13 @@
 # MGR 3D Forge - Full Living Handoff
 
+## First build from persisted plan — REA self and Rambler v0 (2026-10-31)
+
+- The complete master plan and 184-target research register were **committed and GitHub fetched back before** this new REA study. Source status for 184 candidate records remains QUEUED; nothing is silently marked licensed or installed.
+- **F130 real official REA self-study:** verified original rea-agents@6.8.0 published npm SHA-512 and inspected the shipped release through REA after converting the unsupported TGZ into a strictly bounded DERIVED ZIP carrier. REA observed **2,398 shipped files** with complete ZIP-container coverage; exact source/carrier hashes and immutable evidence pointer in evidence/xray/2026-10-31-rea-self-static.json. Upstream package/ship discrepancies require independent follow-up; dynamic source semantics and all MCP tool permissions not fully audited.
+- **F132 actual MGR Rambler v0:** forge/security/rambler.py, CLI rambler-seal/rambler-verify, tests/test_rambler.py and safe evidence/security/2026-10-31-rambler-smoke.json. Checksums, path/file/symlink rules, unexpected file denial and real tamper rejection tested. **NOT signed, NOT impossible to reverse engineer**; confidential weights/keys must stay server-side. Detailed design docs/MGR-RAMBLER-SECURITY.md.
+- **Fresh entire Forge test suite on this changed code:** python -m unittest discover -q -> 595 run, 592 passed, 3 skipped, zero failures, using owner Windows Python. This verifies code contracts, NOT production commercial readiness.
+- The next functional app target remains F133 ChatGPT Forge Creator and F134 standalone Studio one user-to-revision artifact path. They are NOT connected to a hosted ChatGPT/iOS service. Continue from the master plan with same Forge job/vault/MCP and no new duplicate backend.
+
 ## Current master program/continuity registration — 2026-10-31 (PLAN first)
 
 **This remains the ONE living MGR Forge handoff.** Full durable spec: docs/MASTER-FORGE-PROGRAM-2026-10-31.md; exact queued source universe: research/external-provenance/BEAST-3D-RESEARCH-UNIVERSE-2026-10-31.json and accompanying .md. All records are committed research targets, not 184 completed REA studies or licensed/downloaded assets. Dataset contains **184 records, 177 distinct name strings**, categories may overlap. No new REA target scan or private code-exposing operation is authorized solely by listing a name.

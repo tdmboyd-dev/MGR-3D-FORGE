@@ -1,0 +1,14 @@
+{
+  "changed_file_rejected": true,
+  "date": "2026-10-31",
+  "note": "Only a local unsigned SHA-256 integrity roster, not release signature or runtime code hiding",
+  "private_key_used": false,
+  "publisher_authenticated": false,
+  "reverse_engineering_impossible": false,
+  "roster_sha256": "866a9ccfebbf313dbb91575bde17d37211457c7da2f5b63f07de29caa1653166",
+  "schema": "mgr.rambler.local-cli-proof.v1",
+  "signing_implemented": false,
+  "test_payload_only": true,
+  "valid_release_passed": true,
+  "verified_file_count": 2
+}
