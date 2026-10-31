@@ -40,6 +40,14 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opaci
   <button id="director-build-world" type="button" disabled>Build Edited World</button>
   <button id="director-build-blender" type="button" disabled>Open in Blender Project</button>
   <button id="director-build-godot" type="button" disabled>Download Game Engine Project</button>
+  <hr><h2>MGR CREATURE FORGE</h2><small>Make original stylized 3D creatures from scratch on CPU. Not neural photorealism, Blender-verified rigs or final art.</small>
+  <label for="director-creature-prompt">Describe an original creature</label>
+  <textarea id="director-creature-prompt" maxlength="500" minlength="8" placeholder="Invent a giant armored winged desert creature with horns and a powerful tail"></textarea>
+  <label for="director-creature-seed">Design seed (0–4,294,967,295)</label><input id="director-creature-seed" type="number" step="1" min="0" max="4294967295" value="42">
+  <label for="director-creature-variants">Anatomy ideas to evaluate (1–12)</label><input id="director-creature-variants" type="number" step="1" min="1" max="12" value="4">
+  <button id="director-creature-create" type="button" disabled>Create Original 3D Creature</button>
+  <button id="director-creature-status" type="button" disabled>Check Last Creature</button>
+  <p id="director-creature-result" role="status" aria-live="polite">Creature Forge needs the local authenticated Studio; offline HTML cannot execute creation jobs.</p>
   <hr><h2>MGR SOURCE ATLAS</h2><small>Find faces, creatures, textures, game kits and creation tools. Source discovery is not a rights or quality approval.</small>
   <label for="director-asset-query">What do you need?</label>
   <input id="director-asset-query" type="search" maxlength="120" placeholder="dragon, skin, modular city, hair" style="width:100%;background:#29364a;color:#fff;padding:8px;border:1px solid #64778f;border-radius:7px">

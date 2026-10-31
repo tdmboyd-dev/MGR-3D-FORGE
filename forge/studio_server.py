@@ -23,6 +23,7 @@ from .web_runtime import make_world_flight
 from .world_editor import apply_world_edits
 from .asset_atlas import MGRAssetCatalog, MGRSourceAtlas
 from .world_jobs import create_world_job, world_job_status
+from .creature_jobs import create_creature_job, creature_job_status
 
 
 MAX_REQUEST = 1_800_000
@@ -33,7 +34,8 @@ FILES = {"relief.glb": "model/gltf-binary", "relief.obj": "text/plain",
          "world.mtl": "text/plain", "world-editor.html": "text/html",
          "scene.blend": "application/octet-stream", "scene-report.json": "application/json",
          "godot-project.zip": "application/zip", "candidate.glb": "model/gltf-binary",
-         "candidate.json": "application/json"}
+         "candidate.json": "application/json",
+         "creature.glb": "model/gltf-binary", "creature.json": "application/json"}
 
 
 class ForgeWorkstation:
@@ -173,6 +175,12 @@ class ForgeWorkstation:
                     "triangles": inspected["geometry"]["triangles"],
                     "mesh_containers": inspected["geometry"]["meshes"],
                     "skins": admitted["skin_count"], "warnings": inspected["warnings"]}
+        if route == "/api/creature-create":
+            return create_creature_job(self, payload)
+        if route == "/api/creature-status":
+            if set(payload) != {"request_id"}:
+                raise ValueError("creature-status requires only request_id")
+            return creature_job_status(self,payload["request_id"])
         if route == "/api/world-job":
             if set(payload) != {"request_id", "edits"}:
                 raise ValueError("world-job requires stable request_id and edits")
@@ -275,9 +283,11 @@ def make_handler(studio):
             path = urlparse(self.path).path
             if path in ("/", "/studio"):
                 return self.send_bytes(200, studio.page.encode("utf-8"), "text/html; charset=utf-8")
-            match = re.fullmatch(r"/files/([a-f0-9]{24})/(relief|edited|candidate)?/?([a-z-]+\.(?:glb|obj|mtl|json|html|zip)|scene\.blend)", path)
+            match = re.fullmatch(r"/files/([a-f0-9]{24})/(relief|edited|candidate|creature)?/?([a-z-]+\.(?:glb|obj|mtl|json|html|zip)|scene\.blend)", path)
             if match:
                 jid, subfolder, name = match.groups()
+                if subfolder == "creature" and self.headers.get("X-MGR-Forge-Token") != studio.token:
+                    return self.send_bytes(403, b"forbidden", "text/plain")
                 if name not in FILES:
                     return self.send_bytes(404, b"not found", "text/plain")
                 try:
@@ -291,7 +301,7 @@ def make_handler(studio):
             return self.send_bytes(404, b"not found", "text/plain")
 
         def do_POST(self):
-            if self.path not in ("/api/asset-sources", "/api/asset-search", "/api/relief", "/api/character", "/api/world", "/api/world-job", "/api/world-job-status", "/api/godot", "/api/blender", "/api/blender-status"):
+            if self.path not in ("/api/asset-sources", "/api/asset-search", "/api/relief", "/api/character", "/api/world", "/api/world-job", "/api/world-job-status", "/api/creature-create", "/api/creature-status", "/api/godot", "/api/blender", "/api/blender-status"):
                 return self.send_bytes(404, b"not found", "text/plain")
             if self.headers.get("X-MGR-Forge-Token") != studio.token:
                 return self.send_bytes(403, b"forbidden", "text/plain")

@@ -123,3 +123,10 @@ This is PLANNING, not proof of 184 scans or a globally unbeatable platform. The 
 ## Wave B first verified slice (as of 2026-10-31)
 
 The REA self-release was inspected with supported ZIP carrier after independent official npm TGZ hash check: 2,398 shipped files, complete container scope, source-level semantics not fully proven. MGR Rambler v0 unsigned roster and verification is real but public-key signing/not-inspectable claims are false. Exact code and evidence: forge/security/rambler.py, tests/test_rambler.py, evidence/security/2026-10-31-rambler-smoke.json, evidence/xray/2026-10-31-rea-self-static.json and docs/MGR-RAMBLER-SECURITY.md. Prior phases and unexecuted items remain OPEN.
+
+
+## Wave C actual partial integration — native Creature Forge and shared ChatGPT workflow (2026-10-31)
+
+One shared creation worker implemented under forge/creature_jobs.py + ForgeWorkstation: stable request IDs and replay, generated authentic original GLB, hash, status, token-controlled downloads; exposed through existing MGR-API-MCP (src/forge-catalog-client.ts / src/forge-mcp-tools.ts, tools:execute and tools:read). Local real cross-process test produced 114192-byte/1748-triangle GLB with SHA b019e661..., token-authenticated downloaded SHA identical; wrong tenant/scope/unauthenticated downloads rejected. Existing viewer/ Creation Chat now offers original creature creation and browser SHA-checked GLB downloads, but **interactive Chrome acceptance unverified**.
+
+Private ChatGPT Forge Creator v0.1.0 skills-only source under MGR-API-MCP/integrations/forge-creator-plugin/ is an interface/workflow, NOT a hosted tool server. A working public ChatGPT/iOS authenticated creation action still needs real external OAuth/protected MCP and private artifact storage; no fake URLs. Detailed current proof in the single docs/HANDOFF.md, docs/BUILD-REGISTER.md F133/F134 and evidence/studio/2026-10-31-creature-bridge-local.json. Higher-quality neural 3D, full rig/edit/animation, Blender/Godot acceptance, world app UX remain open.

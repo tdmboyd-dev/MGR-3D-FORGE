@@ -473,6 +473,96 @@
     anchor.style.cssText="display:block;color:#9af4cd;padding:3px";
     downloadLinks.prepend(anchor);
   };
+  // This UI reuses the SAME Forge creature jobs as the shared MGR API/MCP bridge.
+  const creatureCreateButton=document.getElementById("director-creature-create");
+  const creatureStatusButton=document.getElementById("director-creature-status");
+  const creaturePrompt=document.getElementById("director-creature-prompt");
+  const creatureSeed=document.getElementById("director-creature-seed");
+  const creatureVariants=document.getElementById("director-creature-variants");
+  const creatureMessage=document.getElementById("director-creature-result");
+  const creatureStorageKey="mgr.forge.creature-last.v1."+worldSHA;
+  let lastCreature=null;
+  try{
+    const saved=JSON.parse(localStorage.getItem(creatureStorageKey)||"null");
+    if(saved&&/^creature-[0-9a-f-]{36}$/.test(saved.id)&&/^[a-f0-9]{64}$/.test(saved.fingerprint))lastCreature=saved;
+  }catch(error){lastCreature=null;}
+  creatureCreateButton.disabled=!studioEnabled;
+  creatureStatusButton.disabled=!studioEnabled||!lastCreature;
+  const creatureDigest=async(payload)=>{
+    if(!crypto?.subtle)throw new Error("A secure browser hash is needed to verify the downloaded GLB.");
+    return [...new Uint8Array(await crypto.subtle.digest("SHA-256",payload))]
+      .map(b=>b.toString(16).padStart(2,"0")).join("");
+  };
+  const loadCreatureBlob=async(result)=>{
+    if(!result||result.status!=="MATERIALIZED"||
+       !/^[a-f0-9]{64}$/.test(result.creature_sha256)||
+       !/^\/files\/[a-f0-9]{24}\/creature\/creature\.glb$/.test(result.glb_url)){
+      throw new Error("Forge returned no supported fingerprinted creature GLB.");
+    }
+    const response=await fetch(result.glb_url,{
+      headers:{"X-MGR-Forge-Token":forgeToken},redirect:"error"});
+    if(!response.ok)throw new Error("Forge GLB unavailable; inspect saved job state.");
+    const buffer=await response.arrayBuffer();
+    if(buffer.byteLength>50_000_000||buffer.byteLength<28)throw new Error("Creature file is outside size limits.");
+    if(String.fromCharCode(...new Uint8Array(buffer.slice(0,4)))!=="glTF"||
+       await creatureDigest(buffer)!==result.creature_sha256){
+      throw new Error("Downloaded GLB checksum disagrees with Forge saved receipt.");
+    }
+    const localUrl=URL.createObjectURL(new Blob([buffer],{type:"model/gltf-binary"}));
+    const link=document.createElement("a");
+    link.href=localUrl;
+    link.download="mgr-original-creature-"+result.job_id+".glb";
+    link.textContent="Download verified 3D creature ("+result.triangles+" triangles)";
+    link.style.cssText="display:block;color:#9af4cd;padding:5px 0";
+    downloadLinks.prepend(link);
+    return buffer.byteLength;
+  };
+  const showCreatureStatus=async(result)=>{
+    if(result.status==="NEEDS_RECONCILIATION"){
+      creatureMessage.textContent="Prior creation was interrupted. Inspect the job rather than silently rerunning it.";
+      return;
+    }
+    if(result.status!=="MATERIALIZED"){
+      creatureMessage.textContent="Creature status: "+String(result.status||"unknown");
+      return;
+    }
+    const size=await loadCreatureBlob(result);
+    creatureMessage.textContent="Real original GLB: "+result.triangles+" triangles, "+size+" checked bytes. Neural detail, rig and art acceptance still open.";
+  };
+  creatureCreateButton.addEventListener("click",async()=>{
+    if(!studioEnabled)return;
+    const idea=creaturePrompt.value.trim();
+    const seed=Number(creatureSeed.value),variants=Number(creatureVariants.value);
+    if(idea.length<8||idea.length>500||!Number.isInteger(seed)||seed<0||
+       seed>=4294967296||!Number.isInteger(variants)||variants<1||variants>12){
+      creatureMessage.textContent="Enter 8–500 characters, a valid seed and 1–12 variants.";
+      return;
+    }
+    creatureCreateButton.disabled=true;
+    creatureMessage.textContent="Forge is creating original CPU geometry...";
+    try{
+      const typed={prompt:idea,seed,variants,morph:{}};
+      const fingerprint=await creatureDigest(new TextEncoder().encode(JSON.stringify(typed)));
+      const requestId=(lastCreature&&lastCreature.fingerprint===fingerprint)?
+                       lastCreature.id:"creature-"+crypto.randomUUID();
+      const result=await studioPost("/api/creature-create",{request_id:requestId,...typed});
+      lastCreature={id:requestId,fingerprint};
+      try{localStorage.setItem(creatureStorageKey,JSON.stringify(lastCreature));}catch(error){/* private mode */}
+      creatureStatusButton.disabled=false;
+      await showCreatureStatus(result);
+    }catch(error){creatureMessage.textContent="Creature creation failed: "+String(error.message);}
+    finally{creatureCreateButton.disabled=false;}
+  });
+  creatureStatusButton.addEventListener("click",async()=>{
+    if(!studioEnabled||!lastCreature)return;
+    creatureStatusButton.disabled=true;
+    try{
+      const result=await studioPost("/api/creature-status",{request_id:lastCreature.id});
+      await showCreatureStatus(result);
+    }catch(error){creatureMessage.textContent="Creature status check failed: "+String(error.message);}
+    finally{creatureStatusButton.disabled=false;}
+  });
+
   document.getElementById("director-image").addEventListener("change",e=>{
     reliefButton.disabled=!studioEnabled||e.target.files?.[0]?.type!=="image/png"||
       e.target.files[0].size>900_000;

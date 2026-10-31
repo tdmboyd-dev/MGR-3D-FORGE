@@ -1,3 +1,13 @@
+## 2026-10-31 — Direct original 3D creature API/MCP and existing Studio UI (F133/F134)
+
+- Reused Forge Studio job allocation and world-job journal helper to make forge/creature_jobs.py: stable exact job IDs, strong input/mesh hash, persisted GLB/JSON, replay after restart, changed-input and tamper denial; kept native CPU procedural method and no billed providers.
+- forge/studio_server.py added authenticated creation/status routes and token-required creature GLB/manifest reads. Existing world jobs and routes retained.
+- Shared sibling API/MCP ForgeStudioCatalogClient and conditional mgr_forge_creature_create / status under verified actor/tenant/audience tools:execute/read; TypeScript exact optional properties bug found and fixed, actual local Python Forge HTTP -> Node binding smoke PASSED.
+- Real cross-process witness: original GLB 114192 bytes, 1748 triangles SHA b019e6617175a3d4ec3d30a9f72bc372fc6578c5beaf97565c80efc00b6a1b1c; SHA verified by independent token-authenticated HTTP GET, duplicate replay matched, missing permission and wrong tenant/unauthenticated download denied. Receipt evidence/studio/2026-10-31-creature-bridge-local.json.
+- Existing local Creation Chat gained Creature Forge prompt/seed/variants and status/download with WebCrypto SHA validation; JS syntax and server HTTP static integration verified. Actual Chrome end-to-end click interaction could not be exercised in current execution environment; remain OPEN instead of claiming UI verified.
+- Dedicated ChatGPT Forge Creator v0.1.0 source created under sibling MGR-API-MCP/integrations/forge-creator-plugin/ as SKILL ONLY. Hosted MCP/OAuth/preview/download pending; no fake local mobile access.
+- Full local Forge regression 600 tests run, 597 PASS, 3 skip; sibling API/MCP 68 PASS, 0 fail. Source research universe remains at 184 queued entries; no new unlicensed asset downloads.
+
 ## 2026-10-31 — REA self-inspection + MGR Rambler integrity implementation
 
 - Resolved self-study REA limitation: official npm TGZ verified against SHA-512 but REA inspect-artifact refused its binary type. Bounded derived ZIP carrier then passed REA 6.8.0 full ZIP inventory on **2,398 source files**, exact hashes and private complete evidence retained, safe summary in evidence/xray/2026-10-31-rea-self-static.json. Inspected source/license/mcp entry files, flagged absent package-listed plugin launcher for independent provenance check (not declared an upstream bug).

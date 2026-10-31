@@ -21,8 +21,10 @@ def _atomic_json(path, value):
     temp.replace(path)
 
 
-def _index(studio):
-    path = studio.workspace / "world-requests.json"
+def _index(studio, ledger="world-requests.json"):
+    if ledger not in ("world-requests.json", "creature-requests.json"):
+        raise ValueError("unsupported creation job ledger")
+    path = studio.workspace / ledger
     if not path.exists():
         return {}, path
     if path.is_symlink() or path.stat().st_size > MAX_LEDGER_BYTES:

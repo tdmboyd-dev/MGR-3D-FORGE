@@ -75,6 +75,10 @@ class StudioServerTests(unittest.TestCase):
         self.assertIn(b"MGR_FORGE_STUDIO_TOKEN", data)
         self.assertIn(b"director-generate-relief", data)
         self.assertIn(b"director-asset-search", data)
+        self.assertIn(b"director-creature-create", data)
+        self.assertIn(b"director-creature-status", data)
+        self.assertIn(b"/api/creature-create", data)
+        self.assertIn(b"Download verified 3D creature", data)
 
     def test_source_atlas_search_authenticated_over_local_http(self):
         code, raw, _ = self.fetch("/api/asset-sources", {"query": "quaternius"})
@@ -101,6 +105,30 @@ class StudioServerTests(unittest.TestCase):
         self.assertEqual(code, 200)
         self.assertEqual(json.loads(raw), expected)
         vendor.assert_called_once_with("rock", kind="models", limit=3)
+
+    def test_http_original_creature_produces_real_token_protected_glb_and_replay(self):
+        payload={"request_id":"owner-creator-actor-01",
+                 "prompt":"invent a winged forest creature with horns",
+                 "seed":44,"variants":3,"morph":{"length":1.1}}
+        status,body,_=self.fetch("/api/creature-create",payload)
+        self.assertEqual(status,200)
+        result=json.loads(body)
+        self.assertEqual(result["status"],"MATERIALIZED")
+        self.assertGreater(result["triangles"],300)
+        self.assertFalse(result["owner_art_accepted"])
+        self.assertFalse(result["model_inference_used"])
+        self.assertEqual(self.fetch("/api/creature-create",payload,token=False)[0],403)
+        replay=json.loads(self.fetch("/api/creature-create",payload)[1])
+        self.assertTrue(replay["replayed"])
+        self.assertEqual(replay["creature_sha256"],result["creature_sha256"])
+        self.assertEqual(self.fetch(result["glb_url"])[0],403)
+        request=Request(self.root_url+result["glb_url"],
+                        headers={"X-MGR-Forge-Token":self.studio.token})
+        with urlopen(request,timeout=4) as response:
+            blob=response.read()
+        self.assertEqual(hashlib.sha256(blob).hexdigest(),result["creature_sha256"])
+        self.assertEqual(blob[:4],b"glTF")
+        self.assertEqual(self.fetch("/api/creature-create",{**payload,"prompt":"something else"})[0],400)
 
     def test_no_public_tokenless_post(self):
         code, _, _ = self.fetch("/api/world", {"edits": {}}, token=False)

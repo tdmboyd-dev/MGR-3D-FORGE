@@ -1,5 +1,22 @@
 # MGR 3D Forge - Full Living Handoff
 
+## Current direct Creature Forge + ChatGPT Creator source — 2026-10-31
+
+**ONE active owner resume:** this Forge docs/HANDOFF.md, with entire architecture and all still-open systems in docs/MASTER-FORGE-PROGRAM-2026-10-31.md, research source queue (184 records/177 names, not 184 inspections) and docs/BUILD-REGISTER.md F01–F138. Phase A and the earlier REA/Rambler slice are published. This new creation slice extends the SAME Forge Studio/MGR API/MCP, not another standalone job backend.
+
+**What's really built (F133):** forge/creature_jobs.py runs the existing MGR original CPU geometry generator, saves request JSON, immutable job GLB + DNA manifest and SHA, indexes stable request IDs via Forge's current world_jobs.py journal helpers; replay reuses the original output, changed request ID input refuses, interrupted result stays NEEDS_RECONCILIATION. forge/studio_server.py adds protected local /api/creature-create and /api/creature-status plus token-required GET of /files/{job-id}/creature/creature.glb or creature.json. Existing /api/world remains unchanged. Tests: tests/test_creature_jobs.py and tests/test_studio_server.py.
+
+**Standalone Studio F134 partial:** existing viewer/template.html and viewer/runtime.js Creation Chat now include Creature Forge prompt/seed/variants; requests the exact local Studio job, remembers a SHA fingerprint plus job ID for status/replay, downloads GLB to a browser Blob URL only after locally verifying its SHA-256, with honest 'not rigged/art approved' labels. JS syntax and HTTP fixture pass; **full real interactive Chrome click/download screenshot QA was not permitted in the current execution environment, therefore remains OPEN**. Never call this a production complete editor or high-quality neural generator.
+
+**MGR API/MCP owner:** sibling MGR-API-MCP/src/forge-catalog-client.ts and src/forge-mcp-tools.ts now expose the same optional mgr_forge_creature_create and mgr_forge_creature_status under verified scopes tools:execute or tools:read and tenant/audience restrictions. The direct local Python Studio -> Node API bridge produced a **114,192-byte, 1,748-triangle original GLB**, SHA-256 b019e6617175a3d4ec3d30a9f72bc372fc6578c5beaf97565c80efc00b6a1b1c; independently downloaded bytes matched SHA, stable ID replay matched, wrong tenant/missing execute scope and tokenless file GET were denied. Reproduction: sibling MGR-API-MCP/scripts/verify-forge-studio.py; safe evidence in this repo evidence/studio/2026-10-31-creature-bridge-local.json and API repo evidence/forge-creator/2026-10-31-native-creature-local-bridge.json.
+
+**ChatGPT plugin source F133:** sibling MGR-API-MCP/integrations/forge-creator-plugin/plugin.json and skills/mgr-forge-create/SKILL.md; **skills-only v0.1.0** intended as a private workflow plugin, without fictitious remote mcp.json or public server. It does not deliver on-device/iOS hosted model generation just by existing. A real authenticated hosted MGR API/MCP endpoint, secure persistent artifact storage with expiring URLs, OAuth/tenant binding, browser preview and independent Tevin client acceptance are still OPEN. Creation OS is optional coordination, not a mandatory local 3D hop.
+
+**Current repeatable verification:** Python full suite 600 tests run, 597 PASS, 3 intentionally SKIPPED, 0 failed; API/MCP npm run verify 68/68 PASS (TypeScript, public artifact and plugin validation), actual local cross-process source/creature/world test PASS. The previous REA 2,398-file self study and Rambler unsigned roster are separately recorded below; 184 other source targets are still QUEUED. No GPU rental/provider cost, asset distribution, model training or private-weight download in this slice.
+
+**Open/next:** actual browser UI click and screenshot, artwork/3D preview and user revision/redo, real Blender/Godot engine import for THIS generated creature, high-detail neural backend, 184 license-gated study wave, hosted ChatGPT + Tevin production OAuth/artifact delivery, offsite vault restores. Never re-label tests as whole-app completion.
+
+
 ## First build from persisted plan — REA self and Rambler v0 (2026-10-31)
 
 - The complete master plan and 184-target research register were **committed and GitHub fetched back before** this new REA study. Source status for 184 candidate records remains QUEUED; nothing is silently marked licensed or installed.
