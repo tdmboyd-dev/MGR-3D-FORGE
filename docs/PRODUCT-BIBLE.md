@@ -11,7 +11,7 @@ MGR 3D Forge is a native creation platform, not a chatbot and not a rebadged Tri
 ## Intended consumers
 
 - **Tevin Rain / MGR-ONE:** adult Black character identity, accurate hands/proportions, separable outfit components, rig, animation, environments.
-- **Creation OS:** parent creative orchestration when verified against actual source tree.
+- **Creation OS:** separate optional multi-factory creative orchestration when appropriate; simple Forge creation routes directly through MGR API/MCP.
 - **Create Loco:** screenshot/concept-to-3D experiences when appropriate, via shared contracts.
 - **iKickItz:** reusable environments, avatars, rooms and world assets.
 - **MGR Blender Expert:** Blender execution, scene assembly, validation and export.
@@ -141,3 +141,7 @@ Use only authorized photos/video; estimate cameras/depth/scene; convert into edi
 ## Competitive advantage hypotheses
 
 Potential 10x gains are **hypotheses** in (a) cost per accepted asset by procedural reuse, (b) setup speed for large structured worlds, (c) reduction in revisions through continuity locks, (d) percentage of assets reusable across MGR products. Each needs a baseline, 30+ comparable trials, quality gate and cost accounting. Visual fidelity superiority requires a separate blinded human review and objective geometry tests.
+
+## Master program expansion 2026-10-31
+
+Full owner-approved Forge/Rambler/ChatGPT/X-Ray + 184 research target plan is in docs/MASTER-FORGE-PROGRAM-2026-10-31.md and research/external-provenance/BEAST-3D-RESEARCH-UNIVERSE-2026-10-31.json. All names are queued candidates until verified. The sole up-to-date production status remains docs/HANDOFF.md.

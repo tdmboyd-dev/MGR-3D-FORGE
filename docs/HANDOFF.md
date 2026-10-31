@@ -1,5 +1,18 @@
 # MGR 3D Forge - Full Living Handoff
 
+## Current master program/continuity registration — 2026-10-31 (PLAN first)
+
+**This remains the ONE living MGR Forge handoff.** Full durable spec: docs/MASTER-FORGE-PROGRAM-2026-10-31.md; exact queued source universe: research/external-provenance/BEAST-3D-RESEARCH-UNIVERSE-2026-10-31.json and accompanying .md. All records are committed research targets, not 184 completed REA studies or licensed/downloaded assets. Dataset contains **184 records, 177 distinct name strings**, categories may overlap. No new REA target scan or private code-exposing operation is authorized solely by listing a name.
+
+**Work scope agreed:** permitted REA self-analysis under existing optional MGR BEAST X-Ray; 100+ source/kits/morphs/rigs/engines discovery and licensed comparison; fully independent Human/Creature/Creation/Word/World/Vault/AI Shape Lab + Motion/FX capabilities; single working Forge Studio job/vault/preview/revision acceptance; optional Tevin and ChatGPT Forge Creator via existing MGR-API-MCP; MGR Rambler tamper-resistant delivery and private-IP controls without impossible-to-inspect claims; robust code repairs and same-repo proof/readback. No duplicate brains/router/job ledger/vault or mandatory Creation OS.
+
+**Planned repo paths:** MGR-3D-FORGE/docs/MASTER-FORGE-PROGRAM-2026-10-31.md (complete product/system map and build waves); MGR-3D-FORGE/research/external-provenance/BEAST-3D-RESEARCH-UNIVERSE-2026-10-31.json (each target name, source locator, legal gate, owner, status, next action); MGR-3D-FORGE/docs/BUILD-REGISTER.md (F129–F138 lifecycle); MGR-3D-FORGE/forge/security/rambler/ (PLANNED), MGR-API-MCP/integrations/forge-creator-plugin/ (PLANNED). Keep all private binary assets and model weights in reviewed Forge Vault with public safe digests and durable restore instructions, not in public GitHub.
+
+**Read order when this chat ends:** (1) this one handoff; (2) docs/MASTER-FORGE-PROGRAM-2026-10-31.md; (3) docs/BUILD-REGISTER.md F01–F138; (4) current code/tests/evidence and docs/PROGRESS-LOG.md; (5) source universe JSON + exact-license research; (6) matching sibling HANDOFF.md, current Git main and any concurrent changes. Check before running, prove before updating. Existing F128 REA 302/302 proven ZIP receipt remains historical, NOT one of 184 new queued runs.
+
+**Immediate next execution:** publish this PLAN-only baseline and fetch from GitHub first; then permitted REA official self-inspection and prioritized source audit; then original Rambler prototype and real Forge Creator/Studio integration proof. No model training, GPU rental, private-site scraping, paid APIs or license bypass authorized by this plan.
+
+
 ## Current owner checkpoint — 2026-10-31 (older checkpoints archived separately)
 
 **ONE current Forge resume authority:** this document; feature table in `docs/BUILD-REGISTER.md`, chronology in `docs/PROGRESS-LOG.md`, implementation and source citations in `docs/DIRECT-CREATION-AND-KIT-PRESERVATION.md`. Old 2026-10-27 and 2026-10-30 entries remain historical evidence, not current facts.

@@ -1,3 +1,11 @@
+## 2026-10-31 — owner-approved master program is staged before REA wave
+
+- Inspected current Forge repo at GitHub main 1d4c1235c79cce65acb6a1d75fa6a59bdfd46804. Existing 128 numbered capability areas and audited local REA/KayKit evidence retained unchanged.
+- Created detailed durable plan docs/MASTER-FORGE-PROGRAM-2026-10-31.md, 184 queued targets across 177 distinct name strings in research/external-provenance/BEAST-3D-RESEARCH-UNIVERSE-2026-10-31.json, plus .md human index. NO new 100+ REA scans/asset imports falsely claimed.
+- Allocated F129–F138 to REA self-study, candidate research, code protection Rambler, ChatGPT Creator plugin, real standalone Studio, humans/creatures/worlds/motion, backup and quality benchmarks. Every target remains planned or specific prior partial proof.
+- Locked user path: stand-alone Forge and optional ChatGPT/Tevin -> existing MGR API/MCP -> Forge jobs and vault, optional X-Ray and Creation OS. Follow one handoff per repo and commit first; no new duplicate backend.
+- Published commit SHA and any later test evidence must be added after actual execution, not predicted here.
+
 ## 2026-10-31 — REA X-Ray optional source-evidence bridge F128
 
 - Identified official REA `morluto/rea` (observed SHA 6e9ee97a...), `rea-agents@6.8.0` (npm integrity pinned), Windows portable Node 24.22.1 (publisher SHA verified), installed without modifying global Node and ran real static `inspect-artifact` on the pinned owner KayKit ZIP. Corrected the required REA CLI `--evidence_output` contract after initial `invalid_request`.

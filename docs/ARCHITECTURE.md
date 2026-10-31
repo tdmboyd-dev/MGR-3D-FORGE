@@ -1,5 +1,10 @@
 # MGR 3D Forge — Native Architecture
 
+## Live architecture pointer — 2026-10-31
+
+The older 2026-10-30 implementation section below is dated history. Current architecture and product routing are in docs/MASTER-FORGE-PROGRAM-2026-10-31.md, and tested status in docs/HANDOFF.md. Direct Forge execution through MGR-API-MCP is the owner-approved route; Creation OS is OPTIONAL multi-factory orchestration. Forge now has 18 source families, 3 actual official metadata adapters and a local authorized world-job tool. No full hosted Tevin or ChatGPT 3D creation accepted. REA is optional BEAST X-Ray, not mandatory inference. Planned MGR Rambler is defense-in-depth, not impossible inspection.
+
+
 **Status as of 2026-10-30: partial native code + locally verified Studio and API/MCP read-only bridge; no production Tevin creative execution.** Never infer deployed capability from a proposed contract.
 
 ## Implemented source / bridge boundary (2026-10-30)
