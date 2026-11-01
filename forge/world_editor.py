@@ -70,8 +70,7 @@ def _validate_edits(document, originals, world_sha, grounds):
     return normalized
 
 
-def validate_world_edits(world_dir, document):
-    """Read-only validation shared by native preparation and actual export."""
+def _validated_world_source(world_dir):
     source = Path(world_dir).resolve()
     if not source.is_dir() or not (source / "world.glb").is_file():
         raise ValueError("original world directory and GLB required")
@@ -85,8 +84,24 @@ def validate_world_edits(world_dir, document):
     meshes, reproducible = create_neighborhood(spec)
     if reproducible["buildings"] != original["buildings"]:
         raise ValueError("source geometry does not match deterministic MGR manifest")
+    return spec, meshes, reproducible, sha
+
+
+def validate_world_edits(world_dir, document):
+    """Read-only validation shared by native preparation and actual export."""
+    spec, meshes, reproducible, sha = _validated_world_source(world_dir)
     changed = _validate_edits(document, reproducible["buildings"], sha, reproducible["grounds"])
     return spec, meshes, reproducible, changed, sha
+
+
+def world_edit_context(world_dir):
+    """Actual immutable base-world facts for a caller's exact edit proposal."""
+    _, _, original, sha = _validated_world_source(world_dir)
+    return {'schema':'mgr.forge.world-context.v1','sourceVerified':True,'sideEffects':False,
+            'edits':{'schema':'mgr.forge.world-edit.v1','asset_sha256':sha,
+                     'buildings':[{k:b[k] for k in ['id','center','size','material']} for b in original['buildings']]},
+            'materials':list(BUILDING_MATERIALS),'grounds':{k:original['grounds'][k] for k in ['width','depth']},
+            'limits':{'maximumEditedBuildings':128,'maximumHeight':100}}
 
 
 def apply_world_edits(world_dir, edits_path, output):

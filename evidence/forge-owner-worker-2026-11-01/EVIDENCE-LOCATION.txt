@@ -1,0 +1,1 @@
+Raw historical/final logs and source maps are in MGR-API-MCP/evidence/forge-owner-worker-2026-11-01/ on repair/completion-2026-10-28. Current authenticated browser acceptance and blocked cleanup remain explicit.

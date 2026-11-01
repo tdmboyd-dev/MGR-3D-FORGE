@@ -66,3 +66,7 @@ Each safe build wave: record exact source/changed files -> reproduce tests -> ac
 ## Actual new shared MCP typed files and Human/World jobs
 
 In the existing sibling MGR-API-MCP use npm run verify and python scripts/verify-forge-creator-mcp.py to test the official Streamable HTTP client -> authorized shared edge -> Python Forge Studio. The current edge exposes guarded biome, human-lipsync create/status and artifact read with exact 24-hex job ID + SHA-256 + optional GLB binary resource, not a guessed public file URL. The local protocol test uses a fixture JWT verifier, not a deployed OIDC/JWKS issuer. Forge Studio owns real files; no duplicate Vault, no Creation OS middle hop. Missing real hosted worker/ChatGPT/Tevin and neural CUDA model acceptance are OPEN.
+
+## Owned native service/context integration — November1
+
+The current source adds a private Windows-owned native Forge worker, pinned runtime inputs, original-process/Blender family shutdown/crash custody, exact current-world context and five-operation owner-service restart/replay. ONE contract: docs/runtime/TEVIN-FORGE-OWNER-WORKER.md; current executed evidence belongs in evidence/forge-owner-worker-2026-11-01/REPORT.md in each owning repo. This supersedes the instruction to build that adapter from scratch; fixture/runtime/permanent/provider/production states remain distinct in the report. Direct native MCP tools13 plus separate read-scoped department prepare/context; native CLI64. Large assets, full product audits and broader acceptance remain open.

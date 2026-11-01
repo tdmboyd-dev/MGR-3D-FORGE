@@ -110,3 +110,7 @@ Measured under CPython 3.12.14, x86_64. This excludes expensive Blender import, 
 - **Real Windows Chrome passed ten CDP interactions**, including actual canvas click, file download verification, undo/redo and W camera movement. Machine screenshot, SHA-256 and evidence bounds: `evidence/browser/windows-wave15-spatial-editor.json` and its PNG. **223/223 Python tests passed** in Linux and on Windows.
 - Open: triangle-precision hit testing, full transform gizmo, object create/delete, terrain sculpting, live renderer tuning, high-fidelity aesthetic acceptance.
 
+
+## Private owner worker / base-world facts — November1
+
+Native `forge/owner_worker.py` and trusted `scripts/owner-worker.py` wrap the original ForgeWorkstation and native journals: Windows workspace lock/named Job, private stdio readiness, original process and Blender family ownership, EOF admission close/join/receipt, crash reconciliation without retry. `forge/world_editor.py::world_edit_context` reuses the original verified source check; authenticated exact-empty-body `/api/world-context` returns original building/source facts without creating a job. Original Human/composition Blender calls close stdin with DEVNULL, keeping the owner control pipe private. See ONE docs/runtime/TEVIN-FORGE-OWNER-WORKER.md and each repo evidence/forge-owner-worker-2026-11-01/REPORT.md for executed results, retained failures and remaining scope. No new CLI parser or model/provider engine; F01-F156 and64CLI unchanged.

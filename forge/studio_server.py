@@ -21,7 +21,7 @@ from .character_intake import admit_candidate
 from .engine_handoff import export_godot_project
 from .live_blender import create_live_blender_scene
 from .web_runtime import make_world_flight
-from .world_editor import apply_world_edits
+from .world_editor import apply_world_edits, world_edit_context
 from .asset_atlas import MGRAssetCatalog, MGRSourceAtlas
 from .world_jobs import create_world_job, world_job_status
 from .creature_jobs import create_creature_job, creature_job_status
@@ -137,6 +137,9 @@ class ForgeWorkstation:
         return folder
 
     def command(self, route, payload):
+        if route == '/api/world-context':
+            if not isinstance(payload,dict) or payload:raise ValueError('empty world-context request required')
+            with self.world_job_lock:return world_edit_context(self.world)
         if route == '/api/request-verify':
             return verify_request(self,payload)
         if not isinstance(payload, dict):
@@ -402,7 +405,7 @@ def make_handler(studio):
         def do_POST(self):
             if not self._valid_local_host():
                 return self.reject_post(403, b"forbidden host")
-            if self.path not in ("/api/request-verify", "/api/asset-sources", "/api/asset-search", "/api/relief", "/api/character", "/api/world", "/api/world-job", "/api/world-job-status", "/api/creature-create", "/api/creature-status", "/api/biome-create", "/api/biome-status", "/api/human-lipsync-start", "/api/human-lipsync-status", "/api/world-compose-create", "/api/world-compose-status", "/api/godot", "/api/blender", "/api/blender-status"):
+            if self.path not in ("/api/world-context", "/api/request-verify", "/api/asset-sources", "/api/asset-search", "/api/relief", "/api/character", "/api/world", "/api/world-job", "/api/world-job-status", "/api/creature-create", "/api/creature-status", "/api/biome-create", "/api/biome-status", "/api/human-lipsync-start", "/api/human-lipsync-status", "/api/world-compose-create", "/api/world-compose-status", "/api/godot", "/api/blender", "/api/blender-status"):
                 return self.reject_post(404, b"not found")
             if not self._owner_authorized():
                 return self.reject_post(403, b"forbidden")

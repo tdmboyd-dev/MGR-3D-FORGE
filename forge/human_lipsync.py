@@ -17,7 +17,7 @@ def _blender(binary,script,args,timeout=110):
     cmd=[located,"--background","--factory-startup","--python",
          str(Path(__file__).resolve().parents[1]/"bridge"/script),"--",*(str(x) for x in args)]
     try:
-        result=subprocess.run(cmd,timeout=timeout,text=True,capture_output=True)
+        result=subprocess.run(cmd,timeout=timeout,text=True,capture_output=True,stdin=subprocess.DEVNULL)
     except subprocess.TimeoutExpired as error:
         raise RuntimeError("Blender facial job timed out; inspect unmodified outputs") from error
     if result.returncode or "Traceback (most recent call last)" in result.stderr or (

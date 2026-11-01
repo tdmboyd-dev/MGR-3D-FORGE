@@ -21,7 +21,7 @@ def _run(binary,filename,arguments,timeout=110):
     script=Path(__file__).resolve().parents[1]/"bridge"/filename
     result=subprocess.run([binary,"--background","--factory-startup",
         "--python",str(script),"--",*(str(x) for x in arguments)],
-        capture_output=True,text=True,timeout=timeout)
+        capture_output=True,text=True,timeout=timeout,stdin=subprocess.DEVNULL)
     if result.returncode or "Traceback (most recent call last)" in (result.stdout+result.stderr):
         raise RuntimeError("Real Blender world composition failed: "+(result.stderr or result.stdout)[-700:])
     return result.stdout

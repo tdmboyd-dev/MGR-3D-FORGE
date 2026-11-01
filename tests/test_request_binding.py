@@ -62,6 +62,12 @@ class RequestBindingTests(unittest.TestCase):
         for kind in ('world','creature','biome','human'):
             r=self.verify(kind);self.assertEqual(r['status'],'NOT_FOUND');self.assertFalse(r['input_verified'])
         self.assertEqual(len(list(self.studio.jobs.iterdir())),0)
+    def test_world_context_is_actual_validated_source_without_creating_a_job(self):
+        result=self.studio.command('/api/world-context',{})
+        self.assertTrue(result['sourceVerified']);self.assertFalse(result['sideEffects']);self.assertEqual(result['edits'],self.requests['world']['edits']);self.assertIn('building-gold',result['materials']);self.assertEqual(len(list(self.studio.jobs.iterdir())),0)
+        with self.assertRaises(ValueError):self.studio.command('/api/world-context',{'world':'caller-selected'})
+        path=self.root/'world/world.glb';path.write_bytes(path.read_bytes()+b'changed')
+        with self.assertRaises(ValueError):self.studio.command('/api/world-context',{})
     def test_new_world_request_runs_editor_source_and_geometry_validation_without_allocation(self):
         invalid=[]
         for field,value in [('asset_sha256','0'*64),('schema','unknown')]:
