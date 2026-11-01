@@ -5,6 +5,9 @@ import fs from "node:fs/promises";
 
 const url=process.argv[2], out=process.argv[3];
 if(!/^http:\/\/127\.0\.0\.1:\d+\/$/.test(url)||!out)throw new Error("local Forge Studio URL and evidence directory required");
+const studioAccessToken=process.env.MGR_FORGE_QA_TOKEN;
+if(!studioAccessToken||!/^[A-Za-z0-9_-]{24,128}$/.test(studioAccessToken))throw Error("Private test Studio token required in the scoped environment");
+const ownerUrl=new URL(url);ownerUrl.hash='mgr-token='+studioAccessToken;
 const browser=await chromium.launch({
   executablePath:"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
   headless:true,
@@ -14,11 +17,40 @@ const browser=await chromium.launch({
 let errors=[];
 try{
   const context=await browser.newContext({acceptDownloads:true,viewport:{width:1440,height:900}});
+  const locked=await context.request.get(url);
+  const lockedHtml=await locked.text();
+  assert.equal(lockedHtml.includes(studioAccessToken),false);
+  assert.equal(lockedHtml.includes('MGR_WORLD_BASE64'),false);
+  assert.equal((await context.request.get(new URL('/studio',url).href)).status(),403);
   const page=await context.newPage();
   page.on("pageerror",e=>errors.push(String(e)));
-  const response=await page.goto(url,{waitUntil:"domcontentloaded",timeout:20000});
+  await page.goto(url);
+  await page.screenshot({path:out+'/forge-studio-locked.png'});
+  await page.locator('#studio-access').fill('invalid');
+  await page.locator('#studio-open').click();
+  await page.locator('#studio-status').filter({hasText:'Use the private Studio'}).waitFor();
+  await page.locator('#studio-access').fill('x'.repeat(43));
+  await page.locator('#studio-open').click();
+  await page.locator('#studio-status').filter({hasText:'not accepted'}).waitFor();
+  await page.route('**/studio',async route=>{
+    await new Promise(resolve=>setTimeout(resolve,300));
+    try{await route.abort();}catch(error){
+      if(!String(error).includes('Route is already handled'))throw error;
+    }
+  });
+  await page.locator('#studio-access').fill(studioAccessToken);
+  await page.locator('#studio-open').click();
+  await page.locator('#studio-cancel').click();
+  await page.locator('#studio-status').filter({hasText:'interrupted'}).waitFor();
+  await page.unrouteAll({behavior:'wait'});
+  await page.goto('about:blank');
+  const response=await page.goto(ownerUrl.href,{waitUntil:"domcontentloaded",timeout:20000});
   assert.equal(response.status(),200);
   await page.locator("#director-toggle").click();
+  assert.equal(new URL(page.url()).hash,'');
+  await page.reload();
+  await page.locator('#director-toggle').click();
+  assert.equal(new URL(page.url()).hash,'');
   await page.locator("#director-creature-prompt").fill("Invent a giant winged steel dragon creature with horns and a long tail");
   await page.locator("#director-creature-seed").fill("41");
   await page.locator("#director-creature-variants").fill("4");
@@ -152,11 +184,17 @@ try{
      morph_changed_real_glb_sha:sha!==nextSha,
      original_biome_and_edit_job_passed:true,
      status_checked_after_creation:true,download_link_type:"blob_url_checked_sha256",
+     anonymous_page_contains_no_bearer_or_world:true,private_editor_requires_token:true,
+     invalid_token_rejected:true,wrong_token_rejected:true,cancel_and_retry_verified:true,
+     owner_fragment_removed:true,tab_session_reload_verified:true,
      screenshot_sha256:createHash("sha256").update(screenshotData).digest("hex"),
      browser_errors:errors,
      visual_art_quality_accepted:false,
      hosted_chatgpt_or_tevin_verified:false
   }));
+}catch(error){
+  console.error('FORGE_BROWSER_FAILED='+String(error).replaceAll(studioAccessToken,'[redacted]'));
+  process.exitCode=1;
 }finally{
   await browser.close();
 }

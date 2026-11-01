@@ -194,3 +194,7 @@ Target runtime/game engine; production hardware; user-approved Tevin references 
 ## Shared consumer evidence update — November 1, 2026
 
 Existing Forge/MCP integration and current Human/World lanes gain receiving evidence, not new parent feature closure: API247/247, Forge638run/635pass/3SAM skips, real SDK/HTTP/Blender private GLB return and same-tenant actor denial. See evidence/audits/2026-11-01-shared-edge-consumer-audit.json and the current docs/HANDOFF.md. Permanent Tevin execution, raw-WAV shared adapter, stronger shared GLB structure checks, all64-action source audit and hosted/owner/production gates remain open in the original features. No original status is reset or promoted by this note.
+
+## Studio entry qualification — November 1, 2026
+
+Existing Studio/jobs/security and Forge/MCP consumer features gain a targeted repair, not parent-feature closure. Anonymous HTML no longer releases the bearer or authored world. Real Chrome unlock/cancel/reload and native creature/world/human downloads passed; full642 tests/639pass/3SAMskips. See `evidence/studio-access-2026-11-01/verification.json`. Personal Tevin actions, mobile, hosted/private-worker restart/cancellation, professional art and production remain separate open checks. Earlier638-case receipts remain historical evidence for their original source.

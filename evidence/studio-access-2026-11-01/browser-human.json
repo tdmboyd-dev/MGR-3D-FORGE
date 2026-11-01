@@ -1,0 +1,26 @@
+{
+  "actual_browser_result": {
+    "anonymous_page_contains_no_bearer_or_world": true,
+    "audio_automatic_alignment_verified": false,
+    "blend_bytes": 134273,
+    "final_look_owner_approved": false,
+    "genuine_browser_click": true,
+    "hosted_chatgpt_verified": false,
+    "human_glb_bytes": 230536,
+    "original_3d_face_shape_keys": true,
+    "owner_fragment_removed": true,
+    "page_errors": [],
+    "private_editor_requires_token": true,
+    "real_editable_blend_sha256": "1161e6ffeb5ce7cd558f05aad07a8c368ed0f8df59926f530c307d9cdee1d9fe",
+    "real_human_glb_sha256": "04c3edafc580333b1d61bd800ab7820519c71df75bb00b33d58cb1d5c23b820c",
+    "screenshot_sha256": "17a2b853ae1fcec7b518157083a39be80bd06778d4bd96a034283948fe1ffeab",
+    "status": "REAL_CHROME_HUMAN_FACE_CREATION_PASS"
+  },
+  "gpu_neural_inference_used": false,
+  "mode": "human",
+  "owner_visual_art_accepted": false,
+  "public_hosted_consumer_verified": false,
+  "schema": "mgr.forge.owner-browser-reproduction.v1",
+  "source": "same Forge Studio viewer + existing Python Forge workers",
+  "status": "REAL_CHROME_ACCEPTANCE_PASS"
+}

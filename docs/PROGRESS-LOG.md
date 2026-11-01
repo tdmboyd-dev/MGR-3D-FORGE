@@ -1,5 +1,9 @@
 ## 2026-11-01 — Recovered audio/world composition and bounded REA
 
+### 2026-11-01 — Secured native Studio entry and real browser recovery
+
+Reproduced and repaired public editor bearer/world exposure in the original server. Added owner fragment unlock with validation/loading/error/cancel, strict single-header comparison, tab reload and safe anonymous HTML. Focused44/44, full642/639passed/3SAMskips; actual Chrome creature/world and Human Blender/download workflows passed. Test dependency lockfile added. Safe receipts under `evidence/studio-access-2026-11-01/`; personal Tevin/hosted/production and owner art acceptance remain open.
+
 - November 1 REA JSON truth: fixed 4 stale NOT_RUN entries to one complete publisher source ZIP inventory plus 3 partial pinned selections; 183 source candidates still NOT_RUN, 0 model inference or rights approval. Tests test_master_continuity/test_source_handbook 8/8 PASS. No unverified source claims promoted.
 
 - After full real run: current Forge suite 638 run / 635 PASS / 3 skipped / 0 failures; API/MCP verify 85/85 PASS. Current source SHA and full log hash in evidence/audits/2026-11-01-full-regression.json. All remaining hosted/GPU/GoDot/phoneme gates remain open.

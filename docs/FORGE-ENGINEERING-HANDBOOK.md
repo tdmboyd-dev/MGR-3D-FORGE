@@ -1,5 +1,11 @@
 # MGR 3D Forge — Engineering Handbook
 
+## Current owner Studio entry — November 1, 2026
+
+`serve-studio` prints a private launch link with a fragment credential. Open that exact link locally; do not share or commit it. Bare localhost URLs show a public Unlock Studio shell with no world or token. The fragment is stripped before `/studio` is fetched with exactly one `X-MGR-Forge-Token`; tab session storage permits reload. A restarted server uses a fresh link. Query strings/cookies are not authentication. All private file and action clients use the same exact header. This supersedes older public-editor entry assumptions.
+
+Current targeted proof: `evidence/studio-access-2026-11-01/verification.json`, real Chrome/Blender creature/world and human receipts. These replace the older “browser click not yet run” statement for these exact desktop paths only; mobile, permanent Tevin approval/execution/reopening, deployed OAuth, full product/neural/professional art acceptance remain open. Reproduce with `npm ci --ignore-scripts` in `scripts/browser-qa`, then `python scripts/verify_browser_ui.py --mode creature --out <new-private-directory>` and the separate `human` mode. The harness uses installed Chrome/Blender and refuses to overwrite an existing receipt before allocating jobs.
+
 **Audited baseline:** GitHub main 310badac0661422fd1415b9d3baa52fed7127391, 2026-10-31. This handbook covers the **actual existing repository**. Subsequent changed code is tracked by the current docs/HANDOFF.md and docs/BUILD-REGISTER.md. It is NOT a new or separate Forge architecture.
 
 ## 1 — The read order and what counts as truth

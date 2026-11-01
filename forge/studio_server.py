@@ -49,6 +49,28 @@ FILES = {"relief.glb": "model/gltf-binary", "relief.obj": "text/plain",
          "world-composed-preview.png": "image/png",
          "composition-receipt.json": "application/json"}
 
+# This public bootstrap is constant: no bearer, authored world or private scene
+# is substituted into it. The owner's fragment never travels in an HTTP URL.
+LOCKED_STUDIO_PAGE = """<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>MGR Forge — Unlock Studio</title>
+<style>body{margin:0;background:#080f1c;color:#eef4ff;font:17px system-ui;display:grid;min-height:100vh;place-items:center}main{max-width:32rem;padding:2rem}h1{font-size:2rem}p{line-height:1.6;color:#bdcce3}label{display:block;margin:1.5rem 0 .5rem}input,button{font:inherit;border-radius:.5rem;padding:.75rem}input{box-sizing:border-box;width:100%;background:#111d30;color:#fff;border:1px solid #7390b4}button{margin:.8rem .5rem 0 0;border:0;background:#9fd8ff;color:#071325;cursor:pointer}button:disabled{opacity:.6}button:focus-visible,input:focus-visible{outline:3px solid #e2c373;outline-offset:3px}[hidden]{display:none}</style>
+</head><body><main><h1>MGR 3D Forge</h1><p>Open the private Studio link printed by your local Forge launcher. Your projects stay locked until you unlock this session.</p>
+<form id="studio-unlock"><label for="studio-access">Studio access token</label><input id="studio-access" type="password" autocomplete="off" spellcheck="false"><button id="studio-open" type="submit">Unlock Studio</button><button id="studio-cancel" type="button" hidden>Cancel</button></form><p id="studio-status" role="status" aria-live="polite">Waiting for your private launch link.</p></main>
+<script>(()=>{
+const form=document.getElementById('studio-unlock'),input=document.getElementById('studio-access'),open=document.getElementById('studio-open'),cancel=document.getElementById('studio-cancel'),status=document.getElementById('studio-status'),key='mgr-forge-session:'+location.origin;
+let active=null;const fragment=new URLSearchParams(location.hash.slice(1)),fromLink=fragment.get('mgr-token');
+if(fragment.has('mgr-token')){fragment.delete('mgr-token');const remainder=fragment.toString();history.replaceState(null,'',location.pathname+location.search+(remainder?'#'+remainder:''));}
+function remembered(){try{return sessionStorage.getItem(key);}catch{return null;}}
+async function unlock(token){
+ if(active)return;if(typeof token!=='string'||!/^[A-Za-z0-9_-]{24,128}$/.test(token)){status.textContent='Use the private Studio launch link or enter its access token.';return;}
+ const controller=new AbortController();active=controller;open.disabled=true;cancel.hidden=false;status.textContent='Opening your private Studio…';const timer=setTimeout(()=>controller.abort(),15000);
+ try{const response=await fetch('/studio',{headers:{'X-MGR-Forge-Token':token},credentials:'omit',signal:controller.signal});if(!response.ok||!response.headers.get('content-type')?.startsWith('text/html'))throw Error('access-unavailable');const page=await response.text();controller.signal.throwIfAborted();try{sessionStorage.setItem(key,token);}catch{}input.value='';document.open();document.write(page);document.close();}
+ catch{if(remembered()===token){try{sessionStorage.removeItem(key);}catch{}}status.textContent=controller.signal.aborted?'Opening was interrupted. You can try again.':'Studio access was not accepted. Open a fresh private launch link.';}
+ finally{clearTimeout(timer);active=null;open.disabled=false;cancel.hidden=true;}
+}
+form.addEventListener('submit',event=>{event.preventDefault();void unlock(input.value.trim());});cancel.addEventListener('click',()=>active?.abort());const token=fromLink||remembered();if(token)void unlock(token);
+})();</script></body></html>"""
+
 
 class ForgeWorkstation:
     def __init__(self, world, workspace, *, blender="blender"):
@@ -313,6 +335,11 @@ def make_handler(studio):
         def _valid_local_host(self):
             return self.headers.get("Host") == f"127.0.0.1:{self.server.server_port}"
 
+        def _owner_authorized(self):
+            values = self.headers.get_all("X-MGR-Forge-Token", [])
+            return (len(values) == 1 and values[0].isascii() and
+                    secrets.compare_digest(values[0], studio.token))
+
         def do_GET(self):
             # Prevent rebinding through an unrelated Host name or a foreign Origin.
             if not self._valid_local_host():
@@ -321,13 +348,18 @@ def make_handler(studio):
             if origin is not None and origin != f"http://127.0.0.1:{self.server.server_port}":
                 return self.send_bytes(403, b"forbidden origin", "text/plain")
             path = urlparse(self.path).path
-            if path in ("/", "/studio"):
+            if path == "/":
+                page = studio.page if self._owner_authorized() else LOCKED_STUDIO_PAGE
+                return self.send_bytes(200, page.encode("utf-8"), "text/html; charset=utf-8")
+            if path == "/studio":
+                if not self._owner_authorized():
+                    return self.send_bytes(403, b"forbidden", "text/plain")
                 return self.send_bytes(200, studio.page.encode("utf-8"), "text/html; charset=utf-8")
             match = re.fullmatch(r"/files/([a-f0-9]{24})/(relief|edited|candidate|creature|biome|human|human/facial-animation|composed)?/?([a-z-]+\.(?:glb|obj|mtl|json|html|zip|blend|png)|scene\.blend)", path)
             if match:
                 jid, subfolder, name = match.groups()
                 # All generated, uploaded and private project files require the same Studio token.
-                if self.headers.get("X-MGR-Forge-Token") != studio.token:
+                if not self._owner_authorized():
                     return self.send_bytes(403, b"forbidden", "text/plain")
                 if name not in FILES:
                     return self.send_bytes(404, b"not found", "text/plain")
@@ -349,7 +381,7 @@ def make_handler(studio):
                 return self.send_bytes(403, b"forbidden host", "text/plain")
             if self.path not in ("/api/asset-sources", "/api/asset-search", "/api/relief", "/api/character", "/api/world", "/api/world-job", "/api/world-job-status", "/api/creature-create", "/api/creature-status", "/api/biome-create", "/api/biome-status", "/api/human-lipsync-start", "/api/human-lipsync-status", "/api/world-compose-create", "/api/world-compose-status", "/api/godot", "/api/blender", "/api/blender-status"):
                 return self.send_bytes(404, b"not found", "text/plain")
-            if self.headers.get("X-MGR-Forge-Token") != studio.token:
+            if not self._owner_authorized():
                 return self.send_bytes(403, b"forbidden", "text/plain")
             origin = self.headers.get("Origin")
             if origin is not None and origin != f"http://127.0.0.1:{self.server.server_port}":
@@ -380,4 +412,5 @@ def start_server(world, workspace, *, port=0, blender="blender"):
     studio = ForgeWorkstation(world, workspace, blender=blender)
     server = ThreadingHTTPServer(("127.0.0.1", port), make_handler(studio))
     server.daemon_threads = True
+    server.owner_url = f"http://127.0.0.1:{server.server_port}/#mgr-token={studio.token}"
     return server, studio

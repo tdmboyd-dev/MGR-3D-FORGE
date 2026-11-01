@@ -2,6 +2,7 @@
 
 import base64
 import hashlib
+import http.client
 import json
 import struct
 from pathlib import Path
@@ -67,6 +68,48 @@ class StudioServerTests(unittest.TestCase):
 
     def test_studio_binds_only_localhost(self):
         self.assertEqual(self.server.server_address[0], "127.0.0.1")
+
+    def test_public_home_contains_no_bearer_or_private_world(self):
+        status, body, headers = self.fetch("/", token=False)
+        self.assertEqual(status, 200)
+        self.assertFalse(self.studio.token.encode() in body, "public home exposed the actual private Studio bearer")
+        self.assertNotIn(b"MGR_WORLD_BASE64", body)
+        self.assertNotIn(b"MGR CREATION DIRECTOR", body)
+        self.assertEqual(headers["Cache-Control"], "no-store")
+
+    def test_private_editor_never_accepts_missing_query_or_cookie_tokens(self):
+        self.assertEqual(self.fetch("/studio", token=False)[0], 403)
+        self.assertEqual(self.fetch("/studio?token=" + self.studio.token, token=False)[0], 403)
+        request = Request(self.root_url + "/studio", headers={"Cookie": "forge=" + self.studio.token})
+        with self.assertRaises(HTTPError) as failed:
+            urlopen(request, timeout=4)
+        with failed.exception as response:
+            self.assertEqual(response.code, 403)
+        status, owner_page, _ = self.fetch("/studio")
+        self.assertEqual(status, 200)
+        self.assertIn(b"MGR CREATION DIRECTOR", owner_page)
+
+    def test_duplicate_studio_authorization_headers_cannot_select_the_first_token(self):
+        connection = http.client.HTTPConnection("127.0.0.1", self.server.server_port, timeout=4)
+        self.addCleanup(connection.close)
+        connection.putrequest("POST", "/api/asset-sources")
+        connection.putheader("X-MGR-Forge-Token", self.studio.token)
+        connection.putheader("X-MGR-Forge-Token", "owned-invalid-second-token")
+        connection.putheader("Content-Type", "application/json")
+        connection.putheader("Content-Length", "2")
+        connection.endheaders(b"{}")
+        response = connection.getresponse()
+        self.assertEqual(response.status, 403)
+        response.read()
+
+    def test_owner_launcher_link_keeps_the_token_in_fragment_and_out_of_http_query(self):
+        from urllib.parse import parse_qs, urlsplit
+        link = urlsplit(getattr(self.server, "owner_url", ""))
+        self.assertEqual(link.scheme, "http")
+        self.assertEqual(link.hostname, "127.0.0.1")
+        self.assertEqual(link.port, self.server.server_port)
+        self.assertEqual(link.query, "")
+        self.assertEqual(parse_qs(link.fragment).get("mgr-token"), [self.studio.token])
 
     def test_studio_renders_actual_3d_editor(self):
         code, data, _ = self.fetch("/")

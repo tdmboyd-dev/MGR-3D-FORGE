@@ -7,6 +7,7 @@ Never runs against a public user website or uploads secrets or model binaries.
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import subprocess
 import shutil
@@ -28,10 +29,13 @@ def verify(mode,out,blender):
     private.mkdir(parents=True,exist_ok=True)
     if not private.is_dir():
         raise ValueError("private browser evidence directory is unavailable")
+    destination=private/("browser-"+mode+"-receipt.json")
+    if destination.exists():
+        raise FileExistsError("Never overwrite existing owner browser proof")
     repo_script=ROOT/"scripts"/"browser-qa"/(mode+".mjs")
     if not repo_script.is_file():
         raise FileNotFoundError("MGR Forge browser QA source absent")
-    if mode=="human" and blender=="blender" and shutil.which("blender") is None:
+    if blender=="blender" and shutil.which("blender") is None:
         # Owner Windows Blender 5.2 installation; source stays portable when
         # installed Blender is already in PATH or an exact --blender is given.
         known=Path(r"C:\Program Files\Blender Foundation\Blender 5.2\blender.exe")
@@ -44,13 +48,15 @@ def verify(mode,out,blender):
         worker=threading.Thread(target=service.serve_forever,daemon=True)
         worker.start()
         try:
+            environment = dict(os.environ)
+            environment["MGR_FORGE_QA_TOKEN"] = studio.token
             process=subprocess.run(
                 ["node",str(repo_script),
                  "http://127.0.0.1:"+str(service.server_port)+"/",str(private)],
-                cwd=repo_script.parent,capture_output=True,text=True,timeout=190
+                cwd=repo_script.parent,env=environment,capture_output=True,text=True,timeout=190
             )
             if process.returncode:
-                print("MGR_CHROME_RUN_FAILED",process.stderr[-1500:])
+                print("MGR_CHROME_RUN_FAILED",process.stderr.replace(studio.token,"[redacted]")[-1500:])
                 for path in (target/"workspace"/"jobs").rglob("human-error.json"):
                     try:
                         item=json.loads(path.read_text(encoding="utf8"))
@@ -91,9 +97,6 @@ def verify(mode,out,blender):
                      "public_hosted_consumer_verified":False,
                      "gpu_neural_inference_used":False,"owner_visual_art_accepted":False,
                      "actual_browser_result":proof}
-            destination=private/("browser-"+mode+"-receipt.json")
-            if destination.exists():
-                raise FileExistsError("Never overwrite existing owner browser proof")
             destination.write_text(json.dumps(receipt,indent=2,sort_keys=True)+"\n",encoding="utf8")
             return destination
         finally:

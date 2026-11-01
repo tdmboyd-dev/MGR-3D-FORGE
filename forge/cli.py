@@ -643,7 +643,7 @@ def main(argv=None):
         return 0
     if args.action == "serve-studio":
         server, _studio = start_server(args.world,args.workspace,port=args.port,blender=args.blender)
-        print(f"MGR Forge Studio: http://127.0.0.1:{server.server_port}/",flush=True)
+        print(f"MGR Forge Studio (private owner link): {server.owner_url}",flush=True)
         try:
             server.serve_forever(poll_interval=0.25)
         except KeyboardInterrupt:
