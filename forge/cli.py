@@ -154,11 +154,23 @@ def main(argv=None):
     imagine.add_argument("--variants", type=int, default=6, help="1..12 alternate anatomy designs to evaluate")
     imagine.add_argument("--out", type=Path, required=True, help="new directory with GLB, DNA variants and proof")
     imagine.add_argument("--morph", type=Path, help="optional JSON morph recipe (length/height/width/twist_degrees/bend_degrees/taper)")
+    human_audio = sub.add_parser("human-audio-motion", help="animate original Human Forge jaw from approved PCM WAV loudness; NOT speech/phoneme alignment")
+    human_audio.add_argument("--wav",type=Path,required=True,help="bounded caller-owned uncompressed RIFF PCM16 WAV")
+    human_audio.add_argument("--actor-id",default="mgr-human-audio",help="safe generic actor label, never a claimed real identity")
+    human_audio.add_argument("--out",type=Path,required=True,help="new private Human Forge animation project")
+    human_audio.add_argument("--blender",default="blender",help="Blender 5.x executable")
+    human_audio.add_argument("--fps",type=int,default=24)
     human_lipsync = sub.add_parser("human-lipsync", help="add real Blender 3D facial shapes and animation to existing Human Forge mannequin; requires timed phonemes")
     human_lipsync.add_argument("--timings",type=Path,required=True,help="source JSON containing actor id and EN-US phoneme time intervals (not raw audio)")
     human_lipsync.add_argument("--out",type=Path,required=True,help="new original MGR Human Forge animation workspace")
     human_lipsync.add_argument("--blender",default="blender",help="installed Blender 5.x executable path")
     human_lipsync.add_argument("--fps",type=int,default=24)
+    compose = sub.add_parser("world-compose", help="combine the same original MGR World GLB + pinned native biome in one real Blender-reopened editable world")
+    compose.add_argument("--world",type=Path,required=True,help="original verified MGR city bundle")
+    compose.add_argument("--biome",type=Path,required=True,help="previous source-pinned World Forge biome bundle")
+    compose.add_argument("--out",type=Path,required=True,help="new combined GLB + editable Blender + Godot project directory")
+    compose.add_argument("--blender",default="blender",help="real Blender 5.x executable")
+    compose.add_argument("--skip-godot-package",action="store_true",help="only create merged Blender/GLB world, skip static Godot handoff")
     biome = sub.add_parser("world-biome", help="make a real original biome ring as an optional GLB layer around an unchanged authored MGR city")
     biome.add_argument("--world",type=Path,required=True,help="existing verified MGR World Forge bundle")
     biome.add_argument("--out",type=Path,required=True,help="new original terrain GLB output directory")
@@ -465,10 +477,22 @@ def main(argv=None):
                           "design_candidates": len(result["candidates"]), "out": str(args.out),
                           "neural_inference": False, "rigged": False},indent=2))
         return 0
+    if args.action == "human-audio-motion":
+        from .human_lipsync import build_human_lipsync
+        result=build_human_lipsync({"actor_id":args.actor_id},args.out,
+                                  audio_wav=args.wav,blender=args.blender,fps=args.fps)
+        print(json.dumps(result,indent=2))
+        return 0
     if args.action == "human-lipsync":
         from .human_lipsync import build_human_lipsync
         timings=json.loads(args.timings.read_text(encoding="utf8"))
         result=build_human_lipsync(timings,args.out,blender=args.blender,fps=args.fps)
+        print(json.dumps(result,indent=2))
+        return 0
+    if args.action == "world-compose":
+        from .world_composition import compose_world
+        result=compose_world(args.world,args.biome,args.out,blender=args.blender,
+                             export_godot=not args.skip_godot_package)
         print(json.dumps(result,indent=2))
         return 0
     if args.action == "world-biome":

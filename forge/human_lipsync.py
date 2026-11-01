@@ -8,6 +8,7 @@ from pathlib import Path
 import shutil
 from .character import build_mannequin
 from .lipsync import create_lipsync_timeline
+from .audio_motion import create_audio_motion_timeline
 
 def _blender(binary,script,args,timeout=110):
     located=shutil.which(str(binary))
@@ -24,7 +25,7 @@ def _blender(binary,script,args,timeout=110):
         raise RuntimeError("Blender facial verification error: "+(result.stderr or result.stdout)[-900:])
     return result.stdout
 
-def build_human_lipsync(spec,out,*,blender="blender",fps=24):
+def build_human_lipsync(spec,out,*,blender="blender",fps=24,audio_wav=None):
     target=Path(out)
     if target.exists():
         raise FileExistsError("human project already exists; preserve earlier asset")
@@ -33,7 +34,14 @@ def build_human_lipsync(spec,out,*,blender="blender",fps=24):
     target.mkdir(parents=True)
     mannequin=target/"existing-human-forge"
     build_mannequin(mannequin,"T")
-    timeline=create_lipsync_timeline(spec,target/"phoneme-timeline",fps=fps)
+    if audio_wav is None:
+        timeline=create_lipsync_timeline(spec,target/"phoneme-timeline",fps=fps)
+    else:
+        source=Path(audio_wav)
+        if source.is_symlink() or not source.is_file() or source.stat().st_size>20_000_000:
+            raise ValueError("approved original PCM WAV file required")
+        timeline=create_audio_motion_timeline(source.read_bytes(),target/"phoneme-timeline",
+                    actor_id=spec["actor_id"],fps=fps)
     face=target/"facial-animation"
     try:
         s=_blender(blender,"blender_face_lipsync.py",[mannequin,target/"phoneme-timeline",face])
@@ -63,7 +71,9 @@ def build_human_lipsync(spec,out,*,blender="blender",fps=24):
                 "morph_target_count":report["gltf_morph_target_primitives"],
                 "animation_actions":report["imported_animation_actions"],
                 "timeline_fps":fps,"phoneme_events":len(timeline["events"]),
-                "caller_supplied_timed_phonemes":True,
+                "caller_supplied_timed_phonemes":audio_wav is None,
+                "source_wav_loudness_reactive":audio_wav is not None,
+                "source_audio_sha256":timeline["source_input_sha256"] if audio_wav is not None else None,
                 "raw_audio_alignment_performed":False,"photoreal_human":False,
                 "identity_approved":False,"owner_visual_quality_approved":False,
                 "paid_gpu_or_cloud_used":False}

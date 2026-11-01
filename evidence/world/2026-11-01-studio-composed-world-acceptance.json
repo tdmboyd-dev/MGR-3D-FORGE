@@ -1,0 +1,22 @@
+{
+  "biome_sha256": "a3a228618b2654efc3992b9f2ee644c58618179a2acbbdcacc9acf4c5941981e",
+  "collision_navmesh_generated": false,
+  "combined_bytes": 69160,
+  "combined_glb_sha256": "224183f3552578e05aadf3e8a0611f379abe73af92fad88dfff5ec462943b2f1",
+  "combined_triangles": 1020,
+  "date": "2026-11-01",
+  "edited_blend_sha256": "d85b213f170cc489b848351ec5647f674077024f8c271b63ce364be741d2603d",
+  "godot_actual_running_import_verified": false,
+  "hosted_chatgpt_verified": false,
+  "original_city_sha256": "7b19574b607ba4a14098b2a9bbe08c94583214b43c79eb9ae6c78e6c7db0d93e",
+  "owner_art_accepted": false,
+  "paid_neural_runtime_used": false,
+  "preview_sha256": "37c9b588e0c12672911ee5aaf19a9dbdcdb954c829779a9c8fc6a5c5daec9e91",
+  "schema": "mgr.forge.studio-world-composition-real-v1",
+  "source_city_original_unchanged": true,
+  "source_godot_archive_sha256": "f20733eadfafa24b63b2b43f329147243f6e28ac8ec65e6e269c7aa3c1c4f6c1",
+  "stable_id_replay_reuses_one_job": true,
+  "status": "REAL_HTTP_AND_2X_BLENDER_COMPOSITION_ACCEPTED",
+  "tokenless_artifact_reads_denied": true,
+  "two_process_independent_blender_accepted": true
+}

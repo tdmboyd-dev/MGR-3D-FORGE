@@ -60,6 +60,10 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opaci
   <hr><h2>MGR HUMAN FORGE — SPEAKING FACE</h2>
   <small>Animate the existing generic MGR human in Blender using manually timed speech sounds. This prototype has real 3D mouth morph targets, NOT automatic audio recognition or a realistic face.</small>
   <button id="director-human-demo" type="button" disabled>Animate Generic Human Face</button>
+  <label for="director-human-audio">Original voice/audio reference (PCM16 WAV only; max 900 KB)</label>
+  <input id="director-human-audio" type="file" accept=".wav,audio/wav,audio/x-wav" />
+  <button id="director-human-audio-create" type="button" disabled>Make Human Mouth React to My Audio</button>
+  <small>Private local audio never goes in public Git. This creates sound-responsive jaw movement, not full phoneme-accurate lip sync or voice cloning.</small>
   <button id="director-human-status" type="button" disabled>Check Human Animation</button>
   <p id="director-human-result" role="status" aria-live="polite">An authenticated local Forge Studio with Blender is required. Output is editable Blender and animated GLB, not user-approved facial likeness.</p>
   <hr><h2>MGR WORLD BIOME FORGE</h2><small>Make original optional terrain around the existing world. Roads and buildings stay untouched; real-time terrain merging is a separate step.</small>
@@ -72,7 +76,10 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opaci
   <label for="director-biome-resolution">Terrain detail (10–64)</label><input id="director-biome-resolution" type="number" min="10" max="64" step="1" value="28">
   <button id="director-biome-create" type="button" disabled>Generate 3D Terrain Layer</button>
   <button id="director-biome-status" type="button" disabled>Check Last Terrain</button>
-  <p id="director-biome-result" role="status" aria-live="polite">A local authenticated Forge Studio is required; optional terrain is not merged into the existing world yet.</p>
+  <p id="director-biome-result" role="status" aria-live="polite">A local authenticated Forge Studio is required; first generate a source-pinned optional terrain.</p>
+  <button id="director-world-compose" type="button" disabled>Combine Original City + Terrain (Blender)</button>
+  <button id="director-world-compose-status" type="button" disabled>Check Combined World</button>
+  <p id="director-world-compose-result" role="status" aria-live="polite">After a terrain job, MGR Forge can combine original city and terrain in one GLB and editable Blender project. Modified building edits are a separate source until explicitly composed.</p>
   <hr><h2>MGR SOURCE ATLAS</h2><small>Find faces, creatures, textures, game kits and creation tools. Source discovery is not a rights or quality approval.</small>
   <label for="director-asset-query">What do you need?</label>
   <input id="director-asset-query" type="search" maxlength="120" placeholder="dragon, skin, modular city, hair" style="width:100%;background:#29364a;color:#fff;padding:8px;border:1px solid #64778f;border-radius:7px">

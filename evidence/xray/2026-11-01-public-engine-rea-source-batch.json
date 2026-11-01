@@ -1,0 +1,155 @@
+{
+  "date": "2026-11-01",
+  "execution_policy": "static public source only; no unreviewed binaries, model weights, provider installs or paid APIs executed",
+  "fully_semantically_reverse_engineered": 0,
+  "methods": [
+    "official Git HEAD pinned SHA",
+    "codeload archive content SHA",
+    "nested root license presence check",
+    "REA inspect-artifact ZIP complete container inventory"
+  ],
+  "new_model_weights_installed": 0,
+  "private_originals": "~\\AppData\\Local\\Temp\\MGR-Forge-MegaWave-20261031\\private-rea-research-2026-11-01",
+  "rea_version": "rea-agents@6.8.0 pinned original owner install",
+  "records": [
+    {
+      "archive_bytes_greater_than": 21000000,
+      "claimed_license_from_publisher": "MIT code; bundled third-party notices separate",
+      "github": "https://github.com/DanielSWolf/rhubarb-lip-sync",
+      "goals": [
+        "time-coded speech/mouth cues",
+        "phonetic sync adapter"
+      ],
+      "name": "Rhubarb Lip Sync",
+      "not_model_weights": true,
+      "private_source_shipped_to_git": false,
+      "production_ready": false,
+      "rea_result": "NOT_RUN",
+      "source_commit_sha": "9b9573cd21b253c9ba58739bbd1aa0b50b991bff",
+      "state": "REPOSITORY_ARCHIVE_OVER_21MB_NO_READ"
+    },
+    {
+      "archive_bytes": 13711030,
+      "archive_expanded_bytes": 14565193,
+      "archive_sha256": "528123c3447041e20762f90a743ecb30e1744c7818c28f49cb8f5ff70477be3c",
+      "claimed_license_from_publisher": "MIT root code; pretrained checkpoint/Qwen/backbone/data rights separately",
+      "declared_license_paths": [
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/LICENSE"
+      ],
+      "github": "https://github.com/VAST-AI-Research/SkinTokens",
+      "goals": [
+        "semantic skeleton topology",
+        "automated mesh skin weights",
+        "mesh-to-rig conditional model"
+      ],
+      "license_scope_review_required": true,
+      "name": "SkinTokens TokenRig",
+      "not_model_weights": true,
+      "private_source_shipped_to_git": false,
+      "production_ready": false,
+      "rea_coverage": {
+        "scope": "container-entries",
+        "status": "complete"
+      },
+      "rea_evidence_id": "ev_44478f22f6955f55d7e47fbfa55036a30adf998ead63c16db601c26190df1a07",
+      "rea_evidence_private_sha256": "eff92c6351e1d50b8205559f1f3ad6b8481e9a43616c6ed62a865e851fb4288f",
+      "rea_exit_code": 0,
+      "rea_limitations": [
+        "No runtime inference, geometry generation or network/API feature actually executed",
+        "Source zip inventory + targeted filenames are not source-wide semantic understanding",
+        "Third-party files/weights/datasets/registries and output rights separate",
+        "Raw archives and REA Evidence stored only in owner private local audit vault"
+      ],
+      "rea_matched_entries": 92,
+      "rea_result": "COMPLETE_ZIP_CONTAINER_ENTRIES",
+      "readable_source_file_count": 62,
+      "root_license_text_excerpt": "MIT License\n\nCopyright (c) 2025 VAST-AI-Research\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, includin",
+      "source_commit_sha": "273b691d35989d71cd17ff2895fdc735097b92d1",
+      "state": "SOURCE_ARCHIVE_HASHED_REA_STATIC_INVENTORY_ONLY",
+      "targeted_source_path_examples": [
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/README.md",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/bpy_server.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/demo.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/download.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/__init__.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/data/augment.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/data/datapath.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/data/dataset.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/data/order.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/data/sampler.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/data/spec.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/data/transform.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/data/vertex_group.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/__init__.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/michelangelo/__init__.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/michelangelo/get_model.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/michelangelo/models/__init__.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/michelangelo/models/modules/__init__.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/michelangelo/models/modules/checkpoint.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/michelangelo/models/modules/distributions.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/michelangelo/models/modules/embedder.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/michelangelo/models/modules/transformer_blocks.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/michelangelo/models/tsal/__init__.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/michelangelo/models/tsal/loss.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/michelangelo/models/tsal/sal_perceiver.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/michelangelo/models/tsal/tsal_base.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/michelangelo/utils/__init__.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/michelangelo/utils/eval.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/michelangelo/utils/misc.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/parse_encoder.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/skin_vae/attention_processor.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/skin_vae/autoencoders/FSQ.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/skin_vae/autoencoders/SimVQ.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/skin_vae/autoencoders/__init__.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/skin_vae/autoencoders/autoencoder_kl_tripo2.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/skin_vae/autoencoders/get_model.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/skin_vae/autoencoders/miche_transformer_blocks.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/skin_vae/autoencoders/skin_fsq_cvae_model.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/skin_vae/autoencoders/vae.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/skin_vae/embeddings.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/skin_vae/transformers/__init__.py",
+        "SkinTokens-273b691d35989d71cd17ff2895fdc735097b92d1/src/model/skin_vae/transformers/modeling_outputs.py"
+      ],
+      "total_files_in_pinned_archive": 70,
+      "trained_model_checkpoint_downloaded": false
+    },
+    {
+      "archive_bytes_greater_than": 21000000,
+      "claimed_license_from_publisher": "CHECK EXACT ROOT AND THIRD PARTY/CHECKPOINT LICENSE",
+      "github": "https://github.com/VAST-AI-Research/UniRig",
+      "goals": [
+        "skeleton generation",
+        "skin binding",
+        "rig inference and retargeting"
+      ],
+      "name": "UniRig",
+      "not_model_weights": true,
+      "private_source_shipped_to_git": false,
+      "production_ready": false,
+      "rea_result": "NOT_RUN",
+      "source_commit_sha": "6793c6640ff01c8fb389f3993434124bb43d2933",
+      "state": "REPOSITORY_ARCHIVE_OVER_21MB_NO_READ"
+    },
+    {
+      "archive_bytes_greater_than": 21000000,
+      "claimed_license_from_publisher": "MIT root addon; third-party bundled files inspect",
+      "github": "https://github.com/TokisanGames/Terrain3D",
+      "goals": [
+        "clipmap terrain",
+        "streaming LOD",
+        "collision navmesh",
+        "terrain painting"
+      ],
+      "name": "Terrain3D for Godot",
+      "not_model_weights": true,
+      "private_source_shipped_to_git": false,
+      "production_ready": false,
+      "rea_result": "NOT_RUN",
+      "source_commit_sha": "cdcd382cd639f0b043444d7d161f1a6c00d30977",
+      "state": "REPOSITORY_ARCHIVE_OVER_21MB_NO_READ"
+    }
+  ],
+  "schema": "mgr.forge.rea-public-source-research-wave.v1",
+  "source_count": 4,
+  "source_inventory_full_success": 1
+}

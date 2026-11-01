@@ -1,5 +1,10 @@
 # MGR 3D FORGE
 
+## CURRENT SOURCE CHECKPOINT — November 1, 2026
+
+The ONE latest resume authority is docs/HANDOFF.md. It now covers original PCM WAV jaw-reactive Human Forge, the new composed city-and-biome Blender/Godot source workflow, glTF 16-bit index repair, REA's bounded inspected source set and all open production gates. Current CLI is 64 commands; historical 60/62 numbers belong to earlier source checkouts. The neural/hosted Tevin/ChatGPT portions are not yet accepted.
+
+
 ## CURRENT WAVE — 2026-10-31
 
 Real original Human Forge Blender facial shape keys/timeline, additive MorphRig bend/taper, 5 World Forge biome shells, shared MGR API/MCP verified GLB transport and actual Chrome creation/edit/download are under one engine. Read docs/HANDOFF.md FIRST for exact paths, proofs and blockers; the pre-audit Master Plan is NOT current-code truth. Raw audio-to-lipsync AI, premium neural model weights and hosted Tevin/ChatGPT still OPEN.

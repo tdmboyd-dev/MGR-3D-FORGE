@@ -1,0 +1,21 @@
+{
+  "actual_user_original_audio_consent_not_tested": true,
+  "automatic_audio_envelope_reactive": true,
+  "automatic_phoneme_alignment": false,
+  "date": "2026-11-01",
+  "neural_model_used": false,
+  "owner_art_approved": false,
+  "private_file_tokenless_denied": true,
+  "real_animation_actions": 1,
+  "real_blender_independent_reimport": true,
+  "real_morph_targets": 8,
+  "real_output_glb_bytes": 231384,
+  "real_output_glb_sha256": "9e33d67e3f4fc5f4bc4fd37885d91c7d02069c764f907b606c37eeedffcaf25a",
+  "schema": "mgr.forge.real-human-wav-studio.v1",
+  "source_audio_private_no_public_git": true,
+  "source_wav_bytes": 64044,
+  "source_wav_sha256": "414f391c074a313915c79f6f87a6faaa4676d7fbe3025d8a41ee1debb5d0758b",
+  "status": "REAL_PCM_WAV_TO_MGR_HUMAN_BLENDER_ANIMATION_PASS",
+  "studio_async_job_replay": true,
+  "synthetic_original_audio": true
+}

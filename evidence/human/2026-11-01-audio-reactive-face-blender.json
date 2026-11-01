@@ -1,0 +1,25 @@
+{
+  "Blender_independent_reimport": true,
+  "animation_actions": 1,
+  "automatic_phoneme_alignment": false,
+  "automatic_wav_loudness_driven_jaw": true,
+  "date": "2026-11-01",
+  "limits": [
+    "No phoneme or facial emotion recognition",
+    "Only the mouth jaw energy responds to acoustic amplitude",
+    "Actual own user speech would require separately approved source + consent"
+  ],
+  "model_weights_downloaded": false,
+  "morph_targets": 8,
+  "output_glb_bytes": 231384,
+  "output_glb_sha256": "b47e93ae5d8443a1478f43a1112b43983959ffce1f6ea7185dac7b400a2e3244",
+  "owner_human_art_accepted": false,
+  "real_wav_sha256": "94daabc85e13b6ee0255afc6c82245b96cf7a18ae59241a822d51b7f10e34380",
+  "schema": "mgr.forge.human-original-audio-motion-blender.v1",
+  "source_audio_consumed": true,
+  "speech_to_text_performed": false,
+  "status": "REAL_PCM_TO_JAW_ANIMATION_INDEPENDENT_BLENDER_PASS",
+  "synthetic_audio_only": true,
+  "voice_ownership_or_identity_inferred": false,
+  "wav_sample_rate": 16000
+}

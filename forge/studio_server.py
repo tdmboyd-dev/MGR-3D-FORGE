@@ -26,6 +26,7 @@ from .world_jobs import create_world_job, world_job_status
 from .creature_jobs import create_creature_job, creature_job_status
 from .biome_jobs import create_biome_job, biome_job_status
 from .human_jobs import start_human_lipsync_job,human_lipsync_job_status
+from .world_composition_jobs import start_world_composition,world_composition_status
 
 
 MAX_REQUEST = 1_800_000
@@ -43,7 +44,10 @@ FILES = {"relief.glb": "model/gltf-binary", "relief.obj": "text/plain",
          "human-lipsync.glb": "model/gltf-binary",
          "human-lipsync.blend": "application/octet-stream",
          "human-lipsync-preview.png": "image/png",
-         "human-lipsync-receipt.json": "application/json"}
+         "human-lipsync-receipt.json": "application/json",
+         "world-composed.blend": "application/octet-stream",
+         "world-composed-preview.png": "image/png",
+         "composition-receipt.json": "application/json"}
 
 
 class ForgeWorkstation:
@@ -55,6 +59,8 @@ class ForgeWorkstation:
         self.blender_lock = threading.Lock()
         self.world_job_lock = threading.RLock()
         self.human_active_jobs=set()
+        self.composed_active_jobs=set()
+        self.heavy_worker_slot=threading.BoundedSemaphore(1)
         self.token = secrets.token_urlsafe(32)
         if not (self.world / "world.glb").is_file():
             raise ValueError("original generated world required")
@@ -184,6 +190,11 @@ class ForgeWorkstation:
                     "triangles": inspected["geometry"]["triangles"],
                     "mesh_containers": inspected["geometry"]["meshes"],
                     "skins": admitted["skin_count"], "warnings": inspected["warnings"]}
+        if route == "/api/world-compose-create":
+            return start_world_composition(self,payload)
+        if route == "/api/world-compose-status":
+            if set(payload)!={"request_id"}:raise ValueError("world-compose-status requires only request_id")
+            return world_composition_status(self,payload["request_id"])
         if route == "/api/human-lipsync-start":
             return start_human_lipsync_job(self,payload)
         if route == "/api/human-lipsync-status":
@@ -312,7 +323,7 @@ def make_handler(studio):
             path = urlparse(self.path).path
             if path in ("/", "/studio"):
                 return self.send_bytes(200, studio.page.encode("utf-8"), "text/html; charset=utf-8")
-            match = re.fullmatch(r"/files/([a-f0-9]{24})/(relief|edited|candidate|creature|biome|human|human/facial-animation)?/?([a-z-]+\.(?:glb|obj|mtl|json|html|zip|blend|png)|scene\.blend)", path)
+            match = re.fullmatch(r"/files/([a-f0-9]{24})/(relief|edited|candidate|creature|biome|human|human/facial-animation|composed)?/?([a-z-]+\.(?:glb|obj|mtl|json|html|zip|blend|png)|scene\.blend)", path)
             if match:
                 jid, subfolder, name = match.groups()
                 # All generated, uploaded and private project files require the same Studio token.
@@ -336,7 +347,7 @@ def make_handler(studio):
         def do_POST(self):
             if not self._valid_local_host():
                 return self.send_bytes(403, b"forbidden host", "text/plain")
-            if self.path not in ("/api/asset-sources", "/api/asset-search", "/api/relief", "/api/character", "/api/world", "/api/world-job", "/api/world-job-status", "/api/creature-create", "/api/creature-status", "/api/biome-create", "/api/biome-status", "/api/human-lipsync-start", "/api/human-lipsync-status", "/api/godot", "/api/blender", "/api/blender-status"):
+            if self.path not in ("/api/asset-sources", "/api/asset-search", "/api/relief", "/api/character", "/api/world", "/api/world-job", "/api/world-job-status", "/api/creature-create", "/api/creature-status", "/api/biome-create", "/api/biome-status", "/api/human-lipsync-start", "/api/human-lipsync-status", "/api/world-compose-create", "/api/world-compose-status", "/api/godot", "/api/blender", "/api/blender-status"):
                 return self.send_bytes(404, b"not found", "text/plain")
             if self.headers.get("X-MGR-Forge-Token") != studio.token:
                 return self.send_bytes(403, b"forbidden", "text/plain")

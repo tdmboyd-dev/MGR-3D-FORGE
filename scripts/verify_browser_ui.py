@@ -73,9 +73,13 @@ def verify(mode,out,blender):
                 biome=json.loads((target/"workspace"/"biome-requests.json").read_text(encoding="utf8"))
                 expected={row["sha256"] for row in rows.values()}
                 expected|={row["sha256"] for row in biome.values()}
-                received={proof["glb_sha256"],proof["morph_revision_sha256"],proof["biome_glb_sha256"]}
-                if not expected.issubset(received) or len(rows)!=2 or len(biome)!=1 or (
-                   not proof.get("original_biome_and_edit_job_passed")):
+                composed=json.loads((target/"workspace"/"world-composition-requests.json").read_text(encoding="utf8"))
+                expected|={row["sha256"] for row in composed.values()}
+                received={proof["glb_sha256"],proof["morph_revision_sha256"],
+                          proof["biome_glb_sha256"],proof.get("composed_world_sha256")}
+                if not expected.issubset(received) or len(rows)!=2 or len(biome)!=1 or len(composed)!=1 or (
+                   not proof.get("original_biome_and_edit_job_passed") or
+                   not proof.get("composed_city_and_biome_in_one_real_blender_scene")):
                     raise RuntimeError("Browser fixture output differs from actual Forge job files")
             else:
                 rows=json.loads((target/"workspace"/"human-lipsync-requests.json").read_text(encoding="utf8"))

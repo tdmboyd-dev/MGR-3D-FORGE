@@ -77,6 +77,49 @@ try{
   await page.locator("#director-biome-status").click();
   await page.waitForFunction(()=>[...document.querySelectorAll("#director-downloads a")].filter(el=>el.textContent.includes("Download verified alien 3D terrain")).length>=2,null,{timeout:15000});
 
+  // Real combined city+terrain: uses existing Forge Studio + Blender, not
+  // an illustrative overlay or screenshot mock.
+  await page.locator("#director-world-compose").click();
+  await page.waitForFunction(()=>{
+    const text=document.getElementById("director-world-compose-result")?.textContent||"";
+    return text.includes("One verified World Forge GLB ready") ||
+           text.includes("failed") || text.includes("reconciliation") ||
+           text.includes("busy") || text.includes("BUSY");
+  },null,{timeout:120000});
+  const combinedMsg=await page.locator("#director-world-compose-result").textContent();
+  assert.ok(combinedMsg?.includes("One verified World Forge GLB ready"),
+            "World Blender composition did not succeed: "+combinedMsg);
+  const combinedLink=page.locator("#director-downloads a").filter({
+    hasText:"Download verified combined original World Forge GLB"
+  }).first();
+  const combinedPromise=page.waitForEvent("download",{timeout:16000});
+  await combinedLink.click();
+  const combinedFile=await combinedPromise;
+  const combinedData=await fs.readFile(await combinedFile.path());
+  assert.equal(combinedData.toString("ascii",0,4),"glTF");
+  const composedSha=createHash("sha256").update(combinedData).digest("hex");
+  assert.notEqual(composedSha,biomeSha,"Combined world must not be just terrain file");
+  const blenderLink=page.locator("#director-downloads a").filter({
+    hasText:"Download editable combined MGR Blender project"
+  }).first();
+  const blendEvent=page.waitForEvent("download",{timeout:16000});
+  await blenderLink.click();
+  const blendFile=await blendEvent;
+  const blendData=await fs.readFile(await blendFile.path());
+  assert.ok(blendData.length>4000,"Editable blended world was not retrieved");
+  const godotLink=page.locator("#director-downloads a").filter({
+    hasText:"Download Godot combined world source project"
+  }).first();
+  const godotEvent=page.waitForEvent("download",{timeout:16000});
+  await godotLink.click();
+  const godotFile=await godotEvent;
+  const godotData=await fs.readFile(await godotFile.path());
+  assert.equal(godotData.toString("ascii",0,2),"PK");
+  await page.locator("#director-world-compose-status").click();
+  await page.waitForFunction(()=>[...document.querySelectorAll("#director-downloads a")].filter(
+    el=>el.textContent.includes("Download verified combined original World Forge GLB")).length>=2,
+    null,{timeout:15000});
+
   // Editor: submit actual existing building changes to the same Forge Studio.
   await page.locator("#building").selectOption({index:0});
   await page.locator("#edit-height").fill("27");
@@ -100,6 +143,12 @@ try{
      morph_revision_sha256:nextSha,morph_revision_bytes:nextBytes.length,
      biome_glb_sha256:biomeSha,biome_bytes:biomeBytes.length,
      edited_world_sha256:worldSha,edited_world_bytes:worldBytes.length,
+     composed_world_sha256:composedSha,composed_world_bytes:combinedData.length,
+     composed_blend_sha256:createHash("sha256").update(blendData).digest("hex"),
+     composed_blend_bytes:blendData.length,
+     composed_godot_sha256:createHash("sha256").update(godotData).digest("hex"),
+     composed_godot_bytes:godotData.length,
+     composed_city_and_biome_in_one_real_blender_scene:true,
      morph_changed_real_glb_sha:sha!==nextSha,
      original_biome_and_edit_job_passed:true,
      status_checked_after_creation:true,download_link_type:"blob_url_checked_sha256",

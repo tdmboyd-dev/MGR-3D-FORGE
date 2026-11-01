@@ -471,7 +471,7 @@
     // Studio-created worlds, models, reports and engine exports are private.
     // Direct anchor navigation cannot attach the owner token, so fetch into
     // a temporary local Blob only after an authenticated same-origin request.
-    if(typeof url!=="string"||!/^\/files\/[a-f0-9]{24}\/(?:(?:relief|edited|candidate|creature|biome)\/|human\/(?:facial-animation\/)?)?[a-z-]+\.(?:glb|obj|mtl|json|html|zip|blend|png)$/.test(url)){
+    if(typeof url!=="string"||!/^\/files\/[a-f0-9]{24}\/(?:(?:relief|edited|candidate|creature|biome|composed)\/|human\/(?:facial-animation\/)?)?[a-z-]+\.(?:glb|obj|mtl|json|html|zip|blend|png)$/.test(url)){
       directorMessage.textContent="Forge returned an invalid artifact path.";
       return;
     }
@@ -689,6 +689,7 @@
       lastBiome={id:requestId,fingerprint};
       try{localStorage.setItem(biomeLastKey,JSON.stringify(lastBiome));}catch(error){/* private mode */}
       biomeStatusButton.disabled=false;
+      composedButton.disabled=false;
       await showBiome(result);
     }catch(error){biomeMessage.textContent="Terrain failed: "+String(error.message);}
     finally{biomeCreateButton.disabled=false;}
@@ -773,9 +774,103 @@
     }catch(error){directorMessage.textContent=`Engine package failed: ${error.message}`;}
     finally{godotButton.disabled=false;}
   });
+  // MGR World Forge: original city + source-pinned terrain in one editable GLB.
+  // It reuses the actual ForgeWorkstation and real Blender, not a dashboard mock.
+  const composedButton=document.getElementById("director-world-compose");
+  const composedStatusButton=document.getElementById("director-world-compose-status");
+  const composedMessage=document.getElementById("director-world-compose-result");
+  const composedStorageKey="mgr.forge.composed-last.v1."+worldSHA;
+  let lastComposed=null;
+  try{
+    const remembered=JSON.parse(localStorage.getItem(composedStorageKey)||"null");
+    if(remembered&&/^composed-[0-9a-f-]{36}$/.test(remembered.id)&&
+       /^biome-[0-9a-f-]{36}$/.test(remembered.biomeId)) lastComposed=remembered;
+  }catch(error){lastComposed=null;}
+  composedButton.disabled=!studioEnabled||!lastBiome;
+  composedStatusButton.disabled=!studioEnabled||!lastComposed;
+  const showComposed=async result=>{
+    if(result.status==="RUNNING"){
+      composedMessage.textContent="Blender is joining original city and terrain into one editable World Forge scene...";
+      return false;
+    }
+    if(result.status==="BUSY"){
+      composedMessage.textContent="Another Blender creation is active; use this button after it completes.";
+      return true;
+    }
+    if(result.status!=="MATERIALIZED"){
+      composedMessage.textContent="Combined world status: "+String(result.status||"unknown")+
+         ". Reconciliation required if Blender was interrupted.";
+      return true;
+    }
+    if(result.world_sha256!==worldSHA||
+       !/^[a-f0-9]{64}$/.test(result.combined_world_sha256)||
+       !/^\/files\/[a-f0-9]{24}\/composed\/world\.glb$/.test(result.glb_url)){
+      throw new Error("Composed world source lineage was not established");
+    }
+    const download=await fetch(result.glb_url,{
+      headers:{"X-MGR-Forge-Token":forgeToken},redirect:"error"});
+    if(!download.ok)throw new Error("Forge refused combined world download");
+    const bytes=await download.arrayBuffer();
+    if(bytes.byteLength<28||bytes.byteLength>80_000_000||
+       String.fromCharCode(...new Uint8Array(bytes.slice(0,4)))!=="glTF"||
+       await creatureDigest(bytes)!==result.combined_world_sha256){
+      throw new Error("World GLB changed after Blender; hash mismatch");
+    }
+    const anchor=document.createElement("a");
+    anchor.href=URL.createObjectURL(new Blob([bytes],{type:"model/gltf-binary"}));
+    anchor.download="mgr-composed-city-world-"+result.job_id+".glb";
+    anchor.textContent="Download verified combined original World Forge GLB";
+    anchor.style.cssText="display:block;color:#9af4cd;padding:4px 0";
+    downloadLinks.prepend(anchor);
+    studioLink(result.blend_url,"Download editable combined MGR Blender project");
+    studioLink(result.preview_url,"Download real Blender combined world preview");
+    studioLink(result.godot_url,"Download Godot combined world source project");
+    studioLink(result.receipt_url,"Download combined world verification JSON");
+    composedMessage.textContent="One verified World Forge GLB ready, "+
+      result.triangles+" triangles. Original city and terrain preserved. Real-time navmesh and owner art are still separate.";
+    return true;
+  };
+  const pollComposed=async id=>{
+    for(let n=0;n<110;n++){
+      const job=await studioPost("/api/world-compose-status",{request_id:id});
+      if(await showComposed(job))return;
+      await new Promise(resolve=>setTimeout(resolve,900));
+    }
+    composedMessage.textContent="Blender still composing; use Check Combined World to resume.";
+  };
+  composedButton.addEventListener("click",async()=>{
+    if(!studioEnabled||!lastBiome)return;
+    composedButton.disabled=true;
+    try{
+      const requestId=lastComposed&&lastComposed.biomeId===lastBiome.id?
+          lastComposed.id:"composed-"+crypto.randomUUID();
+      const result=await studioPost("/api/world-compose-create",{
+        request_id:requestId,biome_request_id:lastBiome.id
+      });
+      if(result.status==="BUSY"){
+        await showComposed(result);
+        return;
+      }
+      lastComposed={id:requestId,biomeId:lastBiome.id};
+      try{localStorage.setItem(composedStorageKey,JSON.stringify(lastComposed));}catch(error){/* private mode */}
+      composedStatusButton.disabled=false;
+      if(!(await showComposed(result)))await pollComposed(requestId);
+    }catch(error){composedMessage.textContent="World composition failed: "+String(error.message);}
+    finally{composedButton.disabled=false;}
+  });
+  composedStatusButton.addEventListener("click",async()=>{
+    if(!studioEnabled||!lastComposed)return;
+    composedStatusButton.disabled=true;
+    try{await pollComposed(lastComposed.id);}
+    catch(error){composedMessage.textContent="World status failed: "+String(error.message);}
+    finally{composedStatusButton.disabled=false;}
+  });
+
   // MGR Human Forge runs real Blender in the same Studio worker, not an image mock.
   const humanButton=document.getElementById("director-human-demo");
   const humanStatusButton=document.getElementById("director-human-status");
+  const humanAudio=document.getElementById("director-human-audio");
+  const humanAudioButton=document.getElementById("director-human-audio-create");
   const humanResult=document.getElementById("director-human-result");
   const humanStorageKey="mgr.forge.human-lipsync-last.v1."+worldSHA;
   let humanLast=null;
@@ -784,6 +879,13 @@
     if(stored&&/^human-[0-9a-f-]{36}$/.test(stored.id))humanLast=stored;
   }catch(error){humanLast=null;}
   humanButton.disabled=!studioEnabled;
+  humanAudioButton.disabled=true;
+  humanAudio.addEventListener("change",()=>{
+    const file=humanAudio.files?.[0];
+    humanAudioButton.disabled=!studioEnabled||!file||file.size>900000||file.size<44||
+      !file.name.toLowerCase().endsWith(".wav");
+    if(file&&humanAudioButton.disabled){humanResult.textContent="WAV rejected: original PCM16 WAV must be 44–900,000 bytes."}
+  });
   humanStatusButton.disabled=!studioEnabled||!humanLast;
   const humanDisplay=async(state)=>{
     if(state.status==="RUNNING"){
@@ -847,6 +949,43 @@
       if(!(await humanDisplay(state)))await humanPoll(requestId);
     }catch(error){humanResult.textContent="Human animation failed: "+String(error.message);}
     finally{humanButton.disabled=false;}
+  });
+  humanAudioButton.addEventListener("click",async()=>{
+    if(!studioEnabled)return;
+    const file=humanAudio.files?.[0];
+    if(!file||file.size<44||file.size>900000||!file.name.toLowerCase().endsWith(".wav")){
+      humanResult.textContent="Select your own original PCM16 .wav below 900KB.";
+      return;
+    }
+    humanAudioButton.disabled=true;
+    humanResult.textContent="Reading approved WAV locally. Only the private Forge Studio on this computer receives audio.";
+    try{
+      const bytes=new Uint8Array(await file.arrayBuffer());
+      if(bytes.length<44||String.fromCharCode(...bytes.slice(0,4))!=="RIFF"||
+         String.fromCharCode(...bytes.slice(8,12))!=="WAVE"){
+        throw new Error("WAV header invalid; only RIFF PCM16 supported");
+      }
+      let binary="";
+      for(let offset=0;offset<bytes.length;offset+=8192)
+        binary+=String.fromCharCode(...bytes.subarray(offset,offset+8192));
+      const request_id="human-"+crypto.randomUUID();
+      const status=await studioPost("/api/human-lipsync-start",{
+        request_id,actor_id:"mgr-original-audio",
+        wav_base64:btoa(binary),fps:24
+      });
+      if(status.status==="BUSY"){
+        humanResult.textContent="The Blender worker is busy with another scene. Retry this original WAV after it finishes.";
+        return;
+      }
+      humanLast={id:request_id};
+      try{localStorage.setItem(humanStorageKey,JSON.stringify(humanLast));}catch(error){/* private browser */}
+      humanStatusButton.disabled=false;
+      if(!(await humanDisplay(status)))await humanPoll(request_id);
+    }catch(error){
+      humanResult.textContent="Original-audio animation failed: "+String(error.message);
+    }finally{
+      humanAudioButton.disabled=false;
+    }
   });
   humanStatusButton.addEventListener("click",async()=>{
     if(!studioEnabled||!humanLast)return;

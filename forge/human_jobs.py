@@ -3,27 +3,48 @@
 This is a *job adapter* for the existing Human Forge build_human_lipsync
 pipeline, not a second artist, geometry engine, model vault or MCP server.
 """
-import hashlib,json,threading
+import hashlib,json,threading,base64,binascii
 from pathlib import Path
 from .lipsync import _validate
+from .audio_motion import _validate_actor,_wav_features
 from .world_jobs import _index,_atomic_json,_ID
 
 LEDGER="human-lipsync-requests.json"
 
 def _validated(payload):
-    if not isinstance(payload,dict) or set(payload)!={"request_id","timings","fps"}:
-        raise ValueError("human lip sync expects request_id, timings, fps")
+    if not isinstance(payload,dict):
+        raise ValueError("Human Forge expects an exact JSON object")
+    fields=set(payload)
+    if fields not in ({"request_id","timings","fps"},
+                      {"request_id","actor_id","wav_base64","fps"}):
+        raise ValueError("Human Forge expects exact phoneme timings OR bounded caller-owned WAV")
     rid=payload["request_id"]
     if not isinstance(rid,str) or not _ID.fullmatch(rid):
         raise ValueError("invalid human animation request ID")
-    events,duration=_validate(payload["timings"])
     fps=payload["fps"]
     if type(fps) is not int or not 12<=fps<=60:
-        raise ValueError("human lip sync fps must be 12..60")
-    raw=json.dumps(payload,sort_keys=True,allow_nan=False,separators=(",",":")).encode("utf8")
-    if len(raw)>100_000:
-        raise ValueError("human lip sync timings too large")
-    return rid,raw
+        raise ValueError("Human Forge fps must be 12..60")
+    if "timings" in fields:
+        _validate(payload["timings"])
+        raw=json.dumps(payload,sort_keys=True,allow_nan=False,
+                       separators=(",",":")).encode("utf8")
+        if len(raw)>100_000:raise ValueError("Human phoneme timings oversized")
+        return rid,raw,None
+    actor=_validate_actor(payload["actor_id"])
+    encoded=payload["wav_base64"]
+    if not isinstance(encoded,str) or not 60<=len(encoded)<=1_500_000:
+        raise ValueError("Human Forge WAV base64 exceeds local Studio limit")
+    try:
+        wave_bytes=base64.b64decode(encoded,validate=True)
+    except (binascii.Error,ValueError) as exc:
+        raise ValueError("invalid caller-provided WAV base64") from exc
+    _wav_features(wave_bytes)
+    # Do not store base64 original recording twice in a public/logged JSON.
+    meta={"schema":"mgr.forge.human-original-audio-request.v1",
+          "request_id":rid,"fps":fps,"actor_id":actor,
+          "source_wav_sha256":hashlib.sha256(wave_bytes).hexdigest(),
+          "source_wav_bytes":len(wave_bytes)}
+    return rid,json.dumps(meta,sort_keys=True,separators=(",",":")).encode("utf8"),wave_bytes
 
 def _readback(studio,rid,row,*,replayed):
     job=studio.valid_job(row["job_id"])
@@ -63,13 +84,15 @@ def _readback(studio,rid,row,*,replayed):
             "source":"existing MGR Human Forge generic mannequin",
             "real_blender_verified":True,
             "audio_alignment_performed":False,
+            "source_wav_loudness_reactive":bool(data.get("source_wav_loudness_reactive")),
             "owner_visual_approved":False,
             "neural_generation_used":False}
 
-def _worker(studio,rid,job,timings,fps):
+def _worker(studio,rid,job,timings,fps,audio_wav=None):
     try:
         from .human_lipsync import build_human_lipsync
-        result=build_human_lipsync(timings,job/"human",blender=studio.blender,fps=fps)
+        result=build_human_lipsync(timings,job/"human",blender=studio.blender,fps=fps,
+                                    audio_wav=audio_wav)
         sha=result["glb_sha256"]
         with studio.world_job_lock:
             rows,path=_index(studio,LEDGER)
@@ -101,9 +124,10 @@ def _worker(studio,rid,job,timings,fps):
     finally:
         with studio.world_job_lock:
             studio.human_active_jobs.discard(rid)
+            studio.heavy_worker_slot.release()
 
 def start_human_lipsync_job(studio,payload):
-    rid,raw=_validated(payload)
+    rid,raw,wav_bytes=_validated(payload)
     fingerprint=hashlib.sha256(raw).hexdigest()
     with studio.world_job_lock:
         rows,path=_index(studio,LEDGER)
@@ -113,18 +137,26 @@ def start_human_lipsync_job(studio,payload):
                 raise ValueError("same human request ID reused with altered timings")
             return _readback(studio,rid,previous,replayed=True)
         if len(rows)>=1000:raise ValueError("Human Forge journal full")
+        if not studio.heavy_worker_slot.acquire(blocking=False):
+            return {"status":"BUSY","request_id":rid,
+                    "reason":"another original Blender creation is active"}
         job_id,job=studio.create_job()
         (job/"human-request.json").write_bytes(raw)
+        if wav_bytes is not None:
+            (job/"human-original.wav").write_bytes(wav_bytes)
         rows[rid]={"status":"RUNNING","job_id":job_id,
                    "fingerprint":fingerprint}
         _atomic_json(path,rows)
         studio.human_active_jobs.add(rid)
         try:
-            thread=threading.Thread(target=_worker,args=(studio,rid,job,payload["timings"],payload["fps"]),
+            spec=payload["timings"] if wav_bytes is None else {"actor_id":payload["actor_id"]}
+            audio_file=None if wav_bytes is None else job/"human-original.wav"
+            thread=threading.Thread(target=_worker,args=(studio,rid,job,spec,payload["fps"],audio_file),
                                     daemon=True,name="mgr-human-lipsync-"+job_id)
             thread.start()
         except Exception:
             studio.human_active_jobs.discard(rid)
+            studio.heavy_worker_slot.release()
             rows[rid]["status"]="FAILED"
             _atomic_json(path,rows)
             raise

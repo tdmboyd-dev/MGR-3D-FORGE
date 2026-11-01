@@ -1,0 +1,308 @@
+{
+  "date": "2026-11-01",
+  "full_semantic_rea_acceptance": 0,
+  "originals_private": true,
+  "partial_rea_success": 3,
+  "records": [
+    {
+      "entire_repo_read": false,
+      "external_source_copied_to_public_git": false,
+      "limitations": [
+        "Source files selected by exact pinned paths, not publisher entire repo",
+        "REA inspected ZIP byte-entry inventory; it did not reproduce model inference",
+        "No model weights or commercial rights adjudication",
+        "Need full source/texture/model license and user art acceptance"
+      ],
+      "mode": "PINNED_PARTIAL_SOURCE_SUBSET_NOT_FULL_RELEASE",
+      "model_weights_downloaded": false,
+      "partial_zip_bytes": 20686,
+      "partial_zip_sha256": "67399507c5b2759d5726907ddc2d8231e1cebcfd89ca3c5d986cd6fc3a564bac",
+      "primary_repo": "https://github.com/DanielSWolf/rhubarb-lip-sync",
+      "publisher_commit": "9b9573cd21b253c9ba58739bbd1aa0b50b991bff",
+      "publisher_model_weights_accepted": false,
+      "publisher_tree_entries": 5113,
+      "rea_evidence_id": "ev_9123e9272a7a1db299ee8baf459dbea7daacad41dc05b0d836a384c2e0bbc848",
+      "rea_evidence_sha256": "65e4c413a92d7fa50ebad9e3d22f4fd37e935f9a8768daf75bc37c35f1b02c5d",
+      "rea_exit_code": 0,
+      "rea_matched_entries": 19,
+      "rea_version": "rea-agents 6.8.0 owner-approved installed",
+      "repo": "DanielSWolf/rhubarb-lip-sync",
+      "rights_not_approved": true,
+      "root_license_in_selection": true,
+      "selected_source_file_count": 18,
+      "selected_source_file_sha256": [
+        {
+          "bytes": 27808,
+          "path": "LICENSE.md",
+          "sha256": "c9a10d99959990ec6802c5e2d519fb23665affa7ba32abbdea5b251ee5f93af6"
+        },
+        {
+          "bytes": 2643,
+          "path": "rhubarb/lib/webrtc-8d2248ff/webrtc/api/java/jni/surfacetexturehelper_jni.h",
+          "sha256": "0ba29dc3d94702aa2d31647da2cc18db33c80b68bfe9877b120c27464402cd03"
+        },
+        {
+          "bytes": 3105,
+          "path": "rhubarb/lib/webrtc-8d2248ff/webrtc/api/java/jni/surfacetexturehelper_jni.cc",
+          "sha256": "7063e7f03dcd139258771f3fb46db504dd76c635ddde77b6036ddf21c19d6bf9"
+        },
+        {
+          "bytes": 9356,
+          "path": "rhubarb/lib/webrtc-8d2248ff/webrtc/api/mediastreaminterface.h",
+          "sha256": "5fc04ab6c727e8cd8f27a0d264dc639721083094025f5ac84907048505e5b27a"
+        },
+        {
+          "bytes": 244,
+          "path": "rhubarb/src/animation/mouthAnimation.h",
+          "sha256": "69ea9cbd04c88e38373418fa77bac19d741eb01d3939cd76fb463ec19bb0a99a"
+        },
+        {
+          "bytes": 613,
+          "path": "rhubarb/lib/webrtc-8d2248ff/webrtc/base/asyncresolverinterface.cc",
+          "sha256": "57386b210dd354e5ac9aceb0daca9267b1c24f6bfeb47dbb11ce9106e6dbe0fc"
+        },
+        {
+          "bytes": 802,
+          "path": "rhubarb/lib/webrtc-8d2248ff/webrtc/voice_engine/test/auto_test/fixtures/after_streaming_fixture.cc",
+          "sha256": "e423e6d33a9cc800edc6ffa15cfcb7d8e9f20e676b6c854efa6af0f52a37f862"
+        },
+        {
+          "bytes": 825,
+          "path": "rhubarb/lib/webrtc-8d2248ff/webrtc/p2p/base/candidatepairinterface.h",
+          "sha256": "fded6549b96a6ba8619bdf5bab43d0f6a07dc53409b0aa44151aae3c1f0cf613"
+        },
+        {
+          "bytes": 916,
+          "path": "rhubarb/lib/webrtc-8d2248ff/webrtc/voice_engine/test/auto_test/voe_test_interface.h",
+          "sha256": "7343e64c3f5ec26561bf9f5f164e48bb461f644a37e07ecfc7d202a06e2e3a0a"
+        },
+        {
+          "bytes": 917,
+          "path": "rhubarb/lib/webrtc-8d2248ff/webrtc/media/base/videosinkinterface.h",
+          "sha256": "0e7c69e749056c9b489012023fd129c036836dd47df22f455c08687192e357cf"
+        },
+        {
+          "bytes": 1098,
+          "path": "rhubarb/lib/webrtc-8d2248ff/webrtc/test/fake_texture_frame.cc",
+          "sha256": "a32c03e471d035092688133c791ee7605542c6a2f16f9b6d4ed9c4f8ba043ffc"
+        },
+        {
+          "bytes": 1108,
+          "path": "rhubarb/lib/webrtc-8d2248ff/webrtc/voice_engine/test/auto_test/fixtures/after_streaming_fixture.h",
+          "sha256": "82fdb3f2509b0be5c4bdbc3ff790db1cd449b5922bf8be3b77f0cc4502825546"
+        },
+        {
+          "bytes": 1170,
+          "path": "rhubarb/lib/webrtc-8d2248ff/webrtc/sdk/objc/Framework/Classes/RTCMediaStream+Private.h",
+          "sha256": "53cc083faa7197d6f25c156ee4a2b038ac58ba8c072477e134d108b3a12c7d43"
+        },
+        {
+          "bytes": 1183,
+          "path": "rhubarb/lib/webrtc-8d2248ff/webrtc/audio/scoped_voe_interface.h",
+          "sha256": "fbb2396e45e26d7e3af137bb42e0a0a8e32b9ef09c8d7db782187a1a3038357d"
+        },
+        {
+          "bytes": 1362,
+          "path": "rhubarb/src/animation/mouthAnimation.cpp",
+          "sha256": "ffd1dbe445579c48f58c731c6c779ac7766fdfa7ca5ae6d142aea395b8e98123"
+        },
+        {
+          "bytes": 1404,
+          "path": "rhubarb/lib/webrtc-8d2248ff/webrtc/sdk/objc/Framework/Headers/WebRTC/RTCMediaStreamTrack.h",
+          "sha256": "2553922fb4e1bbf56707a98dd7d4a1c87b1ce387d1764317750e3a509efb0448"
+        },
+        {
+          "bytes": 1416,
+          "path": "rhubarb/lib/webrtc-8d2248ff/webrtc/api/mediastreamproxy.h",
+          "sha256": "9e7540f229b8d623817687dc200798f1bfd2b2c88021162434795c0b3690a85b"
+        },
+        {
+          "bytes": 1471,
+          "path": "rhubarb/lib/webrtc-8d2248ff/webrtc/sdk/objc/Framework/Headers/WebRTC/RTCMediaStream.h",
+          "sha256": "23ceed051937ce932c512ad308bb07881a977ac1f8faeb36e3822e7d5bd1adbd"
+        }
+      ],
+      "status": "REA_PARTIAL_SOURCE_CARRIER_COMPLETE",
+      "unread_source_files": []
+    },
+    {
+      "entire_repo_read": false,
+      "external_source_copied_to_public_git": false,
+      "limitations": [
+        "Source files selected by exact pinned paths, not publisher entire repo",
+        "REA inspected ZIP byte-entry inventory; it did not reproduce model inference",
+        "No model weights or commercial rights adjudication",
+        "Need full source/texture/model license and user art acceptance"
+      ],
+      "mode": "PINNED_PARTIAL_SOURCE_SUBSET_NOT_FULL_RELEASE",
+      "model_weights_downloaded": false,
+      "partial_zip_bytes": 17550,
+      "partial_zip_sha256": "5bfe9de91a9f6b55c4dedfeb45dbed5e51ad50126a7a9c475d41d9a8834d5024",
+      "primary_repo": "https://github.com/VAST-AI-Research/UniRig",
+      "publisher_commit": "6793c6640ff01c8fb389f3993434124bb43d2933",
+      "publisher_model_weights_accepted": false,
+      "publisher_tree_entries": 132,
+      "rea_evidence_id": "ev_d0bb7ead99495387fdfc567343fe6e45650f9f33e3b8a5682920e5453dc5612e",
+      "rea_evidence_sha256": "bf63a9b7700a5666dff039aef93f8f49c21200195982f0912cf1b193da597211",
+      "rea_exit_code": 0,
+      "rea_matched_entries": 6,
+      "rea_version": "rea-agents 6.8.0 owner-approved installed",
+      "repo": "VAST-AI-Research/UniRig",
+      "rights_not_approved": true,
+      "root_license_in_selection": true,
+      "selected_source_file_count": 5,
+      "selected_source_file_sha256": [
+        {
+          "bytes": 1124,
+          "path": "LICENSE",
+          "sha256": "d6ee0be05753b9078358b9a5a2ff2e343ea94565749ddc44324f346050d9255c"
+        },
+        {
+          "bytes": 21054,
+          "path": "README.md",
+          "sha256": "588f0a05c5fad429265fda2238e5d7ce2901d4245b487534e08c706f9a7f1827"
+        },
+        {
+          "bytes": 174,
+          "path": "requirements.txt",
+          "sha256": "315c371b021de30b57af300d9213fd542fe9eb4f981fd9dbf49cff96d3f45474"
+        },
+        {
+          "bytes": 8390,
+          "path": "src/model/unirig_ar.py",
+          "sha256": "7148e11a5d2f0c39f49145a98ded9ebf7e33e22b2fe4751cebd8581aa16d6b3a"
+        },
+        {
+          "bytes": 23520,
+          "path": "src/model/unirig_skin.py",
+          "sha256": "68bd4134462997d945c7f535a5787d93b10c3b65240de5b4d187624f61bfcf9a"
+        }
+      ],
+      "status": "REA_PARTIAL_SOURCE_CARRIER_COMPLETE",
+      "unread_source_files": []
+    },
+    {
+      "entire_repo_read": false,
+      "external_source_copied_to_public_git": false,
+      "limitations": [
+        "Source files selected by exact pinned paths, not publisher entire repo",
+        "REA inspected ZIP byte-entry inventory; it did not reproduce model inference",
+        "No model weights or commercial rights adjudication",
+        "Need full source/texture/model license and user art acceptance"
+      ],
+      "mode": "PINNED_PARTIAL_SOURCE_SUBSET_NOT_FULL_RELEASE",
+      "model_weights_downloaded": false,
+      "partial_zip_bytes": 22034,
+      "partial_zip_sha256": "c0d70f24f625db41e2a7c45c1aba4ad4b6ed17cddada2e8b606e39ac55c6a5a2",
+      "primary_repo": "https://github.com/TokisanGames/Terrain3D",
+      "publisher_commit": "cdcd382cd639f0b043444d7d161f1a6c00d30977",
+      "publisher_model_weights_accepted": false,
+      "publisher_tree_entries": 402,
+      "rea_evidence_id": "ev_83057b7e61122d88972e97235782a2cf50bfcfe72b24b58236a13d56e668aac5",
+      "rea_evidence_sha256": "578c8d3addd6dadcfe0d8b3bb624fe691a88a1904016b8638723c70c04f80c54",
+      "rea_exit_code": 0,
+      "rea_matched_entries": 19,
+      "rea_version": "rea-agents 6.8.0 owner-approved installed",
+      "repo": "TokisanGames/Terrain3D",
+      "rights_not_approved": true,
+      "root_license_in_selection": true,
+      "selected_source_file_count": 18,
+      "selected_source_file_sha256": [
+        {
+          "bytes": 1112,
+          "path": "LICENSE.txt",
+          "sha256": "f7ecc09ce65c97828130728072c5a6ed3cc185d3bf0436e51a15828ad9ceca7c"
+        },
+        {
+          "bytes": 2594,
+          "path": "README.md",
+          "sha256": "7363c83730920dc7963d02cfcb8e211ceca12bb91b145e37e3fe9bf40b03120c"
+        },
+        {
+          "bytes": 789,
+          "path": "project/addons/terrain_3d/menu/bake_lod_dialog.gd",
+          "sha256": "8c69c53c2d32bc50a6e6a10cbc74b6acf442a3bc5470aa27efe76def094a6a08"
+        },
+        {
+          "bytes": 3099,
+          "path": "src/terrain_3d_texture_asset.h",
+          "sha256": "5a52672673e166ae862381cd88d9f7b660ec890e52ddecbf9c897abda85cce29"
+        },
+        {
+          "bytes": 3531,
+          "path": "src/terrain_3d_collision.h",
+          "sha256": "938f1b008598a4a8fa151955bab5aa256e920918b9046a87e3d488f48740c4b7"
+        },
+        {
+          "bytes": 13303,
+          "path": "src/terrain_3d_texture_asset.cpp",
+          "sha256": "ef05b79f26b24d2b65ce98774049890589b1a4716ebc44567a174aa19294c201"
+        },
+        {
+          "bytes": 21146,
+          "path": "src/terrain_3d_collision.cpp",
+          "sha256": "7e1eab574c31d495ffe0ee03f6b29c3d8c9ba321797e7a55a5d1f7602a281537"
+        },
+        {
+          "bytes": 363,
+          "path": "project/addons/terrain_3d/utils/transform_changed_notifier.gd",
+          "sha256": "ee5e098a23e116fe2f1fcfbc663456038b5f3c13921669029a89c2a0f18f9b23"
+        },
+        {
+          "bytes": 508,
+          "path": "project/addons/terrain_3d/menu/channel_packer_dragdrop.gd",
+          "sha256": "ce46d0ffd1ff37727a591164e78bd955f560073c5b040d872bee2f119780f00f"
+        },
+        {
+          "bytes": 528,
+          "path": "project/addons/terrain_3d/src/operation_builder.gd",
+          "sha256": "0588a355d02b84805f75bb7febd113b2114e66e367fdc92b4804e93e6c8690c3"
+        },
+        {
+          "bytes": 734,
+          "path": "src/generated_texture.h",
+          "sha256": "366bd04eca0860fc00f60c904c0725a29e2a53ef747dfbc86311f1b023a335ba"
+        },
+        {
+          "bytes": 1163,
+          "path": "src/terrain_3d_asset_resource.h",
+          "sha256": "d9fbd46441500a8d6192ae4dba86f7644222c1426db57b32d6229108f79aefe6"
+        },
+        {
+          "bytes": 1593,
+          "path": "src/generated_texture.cpp",
+          "sha256": "8bee25e9965b5d0817f8a9d209f68a28615c0f7e3f9fa4e323663958d471846a"
+        },
+        {
+          "bytes": 1611,
+          "path": "project/addons/terrain_3d/src/gradient_operation_builder.gd",
+          "sha256": "87bab9c41da20f9efda52a5c99e524138cb047e956a7e1563a6ce773548cc2a2"
+        },
+        {
+          "bytes": 1644,
+          "path": "project/addons/terrain_3d/src/export_plugin.gd",
+          "sha256": "7d06042b651ba91813a671ca842dd02370720787b707c7021621e43df818ea91"
+        },
+        {
+          "bytes": 1753,
+          "path": "project/addons/terrain_3d/tools/region_mover.gd",
+          "sha256": "287b3243f18d80a72f87e6cd0c2309ea15ab4c88e357005491dea7e0ea5be931"
+        },
+        {
+          "bytes": 1823,
+          "path": "project/addons/terrain_3d/extras/3rd_party/import_sgt.gd",
+          "sha256": "4c55668439ea9354cb6f952debbd890d303a157f7b767714e32fffa8b2677d8b"
+        },
+        {
+          "bytes": 1942,
+          "path": "project/addons/terrain_3d/src/multi_picker.gd",
+          "sha256": "583b29825a772c31e3ffc792cc36d93429e7b23464a70f099f20f7f1fd7e4ff9"
+        }
+      ],
+      "status": "REA_PARTIAL_SOURCE_CARRIER_COMPLETE",
+      "unread_source_files": []
+    }
+  ],
+  "schema": "mgr.forge.rea-pinned-partial-source-research.v1",
+  "sources_attempted": 3
+}

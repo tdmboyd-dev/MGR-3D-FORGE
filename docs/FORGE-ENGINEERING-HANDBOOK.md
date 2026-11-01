@@ -66,7 +66,7 @@ The Studio prints its loopback URL. It binds to 127.0.0.1, has its own session t
 
 ## 5 — Actual CLI actions from source (current implementation)
 
-**62 actual CLI actions** extracted from the current source tree. Human-lipsync and world-biome are real new commands, not original 60-command baseline. See --help per action for required options; table documentation is not visual acceptance.
+**64 actual CLI actions**, extracted from current Python argparse AST on 2026-11-01. Previous 60/62 counts are historical.
 
 | Real CLI action | Existing source-described effect |
 |---|---|
@@ -106,6 +106,7 @@ The Studio prints its loopback URL. It binds to 127.0.0.1, has its own session t
 | `fantasy-effect` | generate native animated-time magic geometry with emissive GLB |
 | `godot-handoff` | package verified Forge world for Godot 4 with collision bodies and camera |
 | `gpu-plan` | dry-run cost plan for renting a GPU (no money spent) |
+| `human-audio-motion` | animate original Human Forge jaw from approved PCM WAV loudness; NOT speech/phoneme alignment |
 | `human-lipsync` | add real Blender 3D facial shapes and animation to existing Human Forge mannequin; requires timed phonemes |
 | `image-relief` | build real image-derived relief 3D geometry from PNG pixels, not hallucinated full mesh |
 | `imagine-creature` | create procedural creature mesh and design DNA; not neural inference |
@@ -131,6 +132,7 @@ The Studio prints its loopback URL. It binds to 127.0.0.1, has its own session t
 | `unclothe-review` | inspect a proposed multi-part segmentation without extracting |
 | `verify-bundle` | verify artifact hashes in world build folder |
 | `world-biome` | make a real original biome ring as an optional GLB layer around an unchanged authored MGR city |
+| `world-compose` | combine the same original MGR World GLB + pinned native biome in one real Blender-reopened editable world |
 | `world-flight` | package a generated world into an offline interactive 3D HTML world |
 
 ## 6 — How the specific workflows operate

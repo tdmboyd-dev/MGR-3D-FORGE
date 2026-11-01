@@ -98,54 +98,128 @@ def export_glb(meshes, *, name="MGR Forge World", materials=None, pbr_overrides=
 
 
 def inspect_glb(blob: bytes) -> dict:
-    """Read and check a GLB without trusting its declared sizes or offsets."""
-    if len(blob) < 28:
-        raise ValueError("GLB too small")
-    magic, version, length = struct.unpack_from("<4sII", blob)
-    if magic != b"glTF" or version != 2 or length != len(blob):
-        raise ValueError("invalid GLB header/length")
-    cursor, chunks = 12, []
-    while cursor < len(blob):
-        if cursor + 8 > len(blob):
-            raise ValueError("truncated chunk header")
-        size, kind = struct.unpack_from("<I4s", blob, cursor)
-        cursor += 8
-        if size % 4 or cursor + size > len(blob):
-            raise ValueError("invalid chunk length")
-        chunks.append((kind, blob[cursor:cursor + size]))
-        cursor += size
-    if cursor != len(blob) or len(chunks) != 2 or chunks[0][0] != b"JSON" or chunks[1][0] != b"BIN\x00":
-        raise ValueError("GLB must contain JSON and BIN chunks")
-    doc = json.loads(chunks[0][1])
-    binary = chunks[1][1]
-    if doc.get("asset", {}).get("version") != "2.0":
-        raise ValueError("not glTF 2.0")
-    if doc["buffers"][0]["byteLength"] > len(binary):
-        raise ValueError("binary buffer shorter than declared")
-    for view in doc["bufferViews"]:
-        if view["byteOffset"] + view["byteLength"] > len(binary):
-            raise ValueError("buffer view exceeds binary chunk")
-    for accessor in doc["accessors"]:
-        view = doc["bufferViews"][accessor["bufferView"]]
-        comp_bytes = {5125: 4, 5126: 4}[accessor["componentType"]]
-        dims = {"SCALAR": 1, "VEC3": 3}[accessor["type"]]
-        if accessor["count"] * comp_bytes * dims > view["byteLength"]:
-            raise ValueError("accessor exceeds buffer view")
-    for mesh in doc["meshes"]:
-        for primitive in mesh["primitives"]:
-            positions = doc["accessors"][primitive["attributes"]["POSITION"]]
-            normals = doc["accessors"][primitive["attributes"]["NORMAL"]]
-            indices = doc["accessors"][primitive["indices"]]
-            if positions["count"] != normals["count"] or indices["count"] % 3:
-                raise ValueError("invalid geometry counts")
-            view = doc["bufferViews"][indices["bufferView"]]
-            offset = view["byteOffset"]
-            ids = struct.unpack_from(f"<{indices['count']}I", binary, offset)
-            if ids and max(ids) >= positions["count"]:
-                raise ValueError("primitive index exceeds vertices")
-    return {"valid": True, "meshes": len(doc["meshes"]),
-            "primitives": sum(len(m["primitives"]) for m in doc["meshes"]),
-            "vertices": sum(a["count"] for a in doc["accessors"] if a["type"] == "VEC3") // 2,
-            "triangles": sum(doc["accessors"][p["indices"]]["count"] // 3
-                             for m in doc["meshes"] for p in m["primitives"]),
-            "materials": len(doc["materials"])}
+    """Verify self-contained glTF2 GLB triangles, including Blender 16-bit indices.
+
+    All accessors and referenced offsets are bounded within the original BIN.
+    This verifies a structural scene/mesh, not a texture/rig/anatomy license.
+    Sparse and multi-buffer glTF are explicitly unsupported until audited.
+    """
+    if type(blob) is not bytes or not 28<=len(blob)<=256_000_000:
+        raise ValueError("GLB must be bounded binary bytes")
+    magic,version,total=struct.unpack_from("<4sII",blob,0)
+    if (magic,version,total)!=(b"glTF",2,len(blob)):
+        raise ValueError("invalid glTF 2.0 header/length")
+    cursor=12
+    chunks=[]
+    while cursor<len(blob):
+        if cursor+8>len(blob):raise ValueError("truncated GLB chunk header")
+        size,kind=struct.unpack_from("<I4s",blob,cursor)
+        cursor+=8
+        if size%4 or size>len(blob)-cursor:raise ValueError("invalid GLB chunk length")
+        chunks.append((kind,blob[cursor:cursor+size]))
+        cursor+=size
+    if cursor!=len(blob) or len(chunks)!=2 or [x[0] for x in chunks]!=[b"JSON",b"BIN\x00"]:
+        raise ValueError("MGR Forge requires one JSON plus one BIN GLB")
+    try:doc=json.loads(chunks[0][1])
+    except (UnicodeError,json.JSONDecodeError,TypeError) as error:
+        raise ValueError("invalid glTF JSON") from error
+    if not isinstance(doc,dict) or doc.get("asset",{}).get("version")!="2.0":
+        raise ValueError("GLB is not glTF 2.0")
+    binary=chunks[1][1]
+    buffers=doc.get("buffers")
+    views=doc.get("bufferViews")
+    accessors=doc.get("accessors")
+    meshes=doc.get("meshes")
+    if (not isinstance(buffers,list) or len(buffers)!=1 or
+        not isinstance(views,list) or len(views)>100000 or
+        not isinstance(accessors,list) or len(accessors)>100000 or
+        not isinstance(meshes,list) or not 1<=len(meshes)<=10000):
+        raise ValueError("unsupported GLB buffer/accessor/mesh inventory")
+    if (not isinstance(buffers[0],dict) or
+        type(buffers[0].get("byteLength")) is not int or
+        buffers[0]["byteLength"]<0 or buffers[0]["byteLength"]>len(binary) or
+        "uri" in buffers[0]):
+        raise ValueError("unverified binary buffer declaration")
+    try:
+        for view in views:
+            if not isinstance(view,dict) or view.get("buffer",0)!=0:
+                raise ValueError("nonlocal buffer view not accepted")
+            off=view.get("byteOffset",0)
+            size=view.get("byteLength")
+            if (type(off) is not int or type(size) is not int or
+                off<0 or size<0 or off+size>buffers[0]["byteLength"]):
+                raise ValueError("buffer view escaped bounded GLB BIN")
+        components={5120:(1,"b"),5121:(1,"B"),5122:(2,"h"),5123:(2,"H"),
+                    5124:(4,"i"),5125:(4,"I"),5126:(4,"f")}
+        dimensions={"SCALAR":1,"VEC2":2,"VEC3":3,"VEC4":4,
+                    "MAT2":4,"MAT3":9,"MAT4":16}
+        meta=[]
+        for accessor in accessors:
+            if not isinstance(accessor,dict) or "sparse" in accessor:
+                raise ValueError("sparse or malformed GLB accessor not yet supported")
+            ix=accessor.get("bufferView")
+            if type(ix) is not int or not 0<=ix<len(views):
+                raise ValueError("GLB accessor has no valid bufferView")
+            view=views[ix]
+            count=accessor.get("count")
+            ctype=accessor.get("componentType")
+            shape=accessor.get("type")
+            if type(count) is not int or not 0<=count<=40_000_000 or (
+               ctype not in components or shape not in dimensions):
+                raise ValueError("invalid glTF accessor type/count")
+            width=components[ctype][0]*dimensions[shape]
+            stride=view.get("byteStride",width)
+            offset=accessor.get("byteOffset",0)
+            if (type(stride) is not int or type(offset) is not int or
+                offset<0 or offset%components[ctype][0] or
+                stride<width or stride%components[ctype][0] or
+                (offset+(count-1)*stride+width>view["byteLength"] if count else
+                 offset>view["byteLength"])):
+                raise ValueError("GLB accessor exceeds its view or has invalid stride")
+            meta.append((accessor,view,stride))
+        triangle_count=0
+        vertex_count=0
+        primitive_count=0
+        for mesh in meshes:
+            primitives=mesh.get("primitives")
+            if not isinstance(primitives,list) or not 1<=len(primitives)<=20000:
+                raise ValueError("GLB mesh is missing bounded primitives")
+            for primitive in primitives:
+                if not isinstance(primitive,dict) or primitive.get("mode",4)!=4:
+                    raise ValueError("only valid triangle-list GLB primitives accepted")
+                attrs=primitive.get("attributes",{})
+                if not isinstance(attrs,dict):
+                    raise ValueError("invalid primitive attributes")
+                pi,ni,ii=attrs.get("POSITION"),attrs.get("NORMAL"),primitive.get("indices")
+                if any(type(ix) is not int or not 0<=ix<len(accessors) for ix in (pi,ni,ii)):
+                    raise ValueError("primitive must have position, normal and index accessors")
+                pos,norm,indices=accessors[pi],accessors[ni],accessors[ii]
+                if (pos["componentType"]!=5126 or pos["type"]!="VEC3" or
+                    norm["componentType"]!=5126 or norm["type"]!="VEC3" or
+                    indices["type"]!="SCALAR" or
+                    indices["componentType"] not in (5121,5123,5125) or
+                    pos["count"]!=norm["count"] or indices["count"]%3):
+                    raise ValueError("unsupported indexed triangle geometry")
+                ctype=indices["componentType"]
+                view=meta[ii][1]
+                stride=meta[ii][2]
+                start=view.get("byteOffset",0)+indices.get("byteOffset",0)
+                token="<"+components[ctype][1]
+                index_fmt=struct.Struct(token)
+                # Scan indexed geometry without creating an unbounded huge tuple.
+                for j in range(indices["count"]):
+                    index=index_fmt.unpack_from(binary,start+j*stride)[0]
+                    if index>=pos["count"]:
+                        raise ValueError("primitive index references missing vertex")
+                primitive_count+=1
+                triangle_count+=indices["count"]//3
+                vertex_count+=pos["count"]
+        return {"valid":True,"meshes":len(meshes),"primitives":primitive_count,
+                "vertices":vertex_count,"triangles":triangle_count,
+                "materials":len(doc.get("materials",[])),
+                "index_component_types":sorted({accessors[p["indices"]]["componentType"]
+                    for m in meshes for p in m["primitives"]}),
+                "limitations":["Structural triangle mesh verification only, not independent Blender rendering",
+                               "Sparse, nonindexed and externally referenced glTF not yet supported"]}
+    except (KeyError,IndexError,TypeError,struct.error) as error:
+        raise ValueError("malformed or out-of-bounds glTF mesh") from error
