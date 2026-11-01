@@ -1,3 +1,11 @@
+## 2026-10-31 — Complete tracked-file baseline + source-grounded how-tos + local artifact security repair
+
+- 405 actual Forge tracked files hashed, 180 Python AST parses, 89 Forge Python modules mapped, 60 real CLI actions indexed; real MGR-API-MCP 169 files and independent Creation OS 365 files likewise mapped in their own repo evidence/audits. This is static whole-tree audit, NOT 939 live workflow accepts.
+- Unified private file GET checks in existing Forge Studio for older world/relief/character/Blender/Godot as well as creature, replaced unauthenticated Creation Chat direct anchors with token-authorized Blob workflow; repaired world HTML preview false failure caused by window.open+noopener result. Tokenless and foreign host/origin negative HTTP tests passed.
+- Corrected README/WHAT-WE-HAVE October 30 stale claims and renamed the old master plan's conceptual role as expansion roadmap, not a completed repo audit; removed phantom forge/fantasy.py from the plan.
+- Wrote code/module and command handbook, specific how-to source/rig/lip-sync/REA/API/recovery docs; 15 source issues in an exact-path gap ledger. Three newly primary-sourced 3D research targets are not installed: SkinTokens, NVIDIA Audio2Face-3D and Rhubarb, total research queue 187 (initial 184 unchanged in history).
+- Same-wave full regression: 608 run / 605 passed / 3 skipped Forge, 69/69 API/MCP, 123/123 Creation OS; actual local Node->Python Forge smoke PASS. Browser/hosted consumer acceptance OPEN. Proof evidence/audits/2026-10-31-verified-three-repo-audit.json.
+
 ## 2026-10-31 — Direct original 3D creature API/MCP and existing Studio UI (F133/F134)
 
 - Reused Forge Studio job allocation and world-job journal helper to make forge/creature_jobs.py: stable exact job IDs, strong input/mesh hash, persisted GLB/JSON, replay after restart, changed-input and tamper denial; kept native CPU procedural method and no billed providers.

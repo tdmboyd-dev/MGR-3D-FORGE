@@ -468,9 +468,55 @@
     finally{assetSearchButton.disabled=false;}
   });
   const studioLink=(url,label)=>{
+    // Studio-created worlds, models, reports and engine exports are private.
+    // Direct anchor navigation cannot attach the owner token, so fetch into
+    // a temporary local Blob only after an authenticated same-origin request.
+    if(typeof url!=="string"||!/^\/files\/[a-f0-9]{24}\/(?:relief\/|edited\/|candidate\/|creature\/)?[a-z-]+\.(?:glb|obj|mtl|json|html|zip|blend)$/.test(url)){
+      directorMessage.textContent="Forge returned an invalid artifact path.";
+      return;
+    }
     const anchor=document.createElement("a");
-    anchor.href=url;anchor.textContent=label;anchor.rel="noopener";
+    anchor.href="#";anchor.textContent=label;
     anchor.style.cssText="display:block;color:#9af4cd;padding:3px";
+    anchor.addEventListener("click",async event=>{
+      event.preventDefault();
+      if(!studioEnabled)return;
+      const previous=anchor.textContent;
+      anchor.textContent="Preparing authenticated Forge artifact...";
+      try{
+        const response=await fetch(url,{
+          headers:{"X-MGR-Forge-Token":forgeToken},redirect:"error"
+        });
+        if(!response.ok)throw new Error("Forge denied the artifact ("+response.status+").");
+        const claimed=Number(response.headers.get("Content-Length")||"0");
+        if(!Number.isFinite(claimed)||claimed>256_000_000)throw new Error("File exceeds supported size.");
+        const file=await response.blob();
+        if(file.size>256_000_000)throw new Error("File exceeds supported size.");
+        const blobUrl=URL.createObjectURL(file);
+        if(url.endsWith(".html")){
+          // The authored HTML world is a self-contained local viewer. Open it
+          // without exposing the Studio session token as a query parameter.
+          // window.open(..., "noopener") may return null even when a new
+          // tab DID open, so don't falsely report a failed preview.
+          const viewerLink=document.createElement("a");
+          viewerLink.href=blobUrl;
+          viewerLink.target="_blank";
+          viewerLink.rel="noopener noreferrer";
+          document.body.append(viewerLink);
+          viewerLink.click();
+          viewerLink.remove();
+          setTimeout(()=>URL.revokeObjectURL(blobUrl),60_000);
+          directorMessage.textContent="Requested the authenticated world preview tab. Check popup settings if it did not appear.";
+        }else{
+          const link=document.createElement("a");
+          link.href=blobUrl;link.download=url.substring(url.lastIndexOf("/")+1);
+          document.body.append(link);link.click();link.remove();
+          setTimeout(()=>URL.revokeObjectURL(blobUrl),10_000);
+          directorMessage.textContent="Authenticated Forge artifact downloaded.";
+        }
+      }catch(error){directorMessage.textContent="Download failed: "+String(error.message);}
+      finally{anchor.textContent=previous;}
+    });
     downloadLinks.prepend(anchor);
   };
   // This UI reuses the SAME Forge creature jobs as the shared MGR API/MCP bridge.

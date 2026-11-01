@@ -1,8 +1,31 @@
 # MGR 3D Forge - Full Living Handoff
 
+## CURRENT SOURCE-AUDIT HANDBOOK CHECKPOINT — 2026-10-31
+
+**Final same-wave verification:** python -m unittest discover -q **608 run, 605 passed, 3 skipped, zero failures**; actual Node JS syntax check passed; sibling API/MCP **69/69**, actual local cross-process world+creature/authentication smoke PASS; Creation OS **123/123**. Proof file evidence/audits/2026-10-31-verified-three-repo-audit.json. Static baseline 939 tracked files has its separate three SHA-pinned inventories. Actual interactive Chrome and hosted model workflows remain open.
+
+**The old Master Forge Plan was a PRE-AUDIT vision document, not proof that every existing module was known.** It is now explicitly labeled owner expansion roadmap. This one HANDOFF remains the operational authority; no competing new handoff.
+
+**Complete tracked-file STATIC source baseline** at main 310badac...: 405 Forge files, 180 Python ASTs (includes tests), 89 current forge package modules, 135 Markdown docs, 60 actual argparse CLI actions, zero JSON/AST parse errors. A source tree being statically mapped does not certify every runtime connection/visual output. Exact paths, SHA-256, roles, declaration/import graph and baseline commit: evidence/audits/2026-10-31-baseline-static-inventory.json. Module descriptions: docs/ACTUAL-FORGE-MODULE-MAP-2026-10-31.md.
+
+**Proper source how-to handbook**: docs/FORGE-ENGINEERING-HANDBOOK.md, with 60 actual commands and every subsystem owner. Deep instruction: docs/HOW-TO-MORPH-RIG-LIPSYNC.md; docs/HOW-TO-SOURCE-VAULT-REA.md; docs/HOW-TO-INTEGRATION-VERIFY-RECOVER.md; documents and 15 scoped issues: docs/SOURCE-AUDIT-ISSUES-2026-10-31.md and evidence/audits/2026-10-31-cross-repo-gap-ledger.json.
+
+**MGR API/MCP means existing MGR-API-MCP repo** (169 statically hashed files, existing hosted HTTP/MCP/auth source), not a new local API; previous local tests describe WHERE actual Python Forge and Node MCP ran. Sibling source handbook docs/API-MCP-ENGINEERING-HANDBOOK.md. Creation OS is optional independent multi-factory coordinator (365 statically hashed files), not mandatory Forge gateway; sibling docs/CREATION-OS-ENGINEERING-HANDBOOK.md. All three repos total 939 tracked files in this baseline. Hosted connected Tevin/ChatGPT remains unverified.
+
+**Real security defect repaired:** previously several private Forge Studio world/relief/candidate/Blender/Godot file links were tokenless while creature links required session token. Same forge/studio_server.py now checks the session header for ALL /files output and verifies localhost Host/Origin, path and download bound; viewer/runtime.js uses authenticated private Blob fetch for all artifact links and safe world-preview tab. No new parallel file server. Tests/test_studio_server.py covers positive 200, tokenless 403, hostile host/origin and UI source. Full browser click/download visual QA is still OPEN.
+
+**Historical discrepancies fixed**: README and docs/WHAT-WE-HAVE.md October 30 statuses labeled historical; source atlas currently 18 family entries and 3 live official metadata adapters, not 17/2. The roadmap now maps actual forge/fx.py rather than nonexistent forge/fantasy.py. No feature is deleted based only on low static import count.
+
+**Master morphology and lip sync:** current forge/morph_engine.py has bounded stretch/twist only; current creature rig 19-bone prototype; forge/voice.py is a voice command capture contract NOT audio-driven mouth animation. Arbitrary topology and bone/mesh morphing, actual lip sync/visemes, avatar face/skin/hair, 200+ authentic movements, professional art acceptance are still OPEN. Primary source research added SkinTokens, NVIDIA Audio2Face-3D and Rhubarb as XR-0185–187, SOURCED but NOT installed; existing 184 baseline remains in history. Current catalog 187 records, zero new REA investigations against the three. Read research/external-provenance/3D-RIGGING-LIPSYNC-SOURCE-REVIEW-2026-10-31.md.
+
+**Latest verification:** audited original baseline Forge 600 tests (3 skips), API/MCP 68/68 and Creation OS 122/122. After secure-download code, Forge 603 tests ran, 3 skips, zero failures; new documentation guards still require final full run before updated totals. Actual hosted user flows, Blender/Godot import for recent sample, Chrome UI, model weight rights and offsite vault recovery remain OPEN. Do not declare 100% app done.
+
+**Resume order:** this handoff -> docs/FORGE-ENGINEERING-HANDBOOK.md -> docs/ACTUAL-FORGE-MODULE-MAP-2026-10-31.md and evidence/audits -> docs/BUILD-REGISTER.md (F01–F144), gap ledger, actual code/tests -> master roadmap as PLAN -> sibling own handoffs; inspect live Git SHA/dirty branches and perform tests before any change.
+
+
 ## Current direct Creature Forge + ChatGPT Creator source — 2026-10-31
 
-**ONE active owner resume:** this Forge docs/HANDOFF.md, with entire architecture and all still-open systems in docs/MASTER-FORGE-PROGRAM-2026-10-31.md, research source queue (184 records/177 names, not 184 inspections) and docs/BUILD-REGISTER.md F01–F138. Phase A and the earlier REA/Rambler slice are published. This new creation slice extends the SAME Forge Studio/MGR API/MCP, not another standalone job backend.
+**Historical pre-audit expansion handoff entry (superseded by top source-audit checkpoint):** this Forge docs/HANDOFF.md, with entire architecture and all still-open systems in docs/MASTER-FORGE-PROGRAM-2026-10-31.md, research source queue (184 original records/177 names, not inspections) and docs/BUILD-REGISTER.md F01–F138. Phase A and the earlier REA/Rambler slice are published. This new creation slice extends the SAME Forge Studio/MGR API/MCP, not another standalone job backend.
 
 **What's really built (F133):** forge/creature_jobs.py runs the existing MGR original CPU geometry generator, saves request JSON, immutable job GLB + DNA manifest and SHA, indexes stable request IDs via Forge's current world_jobs.py journal helpers; replay reuses the original output, changed request ID input refuses, interrupted result stays NEEDS_RECONCILIATION. forge/studio_server.py adds protected local /api/creature-create and /api/creature-status plus token-required GET of /files/{job-id}/creature/creature.glb or creature.json. Existing /api/world remains unchanged. Tests: tests/test_creature_jobs.py and tests/test_studio_server.py.
 
@@ -33,7 +56,7 @@
 
 **Planned repo paths:** MGR-3D-FORGE/docs/MASTER-FORGE-PROGRAM-2026-10-31.md (complete product/system map and build waves); MGR-3D-FORGE/research/external-provenance/BEAST-3D-RESEARCH-UNIVERSE-2026-10-31.json (each target name, source locator, legal gate, owner, status, next action); MGR-3D-FORGE/docs/BUILD-REGISTER.md (F129–F138 lifecycle); MGR-3D-FORGE/forge/security/rambler/ (PLANNED), MGR-API-MCP/integrations/forge-creator-plugin/ (PLANNED). Keep all private binary assets and model weights in reviewed Forge Vault with public safe digests and durable restore instructions, not in public GitHub.
 
-**Read order when this chat ends:** (1) this one handoff; (2) docs/MASTER-FORGE-PROGRAM-2026-10-31.md; (3) docs/BUILD-REGISTER.md F01–F138; (4) current code/tests/evidence and docs/PROGRESS-LOG.md; (5) source universe JSON + exact-license research; (6) matching sibling HANDOFF.md, current Git main and any concurrent changes. Check before running, prove before updating. Existing F128 REA 302/302 proven ZIP receipt remains historical, NOT one of 184 new queued runs.
+**Read order when this chat ends:** (1) this one handoff; (2) docs/MASTER-FORGE-PROGRAM-2026-10-31.md; (3) docs/BUILD-REGISTER.md F01–F144 (historic snapshot initially 138); (4) current code/tests/evidence and docs/PROGRESS-LOG.md; (5) source universe JSON + exact-license research; (6) matching sibling HANDOFF.md, current Git main and any concurrent changes. Check before running, prove before updating. Existing F128 REA 302/302 proven ZIP receipt remains historical, NOT one of 184 new queued runs.
 
 **Immediate next execution:** publish this PLAN-only baseline and fetch from GitHub first; then permitted REA official self-inspection and prioritized source audit; then original Rambler prototype and real Forge Creator/Studio integration proof. No model training, GPU rental, private-site scraping, paid APIs or license bypass authorized by this plan.
 

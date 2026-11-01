@@ -27,6 +27,7 @@ from .creature_jobs import create_creature_job, creature_job_status
 
 
 MAX_REQUEST = 1_800_000
+MAX_DOWNLOAD = 256_000_000
 JOB_ID = re.compile(r"[a-f0-9]{24}\Z")
 FILES = {"relief.glb": "model/gltf-binary", "relief.obj": "text/plain",
          "relief.mtl": "text/plain", "manifest.json": "application/json",
@@ -279,14 +280,24 @@ def make_handler(studio):
             self.end_headers()
             self.wfile.write(body)
 
+        def _valid_local_host(self):
+            return self.headers.get("Host") == f"127.0.0.1:{self.server.server_port}"
+
         def do_GET(self):
+            # Prevent rebinding through an unrelated Host name or a foreign Origin.
+            if not self._valid_local_host():
+                return self.send_bytes(403, b"forbidden host", "text/plain")
+            origin = self.headers.get("Origin")
+            if origin is not None and origin != f"http://127.0.0.1:{self.server.server_port}":
+                return self.send_bytes(403, b"forbidden origin", "text/plain")
             path = urlparse(self.path).path
             if path in ("/", "/studio"):
                 return self.send_bytes(200, studio.page.encode("utf-8"), "text/html; charset=utf-8")
             match = re.fullmatch(r"/files/([a-f0-9]{24})/(relief|edited|candidate|creature)?/?([a-z-]+\.(?:glb|obj|mtl|json|html|zip)|scene\.blend)", path)
             if match:
                 jid, subfolder, name = match.groups()
-                if subfolder == "creature" and self.headers.get("X-MGR-Forge-Token") != studio.token:
+                # All generated, uploaded and private project files require the same Studio token.
+                if self.headers.get("X-MGR-Forge-Token") != studio.token:
                     return self.send_bytes(403, b"forbidden", "text/plain")
                 if name not in FILES:
                     return self.send_bytes(404, b"not found", "text/plain")
@@ -295,12 +306,17 @@ def make_handler(studio):
                 except ValueError:
                     return self.send_bytes(404, b"not found", "text/plain")
                 target = folder / subfolder / name if subfolder else folder / name
-                if target.is_symlink() or not target.is_file():
+                if (target.is_symlink() or target.parent.is_symlink() or
+                        not target.is_file() or not target.resolve().is_relative_to(folder.resolve())):
                     return self.send_bytes(404, b"not found", "text/plain")
+                if target.stat().st_size > MAX_DOWNLOAD:
+                    return self.send_bytes(413, b"download too large", "text/plain")
                 return self.send_bytes(200, target.read_bytes(), FILES[name])
             return self.send_bytes(404, b"not found", "text/plain")
 
         def do_POST(self):
+            if not self._valid_local_host():
+                return self.send_bytes(403, b"forbidden host", "text/plain")
             if self.path not in ("/api/asset-sources", "/api/asset-search", "/api/relief", "/api/character", "/api/world", "/api/world-job", "/api/world-job-status", "/api/creature-create", "/api/creature-status", "/api/godot", "/api/blender", "/api/blender-status"):
                 return self.send_bytes(404, b"not found", "text/plain")
             if self.headers.get("X-MGR-Forge-Token") != studio.token:

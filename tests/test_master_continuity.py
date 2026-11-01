@@ -20,7 +20,8 @@ class MasterContinuityTests(unittest.TestCase):
         self.assertEqual(self.registry["target_count"],len(entries))
         self.assertEqual(len({x["id"] for x in entries}),len(entries))
         self.assertGreaterEqual(len({x["name"].lower() for x in entries}),100)
-        self.assertTrue(all(e["research_state"]=="QUEUED_UNVERIFIED" for e in entries))
+        self.assertEqual(sum(e["research_state"]=="QUEUED_UNVERIFIED" for e in entries),184)
+        self.assertEqual(sum(e["research_state"]=="SOURCED_PRIMARY_PUBLIC_DOCS_NOT_END_TO_END_READ" for e in entries),3)
         self.assertTrue(all(e["rea_execution_state"]=="NOT_RUN" for e in entries))
         self.assertTrue(all(e["production_ready"] is False for e in entries))
         self.assertEqual(self.registry["new_rea_runs"],0)
@@ -49,7 +50,7 @@ class MasterContinuityTests(unittest.TestCase):
         reg=(ROOT/"docs/BUILD-REGISTER.md").read_text(encoding="utf8")
         for i in range(129,139):
             self.assertEqual(reg.count("| F"+str(i)+" |"),1)
-        self.assertIn("F01–F138",reg)
+        self.assertIn("F01–F144",reg)
         master=(ROOT/"docs/MASTER-FORGE-PROGRAM-2026-10-31.md").read_text(encoding="utf8")
         for phrase in ("MGR Rambler","Forge Creator plugin","REA self-study",
                        "Creation OS","source", "not"):

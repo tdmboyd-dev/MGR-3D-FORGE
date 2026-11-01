@@ -1,5 +1,7 @@
 # MGR 3D FORGE — Instructions for contributing agents
 
+- Read this source-grounded docs/FORGE-ENGINEERING-HANDBOOK.md and evidence/audits/2026-10-31-baseline-static-inventory.json before adding any component. A roadmap cannot prove a module missing; perform source/tests/runtime verification and keep the ONE repo HANDOFF current.
+
 - The repo is the single GitHub-backed source of truth. Keep `main` current after local verification; avoid expensive GitHub Actions for routine tests.
 - Read `README.md`, `docs/PRODUCT-BIBLE.md`, `docs/BUILD-REGISTER.md`, `docs/PROGRESS-LOG.md`, `docs/IMPLEMENTATION-EVIDENCE.md`, `research/RESEARCH-REGISTER.md` before expanding scope.
 - Read `docs/MGR-NATIVE-CANON.md` first. Every MGR capability, status and public-facing description is native; external research references are segregated to `research/external-provenance/` for legal/technical traceability only.

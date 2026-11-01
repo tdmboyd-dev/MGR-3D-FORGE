@@ -1,5 +1,10 @@
 # MGR 3D FORGE — Current Native Inventory
 
+## HISTORICAL SNAPSHOT — Do not treat the October 30 test numbers below as current
+
+Newer October 31 audited baseline: [Forge engineering handbook](FORGE-ENGINEERING-HANDBOOK.md), [current handoff](HANDOFF.md), [actual source modules](ACTUAL-FORGE-MODULE-MAP-2026-10-31.md), and [baseline 405 tracked files](../evidence/audits/2026-10-31-baseline-static-inventory.json). Source Atlas currently 18/3 (18 researched directory families, 3 live official metadata providers), GPU planner source rebuilt earlier and working in DRY-RUN mode, Forge new artifact GET security unified with token. Current latest complete test result after audited fix is recorded in handoff; the numbers below belong to earlier builds.
+
+
 **Current status refreshed 2026-10-30. Owner: Money Grind Religion Corp. Canon: `docs/MGR-NATIVE-CANON.md`.** The authoritative current resume snapshot is `docs/HANDOFF.md`, with detailed states in `docs/BUILD-REGISTER.md` and proof in `evidence/asset-atlas/2026-10-30-proof.json`. **Current source in this Linux workspace: 543 tests ran, 540 passed, 3 skipped, 0 failed** with local sockets; previous Windows 438/546 tests and visual/Blender/Godot receipts are historical measurements, not retests of this head.
 
 **New verified local inventory (F118–F120):** 17 source-library directory entries, 2 live official metadata-search adapters (3DAssets.dev; Poly Haven for models/textures/HDRIs), an explicit bounded GLB download into rights-and-quality quarantine, CLI/Studio source endpoints and Creation Chat UI code, and a read-only authorization-gated sibling MGR API/MCP lookup with actual local HTTP cross-process proof. One 198,252-byte dragon GLB was fetched and hashed but not independently opened in Blender; there is no live hosted Tevin journey yet. **F110 GPU rental planner source and two historical test files are missing on present GitHub main; command needs repair.**

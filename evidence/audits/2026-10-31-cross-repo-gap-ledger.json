@@ -1,0 +1,158 @@
+{
+  "baseline_repos": {
+    "MGR-3D-FORGE": {
+      "commit": "310badac0661422fd1415b9d3baa52fed7127391",
+      "tracked": 405
+    },
+    "MGR-API-MCP": {
+      "commit": "b0b225cc9f225a02b9465db3817fc128532a23b4",
+      "tracked": 169
+    },
+    "MGR-CREATE-Os": {
+      "commit": "dcf3b7490a584d1701ac7c7b2f60cd452627519a",
+      "tracked": 365
+    }
+  },
+  "claims": "Complete tracked source/file static inventory, NOT exhaustive semantic integration certification",
+  "date": "2026-10-31",
+  "issues": [
+    {
+      "action": "Require token for all /files, deny foreign Host/Origin, bound paths/size; adjust existing Creation Chat helper to authenticated Blob transport and HTML tab.",
+      "finding": "Different private local Studio artifacts had inconsistent token gating; older world/relief/character/Blender/Godot artifact URLs could return on loopback without Studio token.",
+      "id": "AUD-FG-001",
+      "repo": "MGR-3D-FORGE",
+      "source_paths": "forge/studio_server.py; viewer/runtime.js; tests/test_studio_server.py",
+      "state": "CLOSED_FIX_VERIFIED",
+      "verification_or_next": "Actual HTTP 403 vs authorized 200; full Forge suite and Node JS syntax; Chrome click remains OPEN."
+    },
+    {
+      "action": "Relabel plan as pre-audit expansion roadmap and refer to actual existing forge/fx.py and real source map.",
+      "finding": "Master Plan falsely implied complete repo review and referenced nonexistent forge/fantasy.py.",
+      "id": "AUD-FG-002",
+      "repo": "MGR-3D-FORGE",
+      "source_paths": "docs/MASTER-FORGE-PROGRAM-2026-10-31.md; docs/FORGE-ENGINEERING-HANDBOOK.md",
+      "state": "FIXED_IN_DOCS",
+      "verification_or_next": "Source static inventory and documentation tests."
+    },
+    {
+      "action": "Mark historical and display current 18 source families/3 official live adapters/updated tests with one handoff.",
+      "finding": "October 30 17/2 source counts, 543 tests and broken F110 GPU summary remained visually prominent.",
+      "id": "AUD-FG-003",
+      "repo": "MGR-3D-FORGE",
+      "source_paths": "README.md; docs/WHAT-WE-HAVE.md; docs/HANDOFF.md",
+      "state": "FIXED_CURRENT_DOCS",
+      "verification_or_next": "Search current docs and verify source code/tests."
+    },
+    {
+      "action": "Enumerated and SHA-256 fingerprinted all 405 tracked files at 310bada, parsed 180 Python, mapped current CLI commands/modules and hints.",
+      "finding": "Previous planning did not enumerate all current repo files.",
+      "id": "AUD-FG-004",
+      "repo": "MGR-3D-FORGE",
+      "source_paths": "evidence/audits/2026-10-31-baseline-static-inventory.json; docs/ACTUAL-FORGE-MODULE-MAP-2026-10-31.md",
+      "state": "STATIC_COMPLETE_BEHAVIOR_OPEN",
+      "verification_or_next": "No claim every function/production route was executed; deep runtime/product proof still required."
+    },
+    {
+      "action": "Confirmed REAL shared existing MGR-API-MCP repo, mapped 169 tracked files/25 code modules and existing hosted HTTP auth plus Forge routes.",
+      "finding": "Term local API/MCP led to potential duplicate-repo confusion.",
+      "id": "AUD-MCP-005",
+      "repo": "MGR-API-MCP",
+      "source_paths": "evidence/audits/2026-10-31-baseline-static-inventory.json; docs/API-MCP-ENGINEERING-HANDBOOK.md",
+      "state": "STATIC_COMPLETE_BEHAVIOR_OPEN",
+      "verification_or_next": "Actual Python Forge\u2192Node local 3D creation passed earlier; hosted Tevin/ChatGPT remains OPEN."
+    },
+    {
+      "action": "Mapped 365 tracked files and current factory/queue/approval system; documented Creation OS optional multi-factory only.",
+      "finding": "Creation OS was incorrectly treated as mandatory Forge router in older architecture.",
+      "id": "AUD-CO-006",
+      "repo": "MGR-CREATE-Os",
+      "source_paths": "evidence/audits/2026-10-31-baseline-static-inventory.json; docs/CREATION-OS-ENGINEERING-HANDBOOK.md",
+      "state": "STATIC_COMPLETE_BEHAVIOR_OPEN",
+      "verification_or_next": "122 tests passed baseline; full cross-factory live app still OPEN."
+    },
+    {
+      "action": "Detailed input/aligned-phoneme/viseme/facial rig/Blender/engine acceptance pipeline; sourced Rhubarb and Audio2Face separately.",
+      "finding": "No verified audio-to-viseme/shape-key facial lip sync in current Forge code.",
+      "id": "AUD-FG-007",
+      "repo": "MGR-3D-FORGE",
+      "source_paths": "forge/voice.py; forge/character_motion.py; docs/HOW-TO-MORPH-RIG-LIPSYNC.md",
+      "state": "OPEN_ART_CAPABILITY",
+      "verification_or_next": "Build original facial rig + real audio + licensed weights/tools + independent animation QA."
+    },
+    {
+      "action": "Define semantic anatomy graph, rig/mesh shared coordinates and per-motion correctness; source SkinTokens and UniRig for comparison.",
+      "finding": "Morph currently 4 bounded spatial controls and skeleton prototypes; arbitrary topology/weight/motion preservation unproven.",
+      "id": "AUD-FG-008",
+      "repo": "MGR-3D-FORGE",
+      "source_paths": "forge/morph_engine.py; forge/creature_rig.py; forge/creature_rig_recipe.py",
+      "state": "OPEN_ART_CAPABILITY",
+      "verification_or_next": "Real arbitrary 3D characters and novel multi-limb rigs, visual deformation tests."
+    },
+    {
+      "action": "Preserved 184 original and added 3 sourced-only primary-doc studies; total 187, 0 new REA studies, none automatically installed.",
+      "finding": "184 candidate queue counted as if exhaustive researched libs and possible installed assets.",
+      "id": "AUD-FG-009",
+      "repo": "MGR-3D-FORGE",
+      "source_paths": "research/external-provenance/BEAST-3D-RESEARCH-UNIVERSE-2026-10-31.json",
+      "state": "OPEN_SOURCE_GATES",
+      "verification_or_next": "Pin exact publisher paths/licenses and study in small legal batches with evidence."
+    },
+    {
+      "action": "Existing Creation Chat used for original creature and all artifact downloads, no new dashboard created.",
+      "finding": "Static/HTTP UI verification isn't a real browser acceptance screenshot or tested previews.",
+      "id": "AUD-FG-010",
+      "repo": "MGR-3D-FORGE",
+      "source_paths": "viewer/runtime.js; viewer/template.html; forge/studio_server.py",
+      "state": "OPEN_OWNER_UI",
+      "verification_or_next": "Actual authorized Chrome manual/e2e test and screenshots, Blender and Godot reopen."
+    },
+    {
+      "action": "Reaffirm existing real service ownership and separation of local test transport from production.",
+      "finding": "Local tests do not demonstrate hosted MGR API/MCP can invoke user workstation via secure authenticated relay.",
+      "id": "AUD-FG-011",
+      "repo": "MGR-API-MCP",
+      "source_paths": "src/http-server.ts; src/mcp-http.ts; src/forge-mcp-tools.ts",
+      "state": "OPEN_HOSTED_CONNECTION",
+      "verification_or_next": "Real hosted OAuth/tenant check, resilient compute, expiring download URL, Tevin and ChatGPT client."
+    },
+    {
+      "action": "Detailed licensing of Audio2Face code vs model vs emotion dataset, SkinTokens exact checkpoints, Rhubarb MIT tool.",
+      "finding": "Candidate neural model sources not installed; root code rights do not grant model/dataset permissions.",
+      "id": "AUD-FG-012",
+      "repo": "MGR-3D-FORGE",
+      "source_paths": "forge/generative_backends.py; forge/data/generative_engines.json",
+      "state": "OPEN_PROVIDER_AND_RIGHTS",
+      "verification_or_next": "No automatic GPU/model installation before exact rights, hardware, cost and visual benchmark."
+    },
+    {
+      "action": "Separate raw private vault from public source, maintain hashes and restoration plan.",
+      "finding": "Preserved private asset archives local; independent offsite restore unproven.",
+      "id": "AUD-FG-013",
+      "repo": "MGR-3D-FORGE",
+      "source_paths": "forge/assets.py; forge/pack_mirror.py",
+      "state": "OPEN_OFFSITE_BACKUP",
+      "verification_or_next": "Provision legal private object store, second backup, hash restore."
+    },
+    {
+      "action": "Full file indexing plus actual AST paths and direct-import heuristic, do not delete modules by import count.",
+      "finding": "Static low-import modules may seem unused, but dynamic registration and CLI entrypoints can call them.",
+      "id": "AUD-FG-014",
+      "repo": "MGR-3D-FORGE",
+      "source_paths": "forge/*.py; evidence/audits/2026-10-31-baseline-static-inventory.json",
+      "state": "RISK_HEURISTIC_NOT_DEFECT",
+      "verification_or_next": "Targeted end-to-end call coverage before removing or refactoring any source."
+    },
+    {
+      "action": "preserved historic document, repaired one link to ../../WORK-STATE.md",
+      "finding": "archived Oct 30 checkpoint used a Markdown relative link resolving to nonexistent docs/history/WORK-STATE.md",
+      "id": "AUD-MCP-015",
+      "repo": "MGR-API-MCP",
+      "source_paths": "docs/history/FORGE-SOURCE-CHECKPOINT-2026-10-30.md; WORK-STATE.md; scripts/verify_repository.py",
+      "state": "FIXED_TESTED",
+      "verification_or_next": "python scripts/verify_repository.py 184 checks, 0 failures; document traversal does not certify hosted MCP runtime"
+    }
+  ],
+  "live_test_status": "Forge 608 run, 605 pass, 3 skip; MGR API/MCP 69/69 and cross-process native CPU world/creature PASS; Creation OS 123/123. Browser interactive and hosted Tevin NOT accepted.",
+  "schema": "mgr.beast.cross-repo-audit-gaps.v1",
+  "total_tracked": 939
+}

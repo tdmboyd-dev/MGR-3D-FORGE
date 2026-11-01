@@ -9,7 +9,7 @@
   "new_imported_assets": 0,
   "previous_separate_proof": "F128: 302/302 archived KayKit files matched by REA; this is an earlier accepted evidence slice, not another study campaign",
   "license_rule": "Publisher verification, per subfolder and checkpoint, and runtime/data/model-weight rights separately required. Restricted binary analysis requires additional authorization.",
-  "target_count": 184,
+  "target_count": 187,
   "targets": [
     {
       "id": "XR-0001",
@@ -3322,6 +3322,70 @@
       "production_ready": false,
       "authorized_method": "PUBLIC_DOCUMENTATION_ONLY_UNTIL_EXACT_RIGHTS_REVIEW",
       "next_action": "Verify publisher, source checkpoint, subfolder-specific license, dependencies, usage rights, permissible inspection; compare with existing Forge code; specify original implementation with actual acceptance proof"
+    },
+    {
+      "id": "XR-0185",
+      "name": "SkinTokens/TokenRig",
+      "family": "Character/rig/motion candidates",
+      "source_locator": "https://github.com/VAST-AI-Research/SkinTokens",
+      "source_path": "VERIFY_EXACT_SUBPATH_AND_COMMIT",
+      "asset_kind": "rig-lipsync-engine-or-study",
+      "owner_system": "Human/Creature Forge",
+      "research_state": "SOURCED_PRIMARY_PUBLIC_DOCS_NOT_END_TO_END_READ",
+      "rea_execution_state": "NOT_RUN",
+      "code_integration_state": "NOT_EVALUATED",
+      "license_state": "MIT_CODE_MODEL_WEIGHTS_AND_QWEN_DEPENDENCIES_SEPARATE",
+      "source_identity_verified": true,
+      "assets_downloaded": false,
+      "production_ready": false,
+      "authorized_method": "PUBLIC_DOCUMENTATION_ONLY_UNTIL_EXACT_RIGHTS_REVIEW",
+      "next_action": "Review code+weights+data and model card/licenses at exact pinned commit, full architecture/benchmarks/hardware, then design MGR-native rig/lipsync benchmark and real Blender/Godot acceptance.",
+      "notes": "Project publishes skeleton+skinning generated as one token sequence, >14GB Nvidia inference claim; root code MIT, exact model cards/weights/data licenses, embedded Qwen and mesh backbone dependencies require per-folder review. No install or benchmark. Published metrics aren't MGR proof."
+    },
+    {
+      "id": "XR-0186",
+      "name": "NVIDIA Audio2Face-3D SDK + models",
+      "family": "Character/rig/motion candidates",
+      "source_locator": "https://github.com/NVIDIA/Audio2Face-3D",
+      "source_path": "VERIFY_EXACT_SUBPATH_AND_COMMIT",
+      "asset_kind": "rig-lipsync-engine-or-study",
+      "owner_system": "Human/Creature Forge",
+      "research_state": "SOURCED_PRIMARY_PUBLIC_DOCS_NOT_END_TO_END_READ",
+      "rea_execution_state": "NOT_RUN",
+      "code_integration_state": "NOT_EVALUATED",
+      "license_state": "SDK_MIT_MODEL_NVIDIA_OPEN_MODEL_EMOTION_CUSTOM_SAMPLE_DATA_EVAL_ONLY",
+      "source_identity_verified": true,
+      "assets_downloaded": false,
+      "production_ready": false,
+      "authorized_method": "PUBLIC_DOCUMENTATION_ONLY_UNTIL_EXACT_RIGHTS_REVIEW",
+      "next_action": "Review code+weights+data and model card/licenses at exact pinned commit, full architecture/benchmarks/hardware, then design MGR-native rig/lipsync benchmark and real Blender/Godot acceptance.",
+      "notes": "Official component index lists MIT SDK, Apache training, NVIDIA Open Model lip-sync weights, Audio2Emotion custom restricted to A2F and evaluation-only sample data. Exact subdirectory/checkpoint rights before commercial bundling, no training/installation claimed."
+    },
+    {
+      "id": "XR-0187",
+      "name": "Rhubarb Lip Sync (timing cue reference)",
+      "family": "Character/rig/motion candidates",
+      "source_locator": "https://github.com/DanielSWolf/rhubarb-lip-sync",
+      "source_path": "VERIFY_EXACT_SUBPATH_AND_COMMIT",
+      "asset_kind": "rig-lipsync-engine-or-study",
+      "owner_system": "Human/Creature Forge",
+      "research_state": "SOURCED_PRIMARY_PUBLIC_DOCS_NOT_END_TO_END_READ",
+      "rea_execution_state": "NOT_RUN",
+      "code_integration_state": "NOT_EVALUATED",
+      "license_state": "MIT_CODE_THIRD_PARTY_LIBS_AND_DATA_SEPARATE",
+      "source_identity_verified": true,
+      "assets_downloaded": false,
+      "production_ready": false,
+      "authorized_method": "PUBLIC_DOCUMENTATION_ONLY_UNTIL_EXACT_RIGHTS_REVIEW",
+      "next_action": "Review code+weights+data and model card/licenses at exact pinned commit, full architecture/benchmarks/hardware, then design MGR-native rig/lipsync benchmark and real Blender/Godot acceptance.",
+      "notes": "2D mouth cue timing source with MIT software and bundled third-party notices. Not a production-ready Blender 5.2 facial rig. Older scaredyfish/blender-rhubarb-lipsync integration explicitly lacks Blender 3.2+ support. Original MGR 3D shape-key mapping and human jaw/tongue corrections required."
     }
+  ],
+  "baseline_queue_at_initial_commit": 184,
+  "baseline_distinct_name_strings": 177,
+  "candidate_new_in_this_wave": [
+    "SkinTokens/TokenRig",
+    "NVIDIA Audio2Face-3D SDK + models",
+    "Rhubarb Lip Sync (timing cue reference)"
   ]
 }

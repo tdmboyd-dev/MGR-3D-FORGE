@@ -1,0 +1,80 @@
+{
+  "baseline_branches": {
+    "MGR-3D-FORGE": "310badac0661422fd1415b9d3baa52fed7127391",
+    "MGR-API-MCP": "b0b225cc9f225a02b9465db3817fc128532a23b4",
+    "MGR-CREATE-Os": "dcf3b7490a584d1701ac7c7b2f60cd452627519a"
+  },
+  "date": "2026-10-31",
+  "forge_coverage": {
+    "cli_subcommands": 60,
+    "forge_python_modules": 89,
+    "markdown": 135,
+    "python_ast_files": 180
+  },
+  "limits": [
+    "static whole-tree audit is not all-source semantic/behavior proof",
+    "browser UI not independently clicked in current environment",
+    "hosted Tevin/ChatGPT Forge plugin file delivery not verified",
+    "full human facial lip sync, arbitrary rig morph, realistic art still open",
+    "future changes after baseline must reindex new tracked files"
+  ],
+  "privacy": {
+    "credentials_committed": false,
+    "developer_secret_files_in_git": false,
+    "node_or_gpu_install_in_this_wave": false,
+    "private_vault_media_in_git": false
+  },
+  "research_queue": {
+    "neural_models_newly_installed": 0,
+    "new_rea_runs": 0,
+    "new_sourced_only": 3,
+    "original": 184,
+    "total": 187
+  },
+  "schema": "mgr.beast.three-repo-source-audit-2026-10-31.v1",
+  "security_fix": {
+    "actual_browser_click_visual_acceptance": false,
+    "after": "all private /files GET require Studio token, exact local Host/Origin and bounded safe files; existing UI authenticated download",
+    "before": "some artifact GET routes unguarded while creature token gated",
+    "file": "forge/studio_server.py",
+    "http_positive_and_denial_tests": true,
+    "issue": "AUD-FG-001",
+    "viewer": "viewer/runtime.js"
+  },
+  "source_docs_written": [
+    "docs/FORGE-ENGINEERING-HANDBOOK.md",
+    "docs/ACTUAL-FORGE-MODULE-MAP-2026-10-31.md",
+    "docs/HOW-TO-MORPH-RIG-LIPSYNC.md",
+    "docs/HOW-TO-SOURCE-VAULT-REA.md",
+    "docs/HOW-TO-INTEGRATION-VERIFY-RECOVER.md",
+    "docs/SOURCE-AUDIT-ISSUES-2026-10-31.md"
+  ],
+  "test_verification": {
+    "api_mcp": {
+      "actual_local_cross_process_world_and_creature": true,
+      "command": "npm run verify && python scripts/verify-forge-studio.py",
+      "failed": 0,
+      "hosted_forge_proved": false,
+      "passed": 69
+    },
+    "creation_os": {
+      "command": "npm run typecheck && npm test",
+      "failed": 0,
+      "passed": 123
+    },
+    "forge": {
+      "command": "python -m unittest discover -q",
+      "failed": 0,
+      "passed": 605,
+      "ran": 608,
+      "skipped": 3
+    }
+  },
+  "tracked_static_inventory": {
+    "api_mcp_files": 169,
+    "creation_os_files": 365,
+    "forge_files": 405,
+    "static_inventory_coverage": "ALL TRACKED FILES OF BASELINE HEADS READ/HASHED; NOT ALL RUNTIME/3D FEATURES AUDITED",
+    "total": 939
+  }
+}

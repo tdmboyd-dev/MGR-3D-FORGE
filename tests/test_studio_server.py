@@ -49,14 +49,14 @@ class StudioServerTests(unittest.TestCase):
 
     def fetch(self, path, payload=None, *, token=True, origin=None, content_type="application/json"):
         headers = {}
+        if token:
+            headers["X-MGR-Forge-Token"] = self.studio.token
+        if origin:
+            headers["Origin"] = origin
         data = None
         if payload is not None:
             data = json.dumps(payload).encode("utf-8")
             headers["Content-Type"] = content_type
-            if token:
-                headers["X-MGR-Forge-Token"] = self.studio.token
-            if origin:
-                headers["Origin"] = origin
         request = Request(self.root_url + path, data=data, headers=headers)
         try:
             with urlopen(request, timeout=4) as response:
@@ -121,7 +121,7 @@ class StudioServerTests(unittest.TestCase):
         replay=json.loads(self.fetch("/api/creature-create",payload)[1])
         self.assertTrue(replay["replayed"])
         self.assertEqual(replay["creature_sha256"],result["creature_sha256"])
-        self.assertEqual(self.fetch(result["glb_url"])[0],403)
+        self.assertEqual(self.fetch(result["glb_url"],token=False)[0],403)
         request=Request(self.root_url+result["glb_url"],
                         headers={"X-MGR-Forge-Token":self.studio.token})
         with urlopen(request,timeout=4) as response:
@@ -153,6 +153,48 @@ class StudioServerTests(unittest.TestCase):
     def test_no_arbitrary_python(self):
         code, _, _ = self.fetch("/api/world", {"script": "import os"})
         self.assertEqual(code, 400)
+
+    def test_downloads_require_token_for_relief_world_and_candidate(self):
+        relief=self.fetch("/api/relief",{"png_base64":base64.b64encode(gray_png()).decode()})
+        self.assertEqual(relief[0],200)
+        relief_url=json.loads(relief[1])["glb_url"]
+        self.assertEqual(self.fetch(relief_url,token=False)[0],403)
+        self.assertEqual(self.fetch(relief_url,token=True)[0],200)
+        manifest=json.loads((self.world/"manifest.json").read_text())
+        edits={"schema":"mgr.forge.world-edit.v1",
+               "asset_sha256":hashlib.sha256((self.world/"world.glb").read_bytes()).hexdigest(),
+               "buildings":[{k:b[k] for k in ("id","center","size","material")} for b in manifest["buildings"]]}
+        result=json.loads(self.fetch("/api/world",{"edits":edits})[1])
+        for name in ("glb_url","html_url"):
+            self.assertEqual(self.fetch(result[name],token=False)[0],403)
+            self.assertEqual(self.fetch(result[name],token=True)[0],200)
+        build_mannequin(self.root/"secure-character")
+        raw=(self.root/"secure-character"/"mannequin.glb").read_bytes()
+        obj=json.loads(self.fetch("/api/character",{"glb_base64":base64.b64encode(raw).decode()})[1])
+        for name in ("glb_url","report_url"):
+            self.assertEqual(self.fetch(obj[name],token=False)[0],403)
+            self.assertEqual(self.fetch(obj[name],token=True)[0],200)
+        godot=json.loads(self.fetch("/api/godot",{"job_id":result["job_id"]})[1])
+        self.assertEqual(self.fetch(godot["archive_url"],token=False)[0],403)
+        self.assertEqual(self.fetch(godot["archive_url"],token=True)[0],200)
+
+    def test_foreign_host_and_origin_cannot_read_local_studio(self):
+        request=Request(self.root_url+"/studio",headers={"Host":"evil.example"})
+        with self.assertRaises(HTTPError) as failure:
+            urlopen(request,timeout=4)
+        with failure.exception as response:
+            self.assertEqual(response.code,403)
+        self.assertEqual(self.fetch("/",token=False,origin="https://evil.example")[0],403)
+
+    def test_existing_creation_chat_links_fetch_private_artifacts_with_token(self):
+        status,html,_=self.fetch("/")
+        self.assertEqual(status,200)
+        self.assertIn(b"Preparing authenticated Forge artifact",html)
+        self.assertIn(b'headers:{"X-MGR-Forge-Token":forgeToken}',html)
+        self.assertIn(b"URL.createObjectURL(file)",html)
+        self.assertIn(b'viewerLink.rel="noopener noreferrer"',html)
+        self.assertIn(b"viewerLink.target=",html)
+        self.assertIn(b"if(url.endsWith",html)
 
     def test_png_to_real_downloadable_glb(self):
         code, body, _ = self.fetch("/api/relief", {"png_base64": base64.b64encode(gray_png()).decode()})
