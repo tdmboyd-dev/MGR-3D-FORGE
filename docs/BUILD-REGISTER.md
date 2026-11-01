@@ -189,3 +189,8 @@ All critical capabilities must have checked-in code, reproducible runtime eviden
 ## Blocking external decisions
 
 Target runtime/game engine; production hardware; user-approved Tevin references in a private store; commercial license clearance for restricted models. These do not block independent CPU/procedural work.
+
+
+## Shared consumer evidence update — November 1, 2026
+
+Existing Forge/MCP integration and current Human/World lanes gain receiving evidence, not new parent feature closure: API247/247, Forge638run/635pass/3SAM skips, real SDK/HTTP/Blender private GLB return and same-tenant actor denial. See evidence/audits/2026-11-01-shared-edge-consumer-audit.json and the current docs/HANDOFF.md. Permanent Tevin execution, raw-WAV shared adapter, stronger shared GLB structure checks, all64-action source audit and hosted/owner/production gates remain open in the original features. No original status is reset or promoted by this note.

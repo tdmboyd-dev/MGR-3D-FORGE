@@ -1,0 +1,56 @@
+{
+  "scope": "Targeted shared API consumer/source reconciliation and native protocol acceptance; not a whole Forge semantic/feature audit.",
+  "forgeRuntimeSource": "6fe053a480d8699ab6382a0599849f7ed679bb06",
+  "sharedAPISource": "02f2f9cc08ea9deaf57fabd2667031244287c3db",
+  "sharedAPIBranch": "repair/completion-2026-10-28",
+  "APIQualification": {
+    "passed": 247,
+    "failed": 0,
+    "skipped": 0
+  },
+  "ForgeFullRuntimeQualification": {
+    "run": 638,
+    "passed": 635,
+    "skipped": 3,
+    "skipReason": "SAM not available",
+    "failed": 0
+  },
+  "realProtocolReceipt": "https://github.com/tdmboyd-dev/MGR-API-MCP/blob/02f2f9cc08ea9deaf57fabd2667031244287c3db/evidence/forge-joined-2026-11-01/real-blender-protocol-context-pinned.json",
+  "protocol": "Official SDK -> Node shared HTTP/MCP -> actual Python Forge/Blender",
+  "authVerifier": "Fixture; not deployed OAuth/JWKS or permanent Tevin authority",
+  "sameTenantForeignActorDenied": true,
+  "unchangedRequestReplayAndFileHashesVerified": true,
+  "composedWorldGLBBytes": 43816,
+  "humanFacialGLBBytes": 230644,
+  "independentBlenderReimportVerified": true,
+  "manualKnowledgeConsumer": {
+    "actualPermanentTevinIndexes": 11,
+    "fullForgeHandbookLines": 184,
+    "newModelCalls": 0
+  },
+  "wholeProductAcceptance": "Unassessed",
+  "permanentTevinForgeExecutionVerified": false,
+  "remoteHostedWorkerVerified": false,
+  "ownerArtAccepted": false,
+  "remaining": [
+    "Personal Tevin proposal/approval/delegation and Forge job/artifact/reopen/cancellation integration",
+    "Typed shared adapter for existing raw-WAV loudness-reactive Human path",
+    "Stronger shared bridge GLB structural validation beyond bounded bytes/hash/magic",
+    "Complete64CLI source-to-operation audit and remaining F01-F156 acceptance",
+    "Hosted OAuth/tenant/private-worker recovery, neural/model rights, Godot runtime and production/owner-art acceptance"
+  ],
+  "sourceReadingCoverage": "Complete shared API Forge client/tool modules and targeted native composition/audio/Human pipeline modules were inspected. Other Forge source and architecture/feature registers have partial reading coverage; no full semantic audit is claimed.",
+  "handoffRegression": {
+    "run": 638,
+    "passed": 635,
+    "skipped": 3,
+    "failed": 0,
+    "logSha256": "ccd7c020a5f528eae98456de5e46903d32f680b247351d36bd9e78d11e9c8d12"
+  },
+  "securityReview": {
+    "scannedFiles": 4,
+    "findingsReviewed": 1,
+    "classification": "sharedAPISource is the verified published Git commit, not an API credential",
+    "unresolvedFindings": 0
+  }
+}

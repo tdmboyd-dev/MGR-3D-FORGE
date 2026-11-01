@@ -520,3 +520,8 @@ The initial historical snapshot has been superseded by the current live inventor
 - **Recovered discrepancy, not erased:** F110's historical 28 passing tests and GPU rental planner are absent from current GitHub `main` (four missing files); `gpu-plan` currently broken by missing import. Marked reopened in register/handoff. Prior device/Windows proofs have their original scope, not current checkout revalidation.
 - Remaining: Chrome panel interaction, Blender acceptance of source asset, real per-asset license rights, 15 additional provider adapters, human/creature/skin/rig generators, multi-object/world composition, production Tevin/MCP execution and F110 source repair.
 
+
+
+## November 1, 2026 — shared consumer branch and authority audit
+
+Original Forge runtime6fe053a was adopted without overwriting work. The existing shared API histories were reconciled and exact actor/tenant, post-await/final-response authority and auth-context pinning repaired there. Full Forge638run/635pass/3SAM skips; API247/247. Real SDK/HTTP/Python/Blender composition and timed facial outputs reached the client with SHA validation. Actual personal Tevin read current full operating knowledge after restart; personal execution remains unfinished. This is an integration/acceptance checkpoint, not a whole-product semantic audit or art/hosted/production approval. Current handoff and evidence/audits/2026-11-01-shared-edge-consumer-audit.json retain exact scope and next work.

@@ -1,5 +1,13 @@
 # MGR 3D Forge - Full Living Handoff
 
+## Shared API consumer reconciliation and actual receiving proof — November 1, 2026
+
+The existing API main Forge code and Tevin's department/repository branch had diverged. Shared API source02f2f9cc08ea9deaf57fabd2667031244287c3db now joins both histories on repair/completion-2026-10-28. All247API tests pass; the actual SDK/HTTP/Forge protocol created/replayed hashed creature and biome, completed real Blender composed-world and facial-animation GLB return, and denied another actor in the same tenant. The shared edge now requires the exact workstation actor as well as tenant, checks current authority after awaits/final serialization, and pins the original auth/fence context. No alternate Forge engine, job ledger or mandatory Creation OS hop was introduced.
+
+Current Forge6fe053a source full suite ran638:635passed,3SAM-unavailable skips,zero failures. This consumer slice did not audit the entire F01-F156 product. Actual permanent Tevin restarted and read all eleven tool documentation indexes through the joined API, including the entire current184-line Forge handbook; zero new model calls. That knowledge read is not permanent Tevin Forge job/approval execution. Protocol identity remains a fixture, not deployed OAuth. [Exact source, proof and remaining work](../evidence/audits/2026-11-01-shared-edge-consumer-audit.json).
+
+Remaining: personal Tevin proposals/current approval or delegation/worker/artifact/reopen/recovery; raw-WAV shared adapter; stronger shared GLB structure checks; complete64-action/feature audit; hosted/private-worker, Godot/runtime, model rights and owner-art acceptance. Full products remain Unassessed. Older dated counts and main-only bridge instructions below retain historical source scope and do not override this receiving checkpoint.
+
 ## CURRENT RECOVERED SOURCE AND EXECUTION — 2026-11-01
 
 **Final current regression:** Forge **638 run, 635 PASS, 3 skipped, zero failures** on GitHub source commit 70a9197c016868d5f1dae6b948882a17c36481c3; complete safe evidence/evidence/audits/2026-11-01-full-regression.json. Existing shared MGR-API-MCP **85/85 PASS** at 8d1184d0504b9a80e8b975f3ee48f0509408ad09. These measure code tests only, not product/neural/hosted completion.
@@ -180,6 +188,10 @@
 the same commit as any feature change. If a claim here disagrees with
 `docs/BUILD-REGISTER.md`, `docs/PROGRESS-LOG.md`, the test suite, or a committed
 receipt, the receipt wins and this file must be corrected before anything else.
+
+### Historical October30 operational metadata
+
+The following baseline metadata is superseded by current source/receipts at the top of this handoff; it is retained for traceability.
 
 - **Repo:** MGR-3D-FORGE (sibling of MGR-ONE; the ONE WORK ORDER lives in MGR-ONE)
 - **Branch:** `main`; inspected remote base `60c3a1317d77abe36f6e8ffa0c6db7dbcd308456` (2026-10-30 wave; publish SHA recorded in git after push)
