@@ -206,3 +206,9 @@ The existing Forge inspector informs the shared API bounded receiver atf0b0256,2
 ## Exact native request identity — November 1, 2026
 
 Existing Forge/job/shared-consumer work gains native original-request verification and bounded denied-body transport repair; API278/278,Forge654/651pass/3SAMskips and actual SDK/Blender all-five input proof passed. Same existing ledgers/permissions; old twelve schemas unchanged. See root-relative evidence/forge-request-binding-2026-11-01/verification.json. Permanent Tevin action/save/reopen and broader whole-product/hosted acceptance remain open; no original parent ID closed.
+
+## Owner-approved workflow consumer — November1
+
+Existing native creators now feed five approved shared department operations through original ONE custody: isolatedONE1027/API292 and actual5kinds/6jobs/ownerSQLreopen/lost-reply-no-duplicate acceptance. Source APIa873526; native generation source unchanged. Root-relative evidence/forge-owner-workflows-2026-11-01/REPORT.md. Permanent worker/normal-launcher/model conversation, native cancellation/process-crash and whole-product acceptance remain open. Full F01-F156/64CLI retained; no new parent closure or measured savings.
+
+November1 joined consumer receipt: ONEfd234a6 integrates peer owner-memory/recovery without overwriting it;1063/1063ONE across101files,292/292API,2178stable inputs, actual all-five/six-job native workflow rerun. Original serial log collision documented; fresh separate276+5logs passed under identical source hashes. Native receiving654run/651pass/3SAMskips. Root-relative evidence/forge-owner-workflows-2026-11-01/joined/verification.json and REPORT.md. The join is resolved; permanent startup/preparation/worker/conversation/Creation reconciliation and original whole-product gates remain open. Same original requirement counts, no new parent closure.

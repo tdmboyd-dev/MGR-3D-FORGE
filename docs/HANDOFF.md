@@ -1,5 +1,13 @@
 # MGR 3D Forge - Full Living Handoff
 
+## Owner-approved Forge workflow consumer — November1, 2026
+
+Shared API a873526da9d63e21edf2ab5b26e59de22512ef36 now adapts the same five native creators into the existing department gateway. ONE's isolated workflow engine binds exact owner/delegated approval to original command/principal/workspace, requires native exact-input proof and actual GLB bytes, saves the result in the existing SQLite/workflow engine and reconciles unknown replies without another create. No native generation runtime, record owner or ledger changed in this receiving update. Five shared owner operations do not replace the original F01-F156/64CLI product scope.
+
+Isolated ONE1027/1027 and API292/292 passed with2170stable inputs. Actual temporary owner approval/SDK/HTTP/Forge/Blender completed all5operations and6jobs including deliberately lost reply, artifact hashes, owner SQL reopen/replay and no duplicate create. Fixture identity and temporary SQL are not permanent Tevin installation, a new account/model call, native process-crash or production acceptance. Joined sourcefd234a6 passed1063/1063ONE,292/292API/2178stable inputs plus an actual native workflow rerun. Fresh serial logs preserve all281cases under identical source hashes; the original log collision remains documented. [Executed workflow consumer proof](../evidence/forge-owner-workflows-2026-11-01/REPORT.md).
+
+Supersedes implementing the basic owner workflow adapter from scratch. Remaining: native readiness/exact-request preparation before approval consumption, permanent private worker registration/start/stop/recovery, actual conversation and normal-launcher artifact/replay, postdispatch cancellation/orphan custody, large-input/private delivery, raw-WAV shared adapter and full original art/provider/device/hosted/production checks. ONE's reuse plan includes a concrete Creation native/main history reconciliation; ordinary Forge tasks stay directly callable without Creation. No parent feature closed or measured monetary saving claimed.
+
 ## Native exact-request verification and denial transport repair — November 1, 2026
 
 World, creature, biome, human and composition creators already rejected same-ID changed inputs, but their ID-only status reads did not prove the instructions behind an old job. The existing Forge controller now adds authenticated read-only `/api/request-verify`: the SAME creation validators/fingerprint helpers, applicable current world/biome sources, saved original request bytes and original job status must agree. It allocates no job or grant and never retries. ID-only status remains available for observation; accepting an approved action must use the exact-input proof as well.
