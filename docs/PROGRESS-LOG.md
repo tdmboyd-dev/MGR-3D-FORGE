@@ -1,5 +1,10 @@
 ## 2026-11-01 — Recovered audio/world composition and bounded REA
 
+- November 1 REA JSON truth: fixed 4 stale NOT_RUN entries to one complete publisher source ZIP inventory plus 3 partial pinned selections; 183 source candidates still NOT_RUN, 0 model inference or rights approval. Tests test_master_continuity/test_source_handbook 8/8 PASS. No unverified source claims promoted.
+
+- After full real run: current Forge suite 638 run / 635 PASS / 3 skipped / 0 failures; API/MCP verify 85/85 PASS. Current source SHA and full log hash in evidence/audits/2026-11-01-full-regression.json. All remaining hosted/GPU/GoDot/phoneme gates remain open.
+
+
 - Preserved unpublished work from clean published main e4828166 (Forge) and 7ce84d7 (MGR-API-MCP), instead of restarting. New owner files forge/audio_motion.py, forge/world_composition.py and forge/world_composition_jobs.py plus actual Blender receivers and tests. Existing source, jobs, Vault and MCP edge reused, no second service.
 - Real synthetic PCM16 WAV -> RMS envelope -> Blender Human face animation: 8 shape targets and one action reopened, authenticated Studio download/409-style duplicate-safe job. Source WAV stays private; evidence/human/2026-11-01-audio-reactive-face-blender.json and audio-reactive-studio-blender.json. This is SOUND-REACTIVE JAW motion, NOT phoneme prediction, FACS, voice identity or owner-art approved accuracy.
 - Original World GLB and pinned native biome composed by two Blender processes into one new editable World Forge .blend / GLB, verified SHA/GLB. Godot project SOURCE packaged (not runtime tested); saved Studio job, private files and replay evidence/world/2026-11-01-combined-world-blender-godot.json and studio-composed-world-acceptance.json. No generated terrain collision/navmesh.

@@ -5,7 +5,7 @@
   "current_handoff": "docs/HANDOFF.md",
   "research_plan": "docs/MASTER-FORGE-PROGRAM-2026-10-31.md",
   "source_claim": "QUEUED CANDIDATES ONLY, NOT 100+ EXECUTED REA INSPECTIONS",
-  "new_rea_runs": 0,
+  "new_rea_runs": 4,
   "new_imported_assets": 0,
   "previous_separate_proof": "F128: 302/302 archived KayKit files matched by REA; this is an earlier accepted evidence slice, not another study campaign",
   "license_rule": "Publisher verification, per subfolder and checkpoint, and runtime/data/model-weight rights separately required. Restricted binary analysis requires additional authorization.",
@@ -1693,15 +1693,20 @@
       "source_path": "VERIFY_EXACT_SUBPATH",
       "asset_kind": "engine-profile",
       "owner_system": "AI Shape Lab",
-      "research_state": "QUEUED_UNVERIFIED",
-      "rea_execution_state": "NOT_RUN",
+      "research_state": "REA_STATIC_CONTAINER_OBSERVED_NOT_SEMANTIC_COMPLETE",
+      "rea_execution_state": "PARTIAL_PINNED_SELECTED_FILES",
       "code_integration_state": "NOT_EVALUATED",
       "license_state": "EXACT_WEIGHTS_RELEASE_SCOPE_REVIEW",
-      "source_identity_verified": false,
+      "source_identity_verified": true,
       "assets_downloaded": false,
       "production_ready": false,
       "authorized_method": "PUBLIC_DOCUMENTATION_ONLY_UNTIL_EXACT_RIGHTS_REVIEW",
-      "next_action": "Verify publisher, source checkpoint, subfolder-specific license, dependencies, usage rights, permissible inspection; compare with existing Forge code; specify original implementation with actual acceptance proof"
+      "next_action": "Read important source algorithms and nested license/weights; build independent original MGR capability and real Blender/Godot inference tests. This source observation is not runtime acceptance.",
+      "static_source_commit_sha": "6793c6640ff01c8fb389f3993434124bb43d2933",
+      "rea_evidence_paths": [
+        "evidence/xray/2026-11-01-public-engine-rea-source-batch.json",
+        "evidence/xray/2026-11-01-research-exact-partial-source-rea.json"
+      ]
     },
     {
       "id": "XR-0095",
@@ -2787,19 +2792,24 @@
       "id": "XR-0155",
       "name": "Godot Terrain3D",
       "family": "World and scene production candidates",
-      "source_locator": "https://github.com/",
+      "source_locator": "https://github.com/TokisanGames/Terrain3D",
       "source_path": "VERIFY_EXACT_SUBPATH",
       "asset_kind": "engine-or-tool",
       "owner_system": "World/Creation Forge",
-      "research_state": "QUEUED_UNVERIFIED",
-      "rea_execution_state": "NOT_RUN",
+      "research_state": "REA_STATIC_CONTAINER_OBSERVED_NOT_SEMANTIC_COMPLETE",
+      "rea_execution_state": "PARTIAL_PINNED_SELECTED_FILES",
       "code_integration_state": "NOT_EVALUATED",
       "license_state": "VERIFY_ENGINE_PLUGIN_HOSTING_CODE_AND_ASSET_LICENSE",
-      "source_identity_verified": false,
+      "source_identity_verified": true,
       "assets_downloaded": false,
       "production_ready": false,
       "authorized_method": "PUBLIC_DOCUMENTATION_ONLY_UNTIL_EXACT_RIGHTS_REVIEW",
-      "next_action": "Verify publisher, source checkpoint, subfolder-specific license, dependencies, usage rights, permissible inspection; compare with existing Forge code; specify original implementation with actual acceptance proof"
+      "next_action": "Read important source algorithms and nested license/weights; build independent original MGR capability and real Blender/Godot inference tests. This source observation is not runtime acceptance.",
+      "static_source_commit_sha": "cdcd382cd639f0b043444d7d161f1a6c00d30977",
+      "rea_evidence_paths": [
+        "evidence/xray/2026-11-01-public-engine-rea-source-batch.json",
+        "evidence/xray/2026-11-01-research-exact-partial-source-rea.json"
+      ]
     },
     {
       "id": "XR-0156",
@@ -3331,16 +3341,21 @@
       "source_path": "VERIFY_EXACT_SUBPATH_AND_COMMIT",
       "asset_kind": "rig-lipsync-engine-or-study",
       "owner_system": "Human/Creature Forge",
-      "research_state": "SOURCED_PRIMARY_PUBLIC_DOCS_NOT_END_TO_END_READ",
-      "rea_execution_state": "NOT_RUN",
+      "research_state": "REA_STATIC_CONTAINER_OBSERVED_NOT_SEMANTIC_COMPLETE",
+      "rea_execution_state": "COMPLETE_PUBLISHER_SOURCE_ZIP_ENTRIES_ONLY",
       "code_integration_state": "NOT_EVALUATED",
       "license_state": "MIT_CODE_MODEL_WEIGHTS_AND_QWEN_DEPENDENCIES_SEPARATE",
       "source_identity_verified": true,
       "assets_downloaded": false,
       "production_ready": false,
       "authorized_method": "PUBLIC_DOCUMENTATION_ONLY_UNTIL_EXACT_RIGHTS_REVIEW",
-      "next_action": "Review code+weights+data and model card/licenses at exact pinned commit, full architecture/benchmarks/hardware, then design MGR-native rig/lipsync benchmark and real Blender/Godot acceptance.",
-      "notes": "Project publishes skeleton+skinning generated as one token sequence, >14GB Nvidia inference claim; root code MIT, exact model cards/weights/data licenses, embedded Qwen and mesh backbone dependencies require per-folder review. No install or benchmark. Published metrics aren't MGR proof."
+      "next_action": "Read important source algorithms and nested license/weights; build independent original MGR capability and real Blender/Godot inference tests. This source observation is not runtime acceptance.",
+      "notes": "Project publishes skeleton+skinning generated as one token sequence, >14GB Nvidia inference claim; root code MIT, exact model cards/weights/data licenses, embedded Qwen and mesh backbone dependencies require per-folder review. No install or benchmark. Published metrics aren't MGR proof.",
+      "static_source_commit_sha": "273b691d35989d71cd17ff2895fdc735097b92d1",
+      "rea_evidence_paths": [
+        "evidence/xray/2026-11-01-public-engine-rea-source-batch.json",
+        "evidence/xray/2026-11-01-research-exact-partial-source-rea.json"
+      ]
     },
     {
       "id": "XR-0186",
@@ -3369,16 +3384,21 @@
       "source_path": "VERIFY_EXACT_SUBPATH_AND_COMMIT",
       "asset_kind": "rig-lipsync-engine-or-study",
       "owner_system": "Human/Creature Forge",
-      "research_state": "SOURCED_PRIMARY_PUBLIC_DOCS_NOT_END_TO_END_READ",
-      "rea_execution_state": "NOT_RUN",
+      "research_state": "REA_STATIC_CONTAINER_OBSERVED_NOT_SEMANTIC_COMPLETE",
+      "rea_execution_state": "PARTIAL_PINNED_SELECTED_FILES",
       "code_integration_state": "NOT_EVALUATED",
       "license_state": "MIT_CODE_THIRD_PARTY_LIBS_AND_DATA_SEPARATE",
       "source_identity_verified": true,
       "assets_downloaded": false,
       "production_ready": false,
       "authorized_method": "PUBLIC_DOCUMENTATION_ONLY_UNTIL_EXACT_RIGHTS_REVIEW",
-      "next_action": "Review code+weights+data and model card/licenses at exact pinned commit, full architecture/benchmarks/hardware, then design MGR-native rig/lipsync benchmark and real Blender/Godot acceptance.",
-      "notes": "2D mouth cue timing source with MIT software and bundled third-party notices. Not a production-ready Blender 5.2 facial rig. Older scaredyfish/blender-rhubarb-lipsync integration explicitly lacks Blender 3.2+ support. Original MGR 3D shape-key mapping and human jaw/tongue corrections required."
+      "next_action": "Read important source algorithms and nested license/weights; build independent original MGR capability and real Blender/Godot inference tests. This source observation is not runtime acceptance.",
+      "notes": "2D mouth cue timing source with MIT software and bundled third-party notices. Not a production-ready Blender 5.2 facial rig. Older scaredyfish/blender-rhubarb-lipsync integration explicitly lacks Blender 3.2+ support. Original MGR 3D shape-key mapping and human jaw/tongue corrections required.",
+      "static_source_commit_sha": "9b9573cd21b253c9ba58739bbd1aa0b50b991bff",
+      "rea_evidence_paths": [
+        "evidence/xray/2026-11-01-public-engine-rea-source-batch.json",
+        "evidence/xray/2026-11-01-research-exact-partial-source-rea.json"
+      ]
     }
   ],
   "baseline_queue_at_initial_commit": 184,
@@ -3387,5 +3407,9 @@
     "SkinTokens/TokenRig",
     "NVIDIA Audio2Face-3D SDK + models",
     "Rhubarb Lip Sync (timing cue reference)"
-  ]
+  ],
+  "static_rea_observation_count": 4,
+  "reu_sourced_only_notes": "Four selected public source cases: one full ZIP-entry inventory, three pinned selected-file ZIP inspections. No weights, no full algorithm execution.",
+  "initial_target_count": 184,
+  "research_completed_end_to_end_in_this_wave": 0
 }

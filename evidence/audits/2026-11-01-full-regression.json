@@ -1,0 +1,25 @@
+{
+  "command": "python -m unittest discover -q",
+  "date": "2026-11-01",
+  "elapsed_seconds": 152.462,
+  "forge_commit": "70a9197c016868d5f1dae6b948882a17c36481c3",
+  "full_private_test_log_sha256": "c9e70d13938fdb99374beef07e59bb8c428ebe54a8041482ee7dbf96c14e00d9",
+  "hosted_oauth_tevin_chatgpt_verified": false,
+  "local_real_blender_reimport_receipts": [
+    "evidence/human/2026-11-01-audio-reactive-face-blender.json",
+    "evidence/world/2026-11-01-combined-world-blender-godot.json"
+  ],
+  "mcp_commit": "8d1184d0504b9a80e8b975f3ee48f0509408ad09",
+  "mcp_regression_tests_passed": 85,
+  "mcp_typecheck_and_plugin_verification": true,
+  "neural_high_detail_model_inference_verified": false,
+  "process_exit_verified": true,
+  "public_log_contains_no_raw_user_audio": true,
+  "reproduction_note": "Source tests ran on owner Windows on same published e482... parent with 70a9197 recovery code. Output log kept privately; evidence paths in HANDOFF.md",
+  "schema": "mgr.forge.current-full-regression.v1",
+  "tests_failed": 0,
+  "tests_passed": 635,
+  "tests_run": 638,
+  "tests_skipped": 3,
+  "world_actual_godot_runtime_verified": false
+}

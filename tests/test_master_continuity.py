@@ -20,11 +20,11 @@ class MasterContinuityTests(unittest.TestCase):
         self.assertEqual(self.registry["target_count"],len(entries))
         self.assertEqual(len({x["id"] for x in entries}),len(entries))
         self.assertGreaterEqual(len({x["name"].lower() for x in entries}),100)
-        self.assertEqual(sum(e["research_state"]=="QUEUED_UNVERIFIED" for e in entries),184)
-        self.assertEqual(sum(e["research_state"]=="SOURCED_PRIMARY_PUBLIC_DOCS_NOT_END_TO_END_READ" for e in entries),3)
-        self.assertTrue(all(e["rea_execution_state"]=="NOT_RUN" for e in entries))
+        self.assertEqual(sum(e["research_state"]=="QUEUED_UNVERIFIED" for e in entries),182)
+        self.assertEqual(sum(e["research_state"]=="SOURCED_PRIMARY_PUBLIC_DOCS_NOT_END_TO_END_READ" for e in entries),1)
+        self.assertEqual(sum(e["rea_execution_state"]!="NOT_RUN" for e in entries),4)
         self.assertTrue(all(e["production_ready"] is False for e in entries))
-        self.assertEqual(self.registry["new_rea_runs"],0)
+        self.assertEqual(self.registry["new_rea_runs"],4)
 
     def test_targets_keep_exact_authorization_and_license_gate(self):
         required={"id","name","family","source_locator","source_path","owner_system",

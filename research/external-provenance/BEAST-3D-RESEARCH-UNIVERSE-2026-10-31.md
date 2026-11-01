@@ -23,3 +23,7 @@ Required gate: PUBLIC SOURCE CHECK -> EXACT VERSION + SUBFOLDER + MODEL/ASSET LI
 ## Follow-on 2026-10-31 rigging + lip-sync sources
 
 Added XR-0185 SkinTokens, XR-0186 NVIDIA Audio2Face-3D and XR-0187 Rhubarb Lip Sync after primary source verification; none installed, downloaded or REA-scanned. Their code, model weights and dataset license scopes are different, with project details in docs/HOW-TO-MORPH-RIG-LIPSYNC.md. The 184-record original baseline remains in Git history. 187 register entries now total; only the three new ones are marked SOURCED_PUBLIC_DOCS; no end-to-end source audits or model quality acceptance are implied.
+
+## November 1, 2026: REA evidence status reconciled
+
+The canonical 187-entry JSON universe now accurately marks FOUR actual authorized static REA inspections: XR-0185 SkinTokens complete source ZIP **entry inventory only**; XR-0187 Rhubarb, XR-0094 UniRig and XR-0155 Godot Terrain3D selected-file ZIP subsets only. Remaining 183 still have rea_execution_state NOT_RUN. Exact publisher SHA, source/partial ZIP evidence and private-media limits are in evidence/xray/2026-11-01-public-engine-rea-source-batch.json and evidence/xray/2026-11-01-research-exact-partial-source-rea.json. Zero deep complete runtime inspections, zero downloaded usable model weights, zero third-party asset production licenses and no model superiority proven. This is a registry correction, not 4 new creative engines.

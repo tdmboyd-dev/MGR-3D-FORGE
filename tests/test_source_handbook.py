@@ -40,13 +40,13 @@ class SourceHandbookTests(unittest.TestCase):
         data=json.loads((ROOT/"research/external-provenance/BEAST-3D-RESEARCH-UNIVERSE-2026-10-31.json").read_text(encoding="utf8"))
         self.assertEqual(data["target_count"],187)
         self.assertEqual(len(data["targets"]),187)
-        self.assertEqual(data["new_rea_runs"],0)
+        self.assertEqual(data["new_rea_runs"],4)
         self.assertEqual(sum(x["assets_downloaded"] is True for x in data["targets"]),0)
-        self.assertEqual(sum(x["research_state"]=="SOURCED_PRIMARY_PUBLIC_DOCS_NOT_END_TO_END_READ" for x in data["targets"]),3)
+        self.assertEqual(sum(x["research_state"]=="SOURCED_PRIMARY_PUBLIC_DOCS_NOT_END_TO_END_READ" for x in data["targets"]),1)
         for entry in data["targets"]:
             self.assertTrue(entry["source_locator"])
             self.assertFalse(entry["production_ready"])
-            self.assertEqual(entry["rea_execution_state"],"NOT_RUN")
+            self.assertIn(entry["rea_execution_state"],("NOT_RUN","PARTIAL_PINNED_SELECTED_FILES","COMPLETE_PUBLISHER_SOURCE_ZIP_ENTRIES_ONLY"))
     def test_one_handoff_and_source_based_howto_exist(self):
         required=["docs/HANDOFF.md","docs/FORGE-ENGINEERING-HANDBOOK.md",
                   "docs/HOW-TO-MORPH-RIG-LIPSYNC.md",
