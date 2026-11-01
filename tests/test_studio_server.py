@@ -130,6 +130,38 @@ class StudioServerTests(unittest.TestCase):
         self.assertEqual(blob[:4],b"glTF")
         self.assertEqual(self.fetch("/api/creature-create",{**payload,"prompt":"something else"})[0],400)
 
+    def test_http_biome_creation_real_glb_token_status_and_replay(self):
+        initial=hashlib.sha256((self.world/"world.glb").read_bytes()).hexdigest()
+        payload={"request_id":"owner-biome-world-00001","biome":"tundra","seed":19,"resolution":21}
+        self.assertEqual(self.fetch("/api/biome-create",payload,token=False)[0],403)
+        status,raw,_=self.fetch("/api/biome-create",payload)
+        self.assertEqual(status,200)
+        data=json.loads(raw)
+        self.assertEqual(data["status"],"MATERIALIZED")
+        self.assertEqual(data["source_world_sha256"],initial)
+        self.assertTrue(data["editor_world_unchanged"])
+        self.assertGreater(data["biome_bytes"],400)
+        self.assertEqual(self.fetch(data["glb_url"],token=False)[0],403)
+        res,file,_=self.fetch(data["glb_url"],token=True)
+        self.assertEqual(res,200)
+        self.assertEqual(file[:4],b"glTF")
+        self.assertEqual(hashlib.sha256(file).hexdigest(),data["biome_sha256"])
+        reread=json.loads(self.fetch("/api/biome-status",{"request_id":payload["request_id"]})[1])
+        self.assertEqual(reread["biome_sha256"],data["biome_sha256"])
+        replay=json.loads(self.fetch("/api/biome-create",payload)[1])
+        self.assertTrue(replay["replayed"])
+        self.assertEqual(replay["biome_sha256"],data["biome_sha256"])
+        self.assertEqual(self.fetch("/api/biome-create",{**payload,"seed":20})[0],400)
+        self.assertEqual(hashlib.sha256((self.world/"world.glb").read_bytes()).hexdigest(),initial)
+
+    def test_creation_chat_has_morph_and_world_biome_controls(self):
+        status,html,_=self.fetch("/")
+        self.assertEqual(status,200)
+        for element in (b"director-morph-bend",b"director-morph-taper",b"director-biome-create",
+                        b"director-biome-status",b"/api/biome-create",b"/api/biome-status",
+                        b"Download verified"):
+            self.assertIn(element,html)
+
     def test_no_public_tokenless_post(self):
         code, _, _ = self.fetch("/api/world", {"edits": {}}, token=False)
         self.assertEqual(code, 403)

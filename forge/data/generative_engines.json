@@ -1,7 +1,7 @@
 {
   "schema": "mgr.forge.generative-engine-candidates.v1",
   "reviewed_at": "2026-10-31",
-  "note": "Profiles, not installed backends. Root licenses DO NOT override nested code, weights, encoders, model cards, territories or hosted API fees. Only MGR-native geometry is runnable.",
+  "note": "16 profiles, only native procedural generator runnable. Neural checkpoint licensing, GPU/runtime/source code separately gated. No paid provider or weights downloaded.",
   "engines": [
     {
       "id": "mgr-native-imagination",
@@ -287,6 +287,47 @@
       "runtime_ready": false,
       "source_commit": "fd21e7cb550b5835cc00c6b4abfea0c02fe77ff2",
       "release_notes": "CLI is not a downloadable free Higgsfield 3D Jutsu model or unlimited provider"
+    },
+    {
+      "id": "skintokens",
+      "source": "https://github.com/VAST-AI-Research/SkinTokens",
+      "tasks": [
+        "neural-mesh-auto-rig",
+        "skeleton-generation",
+        "mesh-skinning",
+        "existing-skeleton-skin-transfer"
+      ],
+      "license": "MIT root code; model checkpoints, Qwen3, encoder, datasets and dependencies review separately",
+      "license_status": "MODEL_WEIGHTS_AND_SUBTREE_REVIEW_PENDING",
+      "min_vram_gb": 14,
+      "platform": [
+        "Linux"
+      ],
+      "network_required": false,
+      "source_code_present": false,
+      "model_weights_present": false,
+      "runtime_ready": false,
+      "release_notes": "Published TokenRig inference requires NVIDIA >=14 GB, CUDA >=12.1, Python >=3.11. No commercially accepted checkpoint, local CUDA or actual inference yet."
+    },
+    {
+      "id": "nvidia-audio2face-3d",
+      "source": "https://github.com/NVIDIA/Audio2Face-3D",
+      "tasks": [
+        "audio-to-blendshapes",
+        "audio-to-facial-rig-animation"
+      ],
+      "license": "NVIDIA SDK code MIT; Audio2Face-3D model NVIDIA Open Model; Audio2Emotion separate gated/custom; sample data evaluation only",
+      "license_status": "MODEL_AND_EMOTION_SEPARATE_RESTRICTED_TERMS",
+      "min_vram_gb": null,
+      "platform": [
+        "Windows",
+        "Linux"
+      ],
+      "network_required": false,
+      "source_code_present": false,
+      "model_weights_present": false,
+      "runtime_ready": false,
+      "release_notes": "Official SDK supports audio-to-face; no local TensorRT/ONNX runtime/model checkpoint or raw audio inference verified."
     }
   ]
 }

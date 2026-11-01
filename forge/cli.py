@@ -153,7 +153,18 @@ def main(argv=None):
     imagine.add_argument("--seed", type=int, default=42)
     imagine.add_argument("--variants", type=int, default=6, help="1..12 alternate anatomy designs to evaluate")
     imagine.add_argument("--out", type=Path, required=True, help="new directory with GLB, DNA variants and proof")
-    imagine.add_argument("--morph", type=Path, help="optional JSON morph recipe (length/height/width/twist_degrees)")
+    imagine.add_argument("--morph", type=Path, help="optional JSON morph recipe (length/height/width/twist_degrees/bend_degrees/taper)")
+    human_lipsync = sub.add_parser("human-lipsync", help="add real Blender 3D facial shapes and animation to existing Human Forge mannequin; requires timed phonemes")
+    human_lipsync.add_argument("--timings",type=Path,required=True,help="source JSON containing actor id and EN-US phoneme time intervals (not raw audio)")
+    human_lipsync.add_argument("--out",type=Path,required=True,help="new original MGR Human Forge animation workspace")
+    human_lipsync.add_argument("--blender",default="blender",help="installed Blender 5.x executable path")
+    human_lipsync.add_argument("--fps",type=int,default=24)
+    biome = sub.add_parser("world-biome", help="make a real original biome ring as an optional GLB layer around an unchanged authored MGR city")
+    biome.add_argument("--world",type=Path,required=True,help="existing verified MGR World Forge bundle")
+    biome.add_argument("--out",type=Path,required=True,help="new original terrain GLB output directory")
+    biome.add_argument("--biome",choices=("forest","desert","tundra","volcanic","alien"),default="forest")
+    biome.add_argument("--seed",type=int,default=42)
+    biome.add_argument("--resolution",type=int,default=28)
     rig_creature = sub.add_parser("rig-creature", help="fit DNA skeleton, weighted skin and test real animation in independent Blender processes")
     rig_creature.add_argument("--source", type=Path, required=True, help="MGR generated creature directory")
     rig_creature.add_argument("--out", type=Path, required=True, help="new directory for editable rigged .blend + GLB")
@@ -453,6 +464,17 @@ def main(argv=None):
         print(json.dumps({"status": result["status"], "mesh_sha256": result["artifact"]["sha256"],
                           "design_candidates": len(result["candidates"]), "out": str(args.out),
                           "neural_inference": False, "rigged": False},indent=2))
+        return 0
+    if args.action == "human-lipsync":
+        from .human_lipsync import build_human_lipsync
+        timings=json.loads(args.timings.read_text(encoding="utf8"))
+        result=build_human_lipsync(timings,args.out,blender=args.blender,fps=args.fps)
+        print(json.dumps(result,indent=2))
+        return 0
+    if args.action == "world-biome":
+        from .environment import write_biome_shell
+        print(json.dumps(write_biome_shell(args.world,args.out,biome=args.biome,
+                         seed=args.seed,resolution=args.resolution),indent=2))
         return 0
     if args.action == "rig-creature":
         from .creature_rig import rig_creature as run_creature_rig

@@ -30,7 +30,7 @@ class SourceHandbookTests(unittest.TestCase):
         for node in ast.walk(tree):
             if isinstance(node,ast.Call) and isinstance(node.func,ast.Attribute) and node.func.attr=="add_parser" and node.args and isinstance(node.args[0],ast.Constant) and isinstance(node.args[0].value,str):
                 names.add(node.args[0].value)
-        self.assertEqual(len(names),60)
+        self.assertEqual(len(names),62)
         handbook=(ROOT/"docs/FORGE-ENGINEERING-HANDBOOK.md").read_text(encoding="utf8")
         for name in names:
             self.assertIn("| "+chr(96)+name+chr(96)+" |",handbook)

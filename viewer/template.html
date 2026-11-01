@@ -45,9 +45,34 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opaci
   <textarea id="director-creature-prompt" maxlength="500" minlength="8" placeholder="Invent a giant armored winged desert creature with horns and a powerful tail"></textarea>
   <label for="director-creature-seed">Design seed (0–4,294,967,295)</label><input id="director-creature-seed" type="number" step="1" min="0" max="4294967295" value="42">
   <label for="director-creature-variants">Anatomy ideas to evaluate (1–12)</label><input id="director-creature-variants" type="number" step="1" min="1" max="12" value="4">
+  <details id="director-morphrig-controls"><summary>Advanced MorphRig — shape changes</summary>
+    <small>Changes apply to the source mesh and character skeleton, not a premade pack. Keep earlier versions with their IDs.</small>
+    <label for="director-morph-length">Body length ×</label><input id="director-morph-length" type="number" min="0.5" max="2.2" step=".05" value="1">
+    <label for="director-morph-height">Height ×</label><input id="director-morph-height" type="number" min="0.5" max="2.2" step=".05" value="1">
+    <label for="director-morph-width">Width ×</label><input id="director-morph-width" type="number" min="0.5" max="2.2" step=".05" value="1">
+    <label for="director-morph-twist">Body twist °</label><input id="director-morph-twist" type="number" min="-45" max="45" step="1" value="0">
+    <label for="director-morph-bend">Spine bend °</label><input id="director-morph-bend" type="number" min="-30" max="30" step="1" value="0">
+    <label for="director-morph-taper">Body taper ×</label><input id="director-morph-taper" type="number" min="0.65" max="1.45" step=".05" value="1">
+  </details>
   <button id="director-creature-create" type="button" disabled>Create Original 3D Creature</button>
   <button id="director-creature-status" type="button" disabled>Check Last Creature</button>
   <p id="director-creature-result" role="status" aria-live="polite">Creature Forge needs the local authenticated Studio; offline HTML cannot execute creation jobs.</p>
+  <hr><h2>MGR HUMAN FORGE — SPEAKING FACE</h2>
+  <small>Animate the existing generic MGR human in Blender using manually timed speech sounds. This prototype has real 3D mouth morph targets, NOT automatic audio recognition or a realistic face.</small>
+  <button id="director-human-demo" type="button" disabled>Animate Generic Human Face</button>
+  <button id="director-human-status" type="button" disabled>Check Human Animation</button>
+  <p id="director-human-result" role="status" aria-live="polite">An authenticated local Forge Studio with Blender is required. Output is editable Blender and animated GLB, not user-approved facial likeness.</p>
+  <hr><h2>MGR WORLD BIOME FORGE</h2><small>Make original optional terrain around the existing world. Roads and buildings stay untouched; real-time terrain merging is a separate step.</small>
+  <label for="director-biome-kind">Original biome</label>
+  <select id="director-biome-kind" style="width:100%;background:#29364a;color:#fff;padding:8px;border:1px solid #64778f;border-radius:7px">
+    <option value="forest">Forest valley</option><option value="desert">Desert dunes</option><option value="tundra">Tundra ice</option>
+    <option value="volcanic">Volcanic rock</option><option value="alien">Alien world</option>
+  </select>
+  <label for="director-biome-seed">World seed</label><input id="director-biome-seed" type="number" min="0" max="4294967295" step="1" value="42">
+  <label for="director-biome-resolution">Terrain detail (10–64)</label><input id="director-biome-resolution" type="number" min="10" max="64" step="1" value="28">
+  <button id="director-biome-create" type="button" disabled>Generate 3D Terrain Layer</button>
+  <button id="director-biome-status" type="button" disabled>Check Last Terrain</button>
+  <p id="director-biome-result" role="status" aria-live="polite">A local authenticated Forge Studio is required; optional terrain is not merged into the existing world yet.</p>
   <hr><h2>MGR SOURCE ATLAS</h2><small>Find faces, creatures, textures, game kits and creation tools. Source discovery is not a rights or quality approval.</small>
   <label for="director-asset-query">What do you need?</label>
   <input id="director-asset-query" type="search" maxlength="120" placeholder="dragon, skin, modular city, hair" style="width:100%;background:#29364a;color:#fff;padding:8px;border:1px solid #64778f;border-radius:7px">

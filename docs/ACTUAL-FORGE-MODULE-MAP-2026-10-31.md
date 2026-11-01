@@ -95,3 +95,7 @@ Read THIS alongside docs/HANDOFF.md and docs/FORGE-ENGINEERING-HANDBOOK.md. Ever
 | `forge/xray_kit.py` | REA Evidence -> Forge Vault cross-check. No copying third-party code/assets. | audit_kit_with_rea, write_xray_kit_receipt | tests/test_xray_kit.py |
 
 Presence and parseability are not semantic correctness. Dynamic registry imports, CLI wrappers and indirect tests can provide other links. Audit the actual end-to-end path before calling a module orphaned.
+
+## Follow-on source modules in the current creation wave
+
+Baseline 89 Forge Python modules belong to earlier SHA 310badac. Additional source under the SAME owner: forge/lipsync.py, forge/human_lipsync.py, forge/human_jobs.py, forge/biome_jobs.py, and bridge/blender_face_lipsync.py, bridge/blender_face_reimport.py, bridge/blender_biome_proof.py, bridge/blender_biome_reopen.py. Existing forge/cli.py, forge/morph_engine.py, forge/environment.py, forge/studio_server.py, forge/world_jobs.py and viewer/ were extended. The old static inventory is not a post-change count. Current evidence and tests: docs/HANDOFF.md F145–F151.

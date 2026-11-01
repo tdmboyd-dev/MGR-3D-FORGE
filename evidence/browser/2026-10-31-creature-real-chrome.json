@@ -1,0 +1,13 @@
+{
+  "browser_errors": [],
+  "download_bytes": 111268,
+  "download_link_type": "blob_url_checked_sha256",
+  "download_name": "mgr-original-creature-09cb4c87bc22be8c9b683992.glb",
+  "glb_sha256": "7900fc8a04bd095addaa63dff2220a18571a870b130b47a5e73f878519e773e7",
+  "hosted_chatgpt_or_tevin_verified": false,
+  "screenshot_sha256": "4a9f01f4a350cd92e923d15f59627becd71c66fe3534494e854cc02425869af4",
+  "status": "PASS",
+  "status_checked_after_creation": true,
+  "test": "real Chrome creation panel -> local CPU Forge GLB -> authenticated verified browser download",
+  "visual_art_quality_accepted": false
+}

@@ -50,7 +50,7 @@ class MasterContinuityTests(unittest.TestCase):
         reg=(ROOT/"docs/BUILD-REGISTER.md").read_text(encoding="utf8")
         for i in range(129,139):
             self.assertEqual(reg.count("| F"+str(i)+" |"),1)
-        self.assertIn("F01–F144",reg)
+        self.assertIn("F01–F151",reg)
         master=(ROOT/"docs/MASTER-FORGE-PROGRAM-2026-10-31.md").read_text(encoding="utf8")
         for phrase in ("MGR Rambler","Forge Creator plugin","REA self-study",
                        "Creation OS","source", "not"):

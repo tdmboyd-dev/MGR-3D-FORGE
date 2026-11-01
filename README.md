@@ -1,5 +1,10 @@
 # MGR 3D FORGE
 
+## CURRENT WAVE — 2026-10-31
+
+Real original Human Forge Blender facial shape keys/timeline, additive MorphRig bend/taper, 5 World Forge biome shells, shared MGR API/MCP verified GLB transport and actual Chrome creation/edit/download are under one engine. Read docs/HANDOFF.md FIRST for exact paths, proofs and blockers; the pre-audit Master Plan is NOT current-code truth. Raw audio-to-lipsync AI, premium neural model weights and hosted Tevin/ChatGPT still OPEN.
+
+
 ## CURRENT SOURCE MAP AND HOW-TO — October 31, 2026
 
 **The 2026-10-30 status block below is HISTORY, not current runtime truth.** Before building, read [the canonical handoff](docs/HANDOFF.md), [the complete tracked-source engineering handbook](docs/FORGE-ENGINEERING-HANDBOOK.md), [the actual module list](docs/ACTUAL-FORGE-MODULE-MAP-2026-10-31.md), and [all 405 Git-tracked file hashes](evidence/audits/2026-10-31-baseline-static-inventory.json). Current baseline: 18 Source Atlas families, 3 official live metadata providers; the existing real shared MGR-API-MCP repository handles auth/calls. Full Forge suite after artifact-access fix and handbook guards: **608 tests run, 605 passed, 3 skipped**. The ChatGPT Forge Creator is a skills-only private plugin, not a hosted file-generation service. Current source research list totals 187 candidates (184 old + 3 newly sourced) and must not be confused with installed models.

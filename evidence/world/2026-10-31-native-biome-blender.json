@@ -1,0 +1,27 @@
+{
+  "blender_version": "5.2.2 LTS",
+  "code_paths": [
+    "forge/environment.py",
+    "bridge/blender_biome_proof.py",
+    "bridge/blender_biome_reopen.py"
+  ],
+  "date": "2026-10-31",
+  "fully_merged_world_and_navmesh": false,
+  "imported_faces": 864,
+  "imported_meshes": 1,
+  "model_weights_installed": false,
+  "no_api_rental_cost": true,
+  "owner_art_approved": false,
+  "preview_sha256": "2fbd150050a8f51ba414d756034bc8032eb77be73ffe5a0a95d357f1d3c4dadc",
+  "real_blender_two_processes": true,
+  "reopened": true,
+  "reopened_faces": 864,
+  "reopened_meshes": 1,
+  "saved_blend_sha256": "a806dabc0b45748e772045b9f90b636df819de5395beaa0deda58fa3945cfd52",
+  "schema": "mgr.forge.biome-blender-proof.v1",
+  "source_biome": "alien",
+  "source_sha256": "342875450f644730089791462b2828c87d3adfbc93ba86c7e956db06066a396e",
+  "source_world_sha256": "32362bb8d234b3bf292d0d6bbbd183cba533888ca6a52397fe469aed4a4ff87e",
+  "source_world_unchanged": true,
+  "status": "BLENDER_BIOME_INDEPENDENT_REOPEN_RENDER_PASS"
+}

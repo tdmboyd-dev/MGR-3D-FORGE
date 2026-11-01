@@ -7,9 +7,11 @@ import math
 from .geometry import Mesh
 from .meshqa import analyze_mesh
 
-DEFAULTS={"length":1.0,"height":1.0,"width":1.0,"twist_degrees":0.0}
+DEFAULTS={"length":1.0,"height":1.0,"width":1.0,"twist_degrees":0.0,
+          "bend_degrees":0.0,"taper":1.0}
 BOUNDS={"length":(0.5,2.2),"height":(0.5,2.2),"width":(0.5,2.2),
-        "twist_degrees":(-45.0,45.0)}
+        "twist_degrees":(-45.0,45.0),
+        "bend_degrees":(-30.0,30.0),"taper":(0.65,1.45)}
 
 
 def normalize_morph(spec):
@@ -42,9 +44,17 @@ def morph_point(point, settings=None, *, pivot_y=0.0, axis_extent=1.0):
     x,y,z=point
     theta=math.radians(recipe["twist_degrees"])*(y-pivot_y)/axis_extent
     cs,sn=math.cos(theta),math.sin(theta)
-    xx=x*recipe["length"]
-    zz=z*recipe["width"]
-    return (xx*cs-zz*sn,pivot_y+(y-pivot_y)*recipe["height"],xx*sn+zz*cs)
+    # Shared normalized height makes spine, wings, clothing and attached
+    # submeshes follow ONE field. Taper changes upper-body proportions while
+    # bend curves the rig and skin together without changing vertex order.
+    phase=max(0.0,min(1.0,(y-pivot_y)/axis_extent))
+    taper=1.0+(recipe["taper"]-1.0)*phase
+    xx=x*recipe["length"]*taper
+    zz=z*recipe["width"]*taper
+    x_twisted=xx*cs-zz*sn
+    z_twisted=xx*sn+zz*cs
+    bend=axis_extent*recipe["height"]*math.tan(math.radians(recipe["bend_degrees"]))*phase*phase
+    return (x_twisted+bend,pivot_y+(y-pivot_y)*recipe["height"],z_twisted)
 
 
 def morph_mesh(mesh,settings=None,*,pivot_y=0.0,axis_extent=None):

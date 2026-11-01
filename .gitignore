@@ -8,3 +8,6 @@ models/
 tools/
 *.blend1
 *.blend2
+
+# Optional local Chrome acceptance dependency; never ship browser executables in source Git.
+scripts/browser-qa/node_modules/

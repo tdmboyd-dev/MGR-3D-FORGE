@@ -23,6 +23,31 @@ class MorphTests(unittest.TestCase):
         self.assertTrue(analyze_mesh(out)["passed"])
         self.assertTrue(receipt["indices_preserved"])
 
+    def test_bend_taper_is_shared_by_all_meshes_and_rig_joints(self):
+        from forge.morph_engine import morph_point
+        from forge.creature_rig_recipe import creature_bones
+        genome=genome_candidates("invent a flying armored serpent with horns",91,1)[0]
+        settings={"bend_degrees":18.0,"taper":1.27,"twist_degrees":7}
+        rig=creature_bones(genome,morph=settings,axis_extent=5.4)
+        root=next(b for b in rig["skeleton"] if b["name"]=="root")
+        expected=morph_point((0,genome["standing_height"],0),settings,axis_extent=5.4)
+        self.assertEqual(tuple(root["tail"]),expected)
+        curved=morph_point((0,3,0),settings,axis_extent=5.4)
+        original=morph_point((0,3,0),None,axis_extent=5.4)
+        self.assertGreater(curved[0],original[0])
+        self.assertNotEqual(morph_point((1,3,1),settings,axis_extent=5.4),
+                            morph_point((1,3,1),{"bend_degrees":18},axis_extent=5.4))
+        mesh=creature_meshes(genome)[0]
+        output,audit=morph_mesh(mesh,settings,axis_extent=5.4)
+        self.assertTrue(audit["indices_preserved"])
+        self.assertTrue(analyze_mesh(output)["passed"])
+
+    def test_bend_taper_reject_unbounded_or_non_numeric_values(self):
+        for recipe in ({"bend_degrees":100},{"bend_degrees":True},
+                       {"taper":0},{"taper":float("inf")},{"taper":"wide"}):
+            with self.subTest(recipe=recipe),self.assertRaises(ValueError):
+                normalize_morph(recipe)
+
     def test_rejected_morphs_do_not_invent_geometry(self):
         bad=({"length":0.01},{"height":99},{"twist_degrees":360},
              {"width":float("nan")},{"foo":3},{"length":"huge"})

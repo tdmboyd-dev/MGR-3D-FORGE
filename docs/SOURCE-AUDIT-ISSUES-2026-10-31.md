@@ -31,3 +31,15 @@ AUD-FG-007/008: No evidence of an end-to-end audio lip sync engine or arbitrary 
 ## No-work-lost protocol
 
 On a new chat: read the one handoff first, the ACTUAL-FORGE-MODULE-MAP and source inventory, follow feature register and this gap ledger; verify the real Git HEAD and user changes before fixing. Open a specific receipt with exact file path, test commands, nonpassing evidence and next action for every issue. Do not erase earlier successful data or duplicate a component just because an older plan recommends it.
+
+## 2026-10-31 new creation-wave audit issues and repairs
+
+AUD-FG-016 FIXED: Real Blender import script failed after factory reset because sc.world was None. Bridge blender_biome_proof.py now creates World explicitly. Independent second-process reopen and render 864 faces in evidence/world/2026-10-31-native-biome-blender.json.
+
+AUD-MCP-017 FIXED: src/mcp-server.ts claimed tools:write in system info while real execution uses tools:execute. Fixed and tested without inventing a second permission or server.
+
+AUD-FG-018 OPEN ART: Real Human face animation currently uses supplied phoneme times and generic anonymous mannequin. Audio alignment, anatomy/jaw/tongue, film-grade identity, 200-plus animations and arbitrary topology retarget not accepted.
+
+AUD-DEPLOY-019 OPEN HOSTED: Existing MGR-API-MCP HTTP/OAuth source is not proof of a deployed real OAuth endpoint reaching the owner computer or an actual cloud GPU. Separate secure worker/object store and real Tevin/ChatGPT session required.
+
+AUD-FG-020 BROWSER QUALITY GATE: Real Chrome creature morph, biome and city editor passed. Human Studio browser worker had a genuine FAILED status; current worker now writes private human-error.json for diagnosis instead of swallowing exceptions. Until exact passing Chrome receipt exists, Human browser acceptance is OPEN.

@@ -62,3 +62,7 @@ The MGR-API-MCP repository contains real hosted HTTP/JWT/JWKS/OAuth code, but lo
 ## Publish and handoff
 
 Each safe build wave: record exact source/changed files -> reproduce tests -> actual result checksum -> user-facing checks -> docs/HANDOFF.md current entry -> docs/BUILD-REGISTER.md status -> docs/PROGRESS-LOG.md chronological evidence -> push existing main without force -> GitHub readback of source and handoff. Preserve existing old receipts under history instead of rewriting them as today's results.
+
+## Actual new shared MCP typed files and Human/World jobs
+
+In the existing sibling MGR-API-MCP use npm run verify and python scripts/verify-forge-creator-mcp.py to test the official Streamable HTTP client -> authorized shared edge -> Python Forge Studio. The current edge exposes guarded biome, human-lipsync create/status and artifact read with exact 24-hex job ID + SHA-256 + optional GLB binary resource, not a guessed public file URL. The local protocol test uses a fixture JWT verifier, not a deployed OIDC/JWKS issuer. Forge Studio owns real files; no duplicate Vault, no Creation OS middle hop. Missing real hosted worker/ChatGPT/Tevin and neural CUDA model acceptance are OPEN.

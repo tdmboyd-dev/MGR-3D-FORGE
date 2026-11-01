@@ -471,7 +471,7 @@
     // Studio-created worlds, models, reports and engine exports are private.
     // Direct anchor navigation cannot attach the owner token, so fetch into
     // a temporary local Blob only after an authenticated same-origin request.
-    if(typeof url!=="string"||!/^\/files\/[a-f0-9]{24}\/(?:relief\/|edited\/|candidate\/|creature\/)?[a-z-]+\.(?:glb|obj|mtl|json|html|zip|blend)$/.test(url)){
+    if(typeof url!=="string"||!/^\/files\/[a-f0-9]{24}\/(?:(?:relief|edited|candidate|creature|biome)\/|human\/(?:facial-animation\/)?)?[a-z-]+\.(?:glb|obj|mtl|json|html|zip|blend|png)$/.test(url)){
       directorMessage.textContent="Forge returned an invalid artifact path.";
       return;
     }
@@ -587,7 +587,24 @@
     creatureCreateButton.disabled=true;
     creatureMessage.textContent="Forge is creating original CPU geometry...";
     try{
-      const typed={prompt:idea,seed,variants,morph:{}};
+      const morphFields=[
+        ["length","director-morph-length",.5,2.2],
+        ["height","director-morph-height",.5,2.2],
+        ["width","director-morph-width",.5,2.2],
+        ["twist_degrees","director-morph-twist",-45,45],
+        ["bend_degrees","director-morph-bend",-30,30],
+        ["taper","director-morph-taper",.65,1.45]
+      ];
+      const morph={};
+      for(const [name,id,min,max] of morphFields){
+        const raw=document.getElementById(id).value;
+        const n=Number(raw);
+        if(raw.trim()===""||!Number.isFinite(n)||n<min||n>max){
+          throw new Error("Morph control "+name+" must remain within "+min+"–"+max);
+        }
+        morph[name]=n;
+      }
+      const typed={prompt:idea,seed,variants,morph};
       const fingerprint=await creatureDigest(new TextEncoder().encode(JSON.stringify(typed)));
       const requestId=(lastCreature&&lastCreature.fingerprint===fingerprint)?
                        lastCreature.id:"creature-"+crypto.randomUUID();
@@ -607,6 +624,81 @@
       await showCreatureStatus(result);
     }catch(error){creatureMessage.textContent="Creature status check failed: "+String(error.message);}
     finally{creatureStatusButton.disabled=false;}
+  });
+
+  // World Forge terrain is an original optional asset layer, never a second city engine.
+  const biomeCreateButton=document.getElementById("director-biome-create");
+  const biomeStatusButton=document.getElementById("director-biome-status");
+  const biomeMessage=document.getElementById("director-biome-result");
+  const biomeLastKey="mgr.forge.biome-last.v1."+worldSHA;
+  let lastBiome=null;
+  try{
+    const saved=JSON.parse(localStorage.getItem(biomeLastKey)||"null");
+    if(saved&&/^biome-[0-9a-f-]{36}$/.test(saved.id)&&/^[a-f0-9]{64}$/.test(saved.fingerprint))lastBiome=saved;
+  }catch(error){lastBiome=null;}
+  biomeCreateButton.disabled=!studioEnabled;
+  biomeStatusButton.disabled=!studioEnabled||!lastBiome;
+  const showBiome=async(result)=>{
+    if(result.status==="NEEDS_RECONCILIATION"){
+      biomeMessage.textContent="Previous terrain work interrupted; inspect it before re-running.";
+      return;
+    }
+    if(result.status!=="MATERIALIZED"){
+      biomeMessage.textContent="World biome job: "+String(result.status||"unknown");return;
+    }
+    if(result.source_world_sha256!==worldSHA||!/^[a-f0-9]{64}$/.test(result.biome_sha256)||
+       !/^\/files\/[a-f0-9]{24}\/biome\/biome\.glb$/.test(result.glb_url)){
+      throw new Error("Terrain is not pinned to the exact MGR World Forge source.");
+    }
+    const res=await fetch(result.glb_url,{headers:{"X-MGR-Forge-Token":forgeToken},redirect:"error"});
+    if(!res.ok)throw new Error("Forge denied the saved terrain GLB.");
+    const bytes=await res.arrayBuffer();
+    if(bytes.byteLength>30_000_000||bytes.byteLength<28||
+       String.fromCharCode(...new Uint8Array(bytes.slice(0,4)))!=="glTF"||
+       await creatureDigest(bytes)!==result.biome_sha256){
+      throw new Error("Biome GLB download failed source hash verification.");
+    }
+    const link=document.createElement("a");
+    link.href=URL.createObjectURL(new Blob([bytes],{type:"model/gltf-binary"}));
+    link.download="mgr-original-biome-"+result.job_id+".glb";
+    link.textContent="Download verified "+result.biome+" 3D terrain layer ("+result.triangles+" triangles)";
+    link.style.cssText="display:block;color:#9af4cd;padding:4px 0";
+    downloadLinks.prepend(link);
+    biomeMessage.textContent="Original "+result.biome+" biome ready. Existing city untouched; terrain merging and engine appearance remain unapproved.";
+  };
+  biomeCreateButton.addEventListener("click",async()=>{
+    if(!studioEnabled)return;
+    const biome=document.getElementById("director-biome-kind").value;
+    const rawSeed=document.getElementById("director-biome-seed").value;
+    const rawResolution=document.getElementById("director-biome-resolution").value;
+    const seed=Number(rawSeed),resolution=Number(rawResolution);
+    if(!["forest","desert","tundra","volcanic","alien"].includes(biome)||
+       rawSeed.trim()===""||rawResolution.trim()===""||
+       !Number.isInteger(seed)||seed<0||seed>=4294967296||
+       !Number.isInteger(resolution)||resolution<10||resolution>64){
+      biomeMessage.textContent="Choose valid biome, seed and 10–64 resolution.";return;
+    }
+    biomeCreateButton.disabled=true;
+    biomeMessage.textContent="Building real native World Forge 3D terrain...";
+    try{
+      const request={biome,seed,resolution};
+      const fingerprint=await creatureDigest(new TextEncoder().encode(JSON.stringify(request)));
+      const requestId=lastBiome&&lastBiome.fingerprint===fingerprint?
+          lastBiome.id:"biome-"+crypto.randomUUID();
+      const result=await studioPost("/api/biome-create",{request_id:requestId,...request});
+      lastBiome={id:requestId,fingerprint};
+      try{localStorage.setItem(biomeLastKey,JSON.stringify(lastBiome));}catch(error){/* private mode */}
+      biomeStatusButton.disabled=false;
+      await showBiome(result);
+    }catch(error){biomeMessage.textContent="Terrain failed: "+String(error.message);}
+    finally{biomeCreateButton.disabled=false;}
+  });
+  biomeStatusButton.addEventListener("click",async()=>{
+    if(!studioEnabled||!lastBiome)return;
+    biomeStatusButton.disabled=true;
+    try{await showBiome(await studioPost("/api/biome-status",{request_id:lastBiome.id}));}
+    catch(error){biomeMessage.textContent="Terrain status failed: "+String(error.message);}
+    finally{biomeStatusButton.disabled=false;}
   });
 
   document.getElementById("director-image").addEventListener("change",e=>{
@@ -681,6 +773,89 @@
     }catch(error){directorMessage.textContent=`Engine package failed: ${error.message}`;}
     finally{godotButton.disabled=false;}
   });
+  // MGR Human Forge runs real Blender in the same Studio worker, not an image mock.
+  const humanButton=document.getElementById("director-human-demo");
+  const humanStatusButton=document.getElementById("director-human-status");
+  const humanResult=document.getElementById("director-human-result");
+  const humanStorageKey="mgr.forge.human-lipsync-last.v1."+worldSHA;
+  let humanLast=null;
+  try{
+    const stored=JSON.parse(localStorage.getItem(humanStorageKey)||"null");
+    if(stored&&/^human-[0-9a-f-]{36}$/.test(stored.id))humanLast=stored;
+  }catch(error){humanLast=null;}
+  humanButton.disabled=!studioEnabled;
+  humanStatusButton.disabled=!studioEnabled||!humanLast;
+  const humanDisplay=async(state)=>{
+    if(state.status==="RUNNING"){
+      humanResult.textContent="Human Forge Blender is building real face animation...";
+      return false;
+    }
+    if(state.status!=="MATERIALIZED"){
+      humanResult.textContent="Human Forge job: "+String(state.status||"unknown")+
+          ". Interrupted work needs reconciliation before new creation.";
+      return true;
+    }
+    if(!/^[a-f0-9]{64}$/.test(state.human_sha256)||
+       !/^\/files\/[a-f0-9]{24}\/human\/facial-animation\/human-lipsync\.glb$/.test(state.glb_url))
+      throw new Error("Human Forge returned invalid model provenance");
+    const response=await fetch(state.glb_url,{headers:{"X-MGR-Forge-Token":forgeToken},redirect:"error"});
+    if(!response.ok)throw new Error("Human GLB authorization refused");
+    const body=await response.arrayBuffer();
+    if(body.byteLength<10000||body.byteLength>20_000_000||
+       String.fromCharCode(...new Uint8Array(body.slice(0,4)))!=="glTF"||
+       await creatureDigest(body)!==state.human_sha256)
+      throw new Error("Human mouth shape GLB download failed exact SHA");
+    const link=document.createElement("a");
+    link.href=URL.createObjectURL(new Blob([body],{type:"model/gltf-binary"}));
+    link.download="mgr-human-face-"+state.job_id+".glb";
+    link.textContent="Download verified animated Human Forge GLB";
+    link.style.cssText="display:block;color:#9af4cd;padding:4px 0";
+    downloadLinks.prepend(link);
+    studioLink(state.blend_url,"Download editable MGR Human Blender file");
+    studioLink(state.preview_url,"Download actual Blender face render");
+    studioLink(state.receipt_url,"Download facial proof");
+    humanResult.textContent="Real facial GLB ready with "+state.morph_targets+
+      " mouth shape controls and "+state.animation_actions+
+      " animation action(s). Timings are supplied, not automatic speech alignment.";
+    return true;
+  };
+  const humanPoll=async(id)=>{
+    for(let i=0;i<100;i++){
+      const state=await studioPost("/api/human-lipsync-status",{request_id:id});
+      if(await humanDisplay(state))return;
+      await new Promise(resolve=>setTimeout(resolve,1000));
+    }
+    humanResult.textContent="Blender still running; Check Human Animation again.";
+  };
+  humanButton.addEventListener("click",async()=>{
+    if(!studioEnabled)return;
+    humanButton.disabled=true;
+    const timings={
+      schema:"mgr.forge.phoneme-timeline.v1",
+      actor_id:"mgr-generic-human-demo",language:"en-US",duration_ms:1000,
+      phonemes:[{phoneme:"M",start_ms:0,end_ms:160},
+                {phoneme:"AA",start_ms:160,end_ms:470},
+                {phoneme:"TH",start_ms:470,end_ms:690},
+                {phoneme:"OW",start_ms:690,end_ms:1000}]
+    };
+    try{
+      const requestId=humanLast?.id||("human-"+crypto.randomUUID());
+      const state=await studioPost("/api/human-lipsync-start",{request_id:requestId,timings,fps:24});
+      humanLast={id:requestId};
+      try{localStorage.setItem(humanStorageKey,JSON.stringify(humanLast));}catch(error){/* disabled local storage */}
+      humanStatusButton.disabled=false;
+      if(!(await humanDisplay(state)))await humanPoll(requestId);
+    }catch(error){humanResult.textContent="Human animation failed: "+String(error.message);}
+    finally{humanButton.disabled=false;}
+  });
+  humanStatusButton.addEventListener("click",async()=>{
+    if(!studioEnabled||!humanLast)return;
+    humanStatusButton.disabled=true;
+    try{await humanPoll(humanLast.id);}
+    catch(error){humanResult.textContent="Human Forge status error: "+String(error.message);}
+    finally{humanStatusButton.disabled=false;}
+  });
+
   resetGpuBuildings();refreshEditor();
   const halfDepth=manifest.grounds.depth/2;
   const camera={x:0,y:Math.max(9,manifest.spec.lot_size*0.6),z:halfDepth+12,yaw:0,pitch:0.12};

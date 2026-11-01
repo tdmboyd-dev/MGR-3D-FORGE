@@ -1,0 +1,17 @@
+{
+  "audio_automatic_alignment_verified": false,
+  "blend_bytes": 134172,
+  "date": "2026-10-31",
+  "final_look_owner_approved": false,
+  "genuine_browser_click": true,
+  "hosted_chatgpt_verified": false,
+  "human_glb_bytes": 230536,
+  "original_3d_face_shape_keys": true,
+  "page_errors": [],
+  "real_editable_blend_sha256": "5f558cf15a297a0ea719aa7cd1056953fbf16489a601402bb7530cf2b8e44e03",
+  "real_human_glb_sha256": "628c33bb1a3ec943701d972bc5308224d1f430471a37ef90725cfac894c629db",
+  "same_original_human_forge_backend": true,
+  "schema": "mgr.forge.human-lipsync-browser-acceptance.v1",
+  "screenshot_sha256": "1b85a185344beb1d43963f76e6365ef5d45467a1880ee2f65b6a8d1cd8dd851b",
+  "status": "REAL_CHROME_HUMAN_FACE_CREATION_PASS"
+}

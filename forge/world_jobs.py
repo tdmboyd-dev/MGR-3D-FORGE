@@ -22,7 +22,7 @@ def _atomic_json(path, value):
 
 
 def _index(studio, ledger="world-requests.json"):
-    if ledger not in ("world-requests.json", "creature-requests.json"):
+    if ledger not in ("world-requests.json", "creature-requests.json", "biome-requests.json", "human-lipsync-requests.json"):
         raise ValueError("unsupported creation job ledger")
     path = studio.workspace / ledger
     if not path.exists():

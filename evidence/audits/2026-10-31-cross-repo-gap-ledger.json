@@ -150,6 +150,51 @@
       "source_paths": "docs/history/FORGE-SOURCE-CHECKPOINT-2026-10-30.md; WORK-STATE.md; scripts/verify_repository.py",
       "state": "FIXED_TESTED",
       "verification_or_next": "python scripts/verify_repository.py 184 checks, 0 failures; document traversal does not certify hosted MCP runtime"
+    },
+    {
+      "action": "Create World object and independently reopen/render",
+      "finding": "Blender factory reset caused world object None",
+      "id": "AUD-FG-016",
+      "repo": "MGR-3D-FORGE",
+      "source_paths": "bridge/blender_biome_proof.py; bridge/blender_biome_reopen.py",
+      "state": "FIXED_BLENDER_VERIFIED",
+      "verification_or_next": "evidence/world/2026-10-31-native-biome-blender.json 864 faces"
+    },
+    {
+      "action": "Correct to actual tools:execute",
+      "finding": "MCP advertised incorrect tools:write",
+      "id": "AUD-MCP-017",
+      "repo": "MGR-API-MCP",
+      "source_paths": "src/mcp-server.ts",
+      "state": "FIXED_AND_TESTED",
+      "verification_or_next": "Existing authorization tests pass"
+    },
+    {
+      "action": "Real editable Blender facial GLB built, future automatic alignment/owner art review",
+      "finding": "Manual phoneme timeline lacks raw speech timing and premium anatomy",
+      "id": "AUD-FG-018",
+      "repo": "MGR-3D-FORGE",
+      "source_paths": "forge/lipsync.py; forge/human_lipsync.py",
+      "state": "OPEN_ART",
+      "verification_or_next": "Eight shape controls and actual Blender action verified; remaining art open"
+    },
+    {
+      "action": "Respect one shared bridge; securely host OAuth, remote worker and private artifacts",
+      "finding": "Local MCP fixture is not a deployed hosted Forge worker",
+      "id": "AUD-DEPLOY-019",
+      "repo": "MGR-API-MCP",
+      "source_paths": "src/http-server.ts; src/mcp-http.ts; render.yaml",
+      "state": "OPEN_EXTERNAL",
+      "verification_or_next": "External endpoint/credentials and real Tevin/ChatGPT still unverified"
+    },
+    {
+      "action": "Persist private per-job human-error.json with exception details; diagnose and rerun",
+      "finding": "Chrome Human lip-sync worker returned FAILED without internal reason",
+      "id": "AUD-FG-020",
+      "repo": "MGR-3D-FORGE",
+      "source_paths": "viewer/runtime.js; forge/human_jobs.py",
+      "state": "FIXED_REAL_CHROME_ACCEPTED",
+      "verification_or_next": "Real Human Chrome source/GLB/.blend download: evidence/browser/2026-10-31-human-lipsync-full-chrome.json; model look still requires owner acceptance"
     }
   ],
   "live_test_status": "Forge 608 run, 605 pass, 3 skip; MGR API/MCP 69/69 and cross-process native CPU world/creature PASS; Creation OS 123/123. Browser interactive and hosted Tevin NOT accepted.",

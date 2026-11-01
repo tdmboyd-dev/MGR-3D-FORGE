@@ -1,0 +1,21 @@
+{
+  "actual_original_human_manifold_quality_approved": false,
+  "all_artifacts_tokenless_denied": true,
+  "animation_actions": 1,
+  "audio_alignment_performed": false,
+  "blend_bytes": 134215,
+  "blend_sha256": "a72c4666c2f82a2ebabe5eb0ecb2a0e4a7ea5c1e4a7db56b66e888562fd37630",
+  "blender": "5.2.2 LTS",
+  "browser_click_accepted": false,
+  "date": "2026-10-31",
+  "external_gpu_or_paid_api": false,
+  "hosted_chatgpt_tevin": false,
+  "human_bytes": 230644,
+  "human_sha256": "eb176d668922447ac94bbfd4ee6ab29d5f529f14adbe4ccdad11c74c8ebe3242",
+  "morph_targets": 8,
+  "preview_sha256": "88e542ba664f52529a00fdf451fc5e1b0be0254c916fcd9420e7df77f95f9720",
+  "replay_same_single_job": true,
+  "schema": "mgr.forge.studio-human-lipsync-real-blender.v1",
+  "source": "current ForgeWorkstation human-lipsync asynchronous job using existing human generator",
+  "status": "REAL_HUMAN_STUDIO_BLENDER_GLTF_AUTH_VERIFIED"
+}

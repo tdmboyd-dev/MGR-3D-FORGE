@@ -1,0 +1,21 @@
+{
+  "biome_bytes": 53504,
+  "biome_glb_sha256": "b3eaa968717b4681bca4ba9d9e9068c02181f5a7ac95e73edfea6d591171221a",
+  "browser_errors": [],
+  "download_bytes": 111268,
+  "download_link_type": "blob_url_checked_sha256",
+  "download_name": "mgr-original-creature-7b6039db816be21061401be1.glb",
+  "edited_world_bytes": 11532,
+  "edited_world_sha256": "686daa56664cb5eb74eafe291729e8389b1c195e5d957fea816a195b7931415c",
+  "glb_sha256": "7900fc8a04bd095addaa63dff2220a18571a870b130b47a5e73f878519e773e7",
+  "hosted_chatgpt_or_tevin_verified": false,
+  "morph_changed_real_glb_sha": true,
+  "morph_revision_bytes": 111324,
+  "morph_revision_sha256": "1883b810506b6a419a41eba7db17527c6fcc9feafe836d296d4726b0f949c9a6",
+  "original_biome_and_edit_job_passed": true,
+  "screenshot_sha256": "67aec4c2658c93744648904161865bc2fdd1147688c834297d693e6638dab053",
+  "status": "PASS",
+  "status_checked_after_creation": true,
+  "test": "real Chrome creation panel -> local CPU Forge GLB -> authenticated verified browser download",
+  "visual_art_quality_accepted": false
+}

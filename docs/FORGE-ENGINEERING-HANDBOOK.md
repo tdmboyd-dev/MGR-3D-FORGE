@@ -5,11 +5,11 @@
 ## 1 — The read order and what counts as truth
 
 1. `docs/HANDOFF.md`: one living operational status and resume point; newest proven work goes first. Do not create a competing handoff.
-2. `docs/BUILD-REGISTER.md`: individual F01–F144 capabilities, code paths, prior proof and next acceptance. Some statuses remain historical and need reconciliation against current code/tests.
+2. `docs/BUILD-REGISTER.md`: individual F01–F151 capabilities, code paths, prior proof and next acceptance. Some statuses remain historical and need reconciliation against current code/tests.
 3. `evidence/audits/2026-10-31-baseline-static-inventory.json`: 405 tracked files with names, per-file SHA-256, sizes, classifications, declarations, imports and route mentions.
 4. `docs/ACTUAL-FORGE-MODULE-MAP-2026-10-31.md`: **every existing Forge Python module** with source docstring and directly importing tests (test matching is heuristic).
 5. `docs/MASTER-FORGE-PROGRAM-2026-10-31.md`: owner-approved target **roadmap**, not a replacement for source; do not implement an imaginary engine when a comparable implementation is present.
-6. `research/external-provenance/BEAST-3D-RESEARCH-UNIVERSE-2026-10-31.json`: 184 investigation records (177 distinct names) queued, **not** 184 installed/verified models or REA scans.
+6. `research/external-provenance/BEAST-3D-RESEARCH-UNIVERSE-2026-10-31.json`: 187 source candidates (184 initial queued plus 3 newly sourced-only), **not** 187 installed/verified models or REA scans.
 7. `docs/PROGRESS-LOG.md`, `evidence/`, `tests/`, `bridge/`: histories and acceptance evidence. README and WHAT-WE-HAVE contain dated older facts; reconcile first.
 
 **Meaning of full:** this audit read, parsed or fingerprinted all **405 tracked Forge files** at the named commit; Python parsed with AST, JS/TS read statically. This is NOT proof every algorithm, Blender result, browser, external provider, licensing decision or deployment is right. Only a specific successful end-to-end test and inspected output establishes those claims.
@@ -64,9 +64,9 @@ The Studio prints its loopback URL. It binds to 127.0.0.1, has its own session t
 
 **Actual tracked CLI commands, all extracted from forge/cli.py:** see section below. Test command availability with `python -m forge.cli --help`. Every listed command must have documented inputs/output schema and error behavior before release.
 
-## 5 — Actual CLI actions from source (not invented names)
+## 5 — Actual CLI actions from source (current implementation)
 
-Verified __BT__forge/cli.py__BT__ contains **60** parser commands. Options, prerequisites and exact schemas are determined by __BT__python -m forge.cli ACTION --help__BT__; table descriptions come directly from the existing argparse source.
+**62 actual CLI actions** extracted from the current source tree. Human-lipsync and world-biome are real new commands, not original 60-command baseline. See --help per action for required options; table documentation is not visual acceptance.
 
 | Real CLI action | Existing source-described effect |
 |---|---|
@@ -106,6 +106,7 @@ Verified __BT__forge/cli.py__BT__ contains **60** parser commands. Options, prer
 | `fantasy-effect` | generate native animated-time magic geometry with emissive GLB |
 | `godot-handoff` | package verified Forge world for Godot 4 with collision bodies and camera |
 | `gpu-plan` | dry-run cost plan for renting a GPU (no money spent) |
+| `human-lipsync` | add real Blender 3D facial shapes and animation to existing Human Forge mannequin; requires timed phonemes |
 | `image-relief` | build real image-derived relief 3D geometry from PNG pixels, not hallucinated full mesh |
 | `imagine-creature` | create procedural creature mesh and design DNA; not neural inference |
 | `inspect` | check a GLB for structural validity |
@@ -129,6 +130,7 @@ Verified __BT__forge/cli.py__BT__ contains **60** parser commands. Options, prer
 | `unclothe-proxy` | make independent real GLB silhouette proxies from approved extracted parts |
 | `unclothe-review` | inspect a proposed multi-part segmentation without extracting |
 | `verify-bundle` | verify artifact hashes in world build folder |
+| `world-biome` | make a real original biome ring as an optional GLB layer around an unchanged authored MGR city |
 | `world-flight` | package a generated world into an offline interactive 3D HTML world |
 
 ## 6 — How the specific workflows operate
@@ -174,3 +176,7 @@ See docs/HOW-TO-MORPH-RIG-LIPSYNC.md for exact stage gates, and docs/MASTER-FORG
 ## 10 — What this handbook still cannot certify
 
 Not certified: full browser end-to-end click with download after the new security fix; hosted MGR API/MCP and Tevin roundtrip; every external kit legally approved/Blender-imported; multiuser private artifact store and offsite restore; 200+ actual animation clips; true LipSync/viseme and anatomically stable arbitrary morph engine; photoreal original mesh generation; production render/model benchmark vs Tripo/Meshy/Higgsfield; actual permanent signing keys. Track each with a concrete acceptance test and file owner; do not mark success by document creation.
+
+## New 2026-10-31 native creation lanes
+
+Original Forge extensions: human_lipsync.py + lipsync.py plus Blender face scripts, biome_jobs.py and original environment.py terrain layer, the original morph_engine.py extended to bend/taper, and Studio Creation Chat code in existing viewer. Actual Chrome receipt evidence/browser/2026-10-31-morph-biome-world-real-chrome.json and original face/biome independent Blender evidence under evidence/human/ and evidence/world/. MCP client/authorization ownership is still the sibling MGR-API-MCP/src/forge-mcp-tools.ts, not a new direct local API. Static inventory and module maps must be reindexed after release before claiming a new full-tracked audit.
