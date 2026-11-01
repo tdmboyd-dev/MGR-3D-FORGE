@@ -529,3 +529,7 @@ The initial historical snapshot has been superseded by the current live inventor
 ## November 1, 2026 — shared consumer branch and authority audit
 
 Original Forge runtime6fe053a was adopted without overwriting work. The existing shared API histories were reconciled and exact actor/tenant, post-await/final-response authority and auth-context pinning repaired there. Full Forge638run/635pass/3SAM skips; API247/247. Real SDK/HTTP/Python/Blender composition and timed facial outputs reached the client with SHA validation. Actual personal Tevin read current full operating knowledge after restart; personal execution remains unfinished. This is an integration/acceptance checkpoint, not a whole-product semantic audit or art/hosted/production approval. Current handoff and evidence/audits/2026-11-01-shared-edge-consumer-audit.json retain exact scope and next work.
+
+## Shared GLB receiver adaptation — November 1, 2026
+
+The existing Forge inspector informs the shared API bounded receiver atf0b0256,273/273API and actual SDK/Blender native file acceptance. No native runtime changed. See evidence/forge-glb-receiving-2026-11-01/REPORT.md (root-relative). Full scene/skin/animation semantics, large private delivery, permanent Tevin actions/recovery and hosted/production remain open; no original feature closure inferred.

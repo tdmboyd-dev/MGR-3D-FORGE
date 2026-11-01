@@ -198,3 +198,7 @@ Existing Forge/MCP integration and current Human/World lanes gain receiving evid
 ## Studio entry qualification — November 1, 2026
 
 Existing Studio/jobs/security and Forge/MCP consumer features gain a targeted repair, not parent-feature closure. Anonymous HTML no longer releases the bearer or authored world. Real Chrome unlock/cancel/reload and native creature/world/human downloads passed; full642 tests/639pass/3SAMskips. See `evidence/studio-access-2026-11-01/verification.json`. Personal Tevin actions, mobile, hosted/private-worker restart/cancellation, professional art and production remain separate open checks. Earlier638-case receipts remain historical evidence for their original source.
+
+## Shared GLB receiver adaptation — November 1, 2026
+
+The existing Forge inspector informs the shared API bounded receiver atf0b0256,273/273API and actual SDK/Blender native file acceptance. No native runtime changed. See evidence/forge-glb-receiving-2026-11-01/REPORT.md (root-relative). Full scene/skin/animation semantics, large private delivery, permanent Tevin actions/recovery and hosted/production remain open; no original feature closure inferred.

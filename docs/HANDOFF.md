@@ -1,5 +1,13 @@
 # MGR 3D Forge - Full Living Handoff
 
+## Forge structural artifact receiver — November 1, 2026
+
+Shared API sourcef0b025648c4ae9b6ac44bd9b4c5b1455b144798a is published on repair/completion-2026-10-28. The previous magic-prefix/hash-only receiver accepted malformed matching-hash GLB; oversized/error streams could remain unread. The existing shared client and MCP adapter now apply a bounded geometry/container profile adapted from Forge's own inspector, enforce canonical bytes/lengths, and cancel failed/oversized/microchunk response bodies. Native generation and approval/domain ownership remain unchanged.
+
+Initial15regressions failed before repair; current45focused/273full API checks pass with110stable API inputs. Actual official SDK/HTTP/secured Forge/Blender protocol passed for native creature, biome, composed-world and animated-human private files, saved hash/replay, independent Blender proof and foreign actor/tenant/scope denials. Protocol identity is a fixture. [Owning code, executed logs and exact profile](https://github.com/tdmboyd-dev/MGR-API-MCP/blob/f0b025648c4ae9b6ac44bd9b4c5b1455b144798a/evidence/forge-glb-2026-11-01/REPORT.md).
+
+This supersedes the earlier magic-prefix-only gap for this bounded receiver; it does not certify every glTF scene/skin/animation/material semantic, decoder extension or professional output. Sparse/nonindexed/compressed/external-URI and integer-matrix paths are refused. The800KB transfer and validation budgets are current qualifications, not the full Forge product limits. Larger private delivery and complete semantic acceptance remain open. Permanent Tevin approval/native-job/artifact/save/reopen/recovery integration and whole-product/hosted/production acceptance remain unfinished engineering. No runtime source in this receiving repo changed.
+
 ## Studio private-entry repair — November 1, 2026
 
 The earlier token-gated artifact routes were insufficient: anonymous `/` and `/studio` returned editor HTML containing the actual bearer and private world. This is repaired in the existing `forge/studio_server.py`. Anonymous `/` now returns a constant unlock shell, `/studio` requires exactly one valid header, and duplicate token headers are denied consistently for editor, files and POST actions. Existing localhost Host/Origin, bounded jobs, saved artifacts and native engine remain in place.
