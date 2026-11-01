@@ -1,5 +1,15 @@
 # MGR 3D Forge - Full Living Handoff
 
+## Native preparation before approval consumption — November1, 2026
+
+Shared read-scoped `mgr_department_prepare` now checks the exact original Forge command through the native verifier before ONE reserves a result, leases a job, admits an effect or consumes the approval. Unavailable/foreign/mismatched preparation leaves the workflow approved and the approval unconsumed; owner withdrawal or proposal cancellation/change during the read prevents admission. Existing unknown effects still reconcile without another create. Preparation creates no authority/job/artifact and is not terminal success.
+
+The real negative trial exposed a native world gap: world request binding did not run the editor's full source/geometry validation until after job allocation. Native `world_editor.validate_world_edits` now serves the original creator/export and request-binding paths; binding validates the exact serialized JSON snapshot before allocation. Known invalid schema/source hash/material/identity/dimensions cannot appear prepared or burn a native request. Valid fingerprint construction remains unchanged. This reuses owning validation, not another engine or cross-language normalization.
+
+API295/295 plus typecheck/hosted-artifact/plugin checks; ONE1068/1068 across101files; Forge656run/653pass/3SAM-unavailable skips;2255stable source/test/manifest/compiled inputs. Actual temporary owner SQL/approval/SDK/HTTP/Forge/Blender all5operations/6jobs, artifacts/reopen/lost-response-no-duplicate and three real preparation denials passed. Denials preserved approvals/no effects. Before-repair native14-case run with7failures is preserved. Raw logs/maps live in API evidence/forge-preparation-2026-11-01/; receiving metadata is in the same path in ONE/Forge. See REPORT.md in that packet.
+
+This resolves the earlier instruction to implement before-admission native preparation. Permanent owner Forge worker/workspace startup/stop/recovery, original-process/Blender descendant custody, actual conversation and normal-launcher action/save/replay, Creation history reconciliation and the original wider tool/production work remain open. Current permanent owner startup still enables only Creation rendering. No fresh model/account call, owner runtime restart or production acceptance; same283IDs/21closed15open36/selected-ten5of10 and ForgeF01-F156/64CLI, zero new parent closures.
+
 ## Owner-approved Forge workflow consumer — November1, 2026
 
 Shared API a873526da9d63e21edf2ab5b26e59de22512ef36 now adapts the same five native creators into the existing department gateway. ONE's isolated workflow engine binds exact owner/delegated approval to original command/principal/workspace, requires native exact-input proof and actual GLB bytes, saves the result in the existing SQLite/workflow engine and reconciles unknown replies without another create. No native generation runtime, record owner or ledger changed in this receiving update. Five shared owner operations do not replace the original F01-F156/64CLI product scope.

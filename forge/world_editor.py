@@ -44,7 +44,7 @@ def _validate_edits(document, originals, world_sha, grounds):
     for item in changed:
         if (not isinstance(item, dict) or set(item) != {"id", "center", "size", "material"}
                 or type(item["id"]) is not str or item["id"] in seen
-                or item["material"] not in BUILDING_MATERIALS):
+                or type(item["material"]) is not str or item["material"] not in BUILDING_MATERIALS):
             raise ValueError("building identity/material mismatch")
         seen.add(item["id"])
         base = original_by_id.get(item["id"])
@@ -70,12 +70,9 @@ def _validate_edits(document, originals, world_sha, grounds):
     return normalized
 
 
-def apply_world_edits(world_dir, edits_path, output):
-    """Verify source and edits, export a fresh world bundle without modifying the original."""
+def validate_world_edits(world_dir, document):
+    """Read-only validation shared by native preparation and actual export."""
     source = Path(world_dir).resolve()
-    target = Path(output)
-    if target.exists():
-        raise FileExistsError("edited world destination already exists")
     if not source.is_dir() or not (source / "world.glb").is_file():
         raise ValueError("original world directory and GLB required")
     original = _load_json(source / "manifest.json", max_bytes=10_000_000)
@@ -88,8 +85,17 @@ def apply_world_edits(world_dir, edits_path, output):
     meshes, reproducible = create_neighborhood(spec)
     if reproducible["buildings"] != original["buildings"]:
         raise ValueError("source geometry does not match deterministic MGR manifest")
-    document = _load_json(edits_path)
     changed = _validate_edits(document, reproducible["buildings"], sha, reproducible["grounds"])
+    return spec, meshes, reproducible, changed, sha
+
+
+def apply_world_edits(world_dir, edits_path, output):
+    """Verify source and edits, export a fresh world bundle without modifying the original."""
+    target = Path(output)
+    if target.exists():
+        raise FileExistsError("edited world destination already exists")
+    document = _load_json(edits_path)
+    spec, meshes, reproducible, changed, sha = validate_world_edits(world_dir, document)
     original_by_id = {b["id"]: b for b in reproducible["buildings"]}
     generated = [Mesh() for _ in EDITOR_MATERIALS]
     generated[0], generated[1] = meshes[0], meshes[1]

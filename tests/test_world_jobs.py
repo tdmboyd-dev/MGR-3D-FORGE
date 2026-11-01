@@ -65,3 +65,9 @@ class DurableWorldJobs(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.studio.command("/api/world-job", {"request_id": "bad", "edits": self.edits})
         self.assertEqual(len(list(self.studio.jobs.iterdir())), 0)
+    def test_invalid_source_does_not_allocate_or_burn_an_original_world_request(self):
+        bad={**self.edits,'asset_sha256':'0'*64}
+        with self.assertRaises(ValueError):self.studio.command('/api/world-job',{'request_id':self.request_id,'edits':bad})
+        self.assertEqual(len(list(self.studio.jobs.iterdir())),0)
+        self.assertFalse((self.studio.workspace/'world-requests.json').exists())
+        self.assertEqual(self.studio.command('/api/world-job',{'request_id':self.request_id,'edits':self.edits})['status'],'MATERIALIZED')

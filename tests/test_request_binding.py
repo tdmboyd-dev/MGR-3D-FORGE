@@ -62,6 +62,17 @@ class RequestBindingTests(unittest.TestCase):
         for kind in ('world','creature','biome','human'):
             r=self.verify(kind);self.assertEqual(r['status'],'NOT_FOUND');self.assertFalse(r['input_verified'])
         self.assertEqual(len(list(self.studio.jobs.iterdir())),0)
+    def test_new_world_request_runs_editor_source_and_geometry_validation_without_allocation(self):
+        invalid=[]
+        for field,value in [('asset_sha256','0'*64),('schema','unknown')]:
+            request=copy.deepcopy(self.requests['world']);request['edits'][field]=value;invalid.append(request)
+        for field,value in [('id','unrecognized'),('material',{}),('center',[100000,0,0]),('size',[-1,20,10])]:
+            request=copy.deepcopy(self.requests['world']);request['edits']['buildings'][0][field]=value;invalid.append(request)
+        for request in invalid:
+            with self.subTest(request=request):
+                with self.assertRaises(ValueError):self.verify('world',request)
+                self.assertEqual(len(list(self.studio.jobs.iterdir())),0)
+                self.assertFalse((self.studio.workspace/'world-requests.json').exists())
     def test_changed_world_refuses_previous_world_and_biome_acceptance(self):
         self.create('world');self.create('biome')
         file=self.root/'world/world.glb';file.write_bytes(file.read_bytes()+b'changed')

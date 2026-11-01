@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 import re
 
-from .world_editor import apply_world_edits
+from .world_editor import apply_world_edits, validate_world_edits
 
 _ID = re.compile(r"[A-Za-z0-9_-]{12,100}\Z")
 MAX_EDIT_BYTES = 1_000_000
@@ -71,7 +71,7 @@ def _binding(studio, request_id, edits):
     encoded = json.dumps(edits, sort_keys=True, separators=(",", ":"), allow_nan=False).encode("utf-8")
     if len(encoded) > MAX_EDIT_BYTES:
         raise ValueError("world edits outside byte budget")
-    base = hashlib.sha256((studio.world/"world.glb").read_bytes()).hexdigest()
+    _, _, _, _, base = validate_world_edits(studio.world, json.loads(encoded))
     input_hash = hashlib.sha256(base.encode("ascii") + b":" + encoded).hexdigest()
     return encoded, base, input_hash
 
