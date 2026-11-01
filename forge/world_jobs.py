@@ -63,7 +63,7 @@ def world_job_status(studio, request_id):
         return _read_materialized(studio, entries[request_id], request_id, replay=True)
 
 
-def create_world_job(studio, request_id, edits):
+def _binding(studio, request_id, edits):
     if not isinstance(request_id, str) or not _ID.fullmatch(request_id):
         raise ValueError("invalid stable world request id")
     if not isinstance(edits, dict):
@@ -73,6 +73,11 @@ def create_world_job(studio, request_id, edits):
         raise ValueError("world edits outside byte budget")
     base = hashlib.sha256((studio.world/"world.glb").read_bytes()).hexdigest()
     input_hash = hashlib.sha256(base.encode("ascii") + b":" + encoded).hexdigest()
+    return encoded, base, input_hash
+
+
+def create_world_job(studio, request_id, edits):
+    encoded, base, input_hash = _binding(studio, request_id, edits)
     with studio.world_job_lock:
         entries, path = _index(studio)
         previous = entries.get(request_id)

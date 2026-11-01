@@ -107,13 +107,18 @@ def _compose_worker(studio,rid,job,biome):
             studio.composed_active_jobs.discard(rid)
             studio.heavy_worker_slot.release()
 
-def start_world_composition(studio,payload):
+def _binding(studio,payload):
     rid,biome_request=_validate(payload)
+    directory,biome_sha=_get_biome(studio,biome_request)
+    world_sha=hashlib.sha256((studio.world/"world.glb").read_bytes()).hexdigest()
+    encoded=json.dumps(payload,sort_keys=True,separators=(",",":"),allow_nan=False).encode("utf8")
+    fingerprint=hashlib.sha256(world_sha.encode()+b":"+biome_sha.encode()+b":"+encoded).hexdigest()
+    return rid,directory,biome_sha,world_sha,encoded,fingerprint
+
+
+def start_world_composition(studio,payload):
     with studio.world_job_lock:
-        directory,biome_sha=_get_biome(studio,biome_request)
-        world_sha=hashlib.sha256((studio.world/"world.glb").read_bytes()).hexdigest()
-        encoded=json.dumps(payload,sort_keys=True,separators=(",",":"),allow_nan=False).encode("utf8")
-        fingerprint=hashlib.sha256(world_sha.encode()+b":"+biome_sha.encode()+b":"+encoded).hexdigest()
+        rid,directory,biome_sha,world_sha,encoded,fingerprint=_binding(studio,payload)
         entries,path=_index(studio,LEDGER)
         previous=entries.get(rid)
         if previous:

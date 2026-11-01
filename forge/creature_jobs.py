@@ -64,10 +64,15 @@ def creature_job_status(studio,rid):
         row=rows.get(rid)
         return {"status":"NOT_FOUND","request_id":rid} if row is None else _receipt(studio,rid,row,replayed=True)
 
-def create_creature_job(studio,request):
+def _binding(request):
     data,encoded=_validate(request)
-    rid=data["request_id"]
     fingerprint=hashlib.sha256(encoded).hexdigest()
+    return data,encoded,fingerprint
+
+
+def create_creature_job(studio,request):
+    data,encoded,fingerprint=_binding(request)
+    rid=data["request_id"]
     with studio.world_job_lock:
         rows,path=_index(studio,LEDGER)
         previous=rows.get(rid)

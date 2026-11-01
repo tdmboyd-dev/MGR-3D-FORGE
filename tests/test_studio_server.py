@@ -3,6 +3,8 @@
 import base64
 import hashlib
 import http.client
+import select
+import socket
 import json
 import struct
 from pathlib import Path
@@ -68,6 +70,58 @@ class StudioServerTests(unittest.TestCase):
 
     def test_studio_binds_only_localhost(self):
         self.assertEqual(self.server.server_address[0], "127.0.0.1")
+
+    def test_request_verification_is_authenticated_read_only_and_denies_changed_input(self):
+        request={'request_id':'http-bound-creature-001','prompt':'Original winged blue creature','seed':7,'variants':1,'morph':{}}
+        payload={'kind':'creature','request':request}
+        self.assertEqual(self.fetch('/api/request-verify',payload,token=False)[0],403)
+        status,body,_=self.fetch('/api/request-verify',payload)
+        self.assertEqual(status,200);self.assertEqual(json.loads(body)['status'],'NOT_FOUND')
+        self.assertEqual(len(list(self.studio.jobs.iterdir())),0)
+        self.assertEqual(self.fetch('/api/creature-create',request)[0],200)
+        status,body,_=self.fetch('/api/request-verify',payload)
+        self.assertEqual(status,200);self.assertTrue(json.loads(body)['input_verified'])
+        self.assertEqual(self.fetch('/api/request-verify',{'kind':'creature','request':{**request,'seed':8}})[0],400)
+        self.assertEqual(len(list(self.studio.jobs.iterdir())),1)
+
+    def test_small_denied_post_drains_bounded_body_before_response_and_close(self):
+        reached=threading.Event();handler=self.server.RequestHandlerClass;original=handler._owner_authorized
+        def observed(instance):
+            value=original(instance);reached.set();return value
+        with socket.create_connection(('127.0.0.1',self.server.server_port),timeout=2) as connection,patch.object(handler,'_owner_authorized',observed):
+            connection.sendall((f'POST /api/character HTTP/1.0\r\nHost: 127.0.0.1:{self.server.server_port}\r\nContent-Length: 2\r\nContent-Type: application/json\r\n\r\n').encode())
+            self.assertTrue(reached.wait(1))
+            self.assertFalse(select.select([connection],[],[],0.03)[0],'server closes rejected POST while its small body is still pending')
+            connection.sendall(b'{}');response=http.client.HTTPResponse(connection);response.begin()
+            self.assertEqual(response.status,403);response.read()
+        self.assertEqual(len(list(self.studio.jobs.iterdir())),0)
+
+    def test_denied_large_body_never_waits_for_or_allocates_payload(self):
+        with socket.create_connection(('127.0.0.1',self.server.server_port),timeout=2) as connection:
+            connection.sendall((f'POST /api/character HTTP/1.0\r\nHost: 127.0.0.1:{self.server.server_port}\r\nContent-Length: 5000\r\n\r\n').encode())
+            response=http.client.HTTPResponse(connection);response.begin();self.assertEqual(response.status,403);response.read()
+        self.assertEqual(len(list(self.studio.jobs.iterdir())),0)
+
+    def test_denied_small_body_has_bounded_wait_without_creating_work(self):
+        with socket.create_connection(('127.0.0.1',self.server.server_port),timeout=2) as connection:
+            connection.sendall((f'POST /api/character HTTP/1.0\r\nHost: 127.0.0.1:{self.server.server_port}\r\nContent-Length: 2\r\n\r\n').encode())
+            response=http.client.HTTPResponse(connection);response.begin();self.assertEqual(response.status,403);response.read()
+        self.assertEqual(len(list(self.studio.jobs.iterdir())),0)
+
+    def test_denial_drain_uses_one_total_deadline_across_trickled_chunks(self):
+        from email.message import Message
+        from unittest.mock import Mock
+        handler=object.__new__(self.server.RequestHandlerClass)
+        handler.headers=Message();handler.headers['Content-Length']='4'
+        handler.connection=Mock();handler.connection.gettimeout.return_value=None
+        handler.rfile=Mock();handler.rfile.read1.return_value=b'x'
+        handler.send_bytes=Mock(return_value='denied')
+        with patch('forge.studio_server.time.monotonic',side_effect=[0,0.01,0.20,0.30]):
+            self.assertEqual(handler.reject_post(403,b'forbidden'),'denied')
+        self.assertEqual(handler.rfile.read1.call_count,2)
+        timeouts=[call.args[0] for call in handler.connection.settimeout.call_args_list]
+        self.assertAlmostEqual(timeouts[0],0.24);self.assertAlmostEqual(timeouts[1],0.05);self.assertIsNone(timeouts[2])
+        handler.send_bytes.assert_called_once_with(403,b'forbidden','text/plain')
 
     def test_public_home_contains_no_bearer_or_private_world(self):
         status, body, headers = self.fetch("/", token=False)

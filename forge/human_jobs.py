@@ -126,9 +126,14 @@ def _worker(studio,rid,job,timings,fps,audio_wav=None):
             studio.human_active_jobs.discard(rid)
             studio.heavy_worker_slot.release()
 
-def start_human_lipsync_job(studio,payload):
+def _binding(payload):
     rid,raw,wav_bytes=_validated(payload)
     fingerprint=hashlib.sha256(raw).hexdigest()
+    return rid,raw,wav_bytes,fingerprint
+
+
+def start_human_lipsync_job(studio,payload):
+    rid,raw,wav_bytes,fingerprint=_binding(payload)
     with studio.world_job_lock:
         rows,path=_index(studio,LEDGER)
         previous=rows.get(rid)

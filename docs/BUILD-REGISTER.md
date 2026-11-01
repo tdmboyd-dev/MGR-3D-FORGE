@@ -202,3 +202,7 @@ Existing Studio/jobs/security and Forge/MCP consumer features gain a targeted re
 ## Shared GLB receiver adaptation — November 1, 2026
 
 The existing Forge inspector informs the shared API bounded receiver atf0b0256,273/273API and actual SDK/Blender native file acceptance. No native runtime changed. See evidence/forge-glb-receiving-2026-11-01/REPORT.md (root-relative). Full scene/skin/animation semantics, large private delivery, permanent Tevin actions/recovery and hosted/production remain open; no original feature closure inferred.
+
+## Exact native request identity — November 1, 2026
+
+Existing Forge/job/shared-consumer work gains native original-request verification and bounded denied-body transport repair; API278/278,Forge654/651pass/3SAMskips and actual SDK/Blender all-five input proof passed. Same existing ledgers/permissions; old twelve schemas unchanged. See root-relative evidence/forge-request-binding-2026-11-01/verification.json. Permanent Tevin action/save/reopen and broader whole-product/hosted acceptance remain open; no original parent ID closed.

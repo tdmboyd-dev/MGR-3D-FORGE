@@ -43,11 +43,16 @@ def _readback(studio,rid,row,*,replayed):
             "external_model_used":False,"added_as_layer":True,
             "editor_world_unchanged":True,"engine_visual_accepted":False}
 
-def create_biome_job(studio,payload):
+def _binding(studio,payload):
     encoded=_validate(payload)
-    rid=payload["request_id"]
     world_hash=hashlib.sha256((studio.world/"world.glb").read_bytes()).hexdigest()
     fingerprint=hashlib.sha256(world_hash.encode()+b":"+encoded).hexdigest()
+    return encoded,world_hash,fingerprint
+
+
+def create_biome_job(studio,payload):
+    encoded,world_hash,fingerprint=_binding(studio,payload)
+    rid=payload["request_id"]
     with studio.world_job_lock:
         rows,path=_index(studio,LEDGER)
         previous=rows.get(rid)

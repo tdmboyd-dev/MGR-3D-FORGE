@@ -12,6 +12,7 @@ import re
 import secrets
 import subprocess
 import threading
+import time
 from urllib.parse import urlparse
 from zipfile import ZipFile, ZIP_DEFLATED
 
@@ -27,6 +28,7 @@ from .creature_jobs import create_creature_job, creature_job_status
 from .biome_jobs import create_biome_job, biome_job_status
 from .human_jobs import start_human_lipsync_job,human_lipsync_job_status
 from .world_composition_jobs import start_world_composition,world_composition_status
+from .request_binding import verify_request
 
 
 MAX_REQUEST = 1_800_000
@@ -135,6 +137,8 @@ class ForgeWorkstation:
         return folder
 
     def command(self, route, payload):
+        if route == '/api/request-verify':
+            return verify_request(self,payload)
         if not isinstance(payload, dict):
             raise ValueError("JSON object required")
         if route == "/api/asset-sources":
@@ -340,6 +344,25 @@ def make_handler(studio):
             return (len(values) == 1 and values[0].isascii() and
                     secrets.compare_digest(values[0], studio.token))
 
+        def reject_post(self,status,body):
+            # An unread rejected POST body can reset a Windows connection before
+            # its client sees the denial. Discard only <=4KiB, never parse or
+            # execute, and bound the ENTIRE drain (including trickles) to 250ms.
+            lengths=self.headers.get_all('Content-Length',[])
+            if len(lengths)==1 and re.fullmatch(r'[0-9]{1,4}',lengths[0]) and int(lengths[0])<=4096 and self.headers.get('Transfer-Encoding') is None:
+                remaining=int(lengths[0]);deadline=time.monotonic()+0.25;previous=self.connection.gettimeout()
+                try:
+                    while remaining:
+                        budget=deadline-time.monotonic()
+                        if budget<=0:break
+                        self.connection.settimeout(min(budget,previous) if previous is not None else budget)
+                        data=self.rfile.read1(remaining)
+                        if not data:break
+                        remaining-=len(data)
+                except OSError:pass
+                finally:self.connection.settimeout(previous)
+            return self.send_bytes(status,body,'text/plain')
+
         def do_GET(self):
             # Prevent rebinding through an unrelated Host name or a foreign Origin.
             if not self._valid_local_host():
@@ -378,16 +401,16 @@ def make_handler(studio):
 
         def do_POST(self):
             if not self._valid_local_host():
-                return self.send_bytes(403, b"forbidden host", "text/plain")
-            if self.path not in ("/api/asset-sources", "/api/asset-search", "/api/relief", "/api/character", "/api/world", "/api/world-job", "/api/world-job-status", "/api/creature-create", "/api/creature-status", "/api/biome-create", "/api/biome-status", "/api/human-lipsync-start", "/api/human-lipsync-status", "/api/world-compose-create", "/api/world-compose-status", "/api/godot", "/api/blender", "/api/blender-status"):
-                return self.send_bytes(404, b"not found", "text/plain")
+                return self.reject_post(403, b"forbidden host")
+            if self.path not in ("/api/request-verify", "/api/asset-sources", "/api/asset-search", "/api/relief", "/api/character", "/api/world", "/api/world-job", "/api/world-job-status", "/api/creature-create", "/api/creature-status", "/api/biome-create", "/api/biome-status", "/api/human-lipsync-start", "/api/human-lipsync-status", "/api/world-compose-create", "/api/world-compose-status", "/api/godot", "/api/blender", "/api/blender-status"):
+                return self.reject_post(404, b"not found")
             if not self._owner_authorized():
-                return self.send_bytes(403, b"forbidden", "text/plain")
+                return self.reject_post(403, b"forbidden")
             origin = self.headers.get("Origin")
             if origin is not None and origin != f"http://127.0.0.1:{self.server.server_port}":
-                return self.send_bytes(403, b"forbidden", "text/plain")
+                return self.reject_post(403, b"forbidden")
             if self.headers.get("Content-Type", "").split(";")[0] != "application/json":
-                return self.send_bytes(415, b"JSON required", "text/plain")
+                return self.reject_post(415, b"JSON required")
             try:
                 size = int(self.headers.get("Content-Length", "-1"))
                 if not 0 < size <= MAX_REQUEST:
