@@ -1,0 +1,26 @@
+{
+  "actual_art_owner_accepted": false,
+  "biome_sha256": "b3eaa968717b4681bca4ba9d9e9068c02181f5a7ac95e73edfea6d591171221a",
+  "creature_morph_revision_sha256": "1883b810506b6a419a41eba7db17527c6fcc9feafe836d296d4726b0f949c9a6",
+  "creature_original_sha256": "7900fc8a04bd095addaa63dff2220a18571a870b130b47a5e73f878519e773e7",
+  "creature_screenshot_sha256": "16558469225c9aa1736a8a79e50666fb471833381cad32fd81ef7d12aea255d5",
+  "creature_world_sha256": "c7e75542c2d53905ef14f32f60acf476abcd064d325d88c042fd0dab3c1aea54",
+  "date": "2026-10-31",
+  "forge_commit": "253ac451478a4ab2746557713f80909d9293942c",
+  "human_blend_sha256": "b0db140e82bb991a7b5646be8714f8d5bd8efe0f2d6a815ea026594347a033a9",
+  "human_face_glb_sha256": "6ddd4203b3545690944090196b6056c4c4479120c0945a4327c4fb77bc1b4159",
+  "human_screenshot_sha256": "f076504c3d92bea049ab053b5f1cf4133d7dc14eb552fcc499f4b10a47c42608",
+  "mcp_production_hosted_tested": false,
+  "model_cuda_neural_available": false,
+  "photos_or_screenshots_in_git": false,
+  "playwright_package": "scripts/browser-qa/package.json",
+  "private_output_was_not_uploaded": true,
+  "schema": "mgr.forge.source-reproducible-browser-acceptance.v1",
+  "source_browser_tests": [
+    "scripts/browser-qa/creature.mjs",
+    "scripts/browser-qa/human.mjs"
+  ],
+  "source_wrapper": "scripts/verify_browser_ui.py",
+  "webgl_app_page_errors": 0,
+  "worker_processes_used": "same real ForgeWorkstation, real Chrome and real Blender on owner Windows"
+}
