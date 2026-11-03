@@ -101,6 +101,10 @@ def verify_roster(root,roster):
 def save_roster(root,paths,target):
     path=Path(target)
     if path.exists():raise FileExistsError("refusing to overwrite release manifest")
+    source=Path(root).resolve(strict=True)
+    resolved_target=path.resolve()
+    if resolved_target==source or source in resolved_target.parents:
+        raise ValueError("release manifest must be outside the release root")
     entry=create_roster(root,paths)
     path.parent.mkdir(parents=True,exist_ok=True)
     with path.open("x",encoding="utf8") as f:

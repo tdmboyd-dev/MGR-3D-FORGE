@@ -1,0 +1,20 @@
+{
+  "all_uv_islands_nonzero_inside_unit_range_and_nonoverlapping": true,
+  "artifact_sha256": "f244b1ec1bbcc7ff88ce93a26a04f1d799a2695cd069efcaa184007fa8c8be24",
+  "blender_version": "5.2.2 LTS",
+  "chart_count": 24,
+  "checker_render_is_diagnostic_only": true,
+  "generated_texture_art": false,
+  "owner_art_accepted": false,
+  "part_names": [
+    "original accessory",
+    "original shell"
+  ],
+  "preview_sha256": "0dd79a19093906cf6f75d47a38b79fdd4a5f0c286de500e439684a03ec08af27",
+  "renderer": "CYCLES_CPU",
+  "same_original_world_triangles_materials_and_part_names": true,
+  "schema": "mgr.forge.uv-atlas-blender-witness.v1",
+  "source_sha256": "15fa0149f738f475bb9f67b3e4123861aa0bb91c86835171372b8077f4ef9653",
+  "status": "INDEPENDENT_UV_ATLAS_IMPORT_CHECKER_RENDER_PASS",
+  "triangles": 24
+}

@@ -32,7 +32,8 @@ def make_world_flight(world_dir, output):
         raise ValueError("invalid authored world")
     world = {key: manifest[key] for key in ("spec", "grounds", "buildings", "axis", "unit")}
     json_data = json.dumps(world, separators=(",", ":"), sort_keys=True).replace("<", "\\u003c")
-    script = (VIEWER_DIR / "runtime.js").read_text(encoding="utf-8").replace("</script", "<\\/script")
+    script = ((VIEWER_DIR / "asset-preview.js").read_text(encoding="utf-8") + '\n' +
+              (VIEWER_DIR / "runtime.js").read_text(encoding="utf-8")).replace("</script", "<\\/script")
     html = (VIEWER_DIR / "template.html").read_text(encoding="utf-8")
     html = html.replace("__MGR_MANIFEST__", json_data)
     html = html.replace("__MGR_GLB_BASE64__", base64.b64encode(asset).decode("ascii"))

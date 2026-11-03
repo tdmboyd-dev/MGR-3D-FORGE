@@ -1,0 +1,13 @@
+{
+  "asset-morph-69df790155de8236d74f229a2cb145ef8f941a7c0a56f374673dd8517d9bab27": {
+    "bytes": 6076,
+    "fingerprint": "4346cb61ccd9e22375ad5367a596b6430a7e0945c07be38cd88dedb9de256ecb",
+    "job_id": "8cbb8584114b6379cfcead67",
+    "receipt_sha256": "80c8ef54978c735b2c25494dcd3d56a2455c5be98d3a471692a5b43b286f2f4f",
+    "sha256": "917bcedaf7ca175d83e5c58b14ef1f342816ff72c9edce02c09aa47f6509b549",
+    "source_sha256": {
+      "original-upload.glb": "3e94a29c238d12718f55973795501bd82d89a8620263372c2e3ccade5362f21b"
+    },
+    "status": "MATERIALIZED"
+  }
+}

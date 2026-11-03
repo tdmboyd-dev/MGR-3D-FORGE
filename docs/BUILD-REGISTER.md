@@ -1,5 +1,15 @@
 # Native Capability and Build Register
 
+## November 2, 2026 — ACTIVE all-path audit and native repair
+
+Owner scope is every Forge path; image-to-3D and morphing are examples. Original F01–F156 requirements remain open according to their own acceptance evidence. The current checkpoint has 66 CLI declarations (new `morph-model` and `uv-atlas`), 29 Studio API path literals, eight journal families and 21 configured shared Forge MCP tools. Parsed/static counts are not end-to-end completion.
+
+Current source adds original imported-static-GLB revisions and measured orthographic silhouette hull jobs through the same native workspace, immutable input binding, saved history and protected downloads. Actual Chrome proved create/replay/restart/reopen/download hashes, orbiting saved geometry, real key navigation and stop-waiting/reconciliation. Static morph retains original source/materials/UV/images/parts; hull reconstruction preserves exact mask provenance and honestly separated projection IoU/recall. Neither is arbitrary-photo likeness or neural inference.
+
+Broader repairs bind declared primary/sidecar artifacts into export verification; reject release rosters inside sealed roots; support zero-building/full-lot worlds without invalid empty GLBs; rebuild composed output inventory; compare Godot authored collider corners to actual GLB geometry; and measure real creature/human deformation in separate receiving Blender processes. `evidence/all-paths-2026-11-02/REPORT.md`, the native image/morph packets and current handoff retain exact scopes and limits. The complete research registry retains all187 original target identities; source/algorithm/runtime maturity is distinct.
+
+The bounded native UV path now authors padded non-overlapping triangle islands, retains original bytes, and passes real Blender import and checker rendering. It intentionally splits seams, refuses existing UVs/textures, and does not paint texture art. An enlarged bounded atlas receipt and preflight expansion guard preserve valid larger local work and refuse excessive allocation. Cross-skeleton retargeting, higher-quality unwrap/baking/texture painting and broader engine/owner art acceptance remain open. Keep the [same scorecard](full-build/SCORECARD.md) current, with whole-product completion Unassessed.
+
 ## November 2, 2026 — Native creation and recoverable result access
 
 This additive qualification extends original intent/creature/MorphRig/export/Studio/shared-consumer requirements. No F01–F156 parent is closed and64CLI are retained. Explicit negative/count constraints now survive all candidate mutations and refuse unsupported/conflicting anatomy before allocation. Radial tapered surfaces share authored knee/foot landmarks with the original rig, preserve common morphs and use organic normals. A one-line original Blender reimport path repair resolves relative preview output before Blender changes its file context.

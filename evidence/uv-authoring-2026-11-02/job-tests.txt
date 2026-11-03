@@ -1,0 +1,11 @@
+test_actual_uv_job_replays_after_restart_and_reopens_with_source_verification (tests.test_uv_jobs.UVJobsTests.test_actual_uv_job_replays_after_restart_and_reopens_with_source_verification) ... ok
+test_changed_parameters_or_original_bytes_cannot_reuse_saved_identity (tests.test_uv_jobs.UVJobsTests.test_changed_parameters_or_original_bytes_cannot_reuse_saved_identity) ... ok
+test_existing_uv_textured_and_invalid_settings_refuse_without_allocation (tests.test_uv_jobs.UVJobsTests.test_existing_uv_textured_and_invalid_settings_refuse_without_allocation) ... ok
+test_large_shared_index_mesh_reopens_with_actual_multi_megabyte_chart_receipt (tests.test_uv_jobs.UVJobsTests.test_large_shared_index_mesh_reopens_with_actual_multi_megabyte_chart_receipt) ... ok
+test_oversized_serialized_preflight_receipt_refuses_before_allocation (tests.test_uv_jobs.UVJobsTests.test_oversized_serialized_preflight_receipt_refuses_before_allocation) ... ok
+test_request_original_model_and_receipt_tamper_refuse_replay_status_and_reopen (tests.test_uv_jobs.UVJobsTests.test_request_original_model_and_receipt_tamper_refuse_replay_status_and_reopen) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 6.199s
+
+OK

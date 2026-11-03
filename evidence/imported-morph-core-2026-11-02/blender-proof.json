@@ -1,0 +1,141 @@
+{
+  "artifact_sha256": "a38db2b4923cd86daf29d7b4f2fe5df266bf912e802f1963af4bee574d6cf25d",
+  "blender_version": "5.2.2 LTS",
+  "imported_world_bounds_match_native_receipt": true,
+  "limits": [
+    "original static geometry only, not skinned/animated/shape-target input",
+    "measured GLB/import/material preservation, not semantic likeness or arbitrary topology editing"
+  ],
+  "owner_art_accepted": false,
+  "renderer": "CYCLES_CPU",
+  "renders": [
+    {
+      "blend_sha256": "db0435487854b7005cddbd1861cc8a64ebbe5337f3a608afe1bf54d2b952bc4b",
+      "import": {
+        "bounds": {
+          "max": [
+            13.5,
+            0.5,
+            2.0
+          ],
+          "min": [
+            6.5,
+            -0.5,
+            0.0
+          ]
+        },
+        "images": [
+          {
+            "channels": 4,
+            "linear_pixels_sha256": "78181a3b10cc4e76a123fcfc5c3d8c4e09f78fa1663f66ea5a926dfa138b4b1d",
+            "size": [
+              2,
+              2
+            ]
+          }
+        ],
+        "objects": [
+          {
+            "materials": [
+              "owned accessory"
+            ],
+            "name": "accessory part",
+            "triangles": 12,
+            "uv_layers": [
+              {
+                "loops": 36,
+                "name": "UVMap",
+                "sha256": "cef565f1c0284ba3771c2b82a4262242666fb55ada0e8e340fd7f113b0189588"
+              }
+            ],
+            "vertices": 24
+          },
+          {
+            "materials": [
+              "outer shell"
+            ],
+            "name": "shell part",
+            "triangles": 12,
+            "uv_layers": [
+              {
+                "loops": 36,
+                "name": "UVMap",
+                "sha256": "cef565f1c0284ba3771c2b82a4262242666fb55ada0e8e340fd7f113b0189588"
+              }
+            ],
+            "vertices": 24
+          }
+        ]
+      },
+      "name": "before",
+      "png_sha256": "97f4e6f7a9239882ee02f3fbf04d30835c39037ab4606f89dcf7b944f9d79095"
+    },
+    {
+      "blend_sha256": "e9b3fb1b3c1395caef7f5c5ff7b3d8b0a08753f76f9d9e4e3c46c8c4ea4bdf51",
+      "import": {
+        "bounds": {
+          "max": [
+            16.137298583984375,
+            2.2466583251953125,
+            3.200000047683716
+          ],
+          "min": [
+            5.625,
+            -2.2466583251953125,
+            0.0
+          ]
+        },
+        "images": [
+          {
+            "channels": 4,
+            "linear_pixels_sha256": "78181a3b10cc4e76a123fcfc5c3d8c4e09f78fa1663f66ea5a926dfa138b4b1d",
+            "size": [
+              2,
+              2
+            ]
+          }
+        ],
+        "objects": [
+          {
+            "materials": [
+              "owned accessory"
+            ],
+            "name": "accessory part",
+            "triangles": 12,
+            "uv_layers": [
+              {
+                "loops": 36,
+                "name": "UVMap",
+                "sha256": "cef565f1c0284ba3771c2b82a4262242666fb55ada0e8e340fd7f113b0189588"
+              }
+            ],
+            "vertices": 24
+          },
+          {
+            "materials": [
+              "outer shell"
+            ],
+            "name": "shell part",
+            "triangles": 12,
+            "uv_layers": [
+              {
+                "loops": 36,
+                "name": "UVMap",
+                "sha256": "cef565f1c0284ba3771c2b82a4262242666fb55ada0e8e340fd7f113b0189588"
+              }
+            ],
+            "vertices": 24
+          }
+        ]
+      },
+      "name": "after",
+      "png_sha256": "aa4656effdb229a13a8145d96e27e9abcee532746aeb3e425af6703324696f7e"
+    }
+  ],
+  "rig_deformation_verified": false,
+  "same_camera_and_lights": true,
+  "same_source_parts_topology_uv_materials_and_image_pixels": true,
+  "schema": "mgr.forge.imported-morph-blender-witness.v1",
+  "source_sha256": "3e94a29c238d12718f55973795501bd82d89a8620263372c2e3ccade5362f21b",
+  "status": "INDEPENDENT_BLENDER_STATIC_MORPH_IMPORT_RENDER_PASS"
+}

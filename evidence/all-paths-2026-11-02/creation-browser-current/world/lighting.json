@@ -1,0 +1,12 @@
+{
+  "ambient_strength": 0.5,
+  "exposure": 0,
+  "mood": "daylight",
+  "schema": "mgr.forge.lighting.v1",
+  "sun_color": [
+    1.0,
+    0.94,
+    0.84
+  ],
+  "sun_strength": 2.0
+}

@@ -14,6 +14,16 @@ def camera_tour(world, *, altitude=18.0):
     if not isinstance(lot_size,(int,float)) or not math.isfinite(lot_size) or lot_size<=0:
         raise ValueError("invalid lot size")
     shots = []
+    if not buildings:
+        # A valid authored ground/road world still needs a useful camera.
+        # Do not invent a building subject or emit an unusable empty reel.
+        grounds=world.get("grounds",{})
+        width,depth=grounds.get("width"),grounds.get("depth")
+        if not all(type(v) in (int,float) and math.isfinite(v) and v>0 for v in (width,depth)):
+            raise ValueError("empty world requires finite positive ground dimensions")
+        shots.append({"id":"shot-world-overview","subject_id":"world-ground",
+                      "camera":[round(width*.5,4),round(max(altitude,max(width,depth)*.7),4),round(depth*.5,4)],
+                      "look_at":[0,0,0],"hold_seconds":2.0})
     for idx, building in enumerate(buildings):
         x, _, z = building["center"]
         height = building["size"][1]

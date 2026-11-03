@@ -79,28 +79,43 @@ def build(spec: WorldSpec, output: Path):
     (output / "scene_facts.json").write_text(
         json.dumps(scene_facts(manifest), indent=2, sort_keys=True) + "\n", encoding="utf-8")
     interior_meshes, interior_plan = generate_interiors(manifest)
-    (output / "interiors.glb").write_bytes(export_glb(interior_meshes, name=f"{spec.name} Interiors"))
+    has_interiors=any(mesh.indices for mesh in interior_meshes)
+    if has_interiors:
+        (output / "interiors.glb").write_bytes(export_glb(interior_meshes, name=f"{spec.name} Interiors"))
     (output / "interiors.json").write_text(
         json.dumps(interior_plan, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     park_meshes,park_manifest=generate_parks(manifest)
-    (output / "parks.glb").write_bytes(export_glb(park_meshes,name=f"{spec.name} Parks",
-                                          materials=ENVIRONMENT_MATERIALS))
+    has_parks=any(mesh.indices for mesh in park_meshes)
+    if has_parks:
+        (output / "parks.glb").write_bytes(export_glb(park_meshes,name=f"{spec.name} Parks",
+                                              materials=ENVIRONMENT_MATERIALS))
     (output / "parks.json").write_text(
         json.dumps(park_manifest,indent=2,sort_keys=True)+"\n",encoding="utf-8")
-    lod1_payload = export_glb(simple_building_lod(manifest), name=f"{spec.name} LOD1")
-    (output / "world_lod1.glb").write_bytes(lod1_payload)
+    lod1_meshes=simple_building_lod(manifest)
+    lod1_payload = (export_glb(lod1_meshes, name=f"{spec.name} LOD1")
+                    if any(mesh.indices for mesh in lod1_meshes) else None)
+    if lod1_payload is not None:
+        (output / "world_lod1.glb").write_bytes(lod1_payload)
     manifest["quality"] = qc
     manifest["glb_quality"] = glb_qc
     manifest["artifact"] = {"path": "world.glb", "sha256": hashlib.sha256(payload).hexdigest(),
                             "bytes": len(payload)}
     manifest["additional_artifacts"] = {
         "obj": "world.obj", "mtl": "world.mtl", "road_graph": "navigation.json",
-        "preview": "preview.svg", "chunks": "chunks.json", "lod1": "world_lod1.glb",
+        "preview": "preview.svg", "chunks": "chunks.json",
         "camera_tour": "camera_tour.json", "lighting": "lighting.json", "spatial_overview": "spatial_overview.json",
         "scene_facts": "scene_facts.json",
-        "interiors": "interiors.glb", "interior_plan": "interiors.json",
-        "parks":"parks.glb", "parks_manifest":"parks.json"}
-    manifest["lod1_quality"] = inspect_glb(lod1_payload)
+        "interior_plan": "interiors.json", "parks_manifest":"parks.json"}
+    optional_geometry={"interiors":("interiors.glb",has_interiors),
+                       "parks":("parks.glb",has_parks),
+                       "lod1":("world_lod1.glb",lod1_payload is not None)}
+    manifest["omitted_empty_layers"]=[]
+    for layer,(name,present) in optional_geometry.items():
+        if present:
+            manifest["additional_artifacts"][layer]=name
+        else:
+            manifest["omitted_empty_layers"].append(layer)
+    manifest["lod1_quality"] = inspect_glb(lod1_payload) if lod1_payload is not None else None
     manifest["execution"] = {"compute": "CPU", "external_api_calls": 0,
                              "model_inference": False, "blender_verified": False,
                              "independent_engine_import_verified": False}
@@ -154,6 +169,17 @@ def main(argv=None):
     imagine.add_argument("--variants", type=int, default=6, help="1..12 alternate anatomy designs to evaluate")
     imagine.add_argument("--out", type=Path, required=True, help="new directory with GLB, DNA variants and proof")
     imagine.add_argument("--morph", type=Path, help="optional JSON morph recipe (length/height/width/twist_degrees/bend_degrees/taper)")
+    imported_morph = sub.add_parser('morph-model', help='save a real static imported GLB morph revision while preserving original material/UV/image data')
+    imported_morph.add_argument('--source', type=Path, required=True)
+    imported_morph.add_argument('--out', type=Path, required=True, help='new revision directory; original source stays unchanged')
+    imported_morph.add_argument('--morph', type=Path, required=True, help='bounded JSON native morph controls')
+    imported_morph.add_argument('--expected-sha256', help='optional required original source identity')
+    uv_atlas = sub.add_parser('uv-atlas', help='author a native fully seamed padded UV atlas on an untextured static GLB revision')
+    uv_atlas.add_argument('--source', type=Path, required=True)
+    uv_atlas.add_argument('--out', type=Path, required=True)
+    uv_atlas.add_argument('--atlas-size', type=int, default=2048, choices=(256, 512, 1024, 2048, 4096))
+    uv_atlas.add_argument('--padding', type=int, default=2)
+    uv_atlas.add_argument('--expected-sha256')
     human_audio = sub.add_parser("human-audio-motion", help="animate original Human Forge jaw from approved PCM WAV loudness; NOT speech/phoneme alignment")
     human_audio.add_argument("--wav",type=Path,required=True,help="bounded caller-owned uncompressed RIFF PCM16 WAV")
     human_audio.add_argument("--actor-id",default="mgr-human-audio",help="safe generic actor label, never a claimed real identity")
@@ -469,6 +495,19 @@ def main(argv=None):
         print(json.dumps({"schema":"mgr.forge.engines-status.v1",
                           "engines":profiles,"ready":sum(bool(x["runtime_ready"]) for x in profiles)},indent=2))
         return 0
+    if args.action == 'uv-atlas':
+        from .uv_authoring import author_uv_atlas
+        print(json.dumps(author_uv_atlas(args.source, args.out, expected_sha256=args.expected_sha256,
+                                        atlas_size=args.atlas_size, padding=args.padding), indent=2))
+        return 0
+    if args.action == 'morph-model':
+        from .imported_morph import morph_imported_glb
+        if not args.morph.is_file() or args.morph.stat().st_size > 4096:
+            raise ValueError('bounded morph recipe file required')
+        recipe = json.loads(args.morph.read_text(encoding='utf8'))
+        result = morph_imported_glb(args.source, args.out, recipe, expected_sha256=args.expected_sha256)
+        print(json.dumps(result, indent=2))
+        return 0
     if args.action == "imagine-creature":
         from .imagination import create_original_creature
         recipe=json.loads(args.morph.read_text(encoding="utf-8")) if args.morph else None
@@ -581,7 +620,8 @@ def main(argv=None):
         from PIL import Image
         img = Image.open(args.image).convert('L')
         w0, h0 = img.size
-        src_pixels = [list(img.getdata()[y*w0:(y+1)*w0]) for y in range(h0)]
+        pixels = list(img.get_flattened_data()) if hasattr(img,'get_flattened_data') else list(img.getdata())
+        src_pixels = [pixels[y*w0:(y+1)*w0] for y in range(h0)]
         src_quad = json.loads(args.src_quad.read_text(encoding='utf-8'))
         dst_quad = json.loads(args.dst_quad.read_text(encoding='utf-8'))
         out_rows = rectify_mask(src_pixels, (w0, h0), tuple(args.size), src_quad, dst_quad)
@@ -821,7 +861,6 @@ def main(argv=None):
         report=json.loads(args.report.read_text(encoding="utf-8"))
         if report.get("status")!="PASS" or len(report.get("frames",[]))!=2:
             raise RuntimeError("Blender pose render receipt invalid")
-        from .visualqa import compare_pngs
         diff=compare_pngs(args.first,args.second)
         print(json.dumps({"status":"PASS", "frames":report["frames"],
                           "rgb_difference_mae":diff["rgb_mae"],
@@ -902,7 +941,6 @@ def main(argv=None):
         frames=report.get("frames",[])
         if report.get("status")!="PASS" or len(frames)<4:
             raise RuntimeError("missing actual rendered director frames")
-        from .visualqa import compare_pngs
         before=args.out/frames[1]["filename"]
         after=args.out/frames[2]["filename"]
         difference=compare_pngs(before,after)["rgb_mae"]

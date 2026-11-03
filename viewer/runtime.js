@@ -413,9 +413,9 @@
   const studioEnabled=typeof forgeToken==="string"&&forgeToken.length>=20&&
     location.protocol==="http:"&&location.hostname==="127.0.0.1";
   if(studioEnabled){worldButton.disabled=false;}
-  const studioPost=async(path,data)=>{
+  const studioPost=async(path,data,signal)=>{
     const response=await fetch(path,{method:"POST",headers:{"Content-Type":"application/json",
-      "X-MGR-Forge-Token":forgeToken},body:JSON.stringify(data)});
+      "X-MGR-Forge-Token":forgeToken},body:JSON.stringify(data),signal,redirect:'error'});
     const result=await response.json();
     if(!response.ok)throw new Error(result.error||`Studio error ${response.status}`);
     return result;
@@ -467,11 +467,23 @@
     }catch(error){directorMessage.textContent=`Live model search failed: ${error.message}`;}
     finally{assetSearchButton.disabled=false;}
   });
+  const boundedArtifactBytes=async(response,limit)=>{
+    const declared=response.headers.get('Content-Length');
+    let reader,complete=false;
+    try{
+      if(declared!==null&&(!/^\d+$/.test(declared)||!Number.isSafeInteger(Number(declared))||Number(declared)>limit))throw Error('File exceeds supported size.');
+      if(!response.body)throw Error('Artifact response has no body.');
+      reader=response.body.getReader();const chunks=[];let size=0;
+      for(;;){const {done,value}=await reader.read();if(done){complete=true;break;}size+=value.byteLength;if(size>limit||chunks.length>=4096)throw Error('File exceeds supported size.');chunks.push(value);}
+      if(declared!==null&&Number(declared)!==size)throw Error('Artifact response length changed.');
+      const raw=new Uint8Array(size);let at=0;for(const chunk of chunks){raw.set(chunk,at);at+=chunk.byteLength;}return raw;
+    }finally{try{if(!complete){if(reader)await reader.cancel();else await response.body?.cancel();}}catch{}reader?.releaseLock();}
+  };
   const studioLink=(url,label,expectedSha=null)=>{
     // Studio-created worlds, models, reports and engine exports are private.
     // Direct anchor navigation cannot attach the owner token, so fetch into
     // a temporary local Blob only after an authenticated same-origin request.
-    if(typeof url!=="string"||!/^\/files\/[a-f0-9]{24}\/(?:(?:relief|edited|candidate|creature|biome|composed)\/|human\/(?:facial-animation\/)?)?[a-z-]+\.(?:glb|obj|mtl|json|html|zip|blend|png)$/.test(url)){
+    if(typeof url!=="string"||!/^\/files\/[a-f0-9]{24}\/(?:(?:relief|edited|candidate|creature|biome|composed|reconstructed|morphed|uv)\/|human\/(?:facial-animation\/)?)?[a-z-]+\.(?:glb|obj|mtl|json|html|zip|blend|png)$/.test(url)){
       directorMessage.textContent="Forge returned an invalid artifact path.";
       return;
     }
@@ -490,12 +502,12 @@
         if(!response.ok)throw new Error("Forge denied the artifact ("+response.status+").");
         const claimed=Number(response.headers.get("Content-Length")||"0");
         if(!Number.isFinite(claimed)||claimed>256_000_000)throw new Error("File exceeds supported size.");
-        const file=await response.blob();
+        const file=new Blob([await boundedArtifactBytes(response,256000000)],{type:response.headers.get('Content-Type')||'application/octet-stream'});
         if(file.size>256_000_000)throw new Error("File exceeds supported size.");
         if(expectedSha){
           const raw=await file.arrayBuffer();
-          if(!/^[a-f0-9]{64}$/.test(expectedSha)||raw.byteLength<28||
-             new TextDecoder().decode(raw.slice(0,4))!=="glTF"||
+          if(!/^[a-f0-9]{64}$/.test(expectedSha)||raw.byteLength<8||
+             (url.endsWith('.glb')&&(raw.byteLength<28||new TextDecoder().decode(raw.slice(0,4))!=="glTF"))||
              await creatureDigest(raw)!==expectedSha)throw new Error("Saved GLB changed; reconciliation required.");
         }
         const blobUrl=URL.createObjectURL(file);
@@ -525,6 +537,24 @@
     });
     downloadLinks.prepend(anchor);
   };
+  let previewGeneration=0,previewController=null;
+  const previewAsset=async(result,sha)=>{
+    const generation=++previewGeneration;previewController?.abort();
+    const controller=new AbortController();previewController=controller;
+    const host=document.getElementById('director-asset-preview'),message=document.getElementById('asset-preview-status');
+    const canvas=document.getElementById('asset-preview');canvas.hidden=true;
+    host.hidden=false;message.textContent='Reading the saved model for preview…';
+    try{
+      if(!/^\/files\/[a-f0-9]{24}\/(?:reconstructed\/hull|morphed\/morphed|uv\/uv-mapped)\.glb$/.test(result.glb_url))throw Error('Unsupported preview identity.');
+      const response=await fetch(result.glb_url,{headers:{'X-MGR-Forge-Token':forgeToken},redirect:'error',signal:controller.signal});
+      if(!response.ok||Number(response.headers.get('Content-Length'))>64000000)throw Error('Saved preview unavailable or excessive.');
+      const raw=(await boundedArtifactBytes(response,64000000)).buffer;
+      if(raw.byteLength>64000000||await creatureDigest(raw)!==sha)throw Error('Saved preview changed; reconciliation required.');
+      if(generation!==previewGeneration)return;
+      canvas.hidden=false;const proof=window.MGR_ASSET_PREVIEW(canvas,raw);canvas.dataset.assetSha256=sha;
+      message.textContent=`${proof.triangles} triangles · saved SHA-256 checked. Drag to orbit; scroll to zoom. Geometry and material colors; textures and animation are not rendered here.`;
+    }catch(error){if(generation===previewGeneration){canvas.hidden=true;message.textContent='Preview unavailable: '+String(error.message)+' The saved result and downloads remain available.';}}
+  };
   const historyRefresh=document.getElementById('director-history-refresh');
   const historyNext=document.getElementById('director-history-next');
   const historyCancel=document.getElementById('director-history-cancel');
@@ -553,15 +583,17 @@
       historyKind.disabled=false;historyCancel.hidden=true;historyNext.disabled=!historyCursor;
       for(const button of historyResults.querySelectorAll('button'))button.disabled=false;}
   }
-  const savedLabels={world:'Edited world',creature:'Creature',biome:'Terrain',human:'Human animation',composed:'Combined world'};
+  const savedLabels={world:'Edited world',creature:'Creature',biome:'Terrain',human:'Human animation',composed:'Combined world',reconstruction:'Measured image hull',morph:'Static model morph',uv:'UV atlas revision'};
   function reopenHistory(item){
     void historyRead('/api/saved-job-reopen',{kind:item.kind,request_id:item.request_id},result=>{
       if(result.status!=='MATERIALIZED'){
         historyStatus.textContent=`${savedLabels[item.kind]}: ${result.status}. No new job started. Interrupted jobs need review before retrying.`;return;
       }
-      const sha=result[{world:'world_sha256',creature:'creature_sha256',biome:'biome_sha256',human:'human_sha256',composed:'combined_world_sha256'}[item.kind]];
+      const sha=result[{world:'world_sha256',creature:'creature_sha256',biome:'biome_sha256',human:'human_sha256',composed:'combined_world_sha256',reconstruction:'asset_sha256',morph:'asset_sha256',uv:'asset_sha256'}[item.kind]];
       if(result.request_id!==item.request_id||result.job_id!==item.job_id||!/^[a-f0-9]{64}$/.test(sha))throw new Error('Saved creation identity changed; refresh and review.');
       studioLink(result.glb_url,`Download reopened ${savedLabels[item.kind]} · ${item.request_id}`,sha);
+      if(result.diagnostic_url)studioLink(result.diagnostic_url,`UV diagnostic checker · ${item.request_id}`,result.diagnostic_sha256);
+      if(['reconstruction','morph','uv'].includes(item.kind))void previewAsset(result,sha);
       // Secondary files retain their original receipt's proof boundary.
       for(const [field,label] of [['blend_url','Blender project'],['receipt_url','Job receipt'],['manifest_url','Manifest']]){
         if(result[field])studioLink(result[field],`${label} · ${item.request_id}`);
@@ -790,6 +822,77 @@
   document.getElementById("director-model").addEventListener("change",e=>{
     const file=e.target.files?.[0];
     checkModelButton.disabled=!studioEnabled||!file||!file.name.toLowerCase().endsWith(".glb")||file.size>900_000;
+    document.getElementById('director-model-morph').disabled=checkModelButton.disabled;
+    document.getElementById('director-uv-create').disabled=checkModelButton.disabled;
+  });
+  const bytesBase64=bytes=>{
+    let binary='';for(let i=0;i<bytes.length;i+=16384)binary+=String.fromCharCode(...bytes.subarray(i,i+16384));
+    return btoa(binary);
+  };
+  async function assetCreate(kind,payload,button,message){
+    button.disabled=true;message.textContent='Validating original inputs and creating a recoverable native revision…';
+    const cancel=document.getElementById('director-'+({morph:'model-morph',reconstruction:'recon',uv:'uv'}[kind])+'-cancel');
+    const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),60000);
+    cancel.hidden=false;cancel.onclick=()=>controller.abort();
+    try{
+      const digest=await creatureDigest(new TextEncoder().encode(JSON.stringify(payload)));
+      const request_id='asset-'+kind+'-'+digest;
+      const result=await studioPost('/api/'+kind+'-create',{request_id,...payload},controller.signal);
+      if(result.status!=='MATERIALIZED')throw new Error(`${result.status}. Keep the original request; inspect it before retrying.`);
+      if(!/^[a-f0-9]{64}$/.test(result.asset_sha256))throw new Error('Native asset hash missing.');
+      studioLink(result.glb_url,`Download verified ${savedLabels[kind]} · ${request_id}`,result.asset_sha256);
+      void previewAsset(result,result.asset_sha256);
+      studioLink(result.manifest_url,`Source and method receipt · ${request_id}`);
+      if(result.diagnostic_url)studioLink(result.diagnostic_url,`UV diagnostic checker · ${request_id}`,result.diagnostic_sha256);
+      message.textContent=`Saved ${result.asset_bytes} verified GLB bytes. ${result.replayed?'Original request replayed; no duplicate created.':'Find this result in Saved Creations.'} ${kind==='reconstruction'?'Measured silhouettes constrain the hull; unseen concavities are not recovered.':kind==='uv'?'Original source preserved. Fully seamed texture coordinates authored; texture art is separate.':'Original uploaded model preserved; this revision uses the static mesh pipeline.'}`;
+    }catch(error){message.textContent=controller.signal.aborted?
+      'Stopped waiting. Native work may have finished. Find Saved Creations, or retry identical input to reconcile the same job.':'Asset creation unavailable: '+String(error.message);}
+    finally{clearTimeout(timer);cancel.hidden=true;cancel.onclick=null;button.disabled=false;}
+  }
+  const modelMorphButton=document.getElementById('director-model-morph');
+  const uvCreateButton=document.getElementById('director-uv-create');
+  uvCreateButton.addEventListener('click',async()=>{
+    const file=document.getElementById('director-model').files?.[0],message=document.getElementById('director-uv-status');
+    if(!studioEnabled||!file||file.size>900000)return;
+    try{const raw=new Uint8Array(await file.arrayBuffer());await assetCreate('uv',{
+      glb_base64:bytesBase64(raw),expected_sha256:await creatureDigest(raw),atlas_size:2048,padding:2},uvCreateButton,message);
+    }catch(error){message.textContent=String(error.message);}
+  });
+  modelMorphButton.addEventListener('click',async()=>{
+    const file=document.getElementById('director-model').files?.[0];
+    const message=document.getElementById('director-model-morph-status');
+    if(!studioEnabled||!file||file.size>900000)return;
+    try{
+      const morph={};
+      for(const [key,id,min,max] of [['length','length',.5,2.2],['height','height',.5,2.2],['width','width',.5,2.2],['bend_degrees','bend',-30,30],['twist_degrees','twist',-45,45],['taper','taper',.65,1.45]]){
+        const raw=document.getElementById('director-model-'+id).value,value=Number(raw);
+        if(!raw.trim()||!Number.isFinite(value)||value<min||value>max)throw new Error('Choose bounded numeric morph controls.');
+        morph[key]=value;
+      }
+      const bytes=new Uint8Array(await file.arrayBuffer());
+      await assetCreate('morph',{glb_base64:bytesBase64(bytes),expected_sha256:await creatureDigest(bytes),morph},modelMorphButton,message);
+    }catch(error){message.textContent=String(error.message);}
+  });
+  const reconButton=document.getElementById('director-recon-create');
+  const reconFront=document.getElementById('director-recon-front'),reconSide=document.getElementById('director-recon-side');
+  const reconReady=()=>{reconButton.disabled=!studioEnabled||![reconFront,reconSide].every(input=>{const file=input.files?.[0];return file&&file.size<=900000&&file.name.toLowerCase().endsWith('.png');});};
+  reconFront.addEventListener('change',reconReady);reconSide.addEventListener('change',reconReady);
+  reconButton.addEventListener('click',async()=>{
+    if(!studioEnabled||!reconFront.files?.[0]||!reconSide.files?.[0])return;
+    const message=document.getElementById('director-recon-status');
+    try{
+      const bounds={};
+      for(const axis of ['width','height','depth']){
+        const raw=document.getElementById('director-recon-'+axis).value,value=Number(raw);
+        if(!raw.trim()||!Number.isFinite(value)||value<.01||value>100)throw new Error('Choose known bounds between 0.01 and 100 meters.');
+        bounds[axis]=value;
+      }
+      const rawGrid=document.getElementById('director-recon-grid').value,grid=Number(rawGrid);
+      if(!rawGrid.trim()||!Number.isInteger(grid)||grid<8||grid>64)throw new Error('Choose a whole voxel detail from 8 to 64.');
+      const front=new Uint8Array(await reconFront.files[0].arrayBuffer()),side=new Uint8Array(await reconSide.files[0].arrayBuffer());
+      await assetCreate('reconstruction',{front_png_base64:bytesBase64(front),side_png_base64:bytesBase64(side),bounds,grid,
+        surface:document.getElementById('director-recon-surface').value},reconButton,message);
+    }catch(error){message.textContent=String(error.message);}
   });
   checkModelButton.addEventListener("click",async()=>{
     const file=document.getElementById("director-model").files?.[0];
@@ -1152,7 +1255,7 @@
     const speed=(keys.has("ShiftLeft")?16:7)*dt;
     const f=(keys.has("KeyW")||keys.has("ArrowUp")?1:0)-(keys.has("KeyS")||keys.has("ArrowDown")?1:0);
     const strafe=(keys.has("KeyD")?1:0)-(keys.has("KeyA")?1:0);
-    const dx=(Math.sin(camera.yaw)*-f+Math.cos(camera.y)*strafe)*speed;
+    const dx=(Math.sin(camera.yaw)*-f+Math.cos(camera.yaw)*strafe)*speed;
     const dz=(-Math.cos(camera.yaw)*f-Math.sin(camera.yaw)*strafe)*speed;
     const nx=camera.x+dx,nz=camera.z+dz;
     if(!blocked(nx,nz)){camera.x=nx;camera.z=nz;} else hits++;

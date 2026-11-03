@@ -1,0 +1,78 @@
+{
+  "artifact": {
+    "bytes": 6076,
+    "file": "morphed.glb",
+    "sha256": "917bcedaf7ca175d83e5c58b14ef1f342816ff72c9edce02c09aa47f6509b549"
+  },
+  "artifact_bytes": 6076,
+  "artifact_sha256": "917bcedaf7ca175d83e5c58b14ef1f342816ff72c9edce02c09aa47f6509b549",
+  "axis_extent": 2.0,
+  "geometry": {
+    "materials": 2,
+    "meshes": 2,
+    "primitives": 2,
+    "triangles": 24,
+    "valid": true,
+    "vertices": 48
+  },
+  "independently_blender_verified": false,
+  "limitations": [
+    "static self-contained uncompressed GLB only; skins/animations/shape targets refuse",
+    "one scene; differently transformed instances and unsupported geometry extensions refuse",
+    "global authored six-control deformation, not semantic face/body fitting or learned reconstruction",
+    "topology/UV/image bytes retained; severe deformation can stretch authored textures",
+    "structural and triangle preservation is not target-engine or artistic acceptance"
+  ],
+  "morph": {
+    "bend_degrees": 0.0,
+    "height": 1.0,
+    "length": 1.5,
+    "taper": 1.0,
+    "twist_degrees": 0.0,
+    "width": 1.0
+  },
+  "neural_model_used": false,
+  "owner_art_accepted": false,
+  "pivot_world": [
+    10.0,
+    0.0,
+    0.0
+  ],
+  "preservation": {
+    "indices_uvs_images_materials_preserved": true,
+    "node_hierarchy_transforms_names_preserved": true,
+    "normal_and_tangent_fields_transformed": true,
+    "original_bin_prefix_unchanged": true,
+    "original_bin_sha256": "236727043c5a69c978375fc930d5205c6f351a2556a21757e7e8f84f04b4b7d4",
+    "source_overwritten": false
+  },
+  "provider_spend_usd": 0,
+  "schema": "mgr.forge.imported-morph.v1",
+  "source_bytes": 4264,
+  "source_sha256": "3e94a29c238d12718f55973795501bd82d89a8620263372c2e3ccade5362f21b",
+  "status": "NATIVE_STATIC_GLB_MORPH",
+  "world_bounds_after": {
+    "max": [
+      15.25,
+      2.0,
+      0.5
+    ],
+    "min": [
+      4.75,
+      0.0,
+      -0.5
+    ]
+  },
+  "world_bounds_before": {
+    "max": [
+      13.5,
+      2.0,
+      0.5
+    ],
+    "min": [
+      6.5,
+      0.0,
+      -0.5
+    ]
+  }
+}

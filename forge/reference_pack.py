@@ -17,7 +17,9 @@ MAX_IMAGES = 128
 MAX_BYTES = 30_000_000
 
 
-def png_size(path):
+def png_size(path, *, minimum_dimension=64):
+    if type(minimum_dimension) is not int or not 1 <= minimum_dimension <= 64:
+        raise ValueError("invalid PNG minimum dimension")
     source = Path(path)
     if not source.is_file() or source.is_symlink() or source.suffix.lower() != ".png":
         raise ValueError("ordinary existing PNG required")
@@ -28,7 +30,7 @@ def png_size(path):
     if header[:8] != b"\x89PNG\r\n\x1a\n" or header[12:16] != b"IHDR":
         raise ValueError("invalid PNG reference header")
     width, height = struct.unpack_from(">II", header, 16)
-    if not 64 <= width <= 8192 or not 64 <= height <= 8192:
+    if not minimum_dimension <= width <= 8192 or not minimum_dimension <= height <= 8192:
         raise ValueError("reference dimensions out of bounds")
     return width, height
 

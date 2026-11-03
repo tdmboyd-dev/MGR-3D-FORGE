@@ -1,0 +1,33 @@
+{
+  "parks": [
+    {
+      "ground_plan": "procedural-not-observed",
+      "id": "park-000-001",
+      "lot": [
+        1,
+        0
+      ],
+      "tree_ids": [
+        "park-000-001-tree-00",
+        "park-000-001-tree-01",
+        "park-000-001-tree-02"
+      ]
+    },
+    {
+      "ground_plan": "procedural-not-observed",
+      "id": "park-001-001",
+      "lot": [
+        1,
+        1
+      ],
+      "tree_ids": [
+        "park-001-001-tree-00",
+        "park-001-001-tree-01",
+        "park-001-001-tree-02"
+      ]
+    }
+  ],
+  "provenance": "MGR procedural generated assets",
+  "schema": "mgr.forge.environment.v1",
+  "tree_count": 6
+}

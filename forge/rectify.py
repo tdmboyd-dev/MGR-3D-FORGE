@@ -96,23 +96,27 @@ def warp_perspective_to_orthographic(src_pixels, src_size, dst_size, H):
     for dy in range(dh):
         row = []
         for dx in range(dw):
-            pt = apply_homography(H, dx + 0.5, dy + 0.5)
+            # Quad coordinates and source samples both name integer pixel
+            # centers. Adding half a pixel here shifted even identity masks.
+            pt = apply_homography(H, dx, dy)
             if pt is None:
                 row.append(0)
                 continue
             sx, sy = pt
+            if sx < -1e-9 or sy < -1e-9 or sx > sw-1+1e-9 or sy > sh-1+1e-9:
+                row.append(0)
+                continue
+            sx,sy=min(max(sx,0),sw-1),min(max(sy,0),sh-1)
             # bilinear sample
             x0 = int(math.floor(sx))
             y0 = int(math.floor(sy))
-            if x0 < 0 or y0 < 0 or x0 + 1 >= sw or y0 + 1 >= sh:
-                row.append(0)
-                continue
+            x1,y1=min(x0+1,sw-1),min(y0+1,sh-1)
             fx = sx - x0
             fy = sy - y0
             v00 = src_pixels[y0][x0]
-            v10 = src_pixels[y0][x0 + 1]
-            v01 = src_pixels[y0 + 1][x0]
-            v11 = src_pixels[y0 + 1][x0 + 1]
+            v10 = src_pixels[y0][x1]
+            v01 = src_pixels[y1][x0]
+            v11 = src_pixels[y1][x1]
             val = (v00 * (1 - fx) * (1 - fy) + v10 * fx * (1 - fy)
                    + v01 * (1 - fx) * fy + v11 * fx * fy)
             row.append(255 if val >= 128 else 0)

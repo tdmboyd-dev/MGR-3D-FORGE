@@ -30,12 +30,17 @@ from .human_jobs import start_human_lipsync_job,human_lipsync_job_status
 from .world_composition_jobs import start_world_composition,world_composition_status
 from .request_binding import verify_request
 from .job_history import list_saved_jobs, reopen_saved_job
+from .creation_asset_jobs import create_asset_job, asset_job_status
 
 
 MAX_REQUEST = 1_800_000
 MAX_DOWNLOAD = 256_000_000
 JOB_ID = re.compile(r"[a-f0-9]{24}\Z")
 FILES = {"relief.glb": "model/gltf-binary", "relief.obj": "text/plain",
+         "hull.glb": "model/gltf-binary", "hull.obj": "text/plain", "hull.mtl": "text/plain",
+         "reconstruction.json": "application/json", "morphed.glb": "model/gltf-binary",
+         "original.glb": "model/gltf-binary", "morph-receipt.json": "application/json",
+         "uv-mapped.glb": "model/gltf-binary", "uv-receipt.json": "application/json", "diagnostic-checker.png": "image/png",
          "relief.mtl": "text/plain", "manifest.json": "application/json",
          "world.glb": "model/gltf-binary", "world.obj": "text/plain",
          "world.mtl": "text/plain", "world-editor.html": "text/html",
@@ -138,6 +143,12 @@ class ForgeWorkstation:
         return folder
 
     def command(self, route, payload):
+        if route in ('/api/reconstruction-create', '/api/morph-create', '/api/uv-create'):
+            return create_asset_job(self, route.removeprefix('/api/').removesuffix('-create'), payload)
+        if route in ('/api/reconstruction-status', '/api/morph-status', '/api/uv-status'):
+            if not isinstance(payload, dict) or set(payload) != {'request_id'}:
+                raise ValueError('original asset status requires only request_id')
+            return asset_job_status(self, route.removeprefix('/api/').removesuffix('-status'), payload['request_id'])
         if route == '/api/saved-jobs':
             return list_saved_jobs(self, payload)
         if route == '/api/saved-job-reopen':
@@ -335,14 +346,19 @@ def make_handler(studio):
         server_version = "MGR-Forge-Local/1"
 
         def send_bytes(self, status, body, content_type):
-            self.send_response(status)
-            self.send_header("Content-Type", content_type)
-            self.send_header("Content-Length", str(len(body)))
-            self.send_header("Cache-Control", "no-store")
-            self.send_header("X-Content-Type-Options", "nosniff")
-            self.send_header("Content-Security-Policy", "default-src 'self' blob: data: 'unsafe-inline'; connect-src 'self'; img-src 'self' blob: data:")
-            self.end_headers()
-            self.wfile.write(body)
+            try:
+                self.send_response(status)
+                self.send_header("Content-Type", content_type)
+                self.send_header("Content-Length", str(len(body)))
+                self.send_header("Cache-Control", "no-store")
+                self.send_header("X-Content-Type-Options", "nosniff")
+                self.send_header("Content-Security-Policy", "default-src 'self' blob: data: 'unsafe-inline'; connect-src 'self'; img-src 'self' blob: data:")
+                self.end_headers()
+                self.wfile.write(body)
+            except ConnectionError:
+                # A browser can stop waiting after the durable native action.
+                # Do not change/retry the saved job because its reply was lost.
+                self.close_connection = True
 
         def _valid_local_host(self):
             return self.headers.get("Host") == f"127.0.0.1:{self.server.server_port}"
@@ -386,7 +402,7 @@ def make_handler(studio):
                 if not self._owner_authorized():
                     return self.send_bytes(403, b"forbidden", "text/plain")
                 return self.send_bytes(200, studio.page.encode("utf-8"), "text/html; charset=utf-8")
-            match = re.fullmatch(r"/files/([a-f0-9]{24})/(relief|edited|candidate|creature|biome|human|human/facial-animation|composed)?/?([a-z-]+\.(?:glb|obj|mtl|json|html|zip|blend|png)|scene\.blend)", path)
+            match = re.fullmatch(r"/files/([a-f0-9]{24})/(relief|edited|candidate|creature|biome|human|human/facial-animation|composed|reconstructed|morphed|uv)?/?([a-z-]+\.(?:glb|obj|mtl|json|html|zip|blend|png)|scene\.blend)", path)
             if match:
                 jid, subfolder, name = match.groups()
                 # All generated, uploaded and private project files require the same Studio token.
@@ -410,7 +426,7 @@ def make_handler(studio):
         def do_POST(self):
             if not self._valid_local_host():
                 return self.reject_post(403, b"forbidden host")
-            if self.path not in ("/api/saved-jobs", "/api/saved-job-reopen", "/api/world-context", "/api/request-verify", "/api/asset-sources", "/api/asset-search", "/api/relief", "/api/character", "/api/world", "/api/world-job", "/api/world-job-status", "/api/creature-create", "/api/creature-status", "/api/biome-create", "/api/biome-status", "/api/human-lipsync-start", "/api/human-lipsync-status", "/api/world-compose-create", "/api/world-compose-status", "/api/godot", "/api/blender", "/api/blender-status"):
+            if self.path not in ("/api/uv-create", "/api/uv-status", "/api/reconstruction-create", "/api/reconstruction-status", "/api/morph-create", "/api/morph-status", "/api/saved-jobs", "/api/saved-job-reopen", "/api/world-context", "/api/request-verify", "/api/asset-sources", "/api/asset-search", "/api/relief", "/api/character", "/api/world", "/api/world-job", "/api/world-job-status", "/api/creature-create", "/api/creature-status", "/api/biome-create", "/api/biome-status", "/api/human-lipsync-start", "/api/human-lipsync-status", "/api/world-compose-create", "/api/world-compose-status", "/api/godot", "/api/blender", "/api/blender-status"):
                 return self.reject_post(404, b"not found")
             if not self._owner_authorized():
                 return self.reject_post(403, b"forbidden")

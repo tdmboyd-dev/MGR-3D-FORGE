@@ -1,0 +1,34 @@
+{
+  "room_sets": [
+    {
+      "building_id": "building-000-000",
+      "count": 2,
+      "door_width": 1.2,
+      "floor_elevation": 0,
+      "owner_approved": false,
+      "provenance": "MGR-procedural-hypothesis",
+      "reference_observed": false,
+      "room_ids": [
+        "building-000-000-west",
+        "building-000-000-east"
+      ],
+      "wall_height": 3.0
+    },
+    {
+      "building_id": "building-001-000",
+      "count": 2,
+      "door_width": 1.2,
+      "floor_elevation": 0,
+      "owner_approved": false,
+      "provenance": "MGR-procedural-hypothesis",
+      "reference_observed": false,
+      "room_ids": [
+        "building-001-000-west",
+        "building-001-000-east"
+      ],
+      "wall_height": 3.0
+    }
+  ],
+  "schema": "mgr.forge.interiors.v1",
+  "source": "generated design hypothesis, not sensed reality"
+}

@@ -1,0 +1,51 @@
+{
+  "negative": {
+    "frozen_clip_retains_skin_and_animation_inventory": true,
+    "frozen_output_accessors": 50,
+    "independently_refused_for_no_vertex_motion": true,
+    "sha256": "a23d59215352362ce21e47ca0a5f6987172f887af678144e9309bf7fd3024782"
+  },
+  "owner_art_accepted": false,
+  "positive": {
+    "animation_bones": [
+      "tail_01",
+      "tail_02",
+      "left_wing_01",
+      "right_wing_01"
+    ],
+    "blender_version": "5.2.2 LTS",
+    "bones": 19,
+    "max_evaluated_vertex_motion_m": 0.99043,
+    "mesh_objects": 1,
+    "mesh_source_sha256": "fd6e0184445ae96b5d924ea3645112c227456d68bd2e4ea4a7b02fd737ba7e6a",
+    "owner_visual_acceptance": false,
+    "preview_png_sha256": "ee025e8bc03fe33867fa3ff16050b51359371c6fa2ac33a7a990028ebb2027f8",
+    "production_rig_accepted": false,
+    "quality_limitations": [
+      "nearest-segment weights only; no joint-aware anatomical skin",
+      "no locomotion, cloth, facial controls or game-performance acceptance",
+      "fixed skeleton family derived from generated creature DNA"
+    ],
+    "receiver_evaluated_deformation_verified": true,
+    "receiver_evaluated_frames": [
+      1,
+      16
+    ],
+    "receiver_evaluated_vertices": 1333,
+    "receiver_max_vertex_motion_m": 0.99043,
+    "receiver_mesh_vertices": 1333,
+    "receiver_moving_vertices": 220,
+    "reimported_animation_actions": 1,
+    "reimported_armature_bones": 19,
+    "reopened_in_second_process": true,
+    "rigged_glb_bytes": 97828,
+    "rigged_glb_sha256": "50555b34dcfc4e70daaadf2135d7f2200f96b77b5c221f238a41db829ad7dbcb",
+    "schema": "mgr.forge.creature-skin-smoke.v1",
+    "status": "LOCAL_BLENDER_REIMPORT_AND_RENDER_PASS",
+    "vertices": 1196,
+    "weighted_vertices": 1196
+  },
+  "production_rig_accepted": false,
+  "schema": "mgr.forge.creature-receiver-regression.v1",
+  "status": "PASS"
+}

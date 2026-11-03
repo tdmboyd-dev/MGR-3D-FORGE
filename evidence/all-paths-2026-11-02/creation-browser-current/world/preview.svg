@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820" role="img" aria-label="MGR Forge generated neighborhood">
+<rect width="100%" height="100%" fill="#0c1420"/>
+<polygon points="600.00,297.25 866.30,451.00 600.00,604.75 333.70,451.00" fill="#315f49" stroke="#17212b" stroke-width="0.7"/>
+<polygon points="600.00,296.68 629.59,313.76 363.29,467.51 333.70,450.43" fill="#293443" stroke="#17212b" stroke-width="0.7"/>
+<polygon points="718.35,365.01 747.94,382.10 481.65,535.85 452.06,518.76" fill="#293443" stroke="#17212b" stroke-width="0.7"/>
+<polygon points="836.71,433.35 866.30,450.43 600.00,604.18 570.41,587.10" fill="#293443" stroke="#17212b" stroke-width="0.7"/>
+<polygon points="600.00,296.68 866.30,450.43 836.71,467.51 570.41,313.76" fill="#293443" stroke="#17212b" stroke-width="0.7"/>
+<polygon points="481.65,365.01 747.94,518.76 718.35,535.85 452.06,382.10" fill="#293443" stroke="#17212b" stroke-width="0.7"/>
+<polygon points="363.29,433.35 629.59,587.10 600.00,604.18 333.70,450.43" fill="#293443" stroke="#17212b" stroke-width="0.7"/>
+<polygon points="537.70,386.08 594.09,418.64 594.09,353.34 537.70,320.79" fill="#d3d1c7" stroke="#17212b" stroke-width="0.7"/>
+<polygon points="662.30,379.25 594.09,418.64 594.09,353.34 662.30,313.96" fill="#83817d" stroke="#17212b" stroke-width="0.7"/>
+<polygon points="605.91,281.40 662.30,313.96 594.09,353.34 537.70,320.79" fill="#aaa8a2" stroke="#17212b" stroke-width="0.7"/>
+<polygon points="424.07,453.88 476.66,484.24 476.66,370.94 424.07,340.58" fill="#d48165" stroke="#17212b" stroke-width="0.7"/>
+<polygon points="539.22,448.12 476.66,484.24 476.66,370.94 539.22,334.82" fill="#8e4535" stroke="#17212b" stroke-width="0.7"/>
+<polygon points="486.63,304.46 539.22,334.82 476.66,370.94 424.07,340.58" fill="#ad5d49" stroke="#17212b" stroke-width="0.7"/>
+<text x="30" y="50" fill="white" font-family="sans-serif" font-size="28">MGR Forge Test Neighborhood</text>
+<text x="30" y="78" fill="#9cb6c5" font-family="sans-serif" font-size="16">2 buildings · CPU procedural preview (not a GLB render)</text>
+</svg>

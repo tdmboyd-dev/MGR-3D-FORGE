@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "actual_browser": "installed Chrome headless",
+  "phases": [
+    {
+      "status": "PASS",
+      "phase": "create",
+      "checks": [
+        "static original uploaded, native morph saved and repeated without duplicate",
+        "stop-waiting preserves unknown reply and durable original identity",
+        "actual saved geometry renders and orbits",
+        "native UV coordinates authored from upload, hash-checked preview and duplicate-free replay",
+        "morph reopen/download exact SHA-256",
+        "reconstruction reopen/download exact SHA-256",
+        "uv reopen/download exact SHA-256",
+        "UV diagnostic download exact PNG and SHA-256",
+        "camera +X strafe at initial heading",
+        "390px mobile layout no horizontal overflow"
+      ],
+      "errors": []
+    },
+    {
+      "status": "PASS",
+      "phase": "restart",
+      "checks": [
+        "morph reopen/download exact SHA-256",
+        "reconstruction reopen/download exact SHA-256",
+        "uv reopen/download exact SHA-256",
+        "UV diagnostic download exact PNG and SHA-256",
+        "camera +X strafe at initial heading",
+        "390px mobile layout no horizontal overflow"
+      ],
+      "errors": []
+    }
+  ],
+  "native_jobs": 3,
+  "fresh_server_restart": true,
+  "model_provider_calls": 0,
+  "source_sha256": "3e94a29c238d12718f55973795501bd82d89a8620263372c2e3ccade5362f21b",
+  "limits": "Original synthetic static GLB and calibrated masks; no arbitrary photo likeness or production claim."
+}

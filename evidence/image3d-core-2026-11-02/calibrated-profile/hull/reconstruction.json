@@ -1,0 +1,157 @@
+{
+  "bbox_max_m": [
+    0.75,
+    3.0,
+    0.625
+  ],
+  "bbox_min_m": [
+    -0.75,
+    0.0,
+    -0.625
+  ],
+  "bounds_m": [
+    2.0,
+    3.0,
+    2.0
+  ],
+  "evidence_level": "MEASURED_SILHOUETTE_HULL",
+  "external_api_calls": 0,
+  "fit": {
+    "legacy_iou_field_is_recall": true,
+    "measures": "voxel-hull-mask-recall; not final smoothed-mesh silhouette IoU",
+    "status": "PASS",
+    "threshold": 0.97,
+    "worst_view_iou": 1.0
+  },
+  "glb": {
+    "bytes": 182296,
+    "inspection": {
+      "index_component_types": [
+        5125
+      ],
+      "limitations": [
+        "Structural triangle mesh verification only, not independent Blender rendering",
+        "Sparse, nonindexed and externally referenced glTF not yet supported"
+      ],
+      "materials": 1,
+      "meshes": 1,
+      "primitives": 1,
+      "triangles": 7552,
+      "valid": true,
+      "vertices": 3778
+    },
+    "sha256": "049e7c0fd83e3d39d6c53f5e6216e9ac7a9ed3a7151a1b9ef52df363771d216d"
+  },
+  "grid": 32,
+  "hidden_surface_inference": false,
+  "identity_verified": false,
+  "internally_consistent": true,
+  "limitations": [
+    "orthographic silhouettes only; perspective references need rectification",
+    "concave detail no view can see is bounded by the hull, not measured",
+    "a silhouette set constrains shape; it does not prove identity or likeness",
+    "masks must be pre-segmented by the owner/segmentation stage",
+    "voxel resolution bounds surface fidelity"
+  ],
+  "mesh_bbox_max_m": [
+    0.75,
+    3.0,
+    0.625
+  ],
+  "mesh_bbox_min_m": [
+    -0.75,
+    0.0,
+    -0.625
+  ],
+  "method": "orthographic-silhouette-space-carving",
+  "mirrored_axes": [
+    "back",
+    "right"
+  ],
+  "obj": {
+    "bytes": 495863,
+    "sha256": "3b03faef9cc4ccd6050c2d5e23fc23dd7986c37597d3be998f24e3c9a77d8248"
+  },
+  "occupied_voxels": 11488,
+  "quads": 3776,
+  "schema": "mgr.forge.multiview-silhouette.v1",
+  "smoothing": "area-weighted-vertex-normals",
+  "source_provenance": {
+    "hidden_geometry": "visual-hull bound only",
+    "kind": "owner-supplied-measured-orthographic-masks",
+    "source_hashes": [
+      "a730f6f7d7c91b3d5f4868f8d73411b6831b464ed736cc178bd6bdf6947457d9",
+      "d92745cbdebfbe731d6b3cebc8fd629cf70236e70f7dfba609a6ca050084a626"
+    ]
+  },
+  "status": "MATERIALIZED",
+  "surface": "marching-cubes-fan",
+  "surface_audit": {
+    "edges": {
+      "boundary_edges": 0,
+      "degenerate_triangles": 0,
+      "edge_closed_candidate": true,
+      "limitations": [
+        "position-based approximate welding; not exact topology",
+        "no self-intersection, winding orientation, solid volume, or thickness proof",
+        "edge-closed candidate does not imply 3D-print readiness"
+      ],
+      "nonmanifold_edges": 0,
+      "schema": "mgr.forge.surface-edge-audit.v1",
+      "status": "PASS",
+      "triangles": 7552,
+      "unique_edges": 11328
+    },
+    "geometry": {
+      "bad_index_triangles": [],
+      "degenerate_triangles": [],
+      "passed": true,
+      "triangles": 7552
+    },
+    "limitations": [
+      "no hidden-surface accuracy or self-intersection proof",
+      "surface nets rounds voxel corners; voxel volume is not final mesh volume"
+    ]
+  },
+  "surface_method": "voxel-centre-midpoint-surface-nets",
+  "triangles": 7552,
+  "vertices": 3778,
+  "view_axes": [
+    "front",
+    "left"
+  ],
+  "views": [
+    {
+      "axis": "front",
+      "hull_shadow_iou": 1.0,
+      "mask": "front.png",
+      "mask_coverage": 0.617188,
+      "mask_interpretation": "8-bit luminance multiplied by alpha; value >= threshold is occupied",
+      "pixels": [
+        32,
+        32
+      ],
+      "sha256": "a730f6f7d7c91b3d5f4868f8d73411b6831b464ed736cc178bd6bdf6947457d9",
+      "threshold": 128
+    },
+    {
+      "axis": "left",
+      "hull_shadow_iou": 1.0,
+      "mask": "left.png",
+      "mask_coverage": 0.546875,
+      "mask_interpretation": "8-bit luminance multiplied by alpha; value >= threshold is occupied",
+      "pixels": [
+        32,
+        32
+      ],
+      "sha256": "d92745cbdebfbe731d6b3cebc8fd629cf70236e70f7dfba609a6ca050084a626",
+      "threshold": 128
+    }
+  ],
+  "volume_m3": 4.207031,
+  "voxel_size_m": [
+    0.0625,
+    0.09375,
+    0.0625
+  ]
+}

@@ -1,0 +1,18 @@
+test_actual_atlas_preserves_source_parts_materials_and_triangle_positions (tests.test_uv_authoring.UVAuthoringTests.test_actual_atlas_preserves_source_parts_materials_and_triangle_positions) ... ok
+test_all_supported_attributes_are_duplicated_and_tangents_follow_new_uvs (tests.test_uv_authoring.UVAuthoringTests.test_all_supported_attributes_are_duplicated_and_tangents_follow_new_uvs) ... ok
+test_budgets_and_malformed_inputs_refuse_as_validation_errors (tests.test_uv_authoring.UVAuthoringTests.test_budgets_and_malformed_inputs_refuse_as_validation_errors) ... ok
+test_every_float32_uv_triangle_is_nonzero_inside_unique_padded_cells (tests.test_uv_authoring.UVAuthoringTests.test_every_float32_uv_triangle_is_nonzero_inside_unique_padded_cells) ... ok
+test_exact_source_binding_determinism_and_new_revision_preservation (tests.test_uv_authoring.UVAuthoringTests.test_exact_source_binding_determinism_and_new_revision_preservation) ... ok
+test_existing_uv_or_texture_and_dynamic_sources_refuse_before_output_allocation (tests.test_uv_authoring.UVAuthoringTests.test_existing_uv_or_texture_and_dynamic_sources_refuse_before_output_allocation) ... ok
+test_shared_indices_and_aliased_colors_cannot_amplify_past_output_budget (tests.test_uv_authoring.UVAuthoringTests.test_shared_indices_and_aliased_colors_cannot_amplify_past_output_budget) ... ok
+test_actual_uv_job_replays_after_restart_and_reopens_with_source_verification (tests.test_uv_jobs.UVJobsTests.test_actual_uv_job_replays_after_restart_and_reopens_with_source_verification) ... ok
+test_changed_parameters_or_original_bytes_cannot_reuse_saved_identity (tests.test_uv_jobs.UVJobsTests.test_changed_parameters_or_original_bytes_cannot_reuse_saved_identity) ... ok
+test_existing_uv_textured_and_invalid_settings_refuse_without_allocation (tests.test_uv_jobs.UVJobsTests.test_existing_uv_textured_and_invalid_settings_refuse_without_allocation) ... ok
+test_large_shared_index_mesh_reopens_with_actual_multi_megabyte_chart_receipt (tests.test_uv_jobs.UVJobsTests.test_large_shared_index_mesh_reopens_with_actual_multi_megabyte_chart_receipt) ... ok
+test_oversized_serialized_preflight_receipt_refuses_before_allocation (tests.test_uv_jobs.UVJobsTests.test_oversized_serialized_preflight_receipt_refuses_before_allocation) ... ok
+test_request_original_model_and_receipt_tamper_refuse_replay_status_and_reopen (tests.test_uv_jobs.UVJobsTests.test_request_original_model_and_receipt_tamper_refuse_replay_status_and_reopen) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 7.926s
+
+OK

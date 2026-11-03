@@ -30,8 +30,13 @@ class SourceHandbookTests(unittest.TestCase):
         for node in ast.walk(tree):
             if isinstance(node,ast.Call) and isinstance(node.func,ast.Attribute) and node.func.attr=="add_parser" and node.args and isinstance(node.args[0],ast.Constant) and isinstance(node.args[0].value,str):
                 names.add(node.args[0].value)
-        self.assertEqual(len(names),64)
         handbook=(ROOT/"docs/FORGE-ENGINEERING-HANDBOOK.md").read_text(encoding="utf8")
+        actions=handbook.split('## 5 —',1)[1].split('## 6 —',1)[0]
+        documented=set(re.findall(r'^\| `([^`]+)` \|',actions,re.MULTILINE))
+        self.assertEqual(documented,names)
+        count=re.search(r'\*\*(\d+) actual CLI actions\*\*',actions)
+        self.assertIsNotNone(count)
+        self.assertEqual(int(count.group(1)),len(names))
         for name in names:
             self.assertIn("| "+chr(96)+name+chr(96)+" |",handbook)
         self.assertIn("MGR-API-MCP",handbook)

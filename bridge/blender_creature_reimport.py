@@ -1,6 +1,7 @@
 """Independent Blender process validates exported skinned GLB and renders preview."""
 import hashlib
 import json
+import math
 from pathlib import Path
 import sys
 import bpy
@@ -35,6 +36,29 @@ def main():
     if len(skinned)!=1:
         raise RuntimeError("receiving GLB missing unique deforming skinned mesh")
     mesh=skinned[0]
+    # The exporting process moving vertices does not prove an exported skin and
+    # animation still deform after import. Evaluate the receiving dependency
+    # graph at both authored witness frames and record its own measurements.
+    def evaluated_positions(frame):
+        bpy.context.scene.frame_set(frame)
+        bpy.context.view_layer.update()
+        evaluated=mesh.evaluated_get(bpy.context.evaluated_depsgraph_get())
+        received=evaluated.to_mesh()
+        try:
+            return [evaluated.matrix_world@vertex.co for vertex in received.vertices]
+        finally:
+            evaluated.to_mesh_clear()
+    first,last=evaluated_positions(1),evaluated_positions(16)
+    # glTF may split vertices at material/normal seams during export, so the
+    # receiver compares its own stable vertex order across frames.
+    if not first or len(first)!=len(last) or len(first)!=len(mesh.data.vertices):
+        raise RuntimeError('receiving deformation changed imported vertex correspondence')
+    displacement=[(a-b).length for a,b in zip(first,last)]
+    if any(not math.isfinite(value) for value in displacement) or max(displacement)<.01:
+        raise RuntimeError('receiving skin/animation failed to deform imported vertices')
+    receiver_motion=max(displacement)
+    bpy.context.scene.frame_set(1)
+    bpy.context.view_layer.update()
     for helper in meshes:
         if helper is not mesh:
             helper.hide_render=True
@@ -64,6 +88,12 @@ def main():
                   "reopened_in_second_process":True,
                   "reimported_armature_bones":len(rig.data.bones),
                   "reimported_animation_actions":len(bpy.data.actions),
+                  "receiver_evaluated_deformation_verified":True,
+                  "receiver_evaluated_frames":[1,16],
+                  "receiver_evaluated_vertices":len(first),
+                  "receiver_mesh_vertices":len(mesh.data.vertices),
+                  "receiver_max_vertex_motion_m":round(receiver_motion,5),
+                  "receiver_moving_vertices":sum(value>1e-6 for value in displacement),
                   "preview_png_sha256":hashlib.sha256(image.read_bytes()).hexdigest(),
                   "owner_visual_acceptance":False})
     (root/"skin-proof.json").write_text(json.dumps(proof,sort_keys=True,indent=2)+"\n",

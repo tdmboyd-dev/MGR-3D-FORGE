@@ -1,0 +1,161 @@
+test_full_frame_subject_is_capped_at_all_capture_boundaries (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_full_frame_subject_is_capped_at_all_capture_boundaries) ... FAIL
+test_interior_measured_box_has_no_half_voxel_translation (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_interior_measured_box_has_no_half_voxel_translation) ... FAIL
+test_invalid_occupancy_bounds_and_budget_refuse_before_output (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_invalid_occupancy_bounds_and_budget_refuse_before_output) ...
+  test_invalid_occupancy_bounds_and_budget_refuse_before_output (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_invalid_occupancy_bounds_and_budget_refuse_before_output) (bounds=(2.0, 2.0, 2.0), size=4) ... ERROR
+  test_invalid_occupancy_bounds_and_budget_refuse_before_output (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_invalid_occupancy_bounds_and_budget_refuse_before_output) (bounds=(2.0, 2.0, 2.0), size=True) ... FAIL
+  test_invalid_occupancy_bounds_and_budget_refuse_before_output (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_invalid_occupancy_bounds_and_budget_refuse_before_output) (bounds=(2.0, nan, 2.0), size=4) ... FAIL
+  test_invalid_occupancy_bounds_and_budget_refuse_before_output (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_invalid_occupancy_bounds_and_budget_refuse_before_output) (bounds=(2.0, 0.0, 2.0), size=4) ... FAIL
+  test_invalid_occupancy_bounds_and_budget_refuse_before_output (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_invalid_occupancy_bounds_and_budget_refuse_before_output) (bounds=(2.0, 2.0, 2.0), size=97) ... ERROR
+  test_invalid_occupancy_bounds_and_budget_refuse_before_output (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_invalid_occupancy_bounds_and_budget_refuse_before_output) (bounds=(2.0, 2.0, 2.0), size=4) ... ERROR
+test_invalid_occupancy_bounds_and_budget_refuse_before_output (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_invalid_occupancy_bounds_and_budget_refuse_before_output) ... FAIL
+test_only_true_sign_changing_grid_edges_emit_faces (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_only_true_sign_changing_grid_edges_emit_faces) ... FAIL
+test_voxel_center_translation_moves_the_mesh_exactly_one_step (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_voxel_center_translation_moves_the_mesh_exactly_one_step) ... FAIL
+
+======================================================================
+ERROR: test_invalid_occupancy_bounds_and_budget_refuse_before_output (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_invalid_occupancy_bounds_and_budget_refuse_before_output) (bounds=(2.0, 2.0, 2.0), size=4)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\tests\test_reconstruction_surface.py", line 101, in test_invalid_occupancy_bounds_and_budget_refuse_before_output
+    surface_nets(occupancy, bounds, size)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\forge\marching.py", line 69, in surface_nets
+    if not _is_mixed(occupancy, i, j, k, grid):
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\forge\marching.py", line 38, in _is_mixed
+    corners = [_corner_value(occupancy, i, j, k, *_CORNERS[c], grid) for c in range(8)]
+               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\forge\marching.py", line 34, in _corner_value
+    return occupancy[jj][kk][ii]
+           ~~~~~~~~~^^^^
+IndexError: list index out of range
+
+======================================================================
+ERROR: test_invalid_occupancy_bounds_and_budget_refuse_before_output (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_invalid_occupancy_bounds_and_budget_refuse_before_output) (bounds=(2.0, 2.0, 2.0), size=97)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\tests\test_reconstruction_surface.py", line 101, in test_invalid_occupancy_bounds_and_budget_refuse_before_output
+    surface_nets(occupancy, bounds, size)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\forge\marching.py", line 69, in surface_nets
+    if not _is_mixed(occupancy, i, j, k, grid):
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\forge\marching.py", line 38, in _is_mixed
+    corners = [_corner_value(occupancy, i, j, k, *_CORNERS[c], grid) for c in range(8)]
+               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\forge\marching.py", line 34, in _corner_value
+    return occupancy[jj][kk][ii]
+           ~~~~~~~~~~~~~^^^^
+IndexError: list index out of range
+
+======================================================================
+ERROR: test_invalid_occupancy_bounds_and_budget_refuse_before_output (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_invalid_occupancy_bounds_and_budget_refuse_before_output) (bounds=(2.0, 2.0, 2.0), size=4)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\tests\test_reconstruction_surface.py", line 101, in test_invalid_occupancy_bounds_and_budget_refuse_before_output
+    surface_nets(occupancy, bounds, size)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\forge\marching.py", line 69, in surface_nets
+    if not _is_mixed(occupancy, i, j, k, grid):
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\forge\marching.py", line 38, in _is_mixed
+    corners = [_corner_value(occupancy, i, j, k, *_CORNERS[c], grid) for c in range(8)]
+               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\forge\marching.py", line 34, in _corner_value
+    return occupancy[jj][kk][ii]
+           ~~~~~~~~~^^^^
+IndexError: list index out of range
+
+======================================================================
+FAIL: test_full_frame_subject_is_capped_at_all_capture_boundaries (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_full_frame_subject_is_capped_at_all_capture_boundaries)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\tests\test_reconstruction_surface.py", line 64, in test_full_frame_subject_is_capped_at_all_capture_boundaries
+    self.assert_closed_outward(mesh)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\tests\test_reconstruction_surface.py", line 49, in assert_closed_outward
+    self.assertGreater(len(mesh.indices), 0)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 not greater than 0
+
+======================================================================
+FAIL: test_interior_measured_box_has_no_half_voxel_translation (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_interior_measured_box_has_no_half_voxel_translation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\tests\test_reconstruction_surface.py", line 72, in test_interior_measured_box_has_no_half_voxel_translation
+    self.assert_closed_outward(mesh)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\tests\test_reconstruction_surface.py", line 55, in assert_closed_outward
+    self.assertTrue(all(count == 1 and directed[last, first] == 1
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        for (first, last), count in directed.items()))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_invalid_occupancy_bounds_and_budget_refuse_before_output (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_invalid_occupancy_bounds_and_budget_refuse_before_output) (bounds=(2.0, 2.0, 2.0), size=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\tests\test_reconstruction_surface.py", line 100, in test_invalid_occupancy_bounds_and_budget_refuse_before_output
+    with self.subTest(bounds=bounds, size=size), self.assertRaises(ValueError):
+                                                 ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_occupancy_bounds_and_budget_refuse_before_output (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_invalid_occupancy_bounds_and_budget_refuse_before_output) (bounds=(2.0, nan, 2.0), size=4)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\tests\test_reconstruction_surface.py", line 100, in test_invalid_occupancy_bounds_and_budget_refuse_before_output
+    with self.subTest(bounds=bounds, size=size), self.assertRaises(ValueError):
+                                                 ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_occupancy_bounds_and_budget_refuse_before_output (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_invalid_occupancy_bounds_and_budget_refuse_before_output) (bounds=(2.0, 0.0, 2.0), size=4)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\tests\test_reconstruction_surface.py", line 100, in test_invalid_occupancy_bounds_and_budget_refuse_before_output
+    with self.subTest(bounds=bounds, size=size), self.assertRaises(ValueError):
+                                                 ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_occupancy_bounds_and_budget_refuse_before_output (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_invalid_occupancy_bounds_and_budget_refuse_before_output)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\tests\test_reconstruction_surface.py", line 104, in test_invalid_occupancy_bounds_and_budget_refuse_before_output
+    with self.assertRaises(ValueError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_only_true_sign_changing_grid_edges_emit_faces (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_only_true_sign_changing_grid_edges_emit_faces)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\tests\test_reconstruction_surface.py", line 82, in test_only_true_sign_changing_grid_edges_emit_faces
+    self.assert_closed_outward(mesh)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\tests\test_reconstruction_surface.py", line 55, in assert_closed_outward
+    self.assertTrue(all(count == 1 and directed[last, first] == 1
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        for (first, last), count in directed.items()))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_voxel_center_translation_moves_the_mesh_exactly_one_step (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_voxel_center_translation_moves_the_mesh_exactly_one_step)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\tests\test_reconstruction_surface.py", line 89, in test_voxel_center_translation_moves_the_mesh_exactly_one_step
+    self.assert_closed_outward(a)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\tests\test_reconstruction_surface.py", line 55, in assert_closed_outward
+    self.assertTrue(all(count == 1 and directed[last, first] == 1
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        for (first, last), count in directed.items()))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.114s
+
+FAILED (failures=8, errors=3)

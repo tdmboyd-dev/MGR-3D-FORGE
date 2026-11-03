@@ -1,0 +1,48 @@
+{
+  "asset_sha256": "250d5b5a0a2f45af5b39456e08ebee03d0e805a691925e3e4eae58d5b45b1f4a",
+  "buildings": [
+    {
+      "center": [
+        -12.0,
+        0,
+        -36.0
+      ],
+      "id": "building-000-001",
+      "material": "building-blue",
+      "size": [
+        12.798,
+        14.9373,
+        10.6056
+      ]
+    },
+    {
+      "center": [
+        12.0,
+        0,
+        12.0
+      ],
+      "id": "building-002-002",
+      "material": "building-blue",
+      "size": [
+        11.2083,
+        17.597401,
+        11.6718
+      ]
+    },
+    {
+      "center": [
+        36.0,
+        0,
+        36.0
+      ],
+      "id": "building-003-003",
+      "material": "building-stone",
+      "size": [
+        13.8103,
+        10.663,
+        9.1119
+      ]
+    }
+  ],
+  "schema": "mgr.forge.world-edit.v1"
+}

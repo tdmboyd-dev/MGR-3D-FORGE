@@ -1,0 +1,53 @@
+{
+  "limitations": [
+    "generated objects only",
+    "road entrance is a grid heuristic",
+    "no verified door portal or interior access",
+    "no image sensing"
+  ],
+  "objects": [
+    {
+      "confidence": "exact-generated-data",
+      "dimensions_m": [
+        11.4344,
+        11.4666,
+        13.8333
+      ],
+      "evidence": "generated-scene-geometry",
+      "id": "building-000-000",
+      "kind": "building",
+      "lot": [
+        0,
+        0
+      ],
+      "position_m": [
+        -12.0,
+        0,
+        -12.0
+      ],
+      "road_entrance": "r0-c0"
+    },
+    {
+      "confidence": "exact-generated-data",
+      "dimensions_m": [
+        10.6636,
+        19.8972,
+        12.6857
+      ],
+      "evidence": "generated-scene-geometry",
+      "id": "building-001-000",
+      "kind": "building",
+      "lot": [
+        0,
+        1
+      ],
+      "position_m": [
+        -12.0,
+        0,
+        12.0
+      ],
+      "road_entrance": "r1-c0"
+    }
+  ],
+  "schema": "mgr.forge.scene-consciousness.v1"
+}

@@ -1,0 +1,38 @@
+{
+  "blender_version": "5.2.2 LTS",
+  "limitations": [
+    "GLB mesh objects may combine multiple semantic world objects",
+    "data is from imported GLB, not scene understanding from pixels"
+  ],
+  "objects": [
+    {
+      "armature_modifiers": [],
+      "dimensions_m": [
+        102.0,
+        102.0,
+        18.447399
+      ],
+      "evidence": "direct-Blender-object-data",
+      "has_uv": false,
+      "kind": "MESH",
+      "location_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "materials": [
+        "grass",
+        "asphalt",
+        "building-stone",
+        "building-blue",
+        "roof"
+      ],
+      "name": "MGR Forge Test Neighborhood",
+      "parent": null,
+      "polygons": 204,
+      "vertices": 408
+    }
+  ],
+  "schema": "mgr.forge.blender-scene-facts.v1",
+  "status": "PASS"
+}

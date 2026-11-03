@@ -21,11 +21,11 @@ MAX_PIXELS = 24_000_000
 NAME = re.compile(r"[a-z][a-z0-9_-]{0,39}\Z")
 
 
-def _local_png(directory, value):
+def _local_png(directory, value, *, minimum_dimension=64):
     if not isinstance(value, str) or Path(value).name != value or value in (".", ".."):
         raise ValueError("PNG filename must be a local basename")
     path = directory / value
-    png_size(path)
+    png_size(path,minimum_dimension=minimum_dimension)
     return path
 
 
@@ -159,7 +159,9 @@ def materialize_unclothe_proxies(extracted_directory, output_directory, *, grid=
         name = part["id"]
         if not isinstance(name, str) or not NAME.fullmatch(name) or not part.get("owner_approved"):
             raise ValueError("only approved safe part IDs allowed")
-        source_file = _local_png(source, part.get("isolated_png"))
+        # Approved extraction is intentionally cropped. Its dimensions may be
+        # smaller than the original reference admission minimum of 64 pixels.
+        source_file = _local_png(source, part.get("isolated_png"),minimum_dimension=1)
         bounds = part.get("visible_pixel_bbox_xyxy")
         if (not isinstance(bounds, list) or len(bounds) != 4 or
             any(type(v) is not int for v in bounds) or

@@ -75,7 +75,6 @@ def decode_png(data):
     inflater = zlib.decompressobj()
     try:
         raw = inflater.decompress(bytes(compressed), expected + 1)
-        raw += inflater.flush()
     except zlib.error as error:
         raise ValueError("invalid PNG compression") from error
     if not inflater.eof or inflater.unused_data or inflater.unconsumed_tail or len(raw) != expected:

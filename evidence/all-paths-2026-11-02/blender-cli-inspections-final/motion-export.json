@@ -1,0 +1,13 @@
+{
+  "armatures": 1,
+  "blender_version": "5.2.2 LTS",
+  "engine_import_verified": false,
+  "independent_blender_import_verified": false,
+  "observed_motion_m": 0.428282,
+  "output_bytes": 53596,
+  "output_sha256": "d7a6f1984575cc54057b3155ff0563b2626f4c065cf4990e28f59bbc92c1f264",
+  "owner_approved_likeness": false,
+  "rigged_mesh_objects": 20,
+  "schema": "mgr.forge.animation-export.v1",
+  "status": "MATERIALIZED"
+}

@@ -1,0 +1,327 @@
+{
+  "schema": "mgr.forge.blender-cli-paths.v1",
+  "status": "FAIL",
+  "cases": [
+    {
+      "case": "fresh-native-world",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "build",
+        "--buildings",
+        "3",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\world"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"output\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-blender-paths-j4j7iyr8\\\\world\",\n  \"buildings\": 3,\n  \"triangles\": 204,\n  \"sha256\": \"250d5b5a0a2f45af5b39456e08ebee03d0e805a691925e3e4eae58d5b45b1f4a\",\n  \"quality\": \"PASS\"\n}\n",
+      "stderr": "",
+      "status": "PASS"
+    },
+    {
+      "case": "native-world-independent-import",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "blender-verify",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\world\\world.glb",
+        "--report",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\import.json",
+        "--binary",
+        "C:\\Program Files\\Blender Foundation\\Blender 5.2\\blender.exe"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"blender_version\": \"5.2.2 LTS\",\n  \"imported_mesh_objects\": 1,\n  \"source\": \"world.glb\",\n  \"status\": \"PASS\",\n  \"triangles\": 204\n}\n",
+      "stderr": "",
+      "status": "PASS"
+    },
+    {
+      "case": "native-world-independent-facts",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "blender-facts",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\world\\world.glb",
+        "--report",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\facts.json",
+        "--binary",
+        "C:\\Program Files\\Blender Foundation\\Blender 5.2\\blender.exe"
+      ],
+      "exit_code": 0,
+      "stdout": "19:42:31 | INFO: Data are loaded, start creating Blender stuff\n19:42:31 | INFO: Blender create Mesh node MGR Forge Test Neighborhood\n19:42:31 | INFO: glTF import finished in 0.01s\nMGR_BLENDER_SCENE_FACTS_PASS C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\facts.json\nBlender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:37:04)\n\nBlender quit\n{\n  \"status\": \"PASS\",\n  \"objects\": 1\n}\n",
+      "stderr": "",
+      "status": "PASS"
+    },
+    {
+      "case": "native-world-material-sockets",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "blender-material-audit",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\world\\world.glb",
+        "--report",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\materials.json",
+        "--binary",
+        "C:\\Program Files\\Blender Foundation\\Blender 5.2\\blender.exe"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"schema\": \"mgr.forge.material-guardian.v1\",\n  \"status\": \"PASS\",\n  \"count\": 5,\n  \"errors\": [],\n  \"limitations\": [\n    \"Principled socket inspection, not full shader graph or texture fidelity\",\n    \"does not prove photorealism or appearance under another engine\"\n  ],\n  \"blender_version\": \"5.2.2 LTS\",\n  \"materials\": [\n    {\n      \"base_color\": [\n        0.10499999672174454,\n        0.10999999940395355,\n        0.14000000059604645,\n        1.0\n      ],\n      \"metallic\": 0.0,\n      \"name\": \"asphalt\",\n      \"roughness\": 0.949999988079071\n    },\n    {\n      \"base_color\": [\n        0.11999999731779099,\n        0.3100000023841858,\n        0.47999998927116394,\n        1.0\n      ],\n      \"metallic\": 0.6700000166893005,\n      \"name\": \"building-blue\",\n      \"roughness\": 0.36000001430511475\n    },\n    {\n      \"base_color\": [\n        0.550000011920929,\n        0.5400000214576721,\n        0.5099999904632568,\n        1.0\n      ],\n      \"metallic\": 0.0,\n      \"name\": \"building-stone\",\n      \"roughness\": 0.8399999737739563\n    },\n    {\n      \"base_color\": [\n        0.1899999976158142,\n        0.36000001430511475,\n        0.2199999988079071,\n        1.0\n      ],\n      \"metallic\": 0.0,\n      \"name\": \"grass\",\n      \"roughness\": 0.8999999761581421\n    },\n    {\n      \"base_color\": [\n        0.12999999523162842,\n        0.12999999523162842,\n        0.1599999964237213,\n        1.0\n      ],\n      \"metallic\": 0.0,\n      \"name\": \"roof\",\n      \"roughness\": 0.8999999761581421\n    }\n  ]\n}\n",
+      "stderr": "",
+      "status": "PASS"
+    },
+    {
+      "case": "fresh-native-mannequin",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "character",
+        "--pose",
+        "T",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\character"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"output\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-blender-paths-j4j7iyr8\\\\character\",\n  \"pose\": \"T\",\n  \"parts\": 20,\n  \"anatomy\": \"PASS\"\n}\n",
+      "stderr": "",
+      "status": "PASS"
+    },
+    {
+      "case": "mannequin-candidate-admission",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "character-intake",
+        "--source",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\character\\mannequin.glb",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\candidate"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"schema\": \"mgr.forge.character-candidate.v1\",\n  \"status\": \"INSPECTED\",\n  \"source_sha256\": \"90a98b906c865c64e185ea90505b2a7a67c5e5b390800436288b3aa1a0e20e1f\",\n  \"source_bytes\": 20932,\n  \"geometry\": {\n    \"valid\": true,\n    \"meshes\": 1,\n    \"primitives\": 7,\n    \"vertices\": 528,\n    \"triangles\": 264,\n    \"materials\": 7\n  },\n  \"nodes\": 1,\n  \"skin_count\": 0,\n  \"joint_references\": 0,\n  \"animation_clips\": 0,\n  \"morph_target_groups\": 0,\n  \"bounds_min\": [\n    -0.99,\n    0.0,\n    -0.2614107583743455\n  ],\n  \"bounds_max\": [\n    0.99,\n    1.9200000000000002,\n    0.17500000000000002\n  ],\n  \"warnings\": [\n    \"No skin/armature in source; not animation-ready\",\n    \"No embedded animation clips\",\n    \"One mesh container; clothing/hair separation not demonstrated\"\n  ],\n  \"identity_verified\": false,\n  \"anatomy_verified\": false,\n  \"deformation_verified\": false,\n  \"image_reconstruction_performed\": false\n}\n",
+      "stderr": "",
+      "status": "PASS"
+    },
+    {
+      "case": "candidate-editable-blender",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "character-blender",
+        "--candidate",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\candidate",
+        "--blend",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\character.blend",
+        "--report",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\character-blender.json",
+        "--binary",
+        "C:\\Program Files\\Blender Foundation\\Blender 5.2\\blender.exe"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"armature_objects\": 0,\n  \"blender_version\": \"5.2.2 LTS\",\n  \"editable_parts\": [\n    {\n      \"armature_modifiers\": [],\n      \"material_slots\": [\n        \"skin-placeholder\",\n        \"hair-placeholder\",\n        \"undershirt\",\n        \"coat\",\n        \"pants\",\n        \"boots\",\n        \"chain\"\n      ],\n      \"object\": \"MGR Anonymous T-pose\",\n      \"shape_keys\": 0,\n      \"triangles\": 264,\n      \"vertex_groups\": 0,\n      \"vertices\": 528\n    }\n  ],\n  \"garments_semantically_verified\": false,\n  \"mesh_objects\": 1,\n  \"owner_approved_likeness\": false,\n  \"pose_deformation_verified\": false,\n  \"schema\": \"mgr.forge.blender-character-intake.v1\",\n  \"source_sha256\": \"90a98b906c865c64e185ea90505b2a7a67c5e5b390800436288b3aa1a0e20e1f\",\n  \"status\": \"PASS\",\n  \"triangles\": 264\n}\n",
+      "stderr": "",
+      "status": "PASS"
+    },
+    {
+      "case": "candidate-independent-blend-reopen",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "character-reopen",
+        "--blend",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\character.blend",
+        "--sha256",
+        "5908ee8c2c844f0643ce66d8bdfe8e6d682a8c4489e674c52ebfb9585a60ec5e",
+        "--report",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\character-reopen.json",
+        "--binary",
+        "C:\\Program Files\\Blender Foundation\\Blender 5.2\\blender.exe"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 203, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\cli.py\", line 1044, in <module>\n    raise SystemExit(main())\n                     ~~~~^^\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\cli.py\", line 573, in main\n    print(json.dumps(verify_character_blend(args.blend,args.sha256,args.report,binary=args.binary),indent=2))\n                     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\character_intake.py\", line 131, in verify_character_blend\n    raise RuntimeError(\"Independent character reopen failed: \" +\n                       (process.stderr + process.stdout)[-500:])\nRuntimeError: Independent character reopen failed: cter_reopen.py\", line 34, in <module>\n    main()\n    ~~~~^^\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\bridge\\blender_character_reopen.py\", line 20, in main\n    raise RuntimeError(\"editable source fingerprint lost on mesh\")\nRuntimeError: editable source fingerprint lost on mesh\n00:03.250  blend            | Read blend: \"C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\character.blend\"\nBlender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:37:04)\n\nBlender quit\n\n",
+      "status": "FAIL"
+    },
+    {
+      "case": "candidate-material-separation",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "character-separate",
+        "--blend",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\character.blend",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\separated.blend",
+        "--report",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\separated.json",
+        "--binary",
+        "C:\\Program Files\\Blender Foundation\\Blender 5.2\\blender.exe"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"blender_version\": \"5.2.2 LTS\",\n  \"parts\": [\n    {\n      \"armature_modifiers\": 0,\n      \"materials\": [\n        \"chain\"\n      ],\n      \"object\": \"MGR Anonymous T-pose\",\n      \"triangles\": 24,\n      \"vertex_groups\": 0\n    },\n    {\n      \"armature_modifiers\": 0,\n      \"materials\": [\n        \"skin-placeholder\"\n      ],\n      \"object\": \"MGR Anonymous T-pose.001\",\n      \"triangles\": 96,\n      \"vertex_groups\": 0\n    },\n    {\n      \"armature_modifiers\": 0,\n      \"materials\": [\n        \"hair-placeholder\"\n      ],\n      \"object\": \"MGR Anonymous T-pose.002\",\n      \"triangles\": 12,\n      \"vertex_groups\": 0\n    },\n    {\n      \"armature_modifiers\": 0,\n      \"materials\": [\n        \"undershirt\"\n      ],\n      \"object\": \"MGR Anonymous T-pose.003\",\n      \"triangles\": 12,\n      \"vertex_groups\": 0\n    },\n    {\n      \"armature_modifiers\": 0,\n      \"materials\": [\n        \"coat\"\n      ],\n      \"object\": \"MGR Anonymous T-pose.004\",\n      \"triangles\": 48,\n      \"vertex_groups\": 0\n    },\n    {\n      \"armature_modifiers\": 0,\n      \"materials\": [\n        \"pants\"\n      ],\n      \"object\": \"MGR Anonymous T-pose.005\",\n      \"triangles\": 48,\n      \"vertex_groups\": 0\n    },\n    {\n      \"armature_modifiers\": 0,\n      \"materials\": [\n        \"boots\"\n      ],\n      \"object\": \"MGR Anonymous T-pose.006\",\n      \"triangles\": 24,\n      \"vertex_groups\": 0\n    }\n  ],\n  \"pose_deformation_verified\": false,\n  \"schema\": \"mgr.forge.material-separated-character.v1\",\n  \"semantic_garment_labels_verified\": false,\n  \"separated_mesh_objects\": 7,\n  \"source_mesh_objects\": 1,\n  \"source_sha256\": \"90a98b906c865c64e185ea90505b2a7a67c5e5b390800436288b3aa1a0e20e1f\",\n  \"status\": \"PASS\",\n  \"triangle_count_after\": 264,\n  \"triangle_count_before\": 264\n}\n",
+      "stderr": "",
+      "status": "PASS"
+    },
+    {
+      "case": "actual-mannequin-skin-rig",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "blender-rig",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\character",
+        "--blend",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\rig.blend",
+        "--report",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\rig.json",
+        "--binary",
+        "C:\\Program Files\\Blender Foundation\\Blender 5.2\\blender.exe",
+        "--skin"
+      ],
+      "exit_code": 0,
+      "stdout": "19:42:55 | INFO: Data are loaded, start creating Blender stuff\n19:42:55 | INFO: Blender create Mesh node chain\n19:42:55 | INFO: glTF import finished in 0.01s\n19:42:55 | INFO: Data are loaded, start creating Blender stuff\n19:42:55 | INFO: Blender create Mesh node coat\n19:42:55 | INFO: glTF import finished in 0.00s\n19:42:55 | INFO: Data are loaded, start creating Blender stuff\n19:42:55 | INFO: Blender create Mesh node hair\n19:42:55 | INFO: glTF import finished in 0.00s\n19:42:55 | INFO: Data are loaded, start creating Blender stuff\n19:42:55 | INFO: Blender create Mesh node head\n19:42:55 | INFO: glTF import finished in 0.00s\n19:42:55 | INFO: Data are loaded, start creating Blender stuff\n19:42:55 | INFO: Blender create Mesh node left_boot\n19:42:55 | INFO: glTF import finished in 0.00s\n19:42:55 | INFO: Data are loaded, start creating Blender stuff\n19:42:55 | INFO: Blender create Mesh node left_elbow_sleeve\n19:42:55 | INFO: glTF import finished in 0.00s\n19:42:55 | INFO: Data are loaded, start creating Blender stuff\n19:42:55 | INFO: Blender create Mesh node left_forearm\n19:42:55 | INFO: glTF import finished in 0.00s\n19:42:55 | INFO: Data are loaded, start creating Blender stuff\n19:42:55 | INFO: Blender create Mesh node left_hand\n19:42:55 | INFO: glTF import finished in 0.00s\n19:42:55 | INFO: Data are loaded, start creating Blender stuff\n19:42:55 | INFO: Blender create Mesh node left_leg\n19:42:55 | INFO: glTF import finished in 0.00s\n19:42:55 | INFO: Data are loaded, start creating Blender stuff\n19:42:55 | INFO: Blender create Mesh node left_pant_leg\n19:42:55 | INFO: glTF import finished in 0.00s\n19:42:55 | INFO: Data are loaded, start creating Blender stuff\n19:42:55 | INFO: Blender create Mesh node left_upper_arm\n19:42:55 | INFO: glTF import finished in 0.00s\n19:42:55 | INFO: Data are loaded, start creating Blender stuff\n19:42:55 | INFO: Blender create Mesh node right_boot\n19:42:55 | INFO: glTF import finished in 0.01s\n19:42:55 | INFO: Data are loaded, start creating Blender stuff\n19:42:55 | INFO: Blender create Mesh node right_elbow_sleeve\n19:42:55 | INFO: glTF import finished in 0.00s\n19:42:55 | INFO: Data are loaded, start creating Blender stuff\n19:42:55 | INFO: Blender create Mesh node right_forearm\n19:42:55 | INFO: glTF import finished in 0.00s\n19:42:55 | INFO: Data are loaded, start creating Blender stuff\n19:42:55 | INFO: Blender create Mesh node right_hand\n19:42:55 | INFO: glTF import finished in 0.01s\n19:42:55 | INFO: Data are loaded, start creating Blender stuff\n19:42:55 | INFO: Blender create Mesh node right_leg\n19:42:55 | INFO: glTF import finished in 0.00s\n19:42:55 | INFO: Data are loaded, start creating Blender stuff\n19:42:55 | INFO: Blender create Mesh node right_pant_leg\n19:42:55 | INFO: glTF import finished in 0.01s\n19:42:55 | INFO: Data are loaded, start creating Blender stuff\n19:42:55 | INFO: Blender create Mesh node right_upper_arm\n19:42:55 | INFO: glTF import finished in 0.01s\n19:42:55 | INFO: Data are loaded, start creating Blender stuff\n19:42:55 | INFO: Blender create Mesh node shirt\n19:42:55 | INFO: glTF import finished in 0.01s\n19:42:55 | INFO: Data are loaded, start creating Blender stuff\n19:42:55 | INFO: Blender create Mesh node torso\n19:42:55 | INFO: glTF import finished in 0.00s\nInfo: Saved as \"rig.blend\"\nMGR_MODULAR_ARMATURE_PASS\nBlender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:37:04)\n\nBlender quit\n{\n  \"status\": \"PASS\",\n  \"parts\": 20,\n  \"bones\": 11\n}\n",
+      "stderr": "",
+      "status": "PASS"
+    },
+    {
+      "case": "actual-mannequin-pose-audit",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "blender-pose-audit",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\rig.blend",
+        "--report",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\pose.json",
+        "--binary",
+        "C:\\Program Files\\Blender Foundation\\Blender 5.2\\blender.exe"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"schema\": \"mgr.forge.pose-guardian.v1\",\n  \"status\": \"PASS\",\n  \"errors\": [],\n  \"frames\": [\n    {\n      \"frame\": 1,\n      \"joint_max_gap_m\": 0.0,\n      \"bone_count\": 11,\n      \"skinned_part_count\": 20\n    },\n    {\n      \"frame\": 12,\n      \"joint_max_gap_m\": 0.0,\n      \"bone_count\": 11,\n      \"skinned_part_count\": 20\n    }\n  ],\n  \"maximum_hand_motion_m\": 0.427002,\n  \"limitations\": [\n    \"bone-chain continuity does not verify watertight mesh seams\",\n    \"most parts use rigid 1.0 single-bone weights; elbow sleeves alone blend two bones\",\n    \"does not establish human identity or artistic quality\"\n  ],\n  \"blender_version\": \"5.2.2 LTS\"\n}\n",
+      "stderr": "",
+      "status": "PASS"
+    },
+    {
+      "case": "actual-deforming-motion-export",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "character-motion-export",
+        "--blend",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\rig.blend",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\motion.glb",
+        "--report",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\motion-export.json",
+        "--binary",
+        "C:\\Program Files\\Blender Foundation\\Blender 5.2\\blender.exe"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"armatures\": 1,\n  \"blender_version\": \"5.2.2 LTS\",\n  \"engine_import_verified\": false,\n  \"independent_blender_import_verified\": false,\n  \"observed_motion_m\": 0.428282,\n  \"output_bytes\": 53596,\n  \"output_sha256\": \"d7a6f1984575cc54057b3155ff0563b2626f4c065cf4990e28f59bbc92c1f264\",\n  \"owner_approved_likeness\": false,\n  \"rigged_mesh_objects\": 20,\n  \"schema\": \"mgr.forge.animation-export.v1\",\n  \"status\": \"MATERIALIZED\"\n}\n",
+      "stderr": "",
+      "status": "PASS"
+    },
+    {
+      "case": "independent-motion-glb-reimport",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "character-motion-reimport",
+        "--glb",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\motion.glb",
+        "--sha256",
+        "d7a6f1984575cc54057b3155ff0563b2626f4c065cf4990e28f59bbc92c1f264",
+        "--report",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\motion-reimport.json",
+        "--binary",
+        "C:\\Program Files\\Blender Foundation\\Blender 5.2\\blender.exe"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"action_names\": [\n    \"MGR_Character_RigAction\"\n  ],\n  \"animation_actions\": 1,\n  \"armatures\": 1,\n  \"blender_version\": \"5.2.2 LTS\",\n  \"game_engine_import_verified\": false,\n  \"schema\": \"mgr.forge.animation-reimport.v1\",\n  \"sha256\": \"d7a6f1984575cc54057b3155ff0563b2626f4c065cf4990e28f59bbc92c1f264\",\n  \"skinned_mesh_objects\": 20,\n  \"status\": \"PASS\"\n}\n",
+      "stderr": "",
+      "status": "PASS"
+    },
+    {
+      "case": "world-edit-source-for-blender",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "apply-world-edits",
+        "--world",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\world",
+        "--edits",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\edits.json",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\edited"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"schema\": \"mgr.forge.edited-world.v1\",\n  \"status\": \"MATERIALIZED\",\n  \"output\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-blender-paths-j4j7iyr8\\\\edited\",\n  \"changed_buildings\": 1,\n  \"buildings\": 3,\n  \"triangles\": 204,\n  \"glb_sha256\": \"13bf3d03d6fb38882c777b8aa49f79295726c7dbb6f28d1e90b780d7df89322f\",\n  \"viewer\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-blender-paths-j4j7iyr8\\\\edited\\\\world-editor.html\"\n}\n",
+      "stderr": "",
+      "status": "PASS"
+    },
+    {
+      "case": "world-individually-editable-blender",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "blender-live-scene",
+        "--world",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\edited",
+        "--blend",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\live.blend",
+        "--report",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\live.json",
+        "--binary",
+        "C:\\Program Files\\Blender Foundation\\Blender 5.2\\blender.exe"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"blend_bytes\": 99920,\n  \"blender_version\": \"5.2.2 LTS\",\n  \"editable_buildings\": 3,\n  \"object_names\": [\n    \"building-000-001\",\n    \"building-002-002\",\n    \"building-003-003\"\n  ],\n  \"scene\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-blender-paths-j4j7iyr8\\\\live.blend\",\n  \"schema\": \"mgr.forge.blender-live-scene-proof.v1\",\n  \"source_glb_sha256\": \"13bf3d03d6fb38882c777b8aa49f79295726c7dbb6f28d1e90b780d7df89322f\",\n  \"status\": \"PASS\"\n}\n",
+      "stderr": "",
+      "status": "PASS"
+    },
+    {
+      "case": "blender-world-back-to-native-edits",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "blender-to-forge",
+        "--blend",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\live.blend",
+        "--original",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\world",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\roundtrip.json",
+        "--report",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-j4j7iyr8\\roundtrip-report.json",
+        "--binary",
+        "C:\\Program Files\\Blender Foundation\\Blender 5.2\\blender.exe"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"schema\": \"mgr.forge.blender-roundtrip.v1\",\n  \"status\": \"EXPORTED\",\n  \"editable_buildings\": 3,\n  \"source_sha256\": \"250d5b5a0a2f45af5b39456e08ebee03d0e805a691925e3e4eae58d5b45b1f4a\"\n}\n",
+      "stderr": "",
+      "status": "PASS"
+    }
+  ],
+  "limits": [
+    "Fresh original fixtures, actual local Blender receivers, no paid/provider calls or repeated Cycles renders",
+    "No actual Godot runtime, arbitrary imported rig, likeness, cloth or human art acceptance"
+  ],
+  "summary": {
+    "cases": 16,
+    "commands_executed": 16,
+    "failures": 1
+  }
+}

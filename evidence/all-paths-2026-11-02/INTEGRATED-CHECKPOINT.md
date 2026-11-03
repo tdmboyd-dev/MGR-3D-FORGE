@@ -1,0 +1,23 @@
+# Native Forge all-path checkpoint — November 2, 2026
+
+This checkpoint is part of the active all-path build. It does not close the original 156 requirements or the 187-target research universe.
+
+| Owner action | Verified evidence | Boundary |
+|---|---|---|
+| Turn measured masks into an editable hull | Real native and browser outputs; separate Blender import/render of a calibrated original stepped fixture; 3,778 vertices, 7,552 triangles, zero boundary or nonmanifold edges | Orthographic segmented masks and supplied dimensions; no hidden shape or arbitrary-photo likeness inference |
+| Revise an original static GLB | Separate Blender import/render of both versions, unchanged named parts, UV loops, materials and embedded image pixels | Static subset; skin, animation, original blend shapes and compression refuse |
+| Author coordinates for texture work | Native atlas core/job tests, exact original bytes, actual Blender reimport and diagnostic checker; all 24 tested islands separate and inside the unit UV square | Fully seamed triangle atlas; no painting, baking or texture artwork claim |
+| Save, interrupt waiting, reopen and download | `creation-browser-current/browser-proof.json`: real Chrome upload/replay/preview orbit/restart/reopen/model SHA and UV PNG SHA; exactly three jobs | Lost reply is a controlled browser fixture; native work can continue after the browser stops waiting |
+| Use the same jobs through shared MCP | `shared-mcp-current.json`: official SDK→local shared HTTP→authenticated native Forge, exact input/artifact verification, original replay, denial and no extra native jobs | Fixture principals; no deployed OAuth/Tevin or remote app acceptance |
+| Receive real animation | Separate Blender processes measure actual creature skin motion and human face deformation, with frozen/inert negative witnesses | Original authored fixture rigs/shapes; cross-skeleton mapping and owner performance acceptance remain separate |
+| Verify worlds, assets and handoffs | `REPORT.md` and its command matrices: real world/scene/edit/material/rig/export/provenance/integrity paths | Authored collider corners and engine package do not prove Godot import/physics |
+
+Native full qualification: `qualification-final/qualification.json` and `qualification-final/unittest.log`. **749 tests ran; 746 passed; three optional SAM tests skipped; zero failures.** All 222 normalized runtime/test input hashes were stable; viewer/preview/browser verifier JavaScript syntax passed. `native-full-suite.log` retains the first failed run, where a stale fixed CLI count refused the new command. The handbook test now compares its command table and declared total with the actual parser.
+
+Shared API source checkpoint: `92e6a574ccdecef4bb735b390c2531beaa059ffd` / tree `2e245f09e588e8c8cf129075527c72f1857a946d` on `repair/completion-2026-10-28`; exact remote readback passed. Its canonical suite returned 363 results, 342 passes, 21 optional skips and zero failures. Its 21 configured Forge tools keep the original principal, scope and final publication guards. The fresh integrated receipt observes 143 stable native/API runtime inputs after the latest atlas budget/diagnostic custody repair.
+
+Original-source custody hardening includes bounded PNG expansion, empty-job admission rollback only when ownership is positively absent, exact journal/request/source/receipt/model/UV-checker hashes and intentional disconnect handling without a repeated effect. Large UV atlas receipts have a bounded 8 MB native cap and derived vertex duplication has a preallocation byte budget. Shared artifact transfer still refuses files outside its 800,000-byte limit.
+
+REA passively inspected the actual authenticated Studio in an owned Chrome fixture (`rea-studio-observation.json`, `ev_eefac9a8690f939f798dd5069774876688137c845b3243b6d92453395858a43d`). Script sources/storage values were excluded; historical actions were not observed by the passive attachment. The separate active browser trial proves the tested actions. External evidence and unknowns remain in `research/external-provenance/`.
+
+The [living handoff](../../docs/HANDOFF.md), [same scorecard](../../docs/full-build/SCORECARD.md), [owner handbook](../../docs/FORGE-OWNER-HANDBOOK.md) and [how-to](../../docs/FORGE-HOW-TO.md) govern continuation. Next useful work is the remaining entrypoint runtime paths and original manually mapped cross-skeleton motion transfer. Human likeness, general photo reconstruction, higher quality UV/texture work, real target-engine physics, remote client delivery and production remain open. No paid provider, model download, account change or production deployment was used in this checkpoint.

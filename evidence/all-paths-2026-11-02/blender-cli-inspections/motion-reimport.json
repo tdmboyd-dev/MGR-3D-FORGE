@@ -1,0 +1,13 @@
+{
+  "action_names": [
+    "MGR_Character_RigAction"
+  ],
+  "animation_actions": 1,
+  "armatures": 1,
+  "blender_version": "5.2.2 LTS",
+  "game_engine_import_verified": false,
+  "schema": "mgr.forge.animation-reimport.v1",
+  "sha256": "d7a6f1984575cc54057b3155ff0563b2626f4c065cf4990e28f59bbc92c1f264",
+  "skinned_mesh_objects": 20,
+  "status": "PASS"
+}

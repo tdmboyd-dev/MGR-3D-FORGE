@@ -1,0 +1,110 @@
+{
+  "nodes": {
+    "r0-c0": {
+      "neighbors": [
+        "r0-c1",
+        "r1-c0"
+      ],
+      "position": [
+        -24.0,
+        0,
+        -24.0
+      ]
+    },
+    "r0-c1": {
+      "neighbors": [
+        "r0-c0",
+        "r0-c2",
+        "r1-c1"
+      ],
+      "position": [
+        0.0,
+        0,
+        -24.0
+      ]
+    },
+    "r0-c2": {
+      "neighbors": [
+        "r0-c1",
+        "r1-c2"
+      ],
+      "position": [
+        24.0,
+        0,
+        -24.0
+      ]
+    },
+    "r1-c0": {
+      "neighbors": [
+        "r0-c0",
+        "r1-c1",
+        "r2-c0"
+      ],
+      "position": [
+        -24.0,
+        0,
+        0.0
+      ]
+    },
+    "r1-c1": {
+      "neighbors": [
+        "r0-c1",
+        "r1-c0",
+        "r1-c2",
+        "r2-c1"
+      ],
+      "position": [
+        0.0,
+        0,
+        0.0
+      ]
+    },
+    "r1-c2": {
+      "neighbors": [
+        "r0-c2",
+        "r1-c1",
+        "r2-c2"
+      ],
+      "position": [
+        24.0,
+        0,
+        0.0
+      ]
+    },
+    "r2-c0": {
+      "neighbors": [
+        "r1-c0",
+        "r2-c1"
+      ],
+      "position": [
+        -24.0,
+        0,
+        24.0
+      ]
+    },
+    "r2-c1": {
+      "neighbors": [
+        "r1-c1",
+        "r2-c0",
+        "r2-c2"
+      ],
+      "position": [
+        0.0,
+        0,
+        24.0
+      ]
+    },
+    "r2-c2": {
+      "neighbors": [
+        "r1-c2",
+        "r2-c1"
+      ],
+      "position": [
+        24.0,
+        0,
+        24.0
+      ]
+    }
+  },
+  "schema": "mgr.forge.road-graph.v1"
+}

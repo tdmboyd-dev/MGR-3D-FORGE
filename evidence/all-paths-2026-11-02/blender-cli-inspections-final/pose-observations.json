@@ -1,0 +1,564 @@
+{
+  "schema": "mgr.forge.pose-observation.v1",
+  "blender_version": "5.2.2 LTS",
+  "observations": [
+    {
+      "frame": 1,
+      "bones": {
+        "root": {
+          "head": [
+            0.0,
+            0.0,
+            0.9200000166893005
+          ],
+          "tail": [
+            0.0,
+            0.0,
+            1.149999976158142
+          ]
+        },
+        "torso": {
+          "head": [
+            0.0,
+            0.0,
+            1.149999976158142
+          ],
+          "tail": [
+            0.0,
+            0.0,
+            1.4900000095367432
+          ]
+        },
+        "head": {
+          "head": [
+            0.0,
+            0.0,
+            1.4900000095367432
+          ],
+          "tail": [
+            0.0,
+            0.0,
+            1.840000033378601
+          ]
+        },
+        "left_upper_arm": {
+          "head": [
+            -0.2800000011920929,
+            0.0,
+            1.4700000286102295
+          ],
+          "tail": [
+            -0.6100000143051147,
+            0.0,
+            1.4700000286102295
+          ]
+        },
+        "left_forearm": {
+          "head": [
+            -0.6100000143051147,
+            0.0,
+            1.4700000286102295
+          ],
+          "tail": [
+            -0.8700000047683716,
+            0.0,
+            1.4700000286102295
+          ]
+        },
+        "left_hand": {
+          "head": [
+            -0.8700000047683716,
+            0.0,
+            1.4700000286102295
+          ],
+          "tail": [
+            -0.9900000095367432,
+            0.0,
+            1.4700000286102295
+          ]
+        },
+        "right_upper_arm": {
+          "head": [
+            0.2800000011920929,
+            0.0,
+            1.4700000286102295
+          ],
+          "tail": [
+            0.6100000143051147,
+            0.0,
+            1.4700000286102295
+          ]
+        },
+        "right_forearm": {
+          "head": [
+            0.6100000143051147,
+            0.0,
+            1.4700000286102295
+          ],
+          "tail": [
+            0.8700000047683716,
+            0.0,
+            1.4700000286102295
+          ]
+        },
+        "right_hand": {
+          "head": [
+            0.8700000047683716,
+            0.0,
+            1.4700000286102295
+          ],
+          "tail": [
+            0.9900000095367432,
+            0.0,
+            1.4700000286102295
+          ]
+        },
+        "left_leg": {
+          "head": [
+            -0.15000000596046448,
+            0.0,
+            0.9200000166893005
+          ],
+          "tail": [
+            -0.15000000596046448,
+            0.0,
+            0.12000000476837158
+          ]
+        },
+        "right_leg": {
+          "head": [
+            0.15000000596046448,
+            0.0,
+            0.9200000166893005
+          ],
+          "tail": [
+            0.15000000596046448,
+            0.0,
+            0.12000000476837158
+          ]
+        }
+      },
+      "parts": {
+        "MGR_chain": {
+          "vertices": 48,
+          "weighted_vertices": 48,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_coat": {
+          "vertices": 48,
+          "weighted_vertices": 48,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_hair": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_head": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_left_boot": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_left_elbow_sleeve": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 24,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_left_forearm": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_left_hand": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_left_leg": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_left_pant_leg": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_left_upper_arm": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_right_boot": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_right_elbow_sleeve": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 24,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_right_forearm": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_right_hand": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_right_leg": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_right_pant_leg": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_right_upper_arm": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_shirt": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_torso": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        }
+      }
+    },
+    {
+      "frame": 12,
+      "bones": {
+        "root": {
+          "head": [
+            0.0,
+            0.0,
+            0.9200000166893005
+          ],
+          "tail": [
+            0.0,
+            0.0,
+            1.149999976158142
+          ]
+        },
+        "torso": {
+          "head": [
+            0.0,
+            0.0,
+            1.149999976158142
+          ],
+          "tail": [
+            0.0,
+            0.0,
+            1.4900000095367432
+          ]
+        },
+        "head": {
+          "head": [
+            0.0,
+            0.0,
+            1.4900000095367432
+          ],
+          "tail": [
+            0.0,
+            0.0,
+            1.840000033378601
+          ]
+        },
+        "left_upper_arm": {
+          "head": [
+            -0.2800000011920929,
+            0.0,
+            1.4700000286102295
+          ],
+          "tail": [
+            -0.5503201484680176,
+            -0.18928025662899017,
+            1.4700000286102295
+          ]
+        },
+        "left_forearm": {
+          "head": [
+            -0.5503201484680176,
+            -0.18928025662899017,
+            1.4700000286102295
+          ],
+          "tail": [
+            -0.7632997035980225,
+            -0.3384101390838623,
+            1.4700000286102295
+          ]
+        },
+        "left_hand": {
+          "head": [
+            -0.7632997035980225,
+            -0.3384101390838623,
+            1.4700000286102295
+          ],
+          "tail": [
+            -0.8615979552268982,
+            -0.40723931789398193,
+            1.4700000286102295
+          ]
+        },
+        "right_upper_arm": {
+          "head": [
+            0.2800000011920929,
+            0.0,
+            1.4700000286102295
+          ],
+          "tail": [
+            0.5503201484680176,
+            -0.18928025662899017,
+            1.4700000286102295
+          ]
+        },
+        "right_forearm": {
+          "head": [
+            0.5503201484680176,
+            -0.18928025662899017,
+            1.4700000286102295
+          ],
+          "tail": [
+            0.7632997035980225,
+            -0.3384101390838623,
+            1.4700000286102295
+          ]
+        },
+        "right_hand": {
+          "head": [
+            0.7632997035980225,
+            -0.3384101390838623,
+            1.4700000286102295
+          ],
+          "tail": [
+            0.8615979552268982,
+            -0.40723931789398193,
+            1.4700000286102295
+          ]
+        },
+        "left_leg": {
+          "head": [
+            -0.15000000596046448,
+            0.0,
+            0.9200000166893005
+          ],
+          "tail": [
+            -0.15000000596046448,
+            0.0,
+            0.12000000476837158
+          ]
+        },
+        "right_leg": {
+          "head": [
+            0.15000000596046448,
+            0.0,
+            0.9200000166893005
+          ],
+          "tail": [
+            0.15000000596046448,
+            0.0,
+            0.12000000476837158
+          ]
+        }
+      },
+      "parts": {
+        "MGR_chain": {
+          "vertices": 48,
+          "weighted_vertices": 48,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_coat": {
+          "vertices": 48,
+          "weighted_vertices": 48,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_hair": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_head": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_left_boot": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_left_elbow_sleeve": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 24,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_left_forearm": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_left_hand": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_left_leg": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_left_pant_leg": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_left_upper_arm": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_right_boot": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_right_elbow_sleeve": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 24,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_right_forearm": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_right_hand": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_right_leg": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_right_pant_leg": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_right_upper_arm": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_shirt": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        },
+        "MGR_torso": {
+          "vertices": 24,
+          "weighted_vertices": 24,
+          "dual_weight_vertices": 0,
+          "max_weight_sum_error": 0.0,
+          "armature_modifier": true
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+test_committed_then_error_preserves_original_job_and_never_reallocates (tests.test_creation_admission.CreationAdmissionTests.test_committed_then_error_preserves_original_job_and_never_reallocates) ... ok
+test_other_request_owning_the_allocated_job_prevents_removal (tests.test_creation_admission.CreationAdmissionTests.test_other_request_owning_the_allocated_job_prevents_removal) ... ok
+test_uncommitted_failure_removes_only_its_fresh_empty_allocation (tests.test_creation_admission.CreationAdmissionTests.test_uncommitted_failure_removes_only_its_fresh_empty_allocation) ... ok
+test_unknown_or_corrupt_admission_preserves_allocated_work (tests.test_creation_admission.CreationAdmissionTests.test_unknown_or_corrupt_admission_preserves_allocated_work) ... ok
+test_unreadable_recovery_journal_preserves_original_admission_error_and_job (tests.test_creation_admission.CreationAdmissionTests.test_unreadable_recovery_journal_preserves_original_admission_error_and_job) ... ok
+test_actual_unsupported_geometry_and_empty_silhouette_refuse_before_allocation (tests.test_creation_asset_jobs.CreationAssetJobsTests.test_actual_unsupported_geometry_and_empty_silhouette_refuse_before_allocation) ... ok
+test_both_real_creators_persist_replay_restart_history_and_exact_binding (tests.test_creation_asset_jobs.CreationAssetJobsTests.test_both_real_creators_persist_replay_restart_history_and_exact_binding) ... ok
+test_changed_inputs_cannot_reuse_a_request_id_or_verify_existing_output (tests.test_creation_asset_jobs.CreationAssetJobsTests.test_changed_inputs_cannot_reuse_a_request_id_or_verify_existing_output) ... ok
+test_failed_execution_is_preserved_and_never_silently_retried (tests.test_creation_asset_jobs.CreationAssetJobsTests.test_failed_execution_is_preserved_and_never_silently_retried) ... ok
+test_full_journal_refuses_new_work_but_keeps_exact_saved_replay (tests.test_creation_asset_jobs.CreationAssetJobsTests.test_full_journal_refuses_new_work_but_keeps_exact_saved_replay) ... ok
+test_invalid_uploads_hash_controls_and_schema_allocate_no_job (tests.test_creation_asset_jobs.CreationAssetJobsTests.test_invalid_uploads_hash_controls_and_schema_allocate_no_job) ... ok
+test_tampered_request_source_model_and_receipt_cannot_reopen_or_replay (tests.test_creation_asset_jobs.CreationAssetJobsTests.test_tampered_request_source_model_and_receipt_cannot_reopen_or_replay) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 7.573s
+
+OK

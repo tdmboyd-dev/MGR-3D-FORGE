@@ -72,7 +72,7 @@ The Studio prints its loopback URL. It binds to 127.0.0.1, has its own session t
 
 ## 5 — Actual CLI actions from source (current implementation)
 
-**64 actual CLI actions**, extracted from current Python argparse AST on 2026-11-01. Previous 60/62 counts are historical.
+**66 actual CLI actions**, extracted from current Python argparse AST on 2026-11-02. Previous 60/62/64/65 counts are historical.
 
 | Real CLI action | Existing source-described effect |
 |---|---|
@@ -116,6 +116,7 @@ The Studio prints its loopback URL. It binds to 127.0.0.1, has its own session t
 | `human-lipsync` | add real Blender 3D facial shapes and animation to existing Human Forge mannequin; requires timed phonemes |
 | `image-relief` | build real image-derived relief 3D geometry from PNG pixels, not hallucinated full mesh |
 | `imagine-creature` | create procedural creature mesh and design DNA; not neural inference |
+| `morph-model` | create a new static uploaded-GLB shape revision preserving original source, parts, scene transforms, UVs, images and materials; refuses skin/animation/targets/compression |
 | `inspect` | check a GLB for structural validity |
 | `judge-atmosphere` | compare real matched Blender volume/control renders |
 | `kit-mirror` | preserve a pinned official KayKit CC0 archive in quarantined local vault; no extraction |
@@ -137,6 +138,7 @@ The Studio prints its loopback URL. It binds to 127.0.0.1, has its own session t
 | `unclothe-proxy` | make independent real GLB silhouette proxies from approved extracted parts |
 | `unclothe-review` | inspect a proposed multi-part segmentation without extracting |
 | `verify-bundle` | verify artifact hashes in world build folder |
+| `uv-atlas` | author a padded fully seamed native UV atlas on a new untextured static GLB revision; original source retained, diagnostic checker is QA rather than texture art |
 | `world-biome` | make a real original biome ring as an optional GLB layer around an unchanged authored MGR city |
 | `world-compose` | combine the same original MGR World GLB + pinned native biome in one real Blender-reopened editable world |
 | `world-flight` | package a generated world into an offline interactive 3D HTML world |

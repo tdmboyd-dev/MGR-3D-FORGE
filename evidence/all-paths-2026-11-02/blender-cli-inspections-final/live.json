@@ -1,0 +1,14 @@
+{
+  "blend_bytes": 99922,
+  "blender_version": "5.2.2 LTS",
+  "editable_buildings": 3,
+  "object_names": [
+    "building-000-001",
+    "building-002-002",
+    "building-003-003"
+  ],
+  "scene": "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-blender-paths-qfyvs7ep\\live.blend",
+  "schema": "mgr.forge.blender-live-scene-proof.v1",
+  "source_glb_sha256": "13bf3d03d6fb38882c777b8aa49f79295726c7dbb6f28d1e90b780d7df89322f",
+  "status": "PASS"
+}

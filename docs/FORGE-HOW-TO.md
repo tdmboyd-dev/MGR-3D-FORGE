@@ -1,6 +1,39 @@
 # MGR 3D Forge — How to Use It
 
+## Make a measured image hull or revise an uploaded static model
+
+In the running authenticated Studio, open **Creation Chat**. To revise a model, choose its GLB in the existing model upload control, open **Morph the uploaded static model**, set the six shape controls and create the revision. The original upload remains saved. Length, height and width are multipliers; bend and twist are degrees. Repeating exactly the same upload/settings reopens the same job. Changing settings makes a new recoverable revision.
+
+This path accepts a bounded self-contained static GLB up to 900,000 bytes in Studio. It preserves original parts, scene transforms, UVs, embedded images, material definitions and indices. It refuses skinned or animated models, existing blend shapes, compressed geometry and external dependencies rather than silently dropping them. The CLI supports a larger native static subset:
+
+```powershell
+python -m forge.cli morph-model --source artifacts/owned-static.glb --morph examples/owned-morph.json --out artifacts/owned-static-revision-01
+```
+
+Create your own recipe JSON, for example `{"length":1.3,"height":1.0,"width":0.9,"bend_degrees":8,"twist_degrees":10,"taper":0.9}`. The example recipe filename above is user supplied, not a bundled asset. Output includes `original.glb`, `morphed.glb` and `morph-receipt.json`. Use a new destination; overwriting is refused.
+
+To construct a measured hull, open **Build measured 3D from two silhouette images**. Upload a front PNG mask and a side PNG mask, with white subject on black background, captured orthographically and aligned to the same physical dimensions. Use images no larger than 256 pixels per axis, supply width/height/depth in meters, choose detail 8–64 and create. Smooth mode rounds the voxel hull; voxel mode retains cell edges. This reconstructs the intersection of silhouette volumes. It does not infer hidden concavities, textures, likeness or perspective calibration from an arbitrary photograph.
+
+Both paths save into the existing Studio workspace and appear in **Saved Creations**. Reopen checks original source, request, receipt and model hashes; it starts no new creation. Protected GLB downloads check the saved hash again. The saved asset preview shows actual static geometry and material colors: drag to orbit and scroll to zoom. Texture/animation rendering is not included in this preview. Larger than 100,000 triangles can be saved within native limits but are refused by this bounded browser preview.
+
+The whole product also includes worlds, terrain, creatures, human animation, scene composition, materials, cameras, assets, exports and engine handoffs. These two workflows are additions to those paths. The [active all-path scorecard](full-build/SCORECARD.md) distinguishes exercised paths from work still open.
+
 Use this guide to start the existing local creator, make a world or creature, use Blender-dependent workflows and understand the shared API/MCP connection. Commands below were checked against the current CLI source; this document itself is not a fresh execution receipt. See the [living handoff](HANDOFF.md) for actual source-specific test results and [Owner Handbook](FORGE-OWNER-HANDBOOK.md) for the completed-product target.
+
+## Create a padded UV atlas for an untextured static model
+
+Choose an original GLB in Studio's existing model upload control, open **Author UV coordinates for the uploaded static model** and select **Create Native UV Atlas**. This accepts an untextured model with no existing UV layout. Studio binds the selected bytes to their SHA-256 identity and uses the original saved-job journal: repeating the same source/settings reopens that revision; changed settings create separate work. The Studio upload limit is 900,000 bytes, with additional native geometry and saved-receipt budgets checked before allocation. The CLI supports larger original files inside the native limits:
+
+```powershell
+$sourceSha = (Get-FileHash -LiteralPath artifacts/owned-untextured.glb -Algorithm SHA256).Hash.ToLowerInvariant()
+python -m forge.cli uv-atlas --source artifacts/owned-untextured.glb --expected-sha256 $sourceSha --atlas-size 2048 --padding 2 --out artifacts/owned-uv-revision-01
+```
+
+Output contains `original.glb`, `uv-mapped.glb`, `uv-receipt.json` and `diagnostic-checker.png`. The source stays intact, and an existing output directory refuses overwrite. Open `uv-mapped.glb` in Blender to edit the actual UV layer. The diagnostic checker is a QA image; assigning it in Blender can expose seams and coordinate problems. The saved Studio preview shows static geometry/material colors and does not establish checker-texture rendering.
+
+The current method gives each triangle its own padded island. It keeps the original triangle positions/order, material assignments, parts and hierarchy, while duplicating vertices and remapping active indices to create seams. This deliberately changes the active vertex/index representation; exact original bytes remain saved separately and as an unchanged prefix of the derived GLB's binary data. Normals and vertex colors follow their source vertices, and existing tangents are recalculated for the new UV coordinates.
+
+Use atlas sizes 256, 512, 1024, 2048 or 4096 and padding from one to sixteen pixels. The native cap is 16,384 triangles, with additional checks that the resolution fits the padded cells and that float32 UV islands do not collapse. Existing UVs, textures, skinning, animation, blend shapes, compressed geometry and external dependencies refuse. This is a fully seamed starting layout, with visible triangle seams. It does not paint texture art, bake materials, merge semantic charts, optimize texel density or establish artistic/engine acceptance. An [actual separate Blender import and checker render](../evidence/uv-authoring-2026-11-02/REPORT.md) verifies the tested original fixture.
 
 ## Start Forge Studio on this computer
 

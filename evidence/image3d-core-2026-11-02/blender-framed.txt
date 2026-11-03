@@ -1,0 +1,8 @@
+19:11:34 | INFO: Data are loaded, start creating Blender stuff
+19:11:34 | INFO: Blender create Mesh node MGR Multi-View Silhouette Hull
+19:11:34 | INFO: glTF import finished in 0.02s
+00:06.219  render           | Saved: 'C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\evidence\image3d-core-2026-11-02\calibrated-profile\blender-framed\mesh.png'
+MGR_RECONSTRUCTION_WITNESS={"schema": "mgr.forge.reconstruction-blender-witness.v1", "status": "REAL_BLENDER_IMPORT_GEOMETRY_RENDER_PASS", "blender_version": "5.2.2 LTS", "input_glb_sha256": "049e7c0fd83e3d39d6c53f5e6216e9ac7a9ed3a7151a1b9ef52df363771d216d", "vertices": 3778, "triangles": 7552, "boundary_edges": 0, "nonmanifold_edges": 0, "signed_mesh_volume_m3": 4.175981139596841, "native_bbox_min_m": [-0.75, 0.0, -0.625], "native_bbox_max_m": [0.75, 3.0, 0.625], "max_native_bounds_error_m": 0.0, "render_sha256": "a37bafd53ecfa4efd4872dd8cc7aef2d9da24e66a669f64da38e0ee2281ca297", "fixture_kind": "owner-authored synthetic calibrated PNG masks", "hidden_geometry_measured": false, "production_or_likeness_accepted": false, "limitations": ["visual hull cannot recover occluded concavities", "positive volume and manifold edges do not prove self-intersection freedom", "surface nets rounds voxel corners; compare mesh and occupancy volume separately"]}
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:37:04)
+
+Blender quit

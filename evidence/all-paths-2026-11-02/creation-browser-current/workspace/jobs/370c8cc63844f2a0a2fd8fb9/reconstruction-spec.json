@@ -1,0 +1,18 @@
+{
+  "bounds": {
+    "width": 2,
+    "height": 2,
+    "depth": 2
+  },
+  "grid": 12,
+  "views": [
+    {
+      "axis": "front",
+      "mask": "front.png"
+    },
+    {
+      "axis": "left",
+      "mask": "side.png"
+    }
+  ]
+}

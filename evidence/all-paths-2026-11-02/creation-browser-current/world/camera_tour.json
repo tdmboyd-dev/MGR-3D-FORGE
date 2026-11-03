@@ -1,0 +1,45 @@
+{
+  "axis": "Y_UP",
+  "mode": "native-3d-keyframes",
+  "requires_generated_video": false,
+  "requires_paid_api": false,
+  "schema": "mgr.forge.camera-tour.v1",
+  "shots": [
+    {
+      "camera": [
+        -40.8,
+        35.8972,
+        -40.8
+      ],
+      "hold_seconds": 2.0,
+      "id": "shot-0000",
+      "look_at": [
+        -12.0,
+        5.7333,
+        -12.0
+      ],
+      "subject_id": "building-000-000"
+    },
+    {
+      "camera": [
+        -40.8,
+        40.0572,
+        -16.8
+      ],
+      "camera_end": [
+        -34.464,
+        40.0572,
+        -20.256
+      ],
+      "hold_seconds": 2.0,
+      "id": "shot-0001",
+      "look_at": [
+        -12.0,
+        9.9486,
+        12.0
+      ],
+      "movement": "smooth-dolly",
+      "subject_id": "building-001-000"
+    }
+  ]
+}

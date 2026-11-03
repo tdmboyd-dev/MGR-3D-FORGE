@@ -1,5 +1,6 @@
 """Timed voice cue and Human Forge source-backed 3D lip-sync tests."""
 import json
+import hashlib
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
@@ -16,6 +17,29 @@ SPEC={"schema":"mgr.forge.phoneme-timeline.v1","actor_id":"mgr-proxy-human",
                   {"phoneme":"OW","start_ms":610,"end_ms":900}]}
 
 class LipSyncTests(unittest.TestCase):
+    def test_reimport_inventory_without_evaluated_geometry_cannot_claim_acceptance(self):
+        with TemporaryDirectory() as temporary:
+            target=Path(temporary)/'human'
+            def witness(binary,script,args):
+                if script=='blender_face_lipsync.py':
+                    source,lines,face=map(Path,args)
+                    face.mkdir()
+                    raw=(source/'mannequin.glb').read_bytes()
+                    (face/'human-lipsync.glb').write_bytes(raw)
+                    report={'status':'HUMAN_FACIAL_GLTF_REIMPORT_RENDER_PASS',
+                            'export_sha256':hashlib.sha256(raw).hexdigest(),
+                            'gltf_morph_target_primitives':8,'imported_animation_actions':1,
+                            'receiver_independently_reimported':True}
+                    (face/'lipsync-blender-proof.json').write_text(json.dumps(report))
+                    return 'MGR_HUMAN_FACIAL_EXPORT='
+                return 'MGR_FACE_REIMPORT='
+            with patch('forge.human_lipsync.shutil.which',return_value='blender'),patch(
+                    'forge.human_lipsync._blender',side_effect=witness):
+                with self.assertRaisesRegex(RuntimeError,'source-bound evaluated animation'):
+                    build_human_lipsync(SPEC,target)
+            self.assertTrue((target/'needs-reconciliation.txt').is_file())
+            self.assertFalse((target/'human-lipsync-receipt.json').exists())
+
     def test_real_timed_viseme_weights_are_bounded_and_different(self):
         with TemporaryDirectory() as t:
             target=Path(t)/"timeline"

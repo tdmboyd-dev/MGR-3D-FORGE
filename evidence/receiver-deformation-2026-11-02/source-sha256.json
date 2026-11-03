@@ -1,0 +1,13 @@
+{
+  "bridge/blender_creature_reimport.py": "b77c1afd1c7722a0f4bcf6fb7a794cff2ebbb5287096938d0a5ffe8b866e90ee",
+  "bridge/blender_face_lipsync.py": "28541e9801ceb396a6aff73119cc6209a6338a3b816e2b86dcfa396d14c19ac9",
+  "bridge/blender_face_reimport.py": "789e7a5bb6bfeff23072a764c7c84db7430abfb8a8857c50d3a31e90d6b31be3",
+  "forge/creature_rig.py": "224b4bab75b0cf1f27aa368372e01514f9632879d4591b60d1e2c014854bb528",
+  "forge/human_lipsync.py": "324981806bc23abd4e57c16dbb90e5149b46e44972c436ead4bc5eb73a80a214",
+  "forge/imported_morph.py": "6fb06f16d61182ceb763f25cd7008bd409a9ae0faa8bc44fc5affaadb29e15e4",
+  "scripts/verify_creature_receiver.py": "7b91302c6d208d572c2a15f4fe51cfa508b66e87061e0308237efa7ccea5c4b1",
+  "scripts/verify_human_receiver.py": "e578fb74116366c388d26afdd171d4cfa39ce68e771774bbf331466c9af4f6f6",
+  "scripts/verify_imported_morph.py": "e934b0bb1949244d51e6e89cc272ddbd0fd708e6962f617871067eb1a1d04413",
+  "scripts/verify_imported_morph_blender.py": "a0e44e565ad878310189b28352be7383351c839b6ab1fcc1eef9fb3bb0569cba",
+  "tests/test_creation_asset_jobs.py": "d7c754734bc0b9b9dd393a2c581c00bc62fb15c52cb2c63168ee155e3f17270c"
+}

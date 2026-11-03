@@ -11,6 +11,9 @@ def verify_request(studio,payload):
         raise ValueError('request verification requires exact kind and original request')
     kind=payload['kind'];request=payload['request']
     if not isinstance(request,dict):raise ValueError('original request must be an object')
+    if kind in ('reconstruction', 'morph', 'uv'):
+        from .creation_asset_jobs import verify_asset_request
+        return verify_asset_request(studio, kind, request)
     with studio.world_job_lock:
         if kind=='world':
             if set(request)!={'request_id','edits'}:raise ValueError('exact world request required')

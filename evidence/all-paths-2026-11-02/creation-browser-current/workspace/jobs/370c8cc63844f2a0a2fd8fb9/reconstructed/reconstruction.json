@@ -1,0 +1,170 @@
+{
+  "bbox_max_m": [
+    1.0,
+    2.0,
+    1.0
+  ],
+  "bbox_min_m": [
+    -1.0,
+    0.0,
+    -1.0
+  ],
+  "bounds_m": [
+    2.0,
+    2.0,
+    2.0
+  ],
+  "evidence_level": "MEASURED_SILHOUETTE_HULL",
+  "external_api_calls": 0,
+  "fit": {
+    "legacy_iou_field_is_recall": true,
+    "measures": "voxel-hull-mask-recall; not final smoothed-mesh silhouette IoU",
+    "status": "PASS",
+    "threshold": 0.97,
+    "worst_view_iou": 1.0,
+    "worst_view_recall": 1.0
+  },
+  "glb": {
+    "bytes": 42512,
+    "inspection": {
+      "index_component_types": [
+        5125
+      ],
+      "limitations": [
+        "Structural triangle mesh verification only, not independent Blender rendering",
+        "Sparse, nonindexed and externally referenced glTF not yet supported"
+      ],
+      "materials": 1,
+      "meshes": 1,
+      "primitives": 1,
+      "triangles": 1728,
+      "valid": true,
+      "vertices": 866
+    },
+    "sha256": "ec42ea2e3a4de93aaef110cb20c2528187383fa89c8982a13744b845b88649db"
+  },
+  "grid": 12,
+  "hidden_surface_inference": false,
+  "identity_verified": false,
+  "internally_consistent": true,
+  "limitations": [
+    "orthographic silhouettes only; perspective references need rectification",
+    "concave detail no view can see is bounded by the hull, not measured",
+    "a silhouette set constrains shape; it does not prove identity or likeness",
+    "masks must be pre-segmented by the owner/segmentation stage",
+    "voxel resolution bounds surface fidelity"
+  ],
+  "mesh_bbox_max_m": [
+    1.0,
+    2.0,
+    1.0
+  ],
+  "mesh_bbox_min_m": [
+    -1.0,
+    0.0,
+    -1.0
+  ],
+  "method": "orthographic-silhouette-space-carving",
+  "mirrored_axes": [
+    "back",
+    "right"
+  ],
+  "obj": {
+    "bytes": 105041,
+    "sha256": "a66d8158c57560ab8104ad8dfc017a77dc29c11b720602a55ff185f6263be376"
+  },
+  "occupied_voxels": 1728,
+  "quads": 864,
+  "schema": "mgr.forge.multiview-silhouette.v1",
+  "smoothing": "area-weighted-vertex-normals",
+  "source_provenance": {
+    "hidden_geometry": "visual-hull bound only",
+    "kind": "owner-supplied-measured-orthographic-masks",
+    "source_hashes": [
+      "a7a4c149f02934a99249ab019fea1d3e540d4b2ac350e891e1a7c5e4219e2964",
+      "a7a4c149f02934a99249ab019fea1d3e540d4b2ac350e891e1a7c5e4219e2964"
+    ]
+  },
+  "status": "MATERIALIZED",
+  "surface": "marching-cubes-fan",
+  "surface_audit": {
+    "edges": {
+      "boundary_edges": 0,
+      "degenerate_triangles": 0,
+      "edge_closed_candidate": true,
+      "limitations": [
+        "position-based approximate welding; not exact topology",
+        "no self-intersection, winding orientation, solid volume, or thickness proof",
+        "edge-closed candidate does not imply 3D-print readiness"
+      ],
+      "nonmanifold_edges": 0,
+      "schema": "mgr.forge.surface-edge-audit.v1",
+      "status": "PASS",
+      "triangles": 1728,
+      "unique_edges": 2592
+    },
+    "geometry": {
+      "bad_index_triangles": [],
+      "degenerate_triangles": [],
+      "passed": true,
+      "triangles": 1728
+    },
+    "limitations": [
+      "no hidden-surface accuracy or self-intersection proof",
+      "surface nets rounds voxel corners; voxel volume is not final mesh volume"
+    ]
+  },
+  "surface_method": "voxel-centre-midpoint-surface-nets",
+  "triangles": 1728,
+  "vertices": 866,
+  "view_axes": [
+    "front",
+    "left"
+  ],
+  "views": [
+    {
+      "axis": "front",
+      "hull_shadow_iou": 1.0,
+      "mask": "front.png",
+      "mask_coverage": 1.0,
+      "mask_interpretation": "8-bit luminance multiplied by alpha; value >= threshold is occupied",
+      "pixels": [
+        8,
+        8
+      ],
+      "sha256": "a7a4c149f02934a99249ab019fea1d3e540d4b2ac350e891e1a7c5e4219e2964",
+      "threshold": 128,
+      "voxel_projection": {
+        "iou": 1.0,
+        "missed_pixels": 0,
+        "overfill_pixels": 0,
+        "recall": 1.0
+      }
+    },
+    {
+      "axis": "left",
+      "hull_shadow_iou": 1.0,
+      "mask": "side.png",
+      "mask_coverage": 1.0,
+      "mask_interpretation": "8-bit luminance multiplied by alpha; value >= threshold is occupied",
+      "pixels": [
+        8,
+        8
+      ],
+      "sha256": "a7a4c149f02934a99249ab019fea1d3e540d4b2ac350e891e1a7c5e4219e2964",
+      "threshold": 128,
+      "voxel_projection": {
+        "iou": 1.0,
+        "missed_pixels": 0,
+        "overfill_pixels": 0,
+        "recall": 1.0
+      }
+    }
+  ],
+  "volume_m3": 8.0,
+  "voxel_size_m": [
+    0.166667,
+    0.166667,
+    0.166667
+  ]
+}

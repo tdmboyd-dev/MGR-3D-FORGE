@@ -144,6 +144,7 @@ def build_lipsync(source,lines,out):
             "morph_key_count":len(CHANNELS),
             "source_mannequin_meshes":len(mannequin_meshes),
             "animation_frames":len(spec["frames"]),
+            "animation_fps":spec['fps'],
             "audio_alignment_verified":False,"owner_visual_accepted":False,
             "real_human_likeness_verified":False,
             "receiver_independently_reimported":False,

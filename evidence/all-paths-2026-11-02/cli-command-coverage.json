@@ -1,0 +1,1372 @@
+{
+  "schema": "mgr.forge.all-cli-coverage.v1",
+  "scope": "Current declaration scan and completed matrix receipts at publication checkpoint; no whole-feature acceptance",
+  "declared": 66,
+  "states": {
+    "SCOPED_POSITIVE_EXECUTION": 51,
+    "REJECTION_ONLY": 1,
+    "NOT_RUN_IN_COMPLETED_MATRICES": 14
+  },
+  "commands": [
+    {
+      "command": "asset-sources",
+      "source": "forge/cli.py",
+      "line": 132,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "asset-source-index",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "asset-source-index",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "asset-search",
+      "source": "forge/cli.py",
+      "line": 136,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "asset-cache-empty",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "asset-cache-persisted-search",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "asset-cache-empty",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "asset-cache-persisted-search",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "asset-acquire",
+      "source": "forge/cli.py",
+      "line": 145,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "REJECTION_ONLY",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "asset-acquire-unknown-no-network",
+          "status": "EXPECTED_REJECTION",
+          "exit_code": 1
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "asset-acquire-unknown-no-network",
+          "status": "EXPECTED_REJECTION",
+          "exit_code": 1
+        }
+      ],
+      "remaining": "Only undiscovered-slug rejection run; no live acquisition"
+    },
+    {
+      "command": "kit-mirror",
+      "source": "forge/cli.py",
+      "line": 149,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
+      "execution_cases": [],
+      "remaining": "Network archive transfer excluded from CPU matrix. Offline synthetic transport can exercise original handler without claiming live publisher archive or license."
+    },
+    {
+      "command": "rea-kit-audit",
+      "source": "forge/cli.py",
+      "line": 154,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
+      "execution_cases": [],
+      "remaining": "Needs exact matching archive/pack receipt and actual REA file evidence. Targeted own fixture run pending; historical publisher REA remains separate."
+    },
+    {
+      "command": "rambler-seal",
+      "source": "forge/cli.py",
+      "line": 158,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "release-seal",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "release-internal-roster-destination",
+          "status": "EXPECTED_REJECTION",
+          "exit_code": 1
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "release-seal",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "release-internal-roster-destination",
+          "status": "EXPECTED_REJECTION",
+          "exit_code": 1
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "rambler-verify",
+      "source": "forge/cli.py",
+      "line": 162,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "release-byte-verify",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "release-unlisted-file",
+          "status": "EXPECTED_REJECTION",
+          "exit_code": 1
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "release-tamper",
+          "status": "EXPECTED_REJECTION",
+          "exit_code": 1
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "release-byte-verify",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "release-unlisted-file",
+          "status": "EXPECTED_REJECTION",
+          "exit_code": 1
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "release-tamper",
+          "status": "EXPECTED_REJECTION",
+          "exit_code": 1
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "model-engines",
+      "source": "forge/cli.py",
+      "line": 165,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "model-engine-status",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "model-engine-status",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "imagine-creature",
+      "source": "forge/cli.py",
+      "line": 166,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "native-creature",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "morph-model",
+      "source": "forge/cli.py",
+      "line": 172,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "imported-static-morph",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "uv-atlas",
+      "source": "forge/cli.py",
+      "line": 177,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "native-uv-atlas",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "human-audio-motion",
+      "source": "forge/cli.py",
+      "line": 183,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
+      "execution_cases": [],
+      "remaining": "Separate current native/Blender receiver proof exists. CLI wrapper still not run in completed matrix; use original PCM fixture."
+    },
+    {
+      "command": "human-lipsync",
+      "source": "forge/cli.py",
+      "line": 189,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
+      "execution_cases": [],
+      "remaining": "Separate current native/Blender receiver proof exists. CLI wrapper still not run in completed matrix; use original timed cues."
+    },
+    {
+      "command": "world-compose",
+      "source": "forge/cli.py",
+      "line": 194,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "real-blender-world-composition",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "world-biome",
+      "source": "forge/cli.py",
+      "line": 200,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "native-terrain-layer",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "native-terrain-layer",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "rig-creature",
+      "source": "forge/cli.py",
+      "line": 206,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
+      "execution_cases": [],
+      "remaining": "Separate current rig receiver evidence exists. CLI wrapper requires new original creature fixture and real Blender; no model download needed."
+    },
+    {
+      "command": "build",
+      "source": "forge/cli.py",
+      "line": 210,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "world-from-spec",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "world-deterministic-repeat",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "world-prompt-native",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "world-invalid-spec",
+          "status": "EXPECTED_REJECTION",
+          "exit_code": 1
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "world-zero-buildings",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "world-fully-occupied",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "world-from-spec",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "world-deterministic-repeat",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "world-prompt-native",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "world-invalid-spec",
+          "status": "EXPECTED_REJECTION",
+          "exit_code": 1
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "world-zero-buildings",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "world-fully-occupied",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/blender-cli-inspections-final/matrix.json",
+          "case": "fresh-native-world",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "inspect",
+      "source": "forge/cli.py",
+      "line": 218,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "world-glb-structure",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "world-glb-structure",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "character",
+      "source": "forge/cli.py",
+      "line": 220,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "mannequin-character",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/blender-cli-inspections-final/matrix.json",
+          "case": "fresh-native-mannequin",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "fantasy-effect",
+      "source": "forge/cli.py",
+      "line": 223,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "fx-portal",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "fx-spell-orbit",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "fx-aura",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "fx-invalid-radius",
+          "status": "EXPECTED_REJECTION",
+          "exit_code": 1
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "fx-portal",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "fx-spell-orbit",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "fx-aura",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "fx-invalid-radius",
+          "status": "EXPECTED_REJECTION",
+          "exit_code": 1
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "spatial-proof",
+      "source": "forge/cli.py",
+      "line": 230,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "spatial-math-contract",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "spatial-math-contract",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "studio-proof",
+      "source": "forge/cli.py",
+      "line": 233,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "studio-quality-contracts",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "studio-quality-contracts",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "compose-scene",
+      "source": "forge/cli.py",
+      "line": 235,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "layer-composition",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "composition-overwrite",
+          "status": "EXPECTED_REJECTION",
+          "exit_code": 1
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "layer-composition",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "composition-overwrite",
+          "status": "EXPECTED_REJECTION",
+          "exit_code": 1
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "audit-export",
+      "source": "forge/cli.py",
+      "line": 238,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "glb-obj-parity",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "glb-obj-parity",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "load-cells",
+      "source": "forge/cli.py",
+      "line": 242,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "cell-real-glb-load",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "cell-tamper",
+          "status": "EXPECTED_REJECTION",
+          "exit_code": 1
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "cell-real-glb-load",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "cell-tamper",
+          "status": "EXPECTED_REJECTION",
+          "exit_code": 1
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "world-flight",
+      "source": "forge/cli.py",
+      "line": 248,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "world-flight-package",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "world-flight-package",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "apply-world-edits",
+      "source": "forge/cli.py",
+      "line": 251,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "authored-world-edit-export",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/blender-cli-inspections-final/matrix.json",
+          "case": "world-edit-source-for-blender",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "godot-handoff",
+      "source": "forge/cli.py",
+      "line": 255,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "godot-collision-package",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "godot-shifted-collider-manifest",
+          "status": "EXPECTED_REJECTION",
+          "exit_code": 1
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "godot-collision-package",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "godot-shifted-collider-manifest",
+          "status": "EXPECTED_REJECTION",
+          "exit_code": 1
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "character-intake",
+      "source": "forge/cli.py",
+      "line": 258,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "character-candidate-admit",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/blender-cli-inspections-final/matrix.json",
+          "case": "mannequin-candidate-admission",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "character-blender",
+      "source": "forge/cli.py",
+      "line": 261,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/blender-cli-inspections-final/matrix.json",
+          "case": "candidate-editable-blender",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "character-reopen",
+      "source": "forge/cli.py",
+      "line": 266,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/blender-cli-inspections-final/matrix.json",
+          "case": "candidate-independent-blend-reopen",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "character-readiness",
+      "source": "forge/cli.py",
+      "line": 271,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "character-structural-readiness",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "character-separate",
+      "source": "forge/cli.py",
+      "line": 274,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/blender-cli-inspections-final/matrix.json",
+          "case": "candidate-material-separation",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "character-motion-export",
+      "source": "forge/cli.py",
+      "line": 279,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/blender-cli-inspections-final/matrix.json",
+          "case": "actual-deforming-motion-export",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "character-motion-reimport",
+      "source": "forge/cli.py",
+      "line": 284,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/blender-cli-inspections-final/matrix.json",
+          "case": "independent-motion-glb-reimport",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "character-reference-pack",
+      "source": "forge/cli.py",
+      "line": 289,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "reference-pack-admission",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "unclothe-review",
+      "source": "forge/cli.py",
+      "line": 292,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "visible-part-review",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "unclothe-extract",
+      "source": "forge/cli.py",
+      "line": 294,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "visible-part-extraction",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "small-visible-part-extraction",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "unclothe-proxy",
+      "source": "forge/cli.py",
+      "line": 297,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "visible-part-proxy",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "small-visible-part-proxy",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "reconstruct-silhouette",
+      "source": "forge/cli.py",
+      "line": 301,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "orthographic-reconstruction",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "rectify-mask",
+      "source": "forge/cli.py",
+      "line": 306,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "planar-mask-rectification",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "gpu-plan",
+      "source": "forge/cli.py",
+      "line": 312,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "gpu-unpriced-dry-run",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "gpu-unpriced-dry-run",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "reconstruct-score",
+      "source": "forge/cli.py",
+      "line": 320,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "reconstruction-analytic-score",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "blender-live-scene",
+      "source": "forge/cli.py",
+      "line": 324,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/blender-cli-inspections-final/matrix.json",
+          "case": "world-individually-editable-blender",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "image-relief",
+      "source": "forge/cli.py",
+      "line": 329,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "image-derived-relief",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "blender-to-forge",
+      "source": "forge/cli.py",
+      "line": 336,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/blender-cli-inspections-final/matrix.json",
+          "case": "blender-world-back-to-native-edits",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "serve-studio",
+      "source": "forge/cli.py",
+      "line": 342,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
+      "execution_cases": [],
+      "remaining": "Current authenticated browser/HTTP proof separate. Actual CLI process startup/termination not in completed matrix."
+    },
+    {
+      "command": "blender-verify",
+      "source": "forge/cli.py",
+      "line": 347,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/blender-cli-inspections-final/matrix.json",
+          "case": "native-world-independent-import",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "blender-render",
+      "source": "forge/cli.py",
+      "line": 351,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
+      "execution_cases": [],
+      "remaining": "WorkBench receiver invocation not run in completed matrix; separate Blender composition render is a different command."
+    },
+    {
+      "command": "blender-facts",
+      "source": "forge/cli.py",
+      "line": 356,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/blender-cli-inspections-final/matrix.json",
+          "case": "native-world-independent-facts",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "blender-rig",
+      "source": "forge/cli.py",
+      "line": 360,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/blender-cli-inspections-final/matrix.json",
+          "case": "actual-mannequin-skin-rig",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "blender-pose-render",
+      "source": "forge/cli.py",
+      "line": 366,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
+      "execution_cases": [],
+      "remaining": "Requires rig .blend and independent renders; current matrix separately verified actual rig and motion without rendering pose pair."
+    },
+    {
+      "command": "blender-pose-audit",
+      "source": "forge/cli.py",
+      "line": 372,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/blender-cli-inspections-final/matrix.json",
+          "case": "actual-mannequin-pose-audit",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "blender-cinematic",
+      "source": "forge/cli.py",
+      "line": 376,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
+      "execution_cases": [],
+      "remaining": "Existing Blender installed. Actual bounded multi-shot render invocation not yet in completed matrix."
+    },
+    {
+      "command": "blender-material-audit",
+      "source": "forge/cli.py",
+      "line": 384,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/blender-cli-inspections-final/matrix.json",
+          "case": "native-world-material-sockets",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "blender-director-audit",
+      "source": "forge/cli.py",
+      "line": 388,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
+      "execution_cases": [],
+      "remaining": "Requires the saved cinematic .blend with real authored cuts. Not blocked by credentials or hardware."
+    },
+    {
+      "command": "blender-director-frames",
+      "source": "forge/cli.py",
+      "line": 392,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
+      "execution_cases": [],
+      "remaining": "Requires the saved director .blend and actual four-frame rendering; next bounded receiver run."
+    },
+    {
+      "command": "blender-fx-render",
+      "source": "forge/cli.py",
+      "line": 397,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
+      "execution_cases": [],
+      "remaining": "Requires actual paired CPU renders for atmosphere comparison; not a missing provider."
+    },
+    {
+      "command": "blender-studio-witness",
+      "source": "forge/cli.py",
+      "line": 405,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
+      "execution_cases": [],
+      "remaining": "Actual bounded CPU materials/light/strand/volume witness not run by completed CLI matrix."
+    },
+    {
+      "command": "judge-atmosphere",
+      "source": "forge/cli.py",
+      "line": 410,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
+      "execution_cases": [],
+      "remaining": "Needs matched real control/candidate render and source receipts; no synthetic image may qualify a real render."
+    },
+    {
+      "command": "verify-bundle",
+      "source": "forge/cli.py",
+      "line": 417,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "world-integrity",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "world-zero-integrity",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "composed-bundle-integrity",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "bundle-missing-declared-primary",
+          "status": "EXPECTED_REJECTION",
+          "exit_code": 1
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "bundle-declared-sidecar-omitted",
+          "status": "EXPECTED_REJECTION",
+          "exit_code": 1
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "world-sidecar-tamper",
+          "status": "EXPECTED_REJECTION",
+          "exit_code": 1
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "world-integrity",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "world-zero-integrity",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "relief-integrity",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "bundle-missing-declared-primary",
+          "status": "EXPECTED_REJECTION",
+          "exit_code": 1
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "bundle-declared-sidecar-omitted",
+          "status": "EXPECTED_REJECTION",
+          "exit_code": 1
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "world-sidecar-tamper",
+          "status": "EXPECTED_REJECTION",
+          "exit_code": 1
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "compare-renders",
+      "source": "forge/cli.py",
+      "line": 419,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "same-raster-pixels",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "compare-views",
+      "source": "forge/cli.py",
+      "line": 423,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "same-raster-silhouette",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "compare-asset-identity",
+      "source": "forge/cli.py",
+      "line": 427,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "same-asset-source-identity",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "pipeline",
+      "source": "forge/cli.py",
+      "line": 430,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "cpu-workflow-pipeline",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    },
+    {
+      "command": "rehearse-walk",
+      "source": "forge/cli.py",
+      "line": 436,
+      "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
+          "case": "road-collision-rehearsal",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/offline-matrix-extended-uv/matrix.json",
+          "case": "road-collision-rehearsal",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
+    }
+  ],
+  "source_sha256": "d5b8744c1db341c7cf960deef532f04d34aa8bf16e08e3d79ca3611dc886cbd4",
+  "notes": [
+    "52 distinct commands touched, 51 positive + one rejection-only. 14 not yet run in these matrices.",
+    "Separate current browser, human/rig and MCP receipts do not silently count as CLI command invocations.",
+    "No provider generation, paid calls, weights or production acceptance."
+  ]
+}

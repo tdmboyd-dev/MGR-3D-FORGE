@@ -1,0 +1,29 @@
+{
+  "biome_faces": 216,
+  "biome_input_sha256": "3b74dffd106b83ab86595c4178db1b2d73afaeb2ce803d24cde0278ac88d4484",
+  "blender_version": "5.2.2 LTS",
+  "city_faces": 204,
+  "city_input_sha256": "157be862352e9af5de7c3258bd32afa47a83c4d9c6ab278be08c6b1e47614edc",
+  "combined_triangles": 420,
+  "combined_world_sha256": "c4cdc5e7976d519ba6eab81f1533cf1c38af4acbfcd35bc934f4469eb51d7431",
+  "external_paid_model_used": false,
+  "godot_engine_runtime_tested": false,
+  "godot_project_packaged": true,
+  "owner_art_accepted": false,
+  "paths": [
+    "world.glb",
+    "world-composed.blend",
+    "world-composed-preview.png",
+    "world-composed-proof.json",
+    "manifest.json",
+    "godot-project/project.godot",
+    "godot-project/world.tscn",
+    "godot-project/assets/world.glb"
+  ],
+  "preview_sha256": "b44a8f72e121ac26643ee0118a5463569ea2f23e00a50e2fc2fc98e3a92ae50f",
+  "schema": "mgr.forge.world-composition.v1",
+  "source_files_unchanged": true,
+  "source_meshes_preserved": true,
+  "status": "BLENDER_COMPOSED_INDEPENDENT_REOPEN",
+  "world_collision_navmesh_generated": false
+}

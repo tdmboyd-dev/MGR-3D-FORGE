@@ -1,0 +1,87 @@
+{
+  "fixture_kind": "owner-authored analytic union of boxes",
+  "boxes": [
+    {
+      "min": [
+        -0.5,
+        0.0,
+        -0.5
+      ],
+      "max": [
+        0.5,
+        0.375,
+        0.5
+      ]
+    },
+    {
+      "min": [
+        -0.75,
+        0.375,
+        -0.625
+      ],
+      "max": [
+        0.75,
+        1.6875,
+        0.625
+      ]
+    },
+    {
+      "min": [
+        -0.375,
+        1.6875,
+        -0.375
+      ],
+      "max": [
+        0.375,
+        2.25,
+        0.375
+      ]
+    },
+    {
+      "min": [
+        -0.625,
+        2.25,
+        -0.5625
+      ],
+      "max": [
+        0.625,
+        3.0,
+        0.5625
+      ]
+    }
+  ],
+  "score": {
+    "schema": "mgr.forge.hull-vs-solid-score.v1",
+    "status": "MEASURED",
+    "evidence_level": "MEASURED_HULL_VS_ANALYTIC_SOLID",
+    "grid": 32,
+    "bounds_m": [
+      2.0,
+      3.0,
+      2.0
+    ],
+    "voxel_volume_m3": 0.000366210938,
+    "view_axes": [
+      "front",
+      "left"
+    ],
+    "hull_voxels": 11488,
+    "solid_voxels": 11488,
+    "agreement_voxels": 11488,
+    "overfill_voxels": 0,
+    "missed_voxels": 0,
+    "hull_volume_m3": 4.20703125,
+    "solid_volume_m3": 4.20703125,
+    "overfill_volume_m3": 0.0,
+    "missed_volume_m3": 0.0,
+    "hull_vs_solid_iou": 1.0,
+    "silhouettes_prove_identity": false,
+    "limitations": [
+      "orthographic silhouettes only; perspective references need rectification",
+      "concave detail no view can see is bounded by the hull, not measured",
+      "a silhouette set constrains shape; it does not prove identity or likeness",
+      "masks must be pre-segmented by the owner/segmentation stage",
+      "voxel resolution bounds surface fidelity"
+    ]
+  }
+}

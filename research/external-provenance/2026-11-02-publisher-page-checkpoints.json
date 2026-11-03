@@ -1,0 +1,298 @@
+{
+  "schema": "mgr.forge.publisher-pages.v1",
+  "date": "2026-11-02",
+  "results": [
+    {
+      "id": "XR-0080",
+      "url": "https://github.com/",
+      "final_url": "https://github.com/",
+      "title": "GitHub \u00b7 Change is constant. GitHub keeps you ahead. \u00b7 GitHub \u00b7 GitHub",
+      "bytes_read": 180000,
+      "bounded_prefix_sha256": "19f0162ab40ca2878215e0f22ee7994cfe804f59b5ffe11d3cee36a18386b54d",
+      "state": "PUBLISHER_PAGE_IDENTITY_PREFIX_READ",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    },
+    {
+      "id": "XR-0125",
+      "url": "https://docs.blender.org/manual/en/latest/addons/rigging/rigify/index.html",
+      "state": "PRIMARY_PAGE_ACCESS_FAILED",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "id": "XR-0129",
+      "url": "https://diffeomorphic.blogspot.com/",
+      "final_url": "https://diffeomorphic.blogspot.com/",
+      "title": "Diffeomorphic",
+      "bytes_read": 130333,
+      "bounded_prefix_sha256": "ed2666a87929fceb7fb664caec136162fbc4dce0339e75882aa24cafd3a86793",
+      "state": "PUBLISHER_PAGE_IDENTITY_PREFIX_READ",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    },
+    {
+      "id": "XR-0130",
+      "url": "https://www.lucky3d.fr/auto-rig-pro/doc/",
+      "final_url": "https://www.lucky3d.fr/auto-rig-pro/doc/",
+      "title": "Welcome to the Auto-Rig Pro documentation! &mdash; AutoRigPro Doc documentation",
+      "bytes_read": 16654,
+      "bounded_prefix_sha256": "5c52285435911f2317bb461d43f15b9d52184aedc9d1ec16d46b35db3561d583",
+      "state": "PUBLISHER_PAGE_IDENTITY_PREFIX_READ",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    },
+    {
+      "id": "XR-0133",
+      "url": "https://www.mixamo.com/",
+      "final_url": "https://www.mixamo.com/",
+      "title": "Mixamo",
+      "bytes_read": 36699,
+      "bounded_prefix_sha256": "9daa5a50c3ec9aa249950a9f96c2a7034dbbffa961eba1cd6c21cfefcf4239de",
+      "state": "PUBLISHER_PAGE_IDENTITY_PREFIX_READ",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    },
+    {
+      "id": "XR-0134",
+      "url": "https://www.rokoko.com/products/studio",
+      "final_url": "https://www.rokoko.com/products/studio",
+      "title": "Free 3D animation software to record, stream and edit motion capture data",
+      "bytes_read": 180000,
+      "bounded_prefix_sha256": "cd54aca173014c41ce791c5639b6685984820a2931d91ed033f1785c39fd47c8",
+      "state": "PUBLISHER_PAGE_IDENTITY_PREFIX_READ",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    },
+    {
+      "id": "XR-0135",
+      "url": "https://actorcore.reallusion.com/auto-rig",
+      "final_url": "https://actorcore.reallusion.com/auto-rig",
+      "title": null,
+      "bytes_read": 3291,
+      "bounded_prefix_sha256": "5d75feaa476f0642b8d7a51263583a2af351ca1c7d296d0091412e70c3ebf0d9",
+      "state": "PAGE_IDENTITY_NOT_CONFIRMED",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    },
+    {
+      "id": "XR-0136",
+      "url": "https://www.deepmotion.com/animate-3d",
+      "final_url": "https://www.deepmotion.com/animate-3d",
+      "title": null,
+      "bytes_read": 11583,
+      "bounded_prefix_sha256": "4db6ea89e866a164967d8831386ba1ced7c6d2746bd7c8bed0b658f032378154",
+      "state": "PAGE_IDENTITY_NOT_CONFIRMED",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    },
+    {
+      "id": "XR-0137",
+      "url": "https://radicalmotion.com/",
+      "state": "PRIMARY_PAGE_ACCESS_FAILED",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "id": "XR-0143",
+      "url": "https://github.com/google-research/google-research/tree/master/ghum",
+      "final_url": "https://github.com/google-research/google-research/tree/master/ghum",
+      "title": "google-research/ghum at master \u00b7 google-research/google-research \u00b7 GitHub",
+      "bytes_read": 180000,
+      "bounded_prefix_sha256": "2d50600edeb3fec8277b0e71881c388b7bd1aff69af476e2ec510952a039be9e",
+      "state": "PUBLISHER_PAGE_IDENTITY_PREFIX_READ",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    },
+    {
+      "id": "XR-0145",
+      "url": "https://docs.blender.org/manual/en/latest/animation/armatures/posing/tool_settings.html",
+      "state": "PRIMARY_PAGE_ACCESS_FAILED",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "id": "XR-0147",
+      "url": "https://vroid.com/en/studio",
+      "state": "PRIMARY_PAGE_ACCESS_FAILED",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "id": "XR-0148",
+      "url": "https://vrm.dev/en/vrm1/",
+      "final_url": "https://vrm.dev/en/vrm1/",
+      "title": "VRM-1.0 | VRM",
+      "bytes_read": 25940,
+      "bounded_prefix_sha256": "d7e3c82113e099abefa1d5daf378dec0fca154f195914672fc9eaa8abcbe115b",
+      "state": "PUBLISHER_PAGE_IDENTITY_PREFIX_READ",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    },
+    {
+      "id": "XR-0149",
+      "url": "https://developer.apple.com/documentation/arkit/arfaceanchor/blendshapes",
+      "final_url": "https://developer.apple.com/documentation/arkit/arfaceanchor/blendshapes",
+      "title": "blendShapes | Apple Developer Documentation",
+      "bytes_read": 18708,
+      "bounded_prefix_sha256": "c6443a2c00ba737a3e2ed1d6ac5d25e6dda7a113b66cf632046549fccbf671b8",
+      "state": "PUBLISHER_PAGE_IDENTITY_PREFIX_READ",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    },
+    {
+      "id": "XR-0153",
+      "url": "https://docs.blender.org/manual/en/latest/modeling/geometry_nodes/index.html",
+      "state": "PRIMARY_PAGE_ACCESS_FAILED",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "id": "XR-0154",
+      "url": "https://docs.blender.org/manual/en/latest/editors/asset_browser.html",
+      "state": "PRIMARY_PAGE_ACCESS_FAILED",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "id": "XR-0158",
+      "url": "https://www.sidefx.com/products/houdini/",
+      "final_url": "https://www.sidefx.com/products/houdini/",
+      "title": "Houdini | Procedural Content Creation Tools for Film/TV, Gamedev and more | SideFX",
+      "bytes_read": 50072,
+      "bounded_prefix_sha256": "ff793a3da56856050d24cfc58123a25cb43437a545fab0379612346efc1390a7",
+      "state": "PUBLISHER_PAGE_IDENTITY_PREFIX_READ",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    },
+    {
+      "id": "XR-0159",
+      "url": "https://dev.epicgames.com/documentation/en-us/unreal-engine/procedural-content-generation-overview",
+      "final_url": "https://dev.epicgames.com/documentation/en-us/unreal-engine/procedural-content-generation-overview",
+      "title": "Procedural Content Generation Overview for Unreal Engine | Unreal Engine 5.8 Documentation | Epic Developer Community",
+      "bytes_read": 126434,
+      "bounded_prefix_sha256": "6532b90329f01023b10a0cdb19ed063ee2547d4495ce64d9c41a03f0b9196382",
+      "state": "PUBLISHER_PAGE_IDENTITY_PREFIX_READ",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    },
+    {
+      "id": "XR-0160",
+      "url": "https://docs.unity3d.com/Manual/terrain-UsingTerrains.html",
+      "final_url": "https://docs.unity.com/en-us/engine/6000.6/manual/creating-environments/script-terrain/terrain-using-terrains",
+      "title": "Create and edit Terrains \u2022 Terrain \u2022 6000.6 \u2022 Unity Editor \u2022 Unity Docs",
+      "bytes_read": 180000,
+      "bounded_prefix_sha256": "d4a2f7774a493c9f5403c86fb47d2564018917711ccf47a564677e6cdaa2dc82",
+      "state": "PUBLISHER_PAGE_IDENTITY_PREFIX_READ",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    },
+    {
+      "id": "XR-0165",
+      "url": "https://www.openstreetmap.org/about",
+      "final_url": "https://www.openstreetmap.org/about",
+      "title": "OpenStreetMap",
+      "bytes_read": 17660,
+      "bounded_prefix_sha256": "eadd0fa99253cb6e5ef42b3139f4057ba2b58493460284cb3b82c29fced540f1",
+      "state": "PUBLISHER_PAGE_IDENTITY_PREFIX_READ",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    },
+    {
+      "id": "XR-0168",
+      "url": "https://ephtracy.github.io/",
+      "final_url": "https://ephtracy.github.io/",
+      "title": "MagicaVoxel",
+      "bytes_read": 4326,
+      "bounded_prefix_sha256": "7fa3c69c4f7e0ece301043d5522447b4877865ad02e884f89830bf02e491ee97",
+      "state": "PUBLISHER_PAGE_IDENTITY_PREFIX_READ",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    },
+    {
+      "id": "XR-0169",
+      "url": "https://quadspinner.com/",
+      "final_url": "https://quadspinner.com/",
+      "title": "QuadSpinner / Creators of Gaea",
+      "bytes_read": 17633,
+      "bounded_prefix_sha256": "88285655b4634b32627b94b0aa78e74b594fb922f637a5e1e7806f14812e327a",
+      "state": "PUBLISHER_PAGE_IDENTITY_PREFIX_READ",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    },
+    {
+      "id": "XR-0170",
+      "url": "https://www.world-machine.com/",
+      "final_url": "https://www.world-machine.com/",
+      "title": "World Machine 3D Terrain Generation Software",
+      "bytes_read": 45133,
+      "bounded_prefix_sha256": "ca49958af93a0f0d5013bbcd41c75a39b20a74451266c1e4f3fe3505ded94924",
+      "state": "PUBLISHER_PAGE_IDENTITY_PREFIX_READ",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    },
+    {
+      "id": "XR-0171",
+      "url": "https://www.world-creator.com/",
+      "state": "PRIMARY_PAGE_ACCESS_FAILED",
+      "error": "HTTP Error 503: Service Unavailable"
+    },
+    {
+      "id": "XR-0172",
+      "url": "https://www.blenderkit.com/",
+      "final_url": "https://www.blendkit.com/",
+      "title": "Blender Asset Library \u2013 150,000+ Free &amp; Paid 3D Assets | Blendkit",
+      "bytes_read": 180000,
+      "bounded_prefix_sha256": "e3a5c906cad22236d8689149ab7decd5eb16da3f09e60f3fbfa706f8372bf530",
+      "state": "PUBLISHER_PAGE_IDENTITY_PREFIX_READ",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    },
+    {
+      "id": "XR-0173",
+      "url": "https://polyhaven.com/",
+      "final_url": "https://polyhaven.com/",
+      "title": "Poly Haven",
+      "bytes_read": 102195,
+      "bounded_prefix_sha256": "7bc98bc2f8cc76a953decf83c05377535ab7f6e40e8ec4cbbac437e7010a1f3a",
+      "state": "PUBLISHER_PAGE_IDENTITY_PREFIX_READ",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    },
+    {
+      "id": "XR-0174",
+      "url": "https://ambientcg.com/",
+      "final_url": "https://ambientcg.com/",
+      "title": "ambientCG - Free Textures, HDRIs and Models",
+      "bytes_read": 20863,
+      "bounded_prefix_sha256": "4fa0fcce8745f4f35bb08ac382d983da2cccf31576fc7fbbc727d2538584b33e",
+      "state": "PUBLISHER_PAGE_IDENTITY_PREFIX_READ",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    },
+    {
+      "id": "XR-0175",
+      "url": "https://docs.omniverse.nvidia.com/composer/latest/index.html",
+      "final_url": "https://docs.omniverse.nvidia.com/composer/latest/index.html",
+      "title": "USD Composer Overview &#8212; Omniverse USD Composer",
+      "bytes_read": 33937,
+      "bounded_prefix_sha256": "d9c81f01add32dcdbb4802203a341c43e5ed61f4d96c3a5fec6c45b912eca174",
+      "state": "PUBLISHER_PAGE_IDENTITY_PREFIX_READ",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    },
+    {
+      "id": "XR-0176",
+      "url": "https://godotengine.org/asset-library/asset",
+      "final_url": "https://godotengine.org/asset-library/asset",
+      "title": "Godot Asset Library",
+      "bytes_read": 71590,
+      "bounded_prefix_sha256": "0547c07b5ff7a57f2e15b94971dcca415d247713cb5836e055e2a29f08ea06e3",
+      "state": "PUBLISHER_PAGE_IDENTITY_PREFIX_READ",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    },
+    {
+      "id": "XR-0177",
+      "url": "https://extensions.blender.org/",
+      "final_url": "https://extensions.blender.org/",
+      "title": "Extensions &mdash; Blender Extensions",
+      "bytes_read": 58114,
+      "bounded_prefix_sha256": "ffbb6c58bac134811200e33376da14c20d6d6e2737c83156324cd4fa832a9c9d",
+      "state": "PUBLISHER_PAGE_IDENTITY_PREFIX_READ",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    },
+    {
+      "id": "XR-0178",
+      "url": "https://www.geoscatter.com/",
+      "final_url": "https://www.geoscatter.com/",
+      "title": "Geo-Scatter",
+      "bytes_read": 48528,
+      "bounded_prefix_sha256": "f98ddaa3677ed698c5e432bd40d06ee51cea5e4c98b3c787603a26d1c2bee9ad",
+      "state": "PUBLISHER_PAGE_IDENTITY_PREFIX_READ",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    },
+    {
+      "id": "XR-0179",
+      "url": "https://extensions.blender.org/add-ons/cell-fracture/",
+      "final_url": "https://extensions.blender.org/add-ons/cell-fracture/",
+      "title": "Cell Fracture &mdash; Blender Extensions",
+      "bytes_read": 52062,
+      "bounded_prefix_sha256": "75a58f39e888887bb54f35714758fe04f7a9948eb94ebea0a0a398d92cfbe9e7",
+      "state": "PUBLISHER_PAGE_IDENTITY_PREFIX_READ",
+      "scope": "Bounded title/text identity prefix only; page not fully read, no algorithm, REA, license clearance or runtime qualification"
+    }
+  ]
+}

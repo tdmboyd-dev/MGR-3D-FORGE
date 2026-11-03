@@ -1,4 +1,4 @@
-"""Bounded read-only navigation over the original five creation journals.
+"""Bounded read-only navigation over original creation journals.
 
 Journal state is an observation, not artifact acceptance. Reopening delegates
 to each original status reader; this module never starts or retries a job.
@@ -12,6 +12,7 @@ from .creature_jobs import creature_job_status
 from .biome_jobs import biome_job_status
 from .human_jobs import human_lipsync_job_status
 from .world_composition_jobs import world_composition_status
+from .creation_asset_jobs import asset_job_status
 
 SOURCES = {
     "world": ("world-requests.json", world_job_status),
@@ -19,6 +20,9 @@ SOURCES = {
     "biome": ("biome-requests.json", biome_job_status),
     "human": ("human-lipsync-requests.json", human_lipsync_job_status),
     "composed": ("world-composition-requests.json", world_composition_status),
+    "reconstruction": ("reconstruction-requests.json", lambda studio, rid: asset_job_status(studio, 'reconstruction', rid)),
+    "morph": ("morph-requests.json", lambda studio, rid: asset_job_status(studio, 'morph', rid)),
+    "uv": ("uv-requests.json", lambda studio, rid: asset_job_status(studio, 'uv', rid)),
 }
 STATES = {"STARTED", "RUNNING", "MATERIALIZED", "FAILED", "NEEDS_RECONCILIATION"}
 

@@ -1,0 +1,22 @@
+{
+  "chunk_lots": 4,
+  "chunks": [
+    {
+      "building_ids": [
+        "building-000-000",
+        "building-001-000"
+      ],
+      "id": "chunk-r000-c000",
+      "lot_origin": [
+        0,
+        0
+      ],
+      "world_origin": [
+        -12.0,
+        0,
+        -12.0
+      ]
+    }
+  ],
+  "schema": "mgr.forge.chunks.v1"
+}

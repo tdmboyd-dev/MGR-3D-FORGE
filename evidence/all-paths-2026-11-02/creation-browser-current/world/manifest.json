@@ -1,0 +1,232 @@
+{
+  "additional_artifacts": {
+    "camera_tour": "camera_tour.json",
+    "chunks": "chunks.json",
+    "interior_plan": "interiors.json",
+    "interiors": "interiors.glb",
+    "lighting": "lighting.json",
+    "lod1": "world_lod1.glb",
+    "mtl": "world.mtl",
+    "obj": "world.obj",
+    "parks": "parks.glb",
+    "parks_manifest": "parks.json",
+    "preview": "preview.svg",
+    "road_graph": "navigation.json",
+    "scene_facts": "scene_facts.json",
+    "spatial_overview": "spatial_overview.json"
+  },
+  "artifact": {
+    "bytes": 11724,
+    "path": "world.glb",
+    "sha256": "39c701c9e15ef811e47f15c5bb78dcac20a2df732c1d6ba60fbcec9e0d851e91"
+  },
+  "artifact_inventory": {
+    "camera_tour.json": {
+      "bytes": 837,
+      "sha256": "a399f249692fb6cf0e231ec0cc9dd6efdde406fa1763de4d2939d982fc93d72e"
+    },
+    "chunks.json": {
+      "bytes": 353,
+      "sha256": "0a9aa863620a76a904ed1602cdd42115f887219cedf8a21df8e11a66784a3df9"
+    },
+    "interiors.glb": {
+      "bytes": 16672,
+      "sha256": "2414cb50ee8abb18948a2162b387ec52624ca39ce973a164fa6ebf894cf9752a"
+    },
+    "interiors.json": {
+      "bytes": 877,
+      "sha256": "e28f44e779740efa7eee3b023115df8a974b37d91590c52f859b74698cd7c1cc"
+    },
+    "lighting.json": {
+      "bytes": 191,
+      "sha256": "51fcdf113fc498bfe5b2187f6c23315bc25ac0f2a660036cef389c0e849e009c"
+    },
+    "navigation.json": {
+      "bytes": 1630,
+      "sha256": "1f5595d458026e2d2fc1d6e195e8b6718d501321538f8ca1bc2f38244665ec58"
+    },
+    "parks.glb": {
+      "bytes": 12528,
+      "sha256": "3e7490b4143f8f6b8ad0b85c2436652dd40dd66c3dec0274a7fefce80fc0cc3a"
+    },
+    "parks.json": {
+      "bytes": 677,
+      "sha256": "b3fbffab3626efd3cd5121d1401f36d6cacf01c918e72865f84e28ae1d0ab65d"
+    },
+    "preview.svg": {
+      "bytes": 2120,
+      "sha256": "5b4b41bfd77de4720efca11243fc0bf2c99873490ef656bf588d47b45e2c77d1"
+    },
+    "scene_facts.json": {
+      "bytes": 1072,
+      "sha256": "317b8a7c7ce6dad6f838c308cb2b91c7c6fb7be2ed3e42e6d690f02cdc02b0d7"
+    },
+    "spatial_overview.json": {
+      "bytes": 936,
+      "sha256": "36c4e7aae33fb198c1a4337d40fca6d7dd1ccc71a5c0f0d07aa5349fd34bd435"
+    },
+    "world.glb": {
+      "bytes": 11724,
+      "sha256": "39c701c9e15ef811e47f15c5bb78dcac20a2df732c1d6ba60fbcec9e0d851e91"
+    },
+    "world.mtl": {
+      "bytes": 607,
+      "sha256": "112fd40c8d1688746a757fa589c555b2314e7a2519549c9da979cff3aea677c4"
+    },
+    "world.obj": {
+      "bytes": 21067,
+      "sha256": "136b6b7fa06d0b279c400eadeb0bcc96f9fda743c04e5637829735092478f4b2"
+    },
+    "world_lod1.glb": {
+      "bytes": 3680,
+      "sha256": "ca700d8910210579a1ff03c93df0a026e0bd340dc4fa47ba3d2edcd8f9c85092"
+    }
+  },
+  "axis": "Y_UP",
+  "buildings": [
+    {
+      "center": [
+        -12.0,
+        0,
+        -12.0
+      ],
+      "entry_road_distance": 5.0834,
+      "id": "building-000-000",
+      "lot": [
+        0,
+        0
+      ],
+      "material": "building-stone",
+      "size": [
+        11.4344,
+        11.4666,
+        13.8333
+      ]
+    },
+    {
+      "center": [
+        -12.0,
+        0,
+        12.0
+      ],
+      "entry_road_distance": 5.6571,
+      "id": "building-001-000",
+      "lot": [
+        0,
+        1
+      ],
+      "material": "building-brick",
+      "size": [
+        10.6636,
+        19.8972,
+        12.6857
+      ]
+    }
+  ],
+  "cinematic_camera_clearance": {
+    "errors": [],
+    "schema": "mgr.forge.camera-clearance.v1",
+    "status": "PASS"
+  },
+  "cinematic_reel_quality": {
+    "duration_seconds": 4.0,
+    "schema": "mgr.forge.shot-plan-qa.v1",
+    "shots": 2,
+    "status": "PASS"
+  },
+  "execution": {
+    "blender_verified": false,
+    "compute": "CPU",
+    "external_api_calls": 0,
+    "independent_engine_import_verified": false,
+    "model_inference": false
+  },
+  "generator": "forge.cpu.neighborhood.v1",
+  "glb_quality": {
+    "index_component_types": [
+      5125
+    ],
+    "limitations": [
+      "Structural triangle mesh verification only, not independent Blender rendering",
+      "Sparse, nonindexed and externally referenced glTF not yet supported"
+    ],
+    "materials": 6,
+    "meshes": 1,
+    "primitives": 5,
+    "triangles": 132,
+    "valid": true,
+    "vertices": 264
+  },
+  "grounds": {
+    "depth": 54.0,
+    "width": 54.0
+  },
+  "lod1_quality": {
+    "index_component_types": [
+      5125
+    ],
+    "limitations": [
+      "Structural triangle mesh verification only, not independent Blender rendering",
+      "Sparse, nonindexed and externally referenced glTF not yet supported"
+    ],
+    "materials": 6,
+    "meshes": 1,
+    "primitives": 2,
+    "triangles": 24,
+    "valid": true,
+    "vertices": 48
+  },
+  "material_count": 6,
+  "omitted_empty_layers": [],
+  "quality": {
+    "checks": [
+      "lot uniqueness",
+      "building bounds",
+      "road setback",
+      "building count",
+      "road grid"
+    ],
+    "errors": [],
+    "passed": true
+  },
+  "roads": [
+    {
+      "axis": "z",
+      "coordinate": -24.0
+    },
+    {
+      "axis": "z",
+      "coordinate": 0.0
+    },
+    {
+      "axis": "z",
+      "coordinate": 24.0
+    },
+    {
+      "axis": "x",
+      "coordinate": -24.0
+    },
+    {
+      "axis": "x",
+      "coordinate": 0.0
+    },
+    {
+      "axis": "x",
+      "coordinate": 24.0
+    }
+  ],
+  "schema": "mgr.forge.world.v1",
+  "spec": {
+    "buildings": 2,
+    "columns": 2,
+    "lot_size": 18.0,
+    "name": "MGR Forge Test Neighborhood",
+    "road_width": 6.0,
+    "rows": 2,
+    "seed": 54
+  },
+  "status": "geometry-generated-not-engine-validated",
+  "triangle_count": 132,
+  "unit": "meter",
+  "vertex_count": 264
+}

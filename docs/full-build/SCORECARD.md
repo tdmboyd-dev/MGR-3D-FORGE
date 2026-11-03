@@ -1,6 +1,31 @@
 # Forge full-build acceptance scorecard
 
 Updated: November 2, 2026. Owning repository: MGR-3D-FORGE, `main`.
+
+**ACTIVE owner scope correction: ALL Forge paths.** Image-to-3D and morphing were examples, not a restriction. The dated C01–C15 outcomes below describe the previous finite delivery only. They do not close the current task. Keep the original F01–F156 register, every CLI/Studio/shared consumer journey and the complete original research target universe in scope. Whole-product completion is **Unassessed** until the full requirements have observable acceptance evidence.
+
+## Active all-path continuation — November 2, 2026
+
+| Outcome | Current evidence | State / next proof |
+|---|---|---|
+| Preserve complete research universe | `research/external-provenance/2026-11-02-full-target-coverage.json` retains all 187 original targets, identities and unresolved locators | Indexed; deep source/runtime coverage remains open, never 187 completed company teardowns |
+| Account for native execution paths | `research/external-provenance/2026-11-02-native-path-coverage.json` plus `scripts/verify_forge_path_matrix.py` | AST inventory and substantive offline runtime trials; refresh source hashes at qualification |
+| Repair unsafe PNG allocation | `tests/test_png_allocation_bounds.py` exercises bounded output against an oversized decompressed stream | Focused verified; integrated full suite pending |
+| Repair mesh boundary extraction | Image3D core report: 41 focused tests and actual Blender geometry/import/render | Focused and independent importer verified; calibrated masks only |
+| Preserve imported static meshes through native shape revisions | Imported morph tests and independent Blender material/UV/image/part proof | Static subset verified; skin/animation/morph target revision explicitly refused |
+| Connect uploads to original jobs and recovery | Native admission/creation regressions; real Chrome creation/replay/restart/reopen/download hash proof | Native and browser verified; actual shared SDK→HTTP→native three-kind proof passed with exact inputs and 3 original jobs |
+| Author native UV coordinates | 13 focused core/job tests; actual Blender checker and world triangle/material correspondence; Chrome/MCP save and reopen | CPU-native bounded atlas verified; professional unwrap/bake/texture artwork remains open |
+| Show saved revisions in Studio | Actual saved geometry orbit preview, checked artifact hash, protected fetch | Browser verified; geometry/material colors only, no texture or animation renderer |
+| Repair world navigation | Actual Chrome key-input +X strafe at initial heading | Browser verified; no device/hosted claim |
+| Support empty and fully occupied worlds | Empty overview camera, real ground/roads; omit nonexistent interior/LOD/park GLBs | Focused verified; runtime matrix being expanded |
+| Bind export receipts to main geometry and sidecars | Missing-main/missing-sidecar tamper regressions in all-path integrity tests | Focused verified; no publisher authentication inferred |
+| Keep release rosters outside sealed roots | Real CLI/refusal tests | Focused verified; no signing identity inferred |
+| Qualify scene composition and receiving-engine contracts | Real Blender composition/reopen, verified bundle and Godot geometry/collider checks | Blender and package verified; Godot import/play remains open |
+| Qualify human, rigs, animation, UV and material paths | Independent Blender measured real skin/morph motion, positive and frozen/inert negative proofs, actual shader sockets and UV checker | Verified within tested original fixtures; mapped cross-skeleton retargeting is the next native implementation |
+| Qualify current combined source | `qualification-final/qualification.json`: 749 run, 746 passed, 3 optional skips, 222 inputs stable; JS syntax passed | Local current regression verified; API canonical 363 results / 342 passed / 21 optional skips |
+| Publish current source and guides | Shared API `92e6a574...` committed, pushed and exact tree read back | API checkpoint published; Forge readback recorded separately after publication |
+
+No active all-product percentage is assigned. Counts in narrow regression receipts measure those receipts only. Neural/provider internals, likeness, arbitrary photo recovery, every receiving engine, owner art acceptance and production acceptance remain separately open.
 Recovered baseline: `f6914ae9f83e8f5cd0fb3ce314e2bfbca0e2db0c`, clean and equal to fetched origin/main before edits.
 
 Owner priority: improve original MGR-native creation by learning production methods, preserve the existing shared API/MCP/Tevin route, and maintain a completion handbook and usable how-to. The owner specifically selected a CPU-native route without huge model hosting as a prerequisite.

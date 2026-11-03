@@ -1,0 +1,4032 @@
+{
+  "schema": "mgr.forge.rea-studio-observation.v1",
+  "evidence_id": "ev_eefac9a8690f939f798dd5069774876688137c845b3243b6d92453395858a43d",
+  "operation": "inspect_web_page",
+  "parameters": {
+    "allowed_origins": [
+      "http://127.0.0.1:62785"
+    ],
+    "cdp_endpoint": "http://127.0.0.1:62788",
+    "command_timeout_ms": 20000,
+    "include_accessibility_text": true,
+    "include_console_text": false,
+    "include_json_body_shapes": false,
+    "include_script_sources": false,
+    "include_storage_fingerprints": false,
+    "include_storage_keys": false,
+    "include_websocket_shapes": false,
+    "observation_ms": 1000,
+    "target_id": "4EE81303512C33CD6433B59F5EB393B8"
+  },
+  "browser": {
+    "js_version": "15.6.75.19",
+    "product": "Chrome/156.0.8078.47",
+    "protocol_version": "1.3",
+    "revision": "537.36 (@1d17a2e2ee147bb7d6ae2ab6abdb3a2510c17775)",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36"
+  },
+  "target": {
+    "attached": null,
+    "origin": "http://127.0.0.1:62785",
+    "target_id": "4EE81303512C33CD6433B59F5EB393B8",
+    "title": "MGR Forge World Flight",
+    "type": "page",
+    "url": "http://127.0.0.1:62785/"
+  },
+  "completeness": {
+    "attach_limited_sections": [
+      "console_events",
+      "metadata",
+      "network_requests",
+      "websocket_connections",
+      "websocket_frames",
+      "workers"
+    ],
+    "conditions": [
+      "attach_limited",
+      "policy_filtered"
+    ],
+    "dropped_events": {
+      "console_events": 0,
+      "network_requests": 0,
+      "scripts": 0,
+      "timeline_events": 0,
+      "total": 0,
+      "webmcp_tools": 0,
+      "websocket_connections": 0,
+      "websocket_frames": 0
+    },
+    "excluded": [
+      {
+        "count": null,
+        "reason": "not_approved",
+        "section": "console_text"
+      },
+      {
+        "count": null,
+        "reason": "not_approved",
+        "section": "json_body_shapes"
+      },
+      {
+        "count": 1,
+        "reason": "not_approved",
+        "section": "script_sources"
+      },
+      {
+        "count": 24,
+        "reason": "unattributed_origin",
+        "section": "scripts"
+      },
+      {
+        "count": null,
+        "reason": "not_approved",
+        "section": "storage_keys"
+      },
+      {
+        "count": null,
+        "reason": "not_approved",
+        "section": "websocket_shapes"
+      }
+    ],
+    "policy_filtered_sections": [
+      "console_text",
+      "json_body_shapes",
+      "script_sources",
+      "scripts",
+      "storage_keys",
+      "websocket_shapes"
+    ],
+    "status": "policy_filtered",
+    "truncated_sections": [],
+    "unavailable_sections": []
+  },
+  "dom_nodes": 490,
+  "accessibility": {
+    "nodes": [
+      {
+        "description": null,
+        "ignored": false,
+        "name": "MGR Forge World Flight",
+        "node_id": "125",
+        "parent_id": null,
+        "role": "RootWebArea",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "focused",
+            "value": true
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "126",
+        "parent_id": "125",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "132",
+        "parent_id": "126",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Interactive three-dimensional MGR world",
+        "node_id": "134",
+        "parent_id": "132",
+        "role": "Canvas",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "135",
+        "parent_id": "132",
+        "role": "generic",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "140",
+        "parent_id": "132",
+        "role": "generic",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "\u2715 Close Creation Chat",
+        "node_id": "141",
+        "parent_id": "132",
+        "role": "button",
+        "states": [
+          {
+            "name": "expanded",
+            "value": true
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "MGR Creation Director",
+        "node_id": "142",
+        "parent_id": "132",
+        "role": "complementary",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "MGR World Editor",
+        "node_id": "443",
+        "parent_id": "132",
+        "role": "complementary",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "MGR // WORLD FLIGHT",
+        "node_id": "136",
+        "parent_id": "135",
+        "role": "heading",
+        "states": [
+          {
+            "name": "level",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "OWNED WORLD \u00b7 LOCAL RENDER \u00b7 LIVE NAVIGATION",
+        "node_id": "60",
+        "parent_id": "135",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "138",
+        "parent_id": "135",
+        "role": "generic",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "W/S: forward/back \u00a0 A/D: strafe \u00a0 E/Q: up/down \u00a0 \u2190/\u2192: turn \u00a0 Drag: look \u00a0 Shift: move faster",
+        "node_id": "62",
+        "parent_id": "140",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "\u2715 Close Creation Chat",
+        "node_id": "751",
+        "parent_id": "141",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "MGR CREATION DIRECTOR",
+        "node_id": "143",
+        "parent_id": "142",
+        "role": "heading",
+        "states": [
+          {
+            "name": "level",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Describe an edit or a new building. Commands stay local.",
+        "node_id": "527",
+        "parent_id": "142",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": " ",
+        "node_id": "661",
+        "parent_id": "142",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "145",
+        "parent_id": "142",
+        "role": "LabelText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Creation command",
+        "node_id": "90",
+        "parent_id": "142",
+        "role": "textbox",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "multiline",
+            "value": true
+          },
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Create / Change",
+        "node_id": "149",
+        "parent_id": "142",
+        "role": "button",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "\ud83c\udf99 Voice",
+        "node_id": "150",
+        "parent_id": "142",
+        "role": "button",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Try: \u201cmake it blue\u201d, \u201cset height to 24\u201d, \u201cmove to x 5 z -8\u201d, \u201ccreate a gold building height 15\u201d.",
+        "node_id": "531",
+        "parent_id": "142",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": " ",
+        "node_id": "640",
+        "parent_id": "142",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "152",
+        "parent_id": "142",
+        "role": "LabelText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Optional picture reference (local preview, not image reconstruction)",
+        "node_id": "119",
+        "parent_id": "142",
+        "role": "button",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Use image color on building",
+        "node_id": "159",
+        "parent_id": "142",
+        "role": "button",
+        "states": [
+          {
+            "name": "disabled",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Create 3D Relief (PNG)",
+        "node_id": "160",
+        "parent_id": "142",
+        "role": "button",
+        "states": [
+          {
+            "name": "disabled",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "161",
+        "parent_id": "142",
+        "role": "LabelText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Existing 3D model (.glb, up to 900 KB in browser)",
+        "node_id": "120",
+        "parent_id": "142",
+        "role": "button",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Inspect / Preserve 3D Model",
+        "node_id": "164",
+        "parent_id": "142",
+        "role": "button",
+        "states": [
+          {
+            "name": "disabled",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "165",
+        "parent_id": "142",
+        "role": "group",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "204",
+        "parent_id": "142",
+        "role": "group",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Build Edited World",
+        "node_id": "252",
+        "parent_id": "142",
+        "role": "button",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Open in Blender Project",
+        "node_id": "253",
+        "parent_id": "142",
+        "role": "button",
+        "states": [
+          {
+            "name": "disabled",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Download Game Engine Project",
+        "node_id": "254",
+        "parent_id": "142",
+        "role": "button",
+        "states": [
+          {
+            "name": "disabled",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "255",
+        "parent_id": "142",
+        "role": "separator",
+        "states": [
+          {
+            "name": "orientation",
+            "value": "horizontal"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "MGR CREATURE FORGE",
+        "node_id": "256",
+        "parent_id": "142",
+        "role": "heading",
+        "states": [
+          {
+            "name": "level",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Make original stylized 3D creatures from scratch on CPU. Not neural photorealism, Blender-verified rigs or final art.",
+        "node_id": "572",
+        "parent_id": "142",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": " ",
+        "node_id": "662",
+        "parent_id": "142",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "258",
+        "parent_id": "142",
+        "role": "LabelText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Describe an original creature",
+        "node_id": "102",
+        "parent_id": "142",
+        "role": "textbox",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "multiline",
+            "value": true
+          },
+          {
+            "name": "readonly",
+            "value": false
+          },
+          {
+            "name": "required",
+            "value": false
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "262",
+        "parent_id": "142",
+        "role": "LabelText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Design seed (0\u20134,294,967,295)",
+        "node_id": "103",
+        "parent_id": "142",
+        "role": "spinbutton",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "required",
+            "value": false
+          },
+          {
+            "name": "valuemax",
+            "value": 4294967296
+          },
+          {
+            "name": "valuemin",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "267",
+        "parent_id": "142",
+        "role": "LabelText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Anatomy ideas to evaluate (1\u201312)",
+        "node_id": "104",
+        "parent_id": "142",
+        "role": "spinbutton",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "required",
+            "value": false
+          },
+          {
+            "name": "valuemax",
+            "value": 12
+          },
+          {
+            "name": "valuemin",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "272",
+        "parent_id": "142",
+        "role": "group",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Create Original 3D Creature",
+        "node_id": "309",
+        "parent_id": "142",
+        "role": "button",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Check Last Creature",
+        "node_id": "310",
+        "parent_id": "142",
+        "role": "button",
+        "states": [
+          {
+            "name": "disabled",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "311",
+        "parent_id": "142",
+        "role": "status",
+        "states": [
+          {
+            "name": "atomic",
+            "value": true
+          },
+          {
+            "name": "live",
+            "value": "polite"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "312",
+        "parent_id": "142",
+        "role": "separator",
+        "states": [
+          {
+            "name": "orientation",
+            "value": "horizontal"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "MGR HUMAN FORGE \u2014 SPEAKING FACE",
+        "node_id": "313",
+        "parent_id": "142",
+        "role": "heading",
+        "states": [
+          {
+            "name": "level",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Animate the existing generic MGR human in Blender using manually timed speech sounds. This prototype has real 3D mouth morph targets, NOT automatic audio recognition or a realistic face.",
+        "node_id": "596",
+        "parent_id": "142",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Animate Generic Human Face",
+        "node_id": "315",
+        "parent_id": "142",
+        "role": "button",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "316",
+        "parent_id": "142",
+        "role": "LabelText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Original voice/audio reference (PCM16 WAV only; max 900 KB)",
+        "node_id": "123",
+        "parent_id": "142",
+        "role": "button",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Make Human Mouth React to My Audio",
+        "node_id": "319",
+        "parent_id": "142",
+        "role": "button",
+        "states": [
+          {
+            "name": "disabled",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Private local audio never goes in public Git. This creates sound-responsive jaw movement, not full phoneme-accurate lip sync or voice cloning.",
+        "node_id": "600",
+        "parent_id": "142",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Check Human Animation",
+        "node_id": "321",
+        "parent_id": "142",
+        "role": "button",
+        "states": [
+          {
+            "name": "disabled",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "322",
+        "parent_id": "142",
+        "role": "status",
+        "states": [
+          {
+            "name": "atomic",
+            "value": true
+          },
+          {
+            "name": "live",
+            "value": "polite"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "323",
+        "parent_id": "142",
+        "role": "separator",
+        "states": [
+          {
+            "name": "orientation",
+            "value": "horizontal"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "MGR WORLD BIOME FORGE",
+        "node_id": "324",
+        "parent_id": "142",
+        "role": "heading",
+        "states": [
+          {
+            "name": "level",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Make original optional terrain around the existing world. Roads and buildings stay untouched; real-time terrain merging is a separate step.",
+        "node_id": "604",
+        "parent_id": "142",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": " ",
+        "node_id": "654",
+        "parent_id": "142",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "326",
+        "parent_id": "142",
+        "role": "LabelText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Original biome",
+        "node_id": "111",
+        "parent_id": "142",
+        "role": "combobox",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "348",
+        "parent_id": "142",
+        "role": "LabelText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "World seed",
+        "node_id": "112",
+        "parent_id": "142",
+        "role": "spinbutton",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "required",
+            "value": false
+          },
+          {
+            "name": "valuemax",
+            "value": 4294967296
+          },
+          {
+            "name": "valuemin",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "353",
+        "parent_id": "142",
+        "role": "LabelText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Terrain detail (10\u201364)",
+        "node_id": "113",
+        "parent_id": "142",
+        "role": "spinbutton",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "required",
+            "value": false
+          },
+          {
+            "name": "valuemax",
+            "value": 64
+          },
+          {
+            "name": "valuemin",
+            "value": 10
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Generate 3D Terrain Layer",
+        "node_id": "358",
+        "parent_id": "142",
+        "role": "button",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Check Last Terrain",
+        "node_id": "359",
+        "parent_id": "142",
+        "role": "button",
+        "states": [
+          {
+            "name": "disabled",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "360",
+        "parent_id": "142",
+        "role": "status",
+        "states": [
+          {
+            "name": "atomic",
+            "value": true
+          },
+          {
+            "name": "live",
+            "value": "polite"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Combine Original City + Terrain (Blender)",
+        "node_id": "361",
+        "parent_id": "142",
+        "role": "button",
+        "states": [
+          {
+            "name": "disabled",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Check Combined World",
+        "node_id": "362",
+        "parent_id": "142",
+        "role": "button",
+        "states": [
+          {
+            "name": "disabled",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "363",
+        "parent_id": "142",
+        "role": "status",
+        "states": [
+          {
+            "name": "atomic",
+            "value": true
+          },
+          {
+            "name": "live",
+            "value": "polite"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "364",
+        "parent_id": "142",
+        "role": "separator",
+        "states": [
+          {
+            "name": "orientation",
+            "value": "horizontal"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "MGR SOURCE ATLAS",
+        "node_id": "365",
+        "parent_id": "142",
+        "role": "heading",
+        "states": [
+          {
+            "name": "level",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Find faces, creatures, textures, game kits and creation tools. Source discovery is not a rights or quality approval.",
+        "node_id": "617",
+        "parent_id": "142",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": " ",
+        "node_id": "655",
+        "parent_id": "142",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "367",
+        "parent_id": "142",
+        "role": "LabelText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "What do you need?",
+        "node_id": "114",
+        "parent_id": "142",
+        "role": "searchbox",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Asset source",
+        "node_id": "115",
+        "parent_id": "142",
+        "role": "combobox",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Find Source Libraries",
+        "node_id": "391",
+        "parent_id": "142",
+        "role": "button",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Search Free 3D Models",
+        "node_id": "392",
+        "parent_id": "142",
+        "role": "button",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "393",
+        "parent_id": "142",
+        "role": "generic",
+        "states": [
+          {
+            "name": "atomic",
+            "value": false
+          },
+          {
+            "name": "live",
+            "value": "polite"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "394",
+        "parent_id": "142",
+        "role": "separator",
+        "states": [
+          {
+            "name": "orientation",
+            "value": "horizontal"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "SAVED CREATIONS",
+        "node_id": "395",
+        "parent_id": "142",
+        "role": "heading",
+        "states": [
+          {
+            "name": "level",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Find creations in this Studio workspace after a restart. Reopen checks the original job and its saved GLB. Listings alone do not verify files. Ordered by type and request ID.",
+        "node_id": "622",
+        "parent_id": "142",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": " ",
+        "node_id": "663",
+        "parent_id": "142",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "397",
+        "parent_id": "142",
+        "role": "LabelText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Creation type",
+        "node_id": "116",
+        "parent_id": "142",
+        "role": "combobox",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Find Saved Creations",
+        "node_id": "428",
+        "parent_id": "142",
+        "role": "button",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Next Page",
+        "node_id": "429",
+        "parent_id": "142",
+        "role": "button",
+        "states": [
+          {
+            "name": "disabled",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "431",
+        "parent_id": "142",
+        "role": "status",
+        "states": [
+          {
+            "name": "atomic",
+            "value": true
+          },
+          {
+            "name": "live",
+            "value": "polite"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "432",
+        "parent_id": "142",
+        "role": "generic",
+        "states": [
+          {
+            "name": "atomic",
+            "value": false
+          },
+          {
+            "name": "live",
+            "value": "polite"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "433",
+        "parent_id": "142",
+        "role": "group",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "441",
+        "parent_id": "142",
+        "role": "generic",
+        "states": [
+          {
+            "name": "atomic",
+            "value": false
+          },
+          {
+            "name": "live",
+            "value": "polite"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "442",
+        "parent_id": "142",
+        "role": "status",
+        "states": [
+          {
+            "name": "atomic",
+            "value": true
+          },
+          {
+            "name": "live",
+            "value": "polite"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "WORLD EDITOR",
+        "node_id": "444",
+        "parent_id": "443",
+        "role": "heading",
+        "states": [
+          {
+            "name": "level",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Change buildings. Save the world you create.",
+        "node_id": "65",
+        "parent_id": "443",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "446",
+        "parent_id": "443",
+        "role": "LabelText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Building",
+        "node_id": "117",
+        "parent_id": "443",
+        "role": "combobox",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "459",
+        "parent_id": "443",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "460",
+        "parent_id": "459",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "461",
+        "parent_id": "460",
+        "role": "LabelText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "X (meters)",
+        "node_id": "41",
+        "parent_id": "460",
+        "role": "spinbutton",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "required",
+            "value": false
+          },
+          {
+            "name": "valuemax",
+            "value": 0
+          },
+          {
+            "name": "valuemin",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "466",
+        "parent_id": "459",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "467",
+        "parent_id": "466",
+        "role": "LabelText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Z (meters)",
+        "node_id": "43",
+        "parent_id": "466",
+        "role": "spinbutton",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          },
+          {
+            "name": "required",
+            "value": false
+          },
+          {
+            "name": "valuemax",
+            "value": 0
+          },
+          {
+            "name": "valuemin",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "472",
+        "parent_id": "443",
+        "role": "LabelText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Height (meters)",
+        "node_id": "45",
+        "parent_id": "443",
+        "role": "spinbutton",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "true"
+          },
+          {
+            "name": "required",
+            "value": false
+          },
+          {
+            "name": "valuemax",
+            "value": 100
+          },
+          {
+            "name": "valuemin",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "477",
+        "parent_id": "443",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "478",
+        "parent_id": "477",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "479",
+        "parent_id": "478",
+        "role": "LabelText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Width (m)",
+        "node_id": "47",
+        "parent_id": "478",
+        "role": "spinbutton",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "true"
+          },
+          {
+            "name": "required",
+            "value": false
+          },
+          {
+            "name": "valuemax",
+            "value": 40
+          },
+          {
+            "name": "valuemin",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "484",
+        "parent_id": "477",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "485",
+        "parent_id": "484",
+        "role": "LabelText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Depth (m)",
+        "node_id": "49",
+        "parent_id": "484",
+        "role": "spinbutton",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "true"
+          },
+          {
+            "name": "required",
+            "value": false
+          },
+          {
+            "name": "valuemax",
+            "value": 40
+          },
+          {
+            "name": "valuemin",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "490",
+        "parent_id": "443",
+        "role": "LabelText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Material color",
+        "node_id": "118",
+        "parent_id": "443",
+        "role": "combobox",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "hasPopup",
+            "value": "menu"
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Download World",
+        "node_id": "512",
+        "parent_id": "443",
+        "role": "button",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Reset",
+        "node_id": "513",
+        "parent_id": "443",
+        "role": "button",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "514",
+        "parent_id": "443",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "\u21b6 Undo",
+        "node_id": "515",
+        "parent_id": "514",
+        "role": "button",
+        "states": [
+          {
+            "name": "disabled",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "\u21b7 Redo",
+        "node_id": "516",
+        "parent_id": "514",
+        "role": "button",
+        "states": [
+          {
+            "name": "disabled",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "517",
+        "parent_id": "443",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Duplicate",
+        "node_id": "518",
+        "parent_id": "517",
+        "role": "button",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Delete",
+        "node_id": "519",
+        "parent_id": "517",
+        "role": "button",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "520",
+        "parent_id": "443",
+        "role": "LabelText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Load a saved world (.json)",
+        "node_id": "124",
+        "parent_id": "443",
+        "role": "button",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "523",
+        "parent_id": "443",
+        "role": "status",
+        "states": [
+          {
+            "name": "atomic",
+            "value": true
+          },
+          {
+            "name": "live",
+            "value": "polite"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "MGR // WORLD FLIGHT",
+        "node_id": "59",
+        "parent_id": "136",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "139",
+        "parent_id": "138",
+        "role": "generic",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "MGR CREATION DIRECTOR",
+        "node_id": "526",
+        "parent_id": "143",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Creation command",
+        "node_id": "528",
+        "parent_id": "145",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "146",
+        "parent_id": "90",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "147",
+        "parent_id": "90",
+        "role": "generic",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Create / Change",
+        "node_id": "529",
+        "parent_id": "149",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "\ud83c\udf99 Voice",
+        "node_id": "530",
+        "parent_id": "150",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Optional picture reference (local preview, not image reconstruction)",
+        "node_id": "532",
+        "parent_id": "152",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Use image color on building",
+        "node_id": "533",
+        "parent_id": "159",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Create 3D Relief (PNG)",
+        "node_id": "534",
+        "parent_id": "160",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Existing 3D model (.glb, up to 900 KB in browser)",
+        "node_id": "535",
+        "parent_id": "161",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Inspect / Preserve 3D Model",
+        "node_id": "536",
+        "parent_id": "164",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "166",
+        "parent_id": "165",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Morph the uploaded static model",
+        "node_id": "170",
+        "parent_id": "166",
+        "role": "DisclosureTriangle",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "168",
+        "parent_id": "165",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "205",
+        "parent_id": "204",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Build measured 3D from two silhouette images",
+        "node_id": "209",
+        "parent_id": "205",
+        "role": "DisclosureTriangle",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "207",
+        "parent_id": "204",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Build Edited World",
+        "node_id": "568",
+        "parent_id": "252",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Open in Blender Project",
+        "node_id": "569",
+        "parent_id": "253",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Download Game Engine Project",
+        "node_id": "570",
+        "parent_id": "254",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "MGR CREATURE FORGE",
+        "node_id": "571",
+        "parent_id": "256",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Describe an original creature",
+        "node_id": "573",
+        "parent_id": "258",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "259",
+        "parent_id": "102",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "260",
+        "parent_id": "102",
+        "role": "generic",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Design seed (0\u20134,294,967,295)",
+        "node_id": "574",
+        "parent_id": "262",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "263",
+        "parent_id": "103",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "265",
+        "parent_id": "263",
+        "role": "generic",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Anatomy ideas to evaluate (1\u201312)",
+        "node_id": "576",
+        "parent_id": "267",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "268",
+        "parent_id": "104",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "270",
+        "parent_id": "268",
+        "role": "generic",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "273",
+        "parent_id": "272",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Advanced MorphRig \u2014 shape changes",
+        "node_id": "277",
+        "parent_id": "273",
+        "role": "DisclosureTriangle",
+        "states": [
+          {
+            "name": "expanded",
+            "value": false
+          },
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "275",
+        "parent_id": "272",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Create Original 3D Creature",
+        "node_id": "592",
+        "parent_id": "309",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Check Last Creature",
+        "node_id": "593",
+        "parent_id": "310",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Creature Forge needs the local authenticated Studio; offline HTML cannot execute creation jobs.",
+        "node_id": "594",
+        "parent_id": "311",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "MGR HUMAN FORGE \u2014 SPEAKING FACE",
+        "node_id": "595",
+        "parent_id": "313",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Animate Generic Human Face",
+        "node_id": "597",
+        "parent_id": "315",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Original voice/audio reference (PCM16 WAV only; max 900 KB)",
+        "node_id": "598",
+        "parent_id": "316",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Make Human Mouth React to My Audio",
+        "node_id": "599",
+        "parent_id": "319",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Check Human Animation",
+        "node_id": "601",
+        "parent_id": "321",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "An authenticated local Forge Studio with Blender is required. Output is editable Blender and animated GLB, not user-approved facial likeness.",
+        "node_id": "602",
+        "parent_id": "322",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "MGR WORLD BIOME FORGE",
+        "node_id": "603",
+        "parent_id": "324",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Original biome",
+        "node_id": "605",
+        "parent_id": "326",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "329",
+        "parent_id": "111",
+        "role": "MenuListPopup",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "World seed",
+        "node_id": "606",
+        "parent_id": "348",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "349",
+        "parent_id": "112",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "351",
+        "parent_id": "349",
+        "role": "generic",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Terrain detail (10\u201364)",
+        "node_id": "608",
+        "parent_id": "353",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "354",
+        "parent_id": "113",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "356",
+        "parent_id": "354",
+        "role": "generic",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Generate 3D Terrain Layer",
+        "node_id": "610",
+        "parent_id": "358",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Check Last Terrain",
+        "node_id": "611",
+        "parent_id": "359",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "A local authenticated Forge Studio is required; first generate a source-pinned optional terrain.",
+        "node_id": "612",
+        "parent_id": "360",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Combine Original City + Terrain (Blender)",
+        "node_id": "613",
+        "parent_id": "361",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Check Combined World",
+        "node_id": "614",
+        "parent_id": "362",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "After a terrain job, MGR Forge can combine original city and terrain in one GLB and editable Blender project. Modified building edits are a separate source until explicitly composed.",
+        "node_id": "615",
+        "parent_id": "363",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "MGR SOURCE ATLAS",
+        "node_id": "616",
+        "parent_id": "365",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "What do you need?",
+        "node_id": "618",
+        "parent_id": "367",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "368",
+        "parent_id": "114",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "369",
+        "parent_id": "114",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "371",
+        "parent_id": "369",
+        "role": "generic",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "375",
+        "parent_id": "115",
+        "role": "MenuListPopup",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Find Source Libraries",
+        "node_id": "619",
+        "parent_id": "391",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Search Free 3D Models",
+        "node_id": "620",
+        "parent_id": "392",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "SAVED CREATIONS",
+        "node_id": "621",
+        "parent_id": "395",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Creation type",
+        "node_id": "623",
+        "parent_id": "397",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "400",
+        "parent_id": "116",
+        "role": "MenuListPopup",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Find Saved Creations",
+        "node_id": "624",
+        "parent_id": "428",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Next Page",
+        "node_id": "625",
+        "parent_id": "429",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "1 saved creations. 1 on this page. Reopen verifies files.",
+        "node_id": "764",
+        "parent_id": "431",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "762",
+        "parent_id": "432",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "760",
+        "parent_id": "762",
+        "role": "paragraph",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Reopen",
+        "node_id": "761",
+        "parent_id": "762",
+        "role": "button",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "invalid",
+            "value": "false"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "434",
+        "parent_id": "433",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Saved asset preview",
+        "node_id": "438",
+        "parent_id": "434",
+        "role": "DisclosureTriangle",
+        "states": [
+          {
+            "name": "expanded",
+            "value": true
+          },
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "436",
+        "parent_id": "433",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Orbit preview of the saved static model",
+        "node_id": "439",
+        "parent_id": "436",
+        "role": "Canvas",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "440",
+        "parent_id": "436",
+        "role": "status",
+        "states": [
+          {
+            "name": "atomic",
+            "value": true
+          },
+          {
+            "name": "live",
+            "value": "polite"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Manifest \u00b7 asset-reconstruction-cc0d75349ba8c86a6f252ff38362d84bc31dab48f64aa81d65cca0a4db95434a",
+        "node_id": "726",
+        "parent_id": "441",
+        "role": "link",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Download reopened Measured image hull \u00b7 asset-reconstruction-cc0d75349ba8c86a6f252ff38362d84bc31dab48f64aa81d65cca0a4db95434a",
+        "node_id": "725",
+        "parent_id": "441",
+        "role": "link",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Manifest \u00b7 asset-morph-69df790155de8236d74f229a2cb145ef8f941a7c0a56f374673dd8517d9bab27",
+        "node_id": "699",
+        "parent_id": "441",
+        "role": "link",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Download reopened Static model morph \u00b7 asset-morph-69df790155de8236d74f229a2cb145ef8f941a7c0a56f374673dd8517d9bab27",
+        "node_id": "698",
+        "parent_id": "441",
+        "role": "link",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Authenticated Forge artifact downloaded.",
+        "node_id": "737",
+        "parent_id": "442",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "WORLD EDITOR",
+        "node_id": "64",
+        "parent_id": "444",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Building",
+        "node_id": "66",
+        "parent_id": "446",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "449",
+        "parent_id": "117",
+        "role": "MenuListPopup",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "X (meters)",
+        "node_id": "68",
+        "parent_id": "461",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "462",
+        "parent_id": "41",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "464",
+        "parent_id": "462",
+        "role": "generic",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Z (meters)",
+        "node_id": "70",
+        "parent_id": "467",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "468",
+        "parent_id": "43",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "470",
+        "parent_id": "468",
+        "role": "generic",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Height (meters)",
+        "node_id": "72",
+        "parent_id": "472",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "473",
+        "parent_id": "45",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "475",
+        "parent_id": "473",
+        "role": "generic",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Width (m)",
+        "node_id": "74",
+        "parent_id": "479",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "480",
+        "parent_id": "47",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "482",
+        "parent_id": "480",
+        "role": "generic",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Depth (m)",
+        "node_id": "76",
+        "parent_id": "485",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "486",
+        "parent_id": "49",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "488",
+        "parent_id": "486",
+        "role": "generic",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Material color",
+        "node_id": "78",
+        "parent_id": "490",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "",
+        "node_id": "493",
+        "parent_id": "118",
+        "role": "MenuListPopup",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Download World",
+        "node_id": "80",
+        "parent_id": "512",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Reset",
+        "node_id": "81",
+        "parent_id": "513",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "\u21b6 Undo",
+        "node_id": "82",
+        "parent_id": "515",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "\u21b7 Redo",
+        "node_id": "83",
+        "parent_id": "516",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Duplicate",
+        "node_id": "84",
+        "parent_id": "518",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Delete",
+        "node_id": "85",
+        "parent_id": "519",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Load a saved world (.json)",
+        "node_id": "86",
+        "parent_id": "520",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Ready to edit.",
+        "node_id": "89",
+        "parent_id": "523",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "LIVE WebGL2 | 2 buildings | 41 FPS | X 3.0 Y 10.8 Z 39.0 | collision stops 0",
+        "node_id": "851",
+        "parent_id": "139",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "744",
+        "parent_id": "170",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "-1000000018",
+        "parent_id": "744",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Morph the uploaded static model",
+        "node_id": "537",
+        "parent_id": "170",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "745",
+        "parent_id": "209",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "-1000000019",
+        "parent_id": "745",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Build measured 3D from two silhouette images",
+        "node_id": "553",
+        "parent_id": "209",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "42",
+        "node_id": "575",
+        "parent_id": "265",
+        "role": "StaticText",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "4",
+        "node_id": "577",
+        "parent_id": "270",
+        "role": "StaticText",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "746",
+        "parent_id": "277",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "-1000000020",
+        "parent_id": "746",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Advanced MorphRig \u2014 shape changes",
+        "node_id": "578",
+        "parent_id": "277",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Forest valley",
+        "node_id": "333",
+        "parent_id": "329",
+        "role": "option",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": true
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Desert dunes",
+        "node_id": "336",
+        "parent_id": "329",
+        "role": "option",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Tundra ice",
+        "node_id": "339",
+        "parent_id": "329",
+        "role": "option",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Volcanic rock",
+        "node_id": "342",
+        "parent_id": "329",
+        "role": "option",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Alien world",
+        "node_id": "345",
+        "parent_id": "329",
+        "role": "option",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "42",
+        "node_id": "607",
+        "parent_id": "351",
+        "role": "StaticText",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "28",
+        "node_id": "609",
+        "parent_id": "356",
+        "role": "StaticText",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "3DAssets.dev \u00b7 CC0 models",
+        "node_id": "379",
+        "parent_id": "375",
+        "role": "option",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": true
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Poly Haven \u00b7 3D models",
+        "node_id": "382",
+        "parent_id": "375",
+        "role": "option",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Poly Haven \u00b7 textures",
+        "node_id": "385",
+        "parent_id": "375",
+        "role": "option",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Poly Haven \u00b7 lighting/HDRIs",
+        "node_id": "388",
+        "parent_id": "375",
+        "role": "option",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "All creation types",
+        "node_id": "404",
+        "parent_id": "400",
+        "role": "option",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Edited worlds",
+        "node_id": "407",
+        "parent_id": "400",
+        "role": "option",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Creatures",
+        "node_id": "410",
+        "parent_id": "400",
+        "role": "option",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Terrain",
+        "node_id": "413",
+        "parent_id": "400",
+        "role": "option",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Human animations",
+        "node_id": "416",
+        "parent_id": "400",
+        "role": "option",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Combined worlds",
+        "node_id": "419",
+        "parent_id": "400",
+        "role": "option",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Measured image hulls",
+        "node_id": "422",
+        "parent_id": "400",
+        "role": "option",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": true
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Static model morphs",
+        "node_id": "425",
+        "parent_id": "400",
+        "role": "option",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Measured image hull \u00b7 asset-reconstruction-cc0d75349ba8c86a6f252ff38362d84bc31dab48f64aa81d65cca0a4db95434a \u00b7 MATERIALIZED (journal state)",
+        "node_id": "765",
+        "parent_id": "760",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Reopen",
+        "node_id": "766",
+        "parent_id": "761",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "750",
+        "parent_id": "438",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": true,
+        "name": null,
+        "node_id": "-1000000021",
+        "parent_id": "750",
+        "role": "none",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Saved asset preview",
+        "node_id": "628",
+        "parent_id": "438",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "1728 triangles \u00b7 saved SHA-256 checked. Drag to orbit; scroll to zoom. Geometry and material colors; textures and animation are not rendered here.",
+        "node_id": "732",
+        "parent_id": "440",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Manifest \u00b7 asset-reconstruction-cc0d75349ba8c86a6f252ff38362d84bc31dab48f64aa81d65cca0a4db95434a",
+        "node_id": "730",
+        "parent_id": "726",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Download reopened Measured image hull \u00b7 asset-reconstruction-cc0d75349ba8c86a6f252ff38362d84bc31dab48f64aa81d65cca0a4db95434a",
+        "node_id": "736",
+        "parent_id": "725",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Manifest \u00b7 asset-morph-69df790155de8236d74f229a2cb145ef8f941a7c0a56f374673dd8517d9bab27",
+        "node_id": "704",
+        "parent_id": "699",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Download reopened Static model morph \u00b7 asset-morph-69df790155de8236d74f229a2cb145ef8f941a7c0a56f374673dd8517d9bab27",
+        "node_id": "710",
+        "parent_id": "698",
+        "role": "StaticText",
+        "states": []
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "building-000-000",
+        "node_id": "453",
+        "parent_id": "449",
+        "role": "option",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": true
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "building-001-000",
+        "node_id": "456",
+        "parent_id": "449",
+        "role": "option",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "-12",
+        "node_id": "69",
+        "parent_id": "464",
+        "role": "StaticText",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "-12",
+        "node_id": "71",
+        "parent_id": "470",
+        "role": "StaticText",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "11.4666",
+        "node_id": "73",
+        "parent_id": "475",
+        "role": "StaticText",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "11.4344",
+        "node_id": "75",
+        "parent_id": "482",
+        "role": "StaticText",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "13.8333",
+        "node_id": "77",
+        "parent_id": "488",
+        "role": "StaticText",
+        "states": [
+          {
+            "name": "editable",
+            "value": "plaintext"
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Warm Brick",
+        "node_id": "497",
+        "parent_id": "493",
+        "role": "option",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Stone",
+        "node_id": "500",
+        "parent_id": "493",
+        "role": "option",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": true
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Blue",
+        "node_id": "503",
+        "parent_id": "493",
+        "role": "option",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Gold",
+        "node_id": "506",
+        "parent_id": "493",
+        "role": "option",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      },
+      {
+        "description": null,
+        "ignored": false,
+        "name": "Emerald",
+        "node_id": "509",
+        "parent_id": "493",
+        "role": "option",
+        "states": [
+          {
+            "name": "focusable",
+            "value": true
+          },
+          {
+            "name": "selected",
+            "value": false
+          }
+        ]
+      }
+    ],
+    "text_capture": {
+      "excluded_fields": 0,
+      "retained_bytes": 6201,
+      "status": "included"
+    },
+    "total_nodes": 298
+  },
+  "limitations": [
+    "Artifact identity is unavailable for this observation.",
+    "Observation starts when REA attaches; prior network and console activity is unavailable.",
+    "Worker targets are a final inventory snapshot, not worker-session observation. Their attached flag describes any debugging client; this page-session collector does not observe worker network, console, or script events, and short-lived workers may be absent from the snapshot.",
+    "Raw network headers, bodies, cookies, storage values, console objects, and WebSocket payloads are never retained; explicitly requested primitive console text is retained verbatim, while payload captures retain value-free shapes.",
+    "Source maps are reported only as declarative URLs and are not fetched.",
+    "URL-less scripts and console events without an allowed source URL are excluded because their origin cannot be proven.",
+    "CDP discovery omitted the target attachment state; attached is reported as unknown.",
+    "Browser host platform and architecture were not observed."
+  ],
+  "raw_bundle_sha256": "3b30b947b7d4e55a623dfdebfc9db54a5f4e6b891511bc5b1f1bfc8561d9438d",
+  "claim": "Passive actual own Studio after unlock; prior actions proved separately by browser-proof.json. No script sources, credentials, storage values or prior network activity retained."
+}

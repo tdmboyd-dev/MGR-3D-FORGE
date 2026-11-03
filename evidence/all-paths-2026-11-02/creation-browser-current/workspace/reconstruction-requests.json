@@ -1,0 +1,14 @@
+{
+  "asset-reconstruction-cc0d75349ba8c86a6f252ff38362d84bc31dab48f64aa81d65cca0a4db95434a": {
+    "bytes": 42512,
+    "fingerprint": "ffbdbe560f3db9807d56521559c391dbacd857ccde4fab81cac37eedc9ba3816",
+    "job_id": "370c8cc63844f2a0a2fd8fb9",
+    "receipt_sha256": "984150bdee85f35bfecb00468ba991a332335ba9eaec78168dda157e78ada3aa",
+    "sha256": "ec42ea2e3a4de93aaef110cb20c2528187383fa89c8982a13744b845b88649db",
+    "source_sha256": {
+      "front.png": "a7a4c149f02934a99249ab019fea1d3e540d4b2ac350e891e1a7c5e4219e2964",
+      "side.png": "a7a4c149f02934a99249ab019fea1d3e540d4b2ac350e891e1a7c5e4219e2964"
+    },
+    "status": "MATERIALIZED"
+  }
+}

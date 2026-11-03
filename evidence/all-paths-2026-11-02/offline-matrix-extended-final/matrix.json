@@ -1,0 +1,2101 @@
+{
+  "blender_requested": null,
+  "cases": [
+    {
+      "case": "world-from-spec",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "build",
+        "--spec",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\spec.json",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\world"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 1.044,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"output\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\world\",\n  \"buildings\": 4,\n  \"triangles\": 204,\n  \"sha256\": \"157be862352e9af5de7c3258bd32afa47a83c4d9c6ab278be08c6b1e47614edc\",\n  \"quality\": \"PASS\"\n}\n"
+    },
+    {
+      "case": "world-integrity",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "verify-bundle",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\world"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.6776,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"passed\": true,\n  \"files\": 15,\n  \"verified_bytes\": 128923\n}\n"
+    },
+    {
+      "case": "world-glb-structure",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "inspect",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\world\\world.glb"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.9295,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"valid\": true,\n  \"meshes\": 1,\n  \"primitives\": 6,\n  \"vertices\": 408,\n  \"triangles\": 204,\n  \"materials\": 6,\n  \"index_component_types\": [\n    5125\n  ],\n  \"limitations\": [\n    \"Structural triangle mesh verification only, not independent Blender rendering\",\n    \"Sparse, nonindexed and externally referenced glTF not yet supported\"\n  ]\n}\n"
+    },
+    {
+      "case": "real-geometry",
+      "detail": {
+        "index_component_types": [
+          5125
+        ],
+        "limitations": [
+          "Structural triangle mesh verification only, not independent Blender rendering",
+          "Sparse, nonindexed and externally referenced glTF not yet supported"
+        ],
+        "materials": 6,
+        "meshes": 1,
+        "primitives": 6,
+        "triangles": 204,
+        "valid": true,
+        "vertices": 408
+      },
+      "kind": "artifact_assertion",
+      "status": "PASS"
+    },
+    {
+      "case": "world-main-lineage",
+      "detail": {
+        "sha256": "157be862352e9af5de7c3258bd32afa47a83c4d9c6ab278be08c6b1e47614edc"
+      },
+      "kind": "artifact_assertion",
+      "status": "PASS"
+    },
+    {
+      "case": "camera-clearance",
+      "detail": {
+        "errors": [],
+        "schema": "mgr.forge.camera-clearance.v1",
+        "status": "PASS"
+      },
+      "kind": "artifact_assertion",
+      "status": "PASS"
+    },
+    {
+      "case": "no-provider-in-world",
+      "detail": {
+        "blender_verified": false,
+        "compute": "CPU",
+        "external_api_calls": 0,
+        "independent_engine_import_verified": false,
+        "model_inference": false
+      },
+      "kind": "artifact_assertion",
+      "status": "PASS"
+    },
+    {
+      "case": "world-authored-pbr",
+      "detail": {
+        "limit": "GLB values only, not rendered material fidelity",
+        "materials": [
+          {
+            "doubleSided": false,
+            "name": "grass",
+            "pbrMetallicRoughness": {
+              "baseColorFactor": [
+                0.19,
+                0.36,
+                0.22,
+                1
+              ],
+              "metallicFactor": 0.0,
+              "roughnessFactor": 0.9
+            }
+          },
+          {
+            "doubleSided": false,
+            "name": "asphalt",
+            "pbrMetallicRoughness": {
+              "baseColorFactor": [
+                0.105,
+                0.11,
+                0.14,
+                1
+              ],
+              "metallicFactor": 0,
+              "roughnessFactor": 0.95
+            }
+          },
+          {
+            "doubleSided": false,
+            "name": "building-brick",
+            "pbrMetallicRoughness": {
+              "baseColorFactor": [
+                0.53,
+                0.22,
+                0.16,
+                1
+              ],
+              "metallicFactor": 0,
+              "roughnessFactor": 0.9
+            }
+          },
+          {
+            "doubleSided": false,
+            "name": "building-stone",
+            "pbrMetallicRoughness": {
+              "baseColorFactor": [
+                0.55,
+                0.54,
+                0.51,
+                1
+              ],
+              "metallicFactor": 0,
+              "roughnessFactor": 0.84
+            }
+          },
+          {
+            "doubleSided": false,
+            "name": "building-blue",
+            "pbrMetallicRoughness": {
+              "baseColorFactor": [
+                0.12,
+                0.31,
+                0.48,
+                1
+              ],
+              "metallicFactor": 0.67,
+              "roughnessFactor": 0.36
+            }
+          },
+          {
+            "doubleSided": false,
+            "name": "roof",
+            "pbrMetallicRoughness": {
+              "baseColorFactor": [
+                0.13,
+                0.13,
+                0.16,
+                1
+              ],
+              "metallicFactor": 0.0,
+              "roughnessFactor": 0.9
+            }
+          }
+        ]
+      },
+      "kind": "artifact_assertion",
+      "status": "PASS"
+    },
+    {
+      "case": "glb-obj-parity",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "audit-export",
+        "--glb",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\world\\world.glb",
+        "--obj",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\world\\world.obj",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\parity.json"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.8362,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"receipt\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\parity.json\"\n}\n"
+    },
+    {
+      "case": "world-deterministic-repeat",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "build",
+        "--spec",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\spec.json",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\repeat"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 1.2498,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"output\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\repeat\",\n  \"buildings\": 4,\n  \"triangles\": 204,\n  \"sha256\": \"157be862352e9af5de7c3258bd32afa47a83c4d9c6ab278be08c6b1e47614edc\",\n  \"quality\": \"PASS\"\n}\n"
+    },
+    {
+      "case": "world-byte-repeat",
+      "detail": "same spec and seed produce exact GLB bytes",
+      "kind": "artifact_assertion",
+      "status": "PASS"
+    },
+    {
+      "case": "world-prompt-native",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "build",
+        "--prompt",
+        "build 3 houses",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\prompt"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 1.0685,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"output\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\prompt\",\n  \"buildings\": 3,\n  \"triangles\": 156,\n  \"sha256\": \"3c6c0d022e8b6b00e7b7e1d0ab773f308450a62d34f41496ee9e76d899a9e82a\",\n  \"quality\": \"PASS\"\n}\n"
+    },
+    {
+      "case": "world-invalid-spec",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "build",
+        "--spec",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\bad-spec.json",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\bad-world"
+      ],
+      "exit_code": 1,
+      "expected_rejection": true,
+      "kind": "cli",
+      "seconds": 0.9108,
+      "status": "EXPECTED_REJECTION",
+      "stderr": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 203, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\cli.py\", line 1033, in <module>\n    raise SystemExit(main())\n                     ~~~~^^\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\cli.py\", line 1018, in main\n    base = (WorldSpec.from_json(args.spec).as_dict() if args.spec else\n            ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\spec.py\", line 42, in from_json\n    return cls(**data)\n  File \"<string>\", line 10, in __init__\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\spec.py\", line 20, in __post_init__\n    raise ValueError(\"seed must be an unsigned 32-bit integer\")\nValueError: seed must be an unsigned 32-bit integer\n",
+      "stdout": ""
+    },
+    {
+      "case": "world-zero-buildings",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "build",
+        "--buildings",
+        "0",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\empty-world"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.9708,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"output\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\empty-world\",\n  \"buildings\": 0,\n  \"triangles\": 132,\n  \"sha256\": \"7a2e01ba958436e5e368630af35acd69128d8f11a1edd4e04f011f41b394ec4b\",\n  \"quality\": \"PASS\"\n}\n"
+    },
+    {
+      "case": "world-zero-integrity",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "verify-bundle",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\empty-world"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.79,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"passed\": true,\n  \"files\": 13,\n  \"verified_bytes\": 127207\n}\n"
+    },
+    {
+      "case": "world-fully-occupied",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "build",
+        "--columns",
+        "2",
+        "--rows",
+        "2",
+        "--buildings",
+        "4",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\full-world"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.8335,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"output\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\full-world\",\n  \"buildings\": 4,\n  \"triangles\": 180,\n  \"sha256\": \"4e17d061ec5f297d3d86e05e07abf96934552637ec677e811b1d4089b8f3c543\",\n  \"quality\": \"PASS\"\n}\n"
+    },
+    {
+      "case": "no-invalid-empty-park-glb",
+      "detail": "empty optional layers omitted; no empty primitive GLB presented as a usable asset",
+      "kind": "artifact_assertion",
+      "status": "PASS"
+    },
+    {
+      "case": "world-flight-package",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "world-flight",
+        "--world",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\world",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\flight.html"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.9807,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"schema\": \"mgr.forge.world-flight.v1\",\n  \"status\": \"MATERIALIZED\",\n  \"html\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\flight.html\",\n  \"bytes\": 127810,\n  \"glb_sha256\": \"157be862352e9af5de7c3258bd32afa47a83c4d9c6ab278be08c6b1e47614edc\",\n  \"triangles\": 204,\n  \"buildings\": 4,\n  \"runtime\": \"offline-browser-WebGL2\",\n  \"limitations\": [\n    \"browser GPU/WebGL2 capability required\",\n    \"procedural editor changes do not modify embedded GLB until apply-world-edits\",\n    \"bounds-based building collision, no navmesh or full physics\",\n    \"browser performance and visual QA require actual browser execution\"\n  ]\n}\n"
+    },
+    {
+      "case": "godot-collision-package",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "godot-handoff",
+        "--world",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\world",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\godot"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 1.0892,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"schema\": \"mgr.forge.engine-handoff.v1\",\n  \"status\": \"MATERIALIZED\",\n  \"engine\": \"Godot 4\",\n  \"source_glb_sha256\": \"157be862352e9af5de7c3258bd32afa47a83c4d9c6ab278be08c6b1e47614edc\",\n  \"triangles\": 204,\n  \"building_colliders\": 4,\n  \"collision_visual_witness\": {\n    \"status\": \"AUTHORED_BOX_CORNERS_VERIFIED\",\n    \"corners\": 36,\n    \"tolerance_m\": 0.002,\n    \"limits\": [\n      \"corner witness only; no triangle/volume coverage or Godot physics proof\",\n      \"static MGR box worlds only; unsupported static GLB features refuse\"\n    ]\n  },\n  \"engine_import_verified\": false,\n  \"files\": [\n    \"project.godot\",\n    \"world.tscn\",\n    \"assets/world.glb\"\n  ]\n}\n"
+    },
+    {
+      "case": "godot-not-fake-runtime",
+      "detail": {
+        "building_colliders": 4,
+        "collision_visual_witness": {
+          "corners": 36,
+          "limits": [
+            "corner witness only; no triangle/volume coverage or Godot physics proof",
+            "static MGR box worlds only; unsupported static GLB features refuse"
+          ],
+          "status": "AUTHORED_BOX_CORNERS_VERIFIED",
+          "tolerance_m": 0.002
+        },
+        "engine": "Godot 4",
+        "engine_import_verified": false,
+        "files": [
+          "project.godot",
+          "world.tscn",
+          "assets/world.glb"
+        ],
+        "schema": "mgr.forge.engine-handoff.v1",
+        "source_glb_sha256": "157be862352e9af5de7c3258bd32afa47a83c4d9c6ab278be08c6b1e47614edc",
+        "status": "MATERIALIZED",
+        "triangles": 204
+      },
+      "kind": "artifact_assertion",
+      "status": "PASS"
+    },
+    {
+      "case": "godot-visual-corner-witness",
+      "detail": {
+        "corners": 36,
+        "limits": [
+          "corner witness only; no triangle/volume coverage or Godot physics proof",
+          "static MGR box worlds only; unsupported static GLB features refuse"
+        ],
+        "status": "AUTHORED_BOX_CORNERS_VERIFIED",
+        "tolerance_m": 0.002
+      },
+      "kind": "artifact_assertion",
+      "status": "PASS"
+    },
+    {
+      "case": "godot-authored-collision-bodies",
+      "detail": "four buildings and one ground collider; engine import remains unrun",
+      "kind": "artifact_assertion",
+      "status": "PASS"
+    },
+    {
+      "case": "godot-shifted-collider-manifest",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "godot-handoff",
+        "--world",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\world",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\bad-godot"
+      ],
+      "exit_code": 1,
+      "expected_rejection": true,
+      "kind": "cli",
+      "seconds": 0.9962,
+      "status": "EXPECTED_REJECTION",
+      "stderr": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 203, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\cli.py\", line 1033, in <module>\n    raise SystemExit(main())\n                     ~~~~^^\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\cli.py\", line 550, in main\n    print(json.dumps(export_godot_project(args.world,args.out),indent=2))\n                     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\engine_handoff.py\", line 113, in export_godot_project\n    visual_witness=_verify_collision_visual_corners(blob,buildings,width,depth)\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\engine_handoff.py\", line 50, in _verify_collision_visual_corners\n    raise ValueError(\"building collider bounds do not match static visual corners\")\nValueError: building collider bounds do not match static visual corners\n",
+      "stdout": ""
+    },
+    {
+      "case": "road-collision-rehearsal",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "rehearse-walk",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\world\\manifest.json",
+        "--from-building",
+        "building-001-000",
+        "--to-building",
+        "building-002-002",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\walk.json"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.7024,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"status\": \"PASS_OFFLINE_ROAD_GRAPH\",\n  \"frames\": 193,\n  \"distance_m\": 72.0\n}\n"
+    },
+    {
+      "case": "walk-has-positions",
+      "detail": {
+        "frames": 193,
+        "status": "PASS_OFFLINE_ROAD_GRAPH"
+      },
+      "kind": "artifact_assertion",
+      "status": "PASS"
+    },
+    {
+      "case": "native-terrain-layer",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "world-biome",
+        "--world",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\world",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\biome",
+        "--biome",
+        "alien",
+        "--resolution",
+        "12"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.7984,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"schema\": \"mgr.forge.biome-shell.v1\",\n  \"biome\": \"alien\",\n  \"seed\": 42,\n  \"resolution\": 12,\n  \"tiles\": 108,\n  \"source_world_glb_sha256\": \"157be862352e9af5de7c3258bd32afa47a83c4d9c6ab278be08c6b1e47614edc\",\n  \"city_unchanged\": true,\n  \"biome_as_optional_layer\": true,\n  \"underlying_model\": \"MGR-own-CPU-procedural-only\",\n  \"collision_navigation_built\": false,\n  \"blender_verified\": false,\n  \"status\": \"NATIVE_OPTIONAL_TERRAIN_GLTF\",\n  \"artifact\": {\n    \"path\": \"biome.glb\",\n    \"sha256\": \"3b74dffd106b83ab86595c4178db1b2d73afaeb2ce803d24cde0278ac88d4484\",\n    \"bytes\": 14616\n  },\n  \"geometry_quality\": {\n    \"valid\": true,\n    \"meshes\": 1,\n    \"primitives\": 2,\n    \"vertices\": 432,\n    \"triangles\": 216,\n    \"materials\": 2,\n    \"index_component_types\": [\n      5125\n    ],\n    \"limitations\": [\n      \"Structural triangle mesh verification only, not independent Blender rendering\",\n      \"Sparse, nonindexed and externally referenced glTF not yet supported\"\n    ]\n  },\n  \"rights\": \"MGR-authored procedural geometry, no external asset kits or model weight\",\n  \"world_original_untouched\": true\n}\n"
+    },
+    {
+      "case": "biome-source-unchanged",
+      "detail": "157be862352e9af5de7c3258bd32afa47a83c4d9c6ab278be08c6b1e47614edc",
+      "kind": "artifact_assertion",
+      "status": "PASS"
+    },
+    {
+      "case": "image-derived-relief",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "image-relief",
+        "--image",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\reference.png",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\relief",
+        "--grid",
+        "8"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 1.1103,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"status\": \"MATERIALIZED\",\n  \"output\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\relief\",\n  \"schema\": \"mgr.forge.image-relief.v1\",\n  \"source_sha256\": \"b5cf6ae8a7e517200ae95c21e5d899f98af0a261b30145ed8bfc379c03effefa\",\n  \"source_pixels\": [\n    128,\n    128\n  ],\n  \"grid\": [\n    8,\n    8\n  ],\n  \"height_range\": [\n    0.2,\n    1.509804\n  ],\n  \"triangles\": 768,\n  \"method\": \"luminance-to-column-relief\",\n  \"inference_of_hidden_surfaces\": false,\n  \"external_api_calls\": 0,\n  \"glb_quality\": {\n    \"valid\": true,\n    \"meshes\": 1,\n    \"primitives\": 1,\n    \"vertices\": 1536,\n    \"triangles\": 768,\n    \"materials\": 1,\n    \"index_component_types\": [\n      5125\n    ],\n    \"limitations\": [\n      \"Structural triangle mesh verification only, not independent Blender rendering\",\n      \"Sparse, nonindexed and externally referenced glTF not yet supported\"\n    ]\n  },\n  \"artifact_inventory\": {\n    \"relief.glb\": {\n      \"sha256\": \"dd548bbbe6bf7d50cc0c67e6d3a948958bf66bc6644ca231172931816d73d70e\",\n      \"bytes\": 47056\n    },\n    \"relief.obj\": {\n      \"sha256\": \"222caeadfa020ccc745a877ffa9e416eecbcff302788554c3f8dc9ee5940ba36\",\n      \"bytes\": 120994\n    },\n    \"relief.mtl\": {\n      \"sha256\": \"3dbd06fd9965e7f54156681f01bc7f31117bb1770fcbae06d5b7acf72d6982c2\",\n      \"bytes\": 146\n    }\n  }\n}\n"
+    },
+    {
+      "case": "relief-integrity",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "verify-bundle",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\relief"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 1.9558,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"passed\": true,\n  \"files\": 3,\n  \"verified_bytes\": 168196\n}\n"
+    },
+    {
+      "case": "native-creature",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "imagine-creature",
+        "--prompt",
+        "a horned creature with four legs and one tail",
+        "--variants",
+        "2",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\creature"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 1.2425,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"status\": \"NATIVE_PROCEDURAL_GEOMETRY\",\n  \"mesh_sha256\": \"7375f5b428be319f437f76aaf78d621744834cf56897db7522ae13baf68d6242\",\n  \"design_candidates\": 2,\n  \"out\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\creature\",\n  \"neural_inference\": false,\n  \"rigged\": false\n}\n"
+    },
+    {
+      "case": "imported-static-morph",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "morph-model",
+        "--source",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\world\\world.glb",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\morphed",
+        "--morph",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\morph.json",
+        "--expected-sha256",
+        "157be862352e9af5de7c3258bd32afa47a83c4d9c6ab278be08c6b1e47614edc"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.9415,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"schema\": \"mgr.forge.imported-morph.v1\",\n  \"status\": \"NATIVE_STATIC_GLB_MORPH\",\n  \"source_sha256\": \"157be862352e9af5de7c3258bd32afa47a83c4d9c6ab278be08c6b1e47614edc\",\n  \"source_bytes\": 16580,\n  \"artifact_sha256\": \"eab767786a62e57ec39ba00a588d20ea4db72479b9ebb143a8787e2dda2bffdb\",\n  \"artifact_bytes\": 28820,\n  \"artifact\": {\n    \"file\": \"morphed.glb\",\n    \"sha256\": \"eab767786a62e57ec39ba00a588d20ea4db72479b9ebb143a8787e2dda2bffdb\",\n    \"bytes\": 28820\n  },\n  \"morph\": {\n    \"length\": 1.0,\n    \"height\": 1.0,\n    \"width\": 1.1,\n    \"twist_degrees\": 0.0,\n    \"bend_degrees\": 5.0,\n    \"taper\": 1.0\n  },\n  \"pivot_world\": [\n    0.0,\n    -0.550000011920929,\n    0.0\n  ],\n  \"axis_extent\": 18.44739991426468,\n  \"geometry\": {\n    \"valid\": true,\n    \"meshes\": 1,\n    \"primitives\": 6,\n    \"vertices\": 408,\n    \"triangles\": 204,\n    \"materials\": 6\n  },\n  \"world_bounds_before\": {\n    \"min\": [\n      -39.0,\n      -0.550000011920929,\n      -39.0\n    ],\n    \"max\": [\n      39.0,\n      17.89739990234375,\n      39.0\n    ]\n  },\n  \"world_bounds_after\": {\n    \"min\": [\n      -39.0,\n      -0.550000011920929,\n      -42.900001525878906\n    ],\n    \"max\": [\n      39.001678466796875,\n      17.89739990234375,\n      42.900001525878906\n    ]\n  },\n  \"preservation\": {\n    \"original_bin_prefix_unchanged\": true,\n    \"original_bin_sha256\": \"b85264f9f5879b534070d39f811e8356eab4f633ac122e93b6e1478e54738494\",\n    \"indices_uvs_images_materials_preserved\": true,\n    \"node_hierarchy_transforms_names_preserved\": true,\n    \"normal_and_tangent_fields_transformed\": true,\n    \"source_overwritten\": false\n  },\n  \"neural_model_used\": false,\n  \"provider_spend_usd\": 0,\n  \"independently_blender_verified\": false,\n  \"owner_art_accepted\": false,\n  \"limitations\": [\n    \"static self-contained uncompressed GLB only; skins/animations/shape targets refuse\",\n    \"one scene; differently transformed instances and unsupported geometry extensions refuse\",\n    \"global authored six-control deformation, not semantic face/body fitting or learned reconstruction\",\n    \"topology/UV/image bytes retained; severe deformation can stretch authored textures\",\n    \"structural and triangle preservation is not target-engine or artistic acceptance\"\n  ]\n}\n"
+    },
+    {
+      "case": "mannequin-character",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "character",
+        "--pose",
+        "A",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\character"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.7655,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"output\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\character\",\n  \"pose\": \"A\",\n  \"parts\": 20,\n  \"anatomy\": \"PASS\"\n}\n"
+    },
+    {
+      "case": "character-candidate-admit",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "character-intake",
+        "--source",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\character\\mannequin.glb",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\candidate"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 1.0857,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"schema\": \"mgr.forge.character-candidate.v1\",\n  \"status\": \"INSPECTED\",\n  \"source_sha256\": \"7f76f5498514f4d11d0e5e252c344e462d1c6c87a4110c1903afd92cd169b506\",\n  \"source_bytes\": 20960,\n  \"geometry\": {\n    \"valid\": true,\n    \"meshes\": 1,\n    \"primitives\": 7,\n    \"vertices\": 528,\n    \"triangles\": 264,\n    \"materials\": 7\n  },\n  \"nodes\": 1,\n  \"skin_count\": 0,\n  \"joint_references\": 0,\n  \"animation_clips\": 0,\n  \"morph_target_groups\": 0,\n  \"bounds_min\": [\n    -0.8931446547180287,\n    0.0,\n    -0.2614107583743455\n  ],\n  \"bounds_max\": [\n    0.8931446547180287,\n    1.9200000000000002,\n    0.17500000000000002\n  ],\n  \"warnings\": [\n    \"No skin/armature in source; not animation-ready\",\n    \"No embedded animation clips\",\n    \"One mesh container; clothing/hair separation not demonstrated\"\n  ],\n  \"identity_verified\": false,\n  \"anatomy_verified\": false,\n  \"deformation_verified\": false,\n  \"image_reconstruction_performed\": false\n}\n"
+    },
+    {
+      "case": "character-structural-readiness",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "character-readiness",
+        "--source",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\character\\mannequin.glb",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\readiness.json"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 1.0609,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"schema\": \"mgr.forge.character-readiness.v1\",\n  \"source_sha256\": \"7f76f5498514f4d11d0e5e252c344e462d1c6c87a4110c1903afd92cd169b506\",\n  \"geometry\": {\n    \"valid\": true,\n    \"meshes\": 1,\n    \"primitives\": 7,\n    \"vertices\": 528,\n    \"triangles\": 264,\n    \"materials\": 7\n  },\n  \"parts\": [\n    {\n      \"mesh_index\": 0,\n      \"name\": \"MGR Anonymous A-pose\",\n      \"node_instances\": [\n        0\n      ],\n      \"primitives\": [\n        {\n          \"vertices\": 192,\n          \"material\": \"skin-placeholder\",\n          \"has_uv\": false,\n          \"has_joint_weights\": false,\n          \"incomplete_joint_weights\": false,\n          \"morph_targets\": 0\n        },\n        {\n          \"vertices\": 24,\n          \"material\": \"hair-placeholder\",\n          \"has_uv\": false,\n          \"has_joint_weights\": false,\n          \"incomplete_joint_weights\": false,\n          \"morph_targets\": 0\n        },\n        {\n          \"vertices\": 24,\n          \"material\": \"undershirt\",\n          \"has_uv\": false,\n          \"has_joint_weights\": false,\n          \"incomplete_joint_weights\": false,\n          \"morph_targets\": 0\n        },\n        {\n          \"vertices\": 96,\n          \"material\": \"coat\",\n          \"has_uv\": false,\n          \"has_joint_weights\": false,\n          \"incomplete_joint_weights\": false,\n          \"morph_targets\": 0\n        },\n        {\n          \"vertices\": 96,\n          \"material\": \"pants\",\n          \"has_uv\": false,\n          \"has_joint_weights\": false,\n          \"incomplete_joint_weights\": false,\n          \"morph_targets\": 0\n        },\n        {\n          \"vertices\": 48,\n          \"material\": \"boots\",\n          \"has_uv\": false,\n          \"has_joint_weights\": false,\n          \"incomplete_joint_weights\": false,\n          \"morph_targets\": 0\n        },\n        {\n          \"vertices\": 48,\n          \"material\": \"chain\",\n          \"has_uv\": false,\n          \"has_joint_weights\": false,\n          \"incomplete_joint_weights\": false,\n          \"morph_targets\": 0\n        }\n      ],\n      \"independently_named_mesh\": false\n    }\n  ],\n  \"skins\": 0,\n  \"joint_references\": 0,\n  \"rig_structure\": \"NOT_READY\",\n  \"rig_issues\": [\n    \"no skin data; model cannot be called deforming-rig ready\"\n  ],\n  \"garments_semantically_verified\": false,\n  \"hair_semantically_verified\": false,\n  \"hands_anatomically_verified\": false,\n  \"pose_deformation_verified\": false,\n  \"owner_approved_identity\": false,\n  \"notes\": [\n    \"Mesh names/materials are inventory hints, not proof of body-part identity.\",\n    \"A structurally plausible skin does not prove pose or deformation quality.\"\n  ]\n}\n"
+    },
+    {
+      "case": "same-asset-source-identity",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "compare-asset-identity",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\identity.json",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\identity.json"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.7379,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"schema\": \"mgr.forge.asset-view-identity.v1\",\n  \"verdict\": \"SAME_VERIFIED_SOURCE_ASSET\",\n  \"basis\": \"matching cryptographic asset or neutral-rest-mesh digest\",\n  \"asset_id_matches\": true,\n  \"different_pose\": false,\n  \"different_camera\": false,\n  \"limitations\": [\n    \"a matching name alone is not identity proof\",\n    \"equal rest meshes do not prove same clothing or face texture\",\n    \"separately generated models can represent the same person\"\n  ]\n}\n"
+    },
+    {
+      "case": "same-raster-pixels",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "compare-renders",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\reference.png",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\reference.png"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.9353,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"schema\": \"mgr.forge.visual-judge.v1\",\n  \"rgb_mae\": 0.0,\n  \"pass\": true,\n  \"reference_sha256\": \"b5cf6ae8a7e517200ae95c21e5d899f98af0a261b30145ed8bfc379c03effefa\",\n  \"candidate_sha256\": \"b5cf6ae8a7e517200ae95c21e5d899f98af0a261b30145ed8bfc379c03effefa\",\n  \"reference_silhouette\": {\n    \"foreground_pixels\": 4096,\n    \"foreground_fraction\": 0.25,\n    \"bbox\": [\n      32,\n      32,\n      95,\n      95\n    ]\n  },\n  \"candidate_silhouette\": {\n    \"foreground_pixels\": 4096,\n    \"foreground_fraction\": 0.25,\n    \"bbox\": [\n      32,\n      32,\n      95,\n      95\n    ]\n  },\n  \"limitations\": [\n    \"pixel comparison at fixed camera and render settings\",\n    \"cannot understand anatomy or identify defects semantically\"\n  ]\n}\n"
+    },
+    {
+      "case": "same-raster-silhouette",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "compare-views",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\reference.png",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\reference.png"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 1.1196,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"schema\": \"mgr.forge.view-silhouette.v1\",\n  \"verdict\": \"APPEARANCE_CONSISTENT\",\n  \"best_iou\": 1.0,\n  \"image_plane_quarter_turns\": 3,\n  \"identity_proven\": false,\n  \"limitations\": [\n    \"binary silhouette only; lighting/background affect masks\",\n    \"translation and image-plane quarter turns tolerated\",\n    \"3D rotation and different poses can change silhouette\",\n    \"appearance similarity is never proof of character identity\"\n  ]\n}\n"
+    },
+    {
+      "case": "reference-pack-admission",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "character-reference-pack",
+        "--spec",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\references.json",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\reference-pack.json"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.8368,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"schema\": \"mgr.forge.reference-pack.v1\",\n  \"character\": \"synthetic-fixture\",\n  \"owner_approval\": \"pending\",\n  \"reference_count\": 1,\n  \"unique_image_count\": 1,\n  \"asset_jobs\": [\n    {\n      \"asset\": \"body\",\n      \"reference_images\": [\n        {\n          \"view\": \"front\",\n          \"variant\": \"primary\",\n          \"filename\": \"reference.png\",\n          \"sha256\": \"b5cf6ae8a7e517200ae95c21e5d899f98af0a261b30145ed8bfc379c03effefa\",\n          \"width\": 128,\n          \"height\": 128\n        }\n      ],\n      \"missing_recommended_views\": [\n        \"back\",\n        \"left\",\n        \"right\"\n      ],\n      \"status\": \"NEEDS_MORE_VIEWS\",\n      \"mesh_generation_performed\": false,\n      \"semantic_asset_verified\": false\n    }\n  ],\n  \"all_assets_requested_together\": true,\n  \"global_identity_consistency_verified\": false,\n  \"reference_rights_approved\": false,\n  \"model_generation_performed\": false,\n  \"notes\": [\n    \"Multi-view references form a coordinated batch of 3D asset jobs.\",\n    \"Image files remain beside input spec; no images are copied to public repo.\",\n    \"Matching identity, anatomy and textures across AI images needs explicit review.\"\n  ]\n}\n"
+    },
+    {
+      "case": "visible-part-review",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "unclothe-review",
+        "--spec",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\parts.json"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.8027,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"schema\": \"mgr.forge.unclothe-review.v1\",\n  \"source_sha256\": \"b5cf6ae8a7e517200ae95c21e5d899f98af0a261b30145ed8bfc379c03effefa\",\n  \"part_count\": 1,\n  \"decisions\": {\n    \"pending\": 0,\n    \"approved\": 1,\n    \"rejected\": 0\n  },\n  \"ready_to_extract\": true,\n  \"segmentation_model_ran\": false,\n  \"image_to_3d_ran\": false,\n  \"hidden_geometry_recovered\": false\n}\n"
+    },
+    {
+      "case": "visible-part-extraction",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "unclothe-extract",
+        "--spec",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\parts.json",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\parts"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 2.8757,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"schema\": \"mgr.forge.unclothe-extraction.v1\",\n  \"source_sha256\": \"b5cf6ae8a7e517200ae95c21e5d899f98af0a261b30145ed8bfc379c03effefa\",\n  \"part_count\": 1,\n  \"source_dimensions\": [\n    128,\n    128\n  ],\n  \"parts\": [\n    {\n      \"id\": \"coat\",\n      \"kind\": \"coat\",\n      \"isolated_png\": \"coat.png\",\n      \"mask_sha256\": \"72a60634c2ebf7ba18c12be2b5a3d150e0a893517c361b9efe3253b029a84002\",\n      \"visible_pixel_bbox_xyxy\": [\n        32,\n        32,\n        96,\n        96\n      ],\n      \"geometry_status\": \"AWAITING_3D_RECONSTRUCTION\",\n      \"occluded_surfaces\": \"UNKNOWN_FROM_IMAGE\",\n      \"owner_approved\": true\n    }\n  ],\n  \"separate_transparent_assets_generated\": true,\n  \"image_to_3d_ran\": false,\n  \"rigging_performed\": false,\n  \"status\": \"APPROVED_2D_PARTS_READY_FOR_3D_ADAPTER\"\n}\n"
+    },
+    {
+      "case": "visible-part-proxy",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "unclothe-proxy",
+        "--parts",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\parts",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\proxies",
+        "--grid",
+        "8"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 3.3714,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"schema\": \"mgr.forge.unclothe-proxies.v1\",\n  \"parts\": [\n    {\n      \"id\": \"coat\",\n      \"filename\": \"coat.glb\",\n      \"sha256\": \"ccd0a128aea887f5b6714f526e98dbfa7f3f6a08fde02c9b0ae90e73f99e37c1\",\n      \"geometry\": {\n        \"valid\": true,\n        \"meshes\": 1,\n        \"primitives\": 1,\n        \"vertices\": 640,\n        \"triangles\": 320,\n        \"materials\": 1,\n        \"index_component_types\": [\n          5125\n        ],\n        \"limitations\": [\n          \"Structural triangle mesh verification only, not independent Blender rendering\",\n          \"Sparse, nonindexed and externally referenced glTF not yet supported\"\n        ]\n      },\n      \"fidelity\": \"OBSERVED_SILHOUETTE_2_5D_PROXY\"\n    }\n  ],\n  \"source_sha256\": \"b5cf6ae8a7e517200ae95c21e5d899f98af0a261b30145ed8bfc379c03effefa\",\n  \"body_rig_attached\": false,\n  \"photorealistic_3d_reconstruction\": false,\n  \"independent_glb_parsing_passed\": true\n}\n"
+    },
+    {
+      "case": "orthographic-reconstruction",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "reconstruct-silhouette",
+        "--spec",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\reconstruction.json",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\hull"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 1.5498,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"status\": \"MATERIALIZED\",\n  \"schema\": \"mgr.forge.multiview-silhouette.v1\",\n  \"evidence_level\": \"MEASURED_SILHOUETTE_HULL\",\n  \"triangles\": 768,\n  \"volume_m3\": 1.0,\n  \"fit\": {\n    \"worst_view_iou\": 1.0,\n    \"worst_view_recall\": 1.0,\n    \"threshold\": 0.97,\n    \"status\": \"PASS\",\n    \"measures\": \"voxel-hull-mask-recall; not final smoothed-mesh silhouette IoU\",\n    \"legacy_iou_field_is_recall\": true\n  },\n  \"glb\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\hull\\\\hull.glb\",\n  \"manifest\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\hull\\\\reconstruction.json\"\n}\n"
+    },
+    {
+      "case": "reconstruction-analytic-score",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "reconstruct-score",
+        "--spec",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\reconstruction.json",
+        "--truth",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\truth.json",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\score.json"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 1.5829,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"status\": \"MEASURED\",\n  \"hull_vs_solid_iou\": 1.0,\n  \"overfill_volume_m3\": 0.0,\n  \"missed_volume_m3\": 0.0,\n  \"receipt\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\score.json\"\n}\n"
+    },
+    {
+      "case": "planar-mask-rectification",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "rectify-mask",
+        "--image",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\mask.png",
+        "--src-quad",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\quad.json",
+        "--dst-quad",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\quad.json",
+        "--size",
+        "128",
+        "128",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\rectified.png"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 2.0589,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"status\": \"MATERIALIZED\",\n  \"out\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\rectified.png\",\n  \"size\": [\n    128,\n    128\n  ]\n}\n"
+    },
+    {
+      "case": "authored-world-edit-export",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "apply-world-edits",
+        "--world",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\world",
+        "--edits",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\edits.json",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\edited"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 1.3851,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"schema\": \"mgr.forge.edited-world.v1\",\n  \"status\": \"MATERIALIZED\",\n  \"output\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\edited\",\n  \"changed_buildings\": 1,\n  \"buildings\": 4,\n  \"triangles\": 204,\n  \"glb_sha256\": \"73f64b7ba62a649dda9e79054c0cf616ae2f24a3155946c9317cc94912a9a256\",\n  \"viewer\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\edited\\\\world-editor.html\"\n}\n"
+    },
+    {
+      "case": "cpu-workflow-pipeline",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "pipeline",
+        "--buildings",
+        "3",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\pipeline"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 1.2988,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"schema\": \"mgr.forge.pipeline.v1\",\n  \"overall\": \"PARTIAL_CPU_ONLY\",\n  \"stages\": {\n    \"cpu_world\": {\n      \"status\": \"PASS\",\n      \"buildings\": 3,\n      \"glb_sha256\": \"250d5b5a0a2f45af5b39456e08ebee03d0e805a691925e3e4eae58d5b45b1f4a\"\n    },\n    \"blender_import\": {\n      \"status\": \"NOT_RUN\"\n    },\n    \"blender_render\": {\n      \"status\": \"NOT_RUN\"\n    },\n    \"visual_comparison\": {\n      \"status\": \"NOT_RUN\"\n    }\n  },\n  \"limitations\": [\n    \"procedural world only; no neural scene generation\",\n    \"no semantic visual understanding or active repair loop\",\n    \"Blender receipt proves only tested file(s) and camera\"\n  ]\n}\n"
+    },
+    {
+      "case": "fx-portal",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "fantasy-effect",
+        "--kind",
+        "portal",
+        "--phase",
+        "0.35",
+        "--particles",
+        "12",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\portal"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.8885,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"kind\": \"portal\",\n  \"triangles\": 912,\n  \"output\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\portal\"\n}\n"
+    },
+    {
+      "case": "fx-emissive-portal",
+      "detail": {
+        "materials": [
+          {
+            "doubleSided": false,
+            "emissiveFactor": [
+              0.07,
+              0.75,
+              1
+            ],
+            "name": "portal-cyan",
+            "pbrMetallicRoughness": {
+              "baseColorFactor": [
+                0.08,
+                0.85,
+                1,
+                1
+              ],
+              "metallicFactor": 0.0,
+              "roughnessFactor": 0.9
+            }
+          },
+          {
+            "doubleSided": false,
+            "emissiveFactor": [
+              0.45,
+              0.06,
+              0.9
+            ],
+            "name": "arc-violet",
+            "pbrMetallicRoughness": {
+              "baseColorFactor": [
+                0.52,
+                0.12,
+                0.95,
+                1
+              ],
+              "metallicFactor": 0.0,
+              "roughnessFactor": 0.9
+            }
+          },
+          {
+            "doubleSided": false,
+            "emissiveFactor": [
+              1,
+              0.36,
+              0.04
+            ],
+            "name": "ember-gold",
+            "pbrMetallicRoughness": {
+              "baseColorFactor": [
+                1,
+                0.46,
+                0.06,
+                1
+              ],
+              "metallicFactor": 0.0,
+              "roughnessFactor": 0.9
+            }
+          }
+        ]
+      },
+      "kind": "artifact_assertion",
+      "status": "PASS"
+    },
+    {
+      "case": "fx-spell-orbit",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "fantasy-effect",
+        "--kind",
+        "spell-orbit",
+        "--phase",
+        "0.35",
+        "--particles",
+        "12",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\spell-orbit"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.801,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"kind\": \"spell-orbit\",\n  \"triangles\": 912,\n  \"output\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\spell-orbit\"\n}\n"
+    },
+    {
+      "case": "fx-emissive-spell-orbit",
+      "detail": {
+        "materials": [
+          {
+            "doubleSided": false,
+            "emissiveFactor": [
+              0.07,
+              0.75,
+              1
+            ],
+            "name": "portal-cyan",
+            "pbrMetallicRoughness": {
+              "baseColorFactor": [
+                0.08,
+                0.85,
+                1,
+                1
+              ],
+              "metallicFactor": 0.0,
+              "roughnessFactor": 0.9
+            }
+          },
+          {
+            "doubleSided": false,
+            "emissiveFactor": [
+              0.45,
+              0.06,
+              0.9
+            ],
+            "name": "arc-violet",
+            "pbrMetallicRoughness": {
+              "baseColorFactor": [
+                0.52,
+                0.12,
+                0.95,
+                1
+              ],
+              "metallicFactor": 0.0,
+              "roughnessFactor": 0.9
+            }
+          },
+          {
+            "doubleSided": false,
+            "emissiveFactor": [
+              1,
+              0.36,
+              0.04
+            ],
+            "name": "ember-gold",
+            "pbrMetallicRoughness": {
+              "baseColorFactor": [
+                1,
+                0.46,
+                0.06,
+                1
+              ],
+              "metallicFactor": 0.0,
+              "roughnessFactor": 0.9
+            }
+          }
+        ]
+      },
+      "kind": "artifact_assertion",
+      "status": "PASS"
+    },
+    {
+      "case": "fx-aura",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "fantasy-effect",
+        "--kind",
+        "aura",
+        "--phase",
+        "0.35",
+        "--particles",
+        "12",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\aura"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.7323,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"kind\": \"aura\",\n  \"triangles\": 912,\n  \"output\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\aura\"\n}\n"
+    },
+    {
+      "case": "fx-emissive-aura",
+      "detail": {
+        "materials": [
+          {
+            "doubleSided": false,
+            "emissiveFactor": [
+              0.07,
+              0.75,
+              1
+            ],
+            "name": "portal-cyan",
+            "pbrMetallicRoughness": {
+              "baseColorFactor": [
+                0.08,
+                0.85,
+                1,
+                1
+              ],
+              "metallicFactor": 0.0,
+              "roughnessFactor": 0.9
+            }
+          },
+          {
+            "doubleSided": false,
+            "emissiveFactor": [
+              0.45,
+              0.06,
+              0.9
+            ],
+            "name": "arc-violet",
+            "pbrMetallicRoughness": {
+              "baseColorFactor": [
+                0.52,
+                0.12,
+                0.95,
+                1
+              ],
+              "metallicFactor": 0.0,
+              "roughnessFactor": 0.9
+            }
+          },
+          {
+            "doubleSided": false,
+            "emissiveFactor": [
+              1,
+              0.36,
+              0.04
+            ],
+            "name": "ember-gold",
+            "pbrMetallicRoughness": {
+              "baseColorFactor": [
+                1,
+                0.46,
+                0.06,
+                1
+              ],
+              "metallicFactor": 0.0,
+              "roughnessFactor": 0.9
+            }
+          }
+        ]
+      },
+      "kind": "artifact_assertion",
+      "status": "PASS"
+    },
+    {
+      "case": "fx-invalid-radius",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "fantasy-effect",
+        "--radius",
+        "nan",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\bad-fx"
+      ],
+      "exit_code": 1,
+      "expected_rejection": true,
+      "kind": "cli",
+      "seconds": 1.3477,
+      "status": "EXPECTED_REJECTION",
+      "stderr": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 203, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\cli.py\", line 1033, in <module>\n    raise SystemExit(main())\n                     ~~~~^^\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\cli.py\", line 793, in main\n    meshes,receipt=create_magic_effect(kind=args.kind,phase=args.phase,\n                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        particles=args.particles,radius=args.radius,seed=args.seed)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\fx.py\", line 35, in create_magic_effect\n    _check(phase,particles,radius)\n    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\fx.py\", line 28, in _check\n    raise ValueError(\"effect radius must be finite between .25 and 100 meters\")\nValueError: effect radius must be finite between .25 and 100 meters\n",
+      "stdout": ""
+    },
+    {
+      "case": "layer-composition",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "compose-scene",
+        "--layers",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\layers.json",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\scene.json"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 1.3371,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"objects\": 1,\n  \"sha256\": \"cc003586d8ce09a0df1bd191f87a6adea17135d4ba0a5eb07a06ea94396bc39d\",\n  \"receipt\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\scene.json\"\n}\n"
+    },
+    {
+      "case": "layer-field-provenance",
+      "detail": {
+        "field_sources": {
+          "/world/rock": {
+            "kind": "base",
+            "material": "art"
+          }
+        },
+        "layer_ids": [
+          "base",
+          "art"
+        ],
+        "limitations": [
+          "no USD parser or authored USD export",
+          "no external renderer or game engine import proof",
+          "no animation time sampling, instance arcs, variants or shader network resolution"
+        ],
+        "objects": {
+          "/world/rock": {
+            "kind": "mesh",
+            "material": "moss"
+          }
+        },
+        "schema": "mgr.forge.layered-scene.v1",
+        "sha256": "cc003586d8ce09a0df1bd191f87a6adea17135d4ba0a5eb07a06ea94396bc39d",
+        "status": "CPU_COMPOSITION_ONLY"
+      },
+      "kind": "artifact_assertion",
+      "status": "PASS"
+    },
+    {
+      "case": "composition-overwrite",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "compose-scene",
+        "--layers",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\layers.json",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\scene.json"
+      ],
+      "exit_code": 1,
+      "expected_rejection": true,
+      "kind": "cli",
+      "seconds": 0.9945,
+      "status": "EXPECTED_REJECTION",
+      "stderr": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 203, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\cli.py\", line 1033, in <module>\n    raise SystemExit(main())\n                     ~~~~^^\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\cli.py\", line 685, in main\n    raise FileExistsError(\"composed scene receipt already exists\")\nFileExistsError: composed scene receipt already exists\n",
+      "stdout": ""
+    },
+    {
+      "case": "spatial-math-contract",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "spatial-proof",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\spatial.json"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.7601,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"spatial_proof\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\spatial.json\"\n}\n"
+    },
+    {
+      "case": "studio-quality-contracts",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "studio-proof",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\studio.json"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.7836,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"studio_proof\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\studio.json\",\n  \"checks\": 10\n}\n"
+    },
+    {
+      "case": "asset-source-index",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "asset-sources",
+        "--query",
+        "Kenney"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 1.2465,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"schema\": \"mgr.forge.source-atlas.v1\",\n  \"count\": 1,\n  \"sources\": [\n    {\n      \"id\": \"kenney\",\n      \"name\": \"Kenney\",\n      \"kind\": \"asset-library\",\n      \"homepage\": \"https://kenney.nl/assets\",\n      \"license_url\": \"https://kenney.nl/support\",\n      \"rights\": \"CC0_PACK_CHECK\",\n      \"access\": \"DIRECTORY_ONLY\",\n      \"categories\": [\n        \"game-kits\",\n        \"buildings\",\n        \"interiors\",\n        \"props\",\n        \"vehicles\",\n        \"worlds\",\n        \"vegetation\",\n        \"characters\",\n        \"ui\"\n      ]\n    }\n  ],\n  \"assets_installed\": 0\n}\n"
+    },
+    {
+      "case": "asset-cache-empty",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "asset-search",
+        "--catalog",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\catalog",
+        "--query",
+        "dragon"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 1.0092,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"status\": \"CACHED_SOURCE_METADATA\",\n  \"count\": 0,\n  \"listings\": [],\n  \"assets_downloaded\": 0\n}\n"
+    },
+    {
+      "case": "asset-cache-persisted-search",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "asset-search",
+        "--catalog",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\catalog",
+        "--query",
+        "dragon"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.7201,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"status\": \"CACHED_SOURCE_METADATA\",\n  \"count\": 1,\n  \"listings\": [\n    {\n      \"category\": \"creatures\",\n      \"cdn_url\": \"https://example.invalid/fixture.glb\",\n      \"id\": \"3dassets:fixture-dragon\",\n      \"license\": \"cc0-1.0\",\n      \"provider_id\": \"3dassets\",\n      \"tags\": [\n        \"dragon\"\n      ],\n      \"title\": \"Synthetic cache fixture dragon\"\n    }\n  ],\n  \"assets_downloaded\": 0\n}\n"
+    },
+    {
+      "case": "cached-metadata-read",
+      "detail": "synthetic fixture metadata only; no asset or upstream rights acceptance",
+      "kind": "artifact_assertion",
+      "status": "PASS"
+    },
+    {
+      "case": "asset-acquire-unknown-no-network",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "asset-acquire",
+        "--catalog",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\catalog",
+        "--slug",
+        "not-discovered",
+        "--store",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\store"
+      ],
+      "exit_code": 1,
+      "expected_rejection": true,
+      "kind": "cli",
+      "seconds": 0.5353,
+      "status": "EXPECTED_REJECTION",
+      "stderr": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 203, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\cli.py\", line 1033, in <module>\n    raise SystemExit(main())\n                     ~~~~^^\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\cli.py\", line 460, in main\n    print(json.dumps(MGRAssetCatalog(args.catalog).acquire_3dassets(args.slug, args.store), indent=2))\n                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\asset_atlas.py\", line 289, in acquire_3dassets\n    raise ValueError(\"source must first be discovered in this catalog\")\nValueError: source must first be discovered in this catalog\n",
+      "stdout": ""
+    },
+    {
+      "case": "model-engine-status",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "model-engines"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.4828,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"schema\": \"mgr.forge.engines-status.v1\",\n  \"engines\": [\n    {\n      \"id\": \"mgr-native-imagination\",\n      \"source\": \"forge/imagination.py\",\n      \"tasks\": [\n        \"text-to-stylized-creature\",\n        \"procedural-morph\"\n      ],\n      \"license\": \"MGR-OWNED_CODE\",\n      \"license_status\": \"OWNED\",\n      \"min_vram_gb\": 0,\n      \"platform\": [\n        \"Windows\",\n        \"Linux\",\n        \"macOS\"\n      ],\n      \"network_required\": false,\n      \"source_code_present\": true,\n      \"model_weights_present\": false,\n      \"runtime_ready\": true,\n      \"release_notes\": \"Generates novel parameter combinations and triangle geometry; not a neural generator, real rig or photoreal model\"\n    },\n    {\n      \"id\": \"trellis-2\",\n      \"source\": \"https://github.com/microsoft/TRELLIS.2\",\n      \"tasks\": [\n        \"image-to-3d\",\n        \"pbr-mesh\",\n        \"geometry-material-generation\"\n      ],\n      \"license\": \"MIT (code/model, dependencies separately checked)\",\n      \"license_status\": \"THIRD_PARTY_DEPENDENCY_REVIEW_PENDING\",\n      \"min_vram_gb\": 24,\n      \"platform\": [\n        \"Linux\"\n      ],\n      \"network_required\": false,\n      \"source_code_present\": false,\n      \"model_weights_present\": false,\n      \"runtime_ready\": false,\n      \"release_notes\": \"4B image-to-3D model; H100 benchmark not a customer runtime promise\"\n    },\n    {\n      \"id\": \"pixal3d\",\n      \"source\": \"https://github.com/TencentARC/Pixal3D\",\n      \"tasks\": [\n        \"image-to-3d\",\n        \"multiview-image-to-3d\",\n        \"pbr-mesh\"\n      ],\n      \"license\": \"MIT declared for public code/weights; dependencies separately licensed\",\n      \"license_status\": \"THIRD_PARTY_DEPENDENCY_REVIEW_PENDING\",\n      \"min_vram_gb\": null,\n      \"platform\": [\n        \"Linux\"\n      ],\n      \"network_required\": false,\n      \"source_code_present\": false,\n      \"model_weights_present\": false,\n      \"runtime_ready\": false,\n      \"release_notes\": \"SIGGRAPH 2026 multi-view code; GPU fit and source image consistency pilot required\"\n    },\n    {\n      \"id\": \"triposr\",\n      \"source\": \"https://github.com/VAST-AI-Research/TripoSR\",\n      \"tasks\": [\n        \"single-image-to-3d\"\n      ],\n      \"license\": \"MIT code, separately verify pinned weights/model card\",\n      \"license_status\": \"MODEL_WEIGHTS_REVIEW_PENDING\",\n      \"min_vram_gb\": null,\n      \"platform\": [\n        \"Linux\",\n        \"Windows\"\n      ],\n      \"network_required\": false,\n      \"source_code_present\": false,\n      \"model_weights_present\": false,\n      \"runtime_ready\": false,\n      \"release_notes\": \"Fast reconstruction, not prompt-only imagination or character rigging\"\n    },\n    {\n      \"id\": \"trellis-original\",\n      \"source\": \"https://github.com/microsoft/TRELLIS\",\n      \"tasks\": [\n        \"text-to-3d\",\n        \"image-to-3d\",\n        \"asset-variation\"\n      ],\n      \"license\": \"CHECK_PINNED_CODE_AND_WEIGHTS\",\n      \"license_status\": \"MODEL_WEIGHTS_REVIEW_PENDING\",\n      \"min_vram_gb\": null,\n      \"platform\": [\n        \"Linux\"\n      ],\n      \"network_required\": false,\n      \"source_code_present\": false,\n      \"model_weights_present\": false,\n      \"runtime_ready\": false,\n      \"release_notes\": \"Candidate text-to-3D model with mesh output and local editing; test weights/VRAM\"\n    },\n    {\n      \"id\": \"hunyuan3d-2.1\",\n      \"source\": \"https://github.com/Tencent-Hunyuan/Hunyuan3D-2.1\",\n      \"tasks\": [\n        \"image-to-3d\",\n        \"pbr-texture\"\n      ],\n      \"license\": \"Tencent Hunyuan 3D 2.1 Community License\",\n      \"license_status\": \"RESTRICTED_TERRITORY_AND_COMMERCIAL_GATE\",\n      \"min_vram_gb\": 29,\n      \"platform\": [\n        \"Linux\",\n        \"Windows\"\n      ],\n      \"network_required\": false,\n      \"source_code_present\": false,\n      \"model_weights_present\": false,\n      \"runtime_ready\": false,\n      \"release_notes\": \"Official readme cites ~10GB shape/21GB texture/29GB combined; restricted territory/third-party service license; no automatic embedding\"\n    },\n    {\n      \"id\": \"makehuman-mpfb\",\n      \"source\": \"https://www.makehumancommunity.org/mpfb/index.html\",\n      \"tasks\": [\n        \"parametric-human-body\",\n        \"face-morph\",\n        \"skin\",\n        \"body-proportions\"\n      ],\n      \"license\": \"GPL software, CC0 core assets; external packs separate\",\n      \"license_status\": \"CODE_ASSET_SPLIT_LICENSE_REVIEW\",\n      \"min_vram_gb\": 0,\n      \"platform\": [\n        \"Windows\",\n        \"Linux\",\n        \"macOS\"\n      ],\n      \"network_required\": false,\n      \"source_code_present\": false,\n      \"model_weights_present\": false,\n      \"runtime_ready\": false,\n      \"release_notes\": \"Human morph foundation; not a diffusion prompt generator or guaranteed photoreal engine\"\n    },\n    {\n      \"id\": \"anigen\",\n      \"source\": \"https://github.com/VAST-AI-Research/AniGen\",\n      \"tasks\": [\n        \"image-to-3d-rigged\",\n        \"skeleton-skin-joint-generation\"\n      ],\n      \"license\": \"MIT core; NVIDIA NONCOMMERCIAL in extensions/CUBVH\",\n      \"license_status\": \"RESTRICTED_SUBTREE_EXCLUDE_AND_REVIEW\",\n      \"min_vram_gb\": 18,\n      \"platform\": [\n        \"Linux\"\n      ],\n      \"network_required\": false,\n      \"source_code_present\": false,\n      \"model_weights_present\": false,\n      \"runtime_ready\": false,\n      \"source_commit\": \"c49db3d6b466537a02ccf2286688903d77af7e4f\",\n      \"excluded_path\": \"extensions/CUBVH\",\n      \"release_notes\": \"Joint geometry/rig flow; image-conditioned, not prompt-only; training restricted subtree must not be bundled\"\n    },\n    {\n      \"id\": \"unirig\",\n      \"source\": \"https://github.com/VAST-AI-Research/UniRig\",\n      \"tasks\": [\n        \"mesh-to-skeleton\",\n        \"automatic-skin-weights\"\n      ],\n      \"license\": \"MIT code; HF weights MIT claim, partial release\",\n      \"license_status\": \"EXACT_WEIGHTS_RELEASE_SCOPE_REVIEW\",\n      \"min_vram_gb\": null,\n      \"platform\": [\n        \"Linux\"\n      ],\n      \"network_required\": false,\n      \"source_code_present\": false,\n      \"model_weights_present\": false,\n      \"runtime_ready\": false,\n      \"source_commit\": \"6793c6640ff01c8fb389f3993434124bb43d2933\",\n      \"release_notes\": \"Available checkpoint not entire published framework; independent imported rig QA required\"\n    },\n    {\n      \"id\": \"hunyuan3d-omni\",\n      \"source\": \"https://github.com/Tencent-Hunyuan/Hunyuan3D-Omni\",\n      \"tasks\": [\n        \"pose-conditioned-3d\",\n        \"voxel-conditioned-3d\",\n        \"bbox-conditioned-3d\",\n        \"pointcloud-conditioned-3d\"\n      ],\n      \"license\": \"Tencent Hunyuan 3D Omni Community License\",\n      \"license_status\": \"RESTRICTED_TERRITORY_OUTPUT_AND_SERVICE\",\n      \"min_vram_gb\": 10,\n      \"platform\": [\n        \"Linux\"\n      ],\n      \"network_required\": false,\n      \"source_code_present\": false,\n      \"model_weights_present\": false,\n      \"runtime_ready\": false,\n      \"release_notes\": \"Commercial and territorial restrictions; cannot default to unrestricted 3D backend\"\n    },\n    {\n      \"id\": \"sam-3d-objects\",\n      \"source\": \"https://github.com/facebookresearch/sam-3d-objects\",\n      \"tasks\": [\n        \"image-scene-object-to-3d\",\n        \"occlusion-reconstruction\"\n      ],\n      \"license\": \"SAM License; gated weights\",\n      \"license_status\": \"SAM_RESTRICTED_AND_GATED\",\n      \"min_vram_gb\": null,\n      \"platform\": [\n        \"Linux\"\n      ],\n      \"network_required\": false,\n      \"source_code_present\": false,\n      \"model_weights_present\": false,\n      \"runtime_ready\": false,\n      \"release_notes\": \"Individual checkpoint licenses and allowed jurisdiction require approval; not simply MIT\"\n    },\n    {\n      \"id\": \"meshanything-v2\",\n      \"source\": \"https://github.com/buaacyw/MeshAnythingV2\",\n      \"tasks\": [\n        \"mesh-retopology\",\n        \"mesh-to-artist-topology\"\n      ],\n      \"license\": \"S-Lab License 1.0, noncommercial without permission\",\n      \"license_status\": \"NONCOMMERCIAL_EXCLUDE_FROM_PRODUCT\",\n      \"min_vram_gb\": 8,\n      \"platform\": [\n        \"Linux\"\n      ],\n      \"network_required\": false,\n      \"source_code_present\": false,\n      \"model_weights_present\": false,\n      \"runtime_ready\": false,\n      \"source_commit\": \"461d3b6ed750ab3443281b2e4a0e30e8ee98097e\",\n      \"release_notes\": \"About 1600-face output limit; not a general high-detail replacement\"\n    },\n    {\n      \"id\": \"riganything-research\",\n      \"source\": \"https://github.com/Isabella98Liu/RigAnything\",\n      \"tasks\": [\n        \"research-template-free-autorigger\"\n      ],\n      \"license\": \"Adobe Research License, noncommercial research\",\n      \"license_status\": \"NONCOMMERCIAL_RESEARCH_ONLY\",\n      \"min_vram_gb\": null,\n      \"platform\": [\n        \"Linux\"\n      ],\n      \"network_required\": false,\n      \"source_code_present\": false,\n      \"model_weights_present\": false,\n      \"runtime_ready\": false,\n      \"source_commit\": \"d03cdb21dd134fa81df6b0947522469db3f78bd2\",\n      \"release_notes\": \"No commercial embedding. Study paper concepts for clean-room native design only\"\n    },\n    {\n      \"id\": \"higgsfield-3d-service\",\n      \"source\": \"https://github.com/higgsfield-ai/cli\",\n      \"tasks\": [\n        \"provider-image-to-3d\",\n        \"provider-3d-rigging\"\n      ],\n      \"license\": \"MIT command-line client; proprietary hosted models\",\n      \"license_status\": \"PROPRIETARY_PAID_SERVICE_NO_LOCAL_WEIGHTS\",\n      \"min_vram_gb\": null,\n      \"platform\": [\n        \"Windows\",\n        \"Linux\",\n        \"macOS\"\n      ],\n      \"network_required\": true,\n      \"source_code_present\": false,\n      \"model_weights_present\": false,\n      \"runtime_ready\": false,\n      \"source_commit\": \"fd21e7cb550b5835cc00c6b4abfea0c02fe77ff2\",\n      \"release_notes\": \"CLI is not a downloadable free Higgsfield 3D Jutsu model or unlimited provider\"\n    },\n    {\n      \"id\": \"skintokens\",\n      \"source\": \"https://github.com/VAST-AI-Research/SkinTokens\",\n      \"tasks\": [\n        \"neural-mesh-auto-rig\",\n        \"skeleton-generation\",\n        \"mesh-skinning\",\n        \"existing-skeleton-skin-transfer\"\n      ],\n      \"license\": \"MIT root code; model checkpoints, Qwen3, encoder, datasets and dependencies review separately\",\n      \"license_status\": \"MODEL_WEIGHTS_AND_SUBTREE_REVIEW_PENDING\",\n      \"min_vram_gb\": 14,\n      \"platform\": [\n        \"Linux\"\n      ],\n      \"network_required\": false,\n      \"source_code_present\": false,\n      \"model_weights_present\": false,\n      \"runtime_ready\": false,\n      \"release_notes\": \"Published TokenRig inference requires NVIDIA >=14 GB, CUDA >=12.1, Python >=3.11. No commercially accepted checkpoint, local CUDA or actual inference yet.\"\n    },\n    {\n      \"id\": \"nvidia-audio2face-3d\",\n      \"source\": \"https://github.com/NVIDIA/Audio2Face-3D\",\n      \"tasks\": [\n        \"audio-to-blendshapes\",\n        \"audio-to-facial-rig-animation\"\n      ],\n      \"license\": \"NVIDIA SDK code MIT; Audio2Face-3D model NVIDIA Open Model; Audio2Emotion separate gated/custom; sample data evaluation only\",\n      \"license_status\": \"MODEL_AND_EMOTION_SEPARATE_RESTRICTED_TERMS\",\n      \"min_vram_gb\": null,\n      \"platform\": [\n        \"Windows\",\n        \"Linux\"\n      ],\n      \"network_required\": false,\n      \"source_code_present\": false,\n      \"model_weights_present\": false,\n      \"runtime_ready\": false,\n      \"release_notes\": \"Official SDK supports audio-to-face; no local TensorRT/ONNX runtime/model checkpoint or raw audio inference verified.\"\n    }\n  ],\n  \"ready\": 1\n}\n"
+    },
+    {
+      "case": "native-only-engine-readiness",
+      "detail": {
+        "ready": 1
+      },
+      "kind": "artifact_assertion",
+      "status": "PASS"
+    },
+    {
+      "case": "gpu-unpriced-dry-run",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "gpu-plan",
+        "--jobs",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\jobs.json",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\gpu-plan.json"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.5583,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"status\": \"UNPRICED\",\n  \"selected_gpu\": null,\n  \"total_estimated_cost\": null,\n  \"blocks\": 1,\n  \"shadow_use_seconds\": 0,\n  \"receipt\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\gpu-plan.json\"\n}\n"
+    },
+    {
+      "case": "no-rental-without-prices",
+      "detail": {
+        "estimate_excludes": [
+          "storage",
+          "egress",
+          "cold start",
+          "failures",
+          "taxes"
+        ],
+        "packing": {
+          "algorithm": "deterministic-first-fit-decreasing-shadow-backfill-v2",
+          "placements": [
+            {
+              "end_seconds": 60.0,
+              "id": "cpu-study",
+              "min_vram_gb": 24.0,
+              "seconds": 60,
+              "shadow": false,
+              "start_seconds": 0.0
+            }
+          ],
+          "totals": {
+            "billed_seconds": 3600.0,
+            "blocks": 1,
+            "estimated_runtime_seconds": 60,
+            "jobs": 1,
+            "min_vram_gb": 24.0,
+            "placed": 1,
+            "shadow_used_seconds": 0,
+            "unused_seconds": 3540.0
+          },
+          "unplaced_shadow": []
+        },
+        "price_proof": "NO_LIVE_QUOTE",
+        "provider_called": false,
+        "purchase_authorized": false,
+        "rental_started": false,
+        "schema": "mgr.forge.gpu-dry-run.v1",
+        "selected_gpu": null,
+        "shadow_use_seconds": 0,
+        "status": "UNPRICED",
+        "total_estimated_cost": null
+      },
+      "kind": "artifact_assertion",
+      "status": "PASS"
+    },
+    {
+      "case": "cell-real-glb-load",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "load-cells",
+        "--root",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\cells",
+        "--manifest",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\cells.json",
+        "--plan",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\cell-plan.json",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\loaded.json"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.7145,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"receipt\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\loaded.json\"\n}\n"
+    },
+    {
+      "case": "cell-tamper",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "load-cells",
+        "--root",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\cells",
+        "--manifest",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\cells.json",
+        "--plan",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\cell-plan.json",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\corrupt.json"
+      ],
+      "exit_code": 1,
+      "expected_rejection": true,
+      "kind": "cli",
+      "seconds": 0.8297,
+      "status": "EXPECTED_REJECTION",
+      "stderr": "",
+      "stdout": "{\n  \"status\": \"PARTIAL_FAILURE\",\n  \"receipt\": \"C:\\\\Users\\\\cool\\\\AppData\\\\Local\\\\Temp\\\\mgr-forge-path-matrix-teif7ou_\\\\corrupt.json\"\n}\n"
+    },
+    {
+      "case": "release-seal",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "rambler-seal",
+        "--root",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\release",
+        "--files-json",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\release-files.json",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\release-roster.json"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.6194,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"status\": \"UNSIGNED_INTEGRITY_ONLY\",\n  \"roster_sha256\": \"3a38ed353bf26503fd9c0b4c0e2d617bfd9ec3e1841aaf4b5763c362fbd0fa5e\",\n  \"file_count\": 1,\n  \"signed\": false\n}\n"
+    },
+    {
+      "case": "release-internal-roster-destination",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "rambler-seal",
+        "--root",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\release",
+        "--files-json",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\release-files.json",
+        "--out",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\release\\roster.json"
+      ],
+      "exit_code": 1,
+      "expected_rejection": true,
+      "kind": "cli",
+      "seconds": 0.5953,
+      "status": "EXPECTED_REJECTION",
+      "stderr": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 203, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\cli.py\", line 1033, in <module>\n    raise SystemExit(main())\n                     ~~~~^^\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\cli.py\", line 478, in main\n    result=save_roster(args.root,listed,args.out)\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\security\\rambler.py\", line 107, in save_roster\n    raise ValueError(\"release manifest must be outside the release root\")\nValueError: release manifest must be outside the release root\n",
+      "stdout": ""
+    },
+    {
+      "case": "release-byte-verify",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "rambler-verify",
+        "--root",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\release",
+        "--manifest",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\release-roster.json"
+      ],
+      "exit_code": 0,
+      "expected_rejection": false,
+      "kind": "cli",
+      "seconds": 0.5081,
+      "status": "PASS",
+      "stderr": "",
+      "stdout": "{\n  \"status\": \"BYTE_INTEGRITY_VERIFIED_NOT_SIGNED\",\n  \"files\": 1,\n  \"sha256\": \"3a38ed353bf26503fd9c0b4c0e2d617bfd9ec3e1841aaf4b5763c362fbd0fa5e\",\n  \"publisher_authenticated\": false,\n  \"code_hidden\": false\n}\n"
+    },
+    {
+      "case": "release-unlisted-file",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "rambler-verify",
+        "--root",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\release",
+        "--manifest",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\release-roster.json"
+      ],
+      "exit_code": 1,
+      "expected_rejection": true,
+      "kind": "cli",
+      "seconds": 0.4357,
+      "status": "EXPECTED_REJECTION",
+      "stderr": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 203, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\cli.py\", line 1033, in <module>\n    raise SystemExit(main())\n                     ~~~~^^\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\cli.py\", line 484, in main\n    print(json.dumps(verify_roster(args.root,args.manifest),indent=2))\n                     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\security\\rambler.py\", line 96, in verify_roster\n    raise ValueError(\"release has unlisted files\")\nValueError: release has unlisted files\n",
+      "stdout": ""
+    },
+    {
+      "case": "release-tamper",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "rambler-verify",
+        "--root",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\release",
+        "--manifest",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\release-roster.json"
+      ],
+      "exit_code": 1,
+      "expected_rejection": true,
+      "kind": "cli",
+      "seconds": 0.4502,
+      "status": "EXPECTED_REJECTION",
+      "stderr": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 203, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\cli.py\", line 1033, in <module>\n    raise SystemExit(main())\n                     ~~~~^^\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\cli.py\", line 484, in main\n    print(json.dumps(verify_roster(args.root,args.manifest),indent=2))\n                     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\security\\rambler.py\", line 90, in verify_roster\n    raise ValueError(\"MGR Rambler release integrity mismatch\")\nValueError: MGR Rambler release integrity mismatch\n",
+      "stdout": ""
+    },
+    {
+      "case": "bundle-missing-declared-primary",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "verify-bundle",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\inconsistent-bundle"
+      ],
+      "exit_code": 1,
+      "expected_rejection": true,
+      "kind": "cli",
+      "seconds": 0.44,
+      "status": "EXPECTED_REJECTION",
+      "stderr": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 203, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\cli.py\", line 1033, in <module>\n    raise SystemExit(main())\n                     ~~~~^^\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\cli.py\", line 981, in main\n    print(json.dumps(verify_bundle(args.directory),indent=2))\n                     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\receipt.py\", line 29, in verify_bundle\n    raise ValueError(\"primary artifact is not bound to artifact inventory\")\nValueError: primary artifact is not bound to artifact inventory\n",
+      "stdout": ""
+    },
+    {
+      "case": "bundle-declared-sidecar-omitted",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "verify-bundle",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\world"
+      ],
+      "exit_code": 1,
+      "expected_rejection": true,
+      "kind": "cli",
+      "seconds": 0.4615,
+      "status": "EXPECTED_REJECTION",
+      "stderr": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 203, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\cli.py\", line 1033, in <module>\n    raise SystemExit(main())\n                     ~~~~^^\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\cli.py\", line 981, in main\n    print(json.dumps(verify_bundle(args.directory),indent=2))\n                     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\receipt.py\", line 34, in verify_bundle\n    raise ValueError(\"declared sidecar missing from artifact inventory\")\nValueError: declared sidecar missing from artifact inventory\n",
+      "stdout": ""
+    },
+    {
+      "case": "world-sidecar-tamper",
+      "command": [
+        "C:\\Users\\cool\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "forge.cli",
+        "verify-bundle",
+        "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-path-matrix-teif7ou_\\world"
+      ],
+      "exit_code": 1,
+      "expected_rejection": true,
+      "kind": "cli",
+      "seconds": 0.5118,
+      "status": "EXPECTED_REJECTION",
+      "stderr": "Traceback (most recent call last):\n  File \"<frozen runpy>\", line 203, in _run_module_as_main\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\cli.py\", line 1033, in <module>\n    raise SystemExit(main())\n                     ~~~~^^\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\cli.py\", line 981, in main\n    print(json.dumps(verify_bundle(args.directory),indent=2))\n                     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\forge\\receipt.py\", line 48, in verify_bundle\n    raise ValueError(f\"artifact integrity mismatch: {name}\")\nValueError: artifact integrity mismatch: parks.json\n",
+      "stdout": ""
+    }
+  ],
+  "cli_coverage": [
+    {
+      "command": "apply-world-edits",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "asset-acquire",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "asset-search",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "asset-sources",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "audit-export",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "blender-cinematic",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "blender-director-audit",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "blender-director-frames",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "blender-facts",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "blender-fx-render",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "blender-live-scene",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "blender-material-audit",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "blender-pose-audit",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "blender-pose-render",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "blender-render",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "blender-rig",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "blender-studio-witness",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "blender-to-forge",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "blender-verify",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "build",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "character",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "character-blender",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "character-intake",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "character-motion-export",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "character-motion-reimport",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "character-readiness",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "character-reference-pack",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "character-reopen",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "character-separate",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "compare-asset-identity",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "compare-renders",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "compare-views",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "compose-scene",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "fantasy-effect",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "godot-handoff",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "gpu-plan",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "human-audio-motion",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "human-lipsync",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "image-relief",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "imagine-creature",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "inspect",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "judge-atmosphere",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "kit-mirror",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "load-cells",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "model-engines",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "morph-model",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "pipeline",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "rambler-seal",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "rambler-verify",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "rea-kit-audit",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "reconstruct-score",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "reconstruct-silhouette",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "rectify-mask",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "rehearse-walk",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "rig-creature",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "serve-studio",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "spatial-proof",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "studio-proof",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "unclothe-extract",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "unclothe-proxy",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "unclothe-review",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "verify-bundle",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "world-biome",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    },
+    {
+      "command": "world-compose",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Excluded from this bounded CPU matrix; requires separate specific fixture/runtime/source qualification, not assumed unavailable",
+      "state": "NOT_RUN_IN_THIS_OFFLINE_MATRIX"
+    },
+    {
+      "command": "world-flight",
+      "limit": "See named receipts; command execution does not qualify all parameter branches or clients.",
+      "reason": "Actual subprocess fixture receipts present",
+      "state": "EXECUTED_SCOPED_FIXTURE"
+    }
+  ],
+  "extended_cpu_cases_requested": true,
+  "limits": [
+    "Fresh disposable fixtures only; no model weights, generation APIs, purchases or network workflows.",
+    "Only the explicit composition case uses independent Blender when --blender is supplied. Godot runtime, browser interaction and mobile remain outside this matrix.",
+    "Unrun commands remain unassessed, not failures or successes. Existing separate receipts require current source reconciliation."
+  ],
+  "schema": "mgr.forge.offline-path-matrix.v1",
+  "status": "PASS_SCOPED_OFFLINE",
+  "summary": {
+    "cases": 77,
+    "cli_declared": 65,
+    "cli_exercised": 38,
+    "failures": 0
+  }
+}

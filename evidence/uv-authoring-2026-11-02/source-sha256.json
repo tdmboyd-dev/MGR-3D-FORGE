@@ -1,0 +1,7 @@
+{
+  "forge/uv_authoring.py": "8cedf5933afdeb5afa9dc928f540417ff0310b7beae8559e86fba9dacb376943",
+  "scripts/verify_uv_atlas.py": "019eec7ed850af08bd9c3d2628e2812ef33fe50e30db18b1e18eb9e920497040",
+  "scripts/verify_uv_atlas_blender.py": "52ff40cb3d428740ff51740ca08fc59486f52e4fb17eefc076d1a1c3b04e0101",
+  "tests/test_uv_authoring.py": "bc805e1000469da80c7af27583aa4ba8965a43ec9972dbc5891bc365703bead1",
+  "tests/test_uv_jobs.py": "611ec27c82ab92cb7f7636a53a74505e923755612eaa4eecf1a3a161f4b73421"
+}

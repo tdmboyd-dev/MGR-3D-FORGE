@@ -1,0 +1,44 @@
+{
+  "camera": [
+    0,
+    45,
+    0
+  ],
+  "limitations": [
+    "box geometry only",
+    "single ray to each building center",
+    "not real-world sensing",
+    "cannot infer invisible details"
+  ],
+  "observations": [
+    {
+      "category": "building",
+      "distance_m": 42.777,
+      "evidence": "generated-scene-geometry",
+      "id": "building-000-000",
+      "occluded_by": [],
+      "position": [
+        -12.0,
+        5.7333,
+        -12.0
+      ],
+      "real_world_verified": false,
+      "visible_center": true
+    },
+    {
+      "category": "building",
+      "distance_m": 38.9436,
+      "evidence": "generated-scene-geometry",
+      "id": "building-001-000",
+      "occluded_by": [],
+      "position": [
+        -12.0,
+        9.9486,
+        12.0
+      ],
+      "real_world_verified": false,
+      "visible_center": true
+    }
+  ],
+  "schema": "mgr.forge.spatial-eyes.v1"
+}

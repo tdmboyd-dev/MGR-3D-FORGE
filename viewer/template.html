@@ -38,6 +38,31 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opaci
   <label for="director-model">Existing 3D model (.glb, up to 900 KB in browser)</label>
   <input id="director-model" type="file" accept=".glb,model/gltf-binary">
   <button id="director-check-model" type="button" disabled>Inspect / Preserve 3D Model</button>
+  <details><summary>Morph the uploaded static model</summary>
+    <small>Creates a new GLB revision from the original uploaded mesh. Original materials, UVs and embedded images are preserved. Skinned, animated and existing morph-target models require their separate rig-aware pipeline and are refused here.</small>
+    <label for="director-model-length">Length ×</label><input id="director-model-length" type="number" min="0.5" max="2.2" step="0.05" value="1.25">
+    <label for="director-model-height">Height ×</label><input id="director-model-height" type="number" min="0.5" max="2.2" step="0.05" value="1">
+    <label for="director-model-width">Width ×</label><input id="director-model-width" type="number" min="0.5" max="2.2" step="0.05" value="1">
+    <label for="director-model-bend">Bend °</label><input id="director-model-bend" type="number" min="-30" max="30" step="1" value="0">
+    <label for="director-model-twist">Twist °</label><input id="director-model-twist" type="number" min="-45" max="45" step="1" value="0">
+    <label for="director-model-taper">Taper ×</label><input id="director-model-taper" type="number" min="0.65" max="1.45" step="0.05" value="1">
+    <button id="director-model-morph" type="button" disabled>Create Static Model Morph Revision</button>
+    <button id="director-model-morph-cancel" type="button" hidden>Stop waiting for model revision</button>
+    <p id="director-model-morph-status" role="status" aria-live="polite">Choose an original static GLB above.</p>
+  </details>
+  <details><summary>Build measured 3D from two silhouette images</summary>
+    <small>Upload front and left-side orthographic masks: white object on black, matching vertical scale, PNG up to 256×256. Set known bounds in meters. This reconstructs a measured visual hull; hidden concavities and arbitrary perspective photos need additional evidence.</small>
+    <label for="director-recon-front">Front silhouette PNG</label><input id="director-recon-front" type="file" accept="image/png,.png">
+    <label for="director-recon-side">Left-side silhouette PNG</label><input id="director-recon-side" type="file" accept="image/png,.png">
+    <label for="director-recon-width">Bounds width (meters)</label><input id="director-recon-width" type="number" min="0.01" max="100" step="0.01" value="2">
+    <label for="director-recon-height">Bounds height (meters)</label><input id="director-recon-height" type="number" min="0.01" max="100" step="0.01" value="2">
+    <label for="director-recon-depth">Bounds depth (meters)</label><input id="director-recon-depth" type="number" min="0.01" max="100" step="0.01" value="2">
+    <label for="director-recon-grid">Voxel detail (8–64)</label><input id="director-recon-grid" type="number" min="8" max="64" step="1" value="24">
+    <label for="director-recon-surface">Surface</label><select id="director-recon-surface"><option value="smooth">Closed smooth surface</option><option value="voxel">Exact voxel boundary</option></select>
+    <button id="director-recon-create" type="button" disabled>Reconstruct Measured 3D</button>
+    <button id="director-recon-cancel" type="button" hidden>Stop waiting for reconstruction</button>
+    <p id="director-recon-status" role="status" aria-live="polite">Choose both calibrated silhouette masks.</p>
+  </details>
   <button id="director-build-world" type="button" disabled>Build Edited World</button>
   <button id="director-build-blender" type="button" disabled>Open in Blender Project</button>
   <button id="director-build-godot" type="button" disabled>Download Game Engine Project</button>
@@ -91,12 +116,22 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opaci
   <hr><h2>SAVED CREATIONS</h2>
   <small>Find creations in this Studio workspace after a restart. Reopen checks the original job and its saved GLB. Listings alone do not verify files. Ordered by type and request ID.</small>
   <label for="director-history-kind">Creation type</label>
-  <select id="director-history-kind"><option value="all">All creation types</option><option value="world">Edited worlds</option><option value="creature">Creatures</option><option value="biome">Terrain</option><option value="human">Human animations</option><option value="composed">Combined worlds</option></select>
+  <select id="director-history-kind"><option value="all">All creation types</option><option value="world">Edited worlds</option><option value="creature">Creatures</option><option value="biome">Terrain</option><option value="human">Human animations</option><option value="composed">Combined worlds</option><option value="reconstruction">Measured image hulls</option><option value="morph">Static model morphs</option><option value="uv">UV atlas revisions</option></select>
   <button id="director-history-refresh" type="button" disabled>Find Saved Creations</button>
   <button id="director-history-next" type="button" disabled>Next Page</button>
   <button id="director-history-cancel" type="button" hidden>Cancel Lookup</button>
   <p id="director-history-status" role="status" aria-live="polite">Open your authenticated Studio to browse its saved jobs.</p>
   <div id="director-history-results" aria-live="polite"></div>
+  <details><summary>Author UV coordinates for the uploaded static model</summary>
+    <p style="font-size:12px">Create a new editable texture-coordinate atlas with a padded island for each triangle. Original model stays saved. Existing UVs or textures are refused; use the original model for their preservation. This authors coordinates, not texture artwork.</p>
+    <button id="director-uv-create" type="button" disabled>Create Native UV Atlas</button>
+    <button id="director-uv-cancel" type="button" hidden>Stop waiting for UV atlas</button>
+    <p id="director-uv-status" role="status" aria-live="polite">Choose an untextured static GLB in the model upload control. Default atlas: 2048 pixels, 2 pixels padding.</p>
+  </details>
+  <details id="director-asset-preview" hidden open><summary>Saved asset preview</summary>
+    <canvas id="asset-preview" aria-label="Orbit preview of the saved static model" style="width:100%;height:240px;touch-action:none"></canvas>
+    <p id="asset-preview-status" role="status" style="font-size:12px">Drag to orbit; scroll to zoom. Geometry and material colors; textures and animation are preserved in the download.</p>
+  </details>
   <div id="director-downloads" aria-live="polite"></div>
   <p id="director-msg" role="status" aria-live="polite">Ready. No external AI call or GPU required for supported commands.</p>
 </aside>

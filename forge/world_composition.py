@@ -8,6 +8,7 @@ import hashlib,json,shutil,subprocess
 from pathlib import Path
 from .glb import inspect_glb
 from .engine_handoff import export_godot_project
+from .receipt import file_receipt
 
 def _sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -67,9 +68,20 @@ def compose_world(world_dir,biome_dir,out,*,blender="blender",export_godot=True)
         manifest=json.loads(json.dumps(city))
         manifest["artifact"]={"path":"world.glb","sha256":_sha(dest/"world.glb"),
                               "bytes":(dest/"world.glb").stat().st_size}
+        # The composed bundle owns different bytes and files from its source
+        # city. Never retain stale source hashes or advertise uncopied layers.
+        manifest["glb_quality"]=counts
+        manifest["triangle_count"]=counts["triangles"]
+        manifest["vertex_count"]=counts["vertices"]
+        manifest["additional_artifacts"]={
+            "composed_glb":"world-composed.glb", "editable_blend":"world-composed.blend",
+            "preview":"world-composed-preview.png", "independent_proof":"world-composed-proof.json"}
+        manifest["artifact_inventory"]={name:file_receipt(dest/name) for name in
+            ("world.glb",*manifest["additional_artifacts"].values())}
         manifest["world_composition"]={
             "schema":"mgr.forge.world-composition.v1",
             "source_city_sha256":world_sha,"source_biome_sha256":biome_sha,
+            "source_city_manifest_sha256":_sha(world/"manifest.json"),
             "biome_kind":overlay["biome"],
             "reversible_originals_remain_in_source_paths":True,
             "blender_second_process_verified":True,
@@ -104,6 +116,9 @@ def compose_world(world_dir,biome_dir,out,*,blender="blender",export_godot=True)
                       "godot-project/assets/world.glb"] if godot_result else [])
         }
         (dest/"composition-receipt.json").write_text(json.dumps(result,indent=2,sort_keys=True)+"\n",encoding="utf8")
+        manifest["additional_artifacts"]["composition_receipt"]="composition-receipt.json"
+        manifest["artifact_inventory"]["composition-receipt.json"]=file_receipt(dest/"composition-receipt.json")
+        (dest/"manifest.json").write_text(json.dumps(manifest,indent=2,sort_keys=True)+"\n",encoding="utf8")
         return result
     except Exception:
         if dest.exists():

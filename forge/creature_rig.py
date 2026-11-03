@@ -59,6 +59,12 @@ def rig_creature(source,output,*,blender="blender",timeout=180):
         receipt.get("reimported_armature_bones")!=recipe["bones"] or
         receipt.get("reimported_animation_actions",0)<1 or
         receipt.get("max_evaluated_vertex_motion_m",0)<.01 or
+        receipt.get("receiver_evaluated_deformation_verified") is not True or
+        receipt.get("receiver_evaluated_frames")!=[1,16] or
+        receipt.get("receiver_max_vertex_motion_m",0)<.01 or
+        receipt.get("receiver_evaluated_vertices",0)<1 or
+        receipt.get("receiver_evaluated_vertices")!=receipt.get("receiver_mesh_vertices") or
+        receipt.get("receiver_moving_vertices",0)<1 or
         receipt.get("rigged_glb_sha256")!=hashlib.sha256(glb.read_bytes()).hexdigest()):
         raise RuntimeError("rig proof lacks valid receiving-import or animation")
     return receipt

@@ -1,5 +1,7 @@
 # MGR Forge — Native Prototype Implementation Evidence
 
+**Active all-path continuation, November2:** the owner requires all Forge paths. `evidence/all-paths-2026-11-02/REPORT.md` contains the substantive offline matrix and concrete repairs; `research/external-provenance/2026-11-02-native-path-coverage.json` is a source inventory, not complete semantic/runtime acceptance. Calibrated hull and imported static-morph evidence have separate reports. Actual Chrome new-job/restart/reopen/download/orbit/navigation proof and passive actual Studio REA observation live in the all-path packet. Creature/human receiver proofs measure deformation in independent Blender processes. The current handoff/scorecard distinguish these source-specific proofs from the still-open original product requirements and native UV/retarget work.
+
 **November 2, 2026 current additive work:** native anatomy/surface and saved-result recovery is tracked in `evidence/native-creation-2026-11-02/REPORT.md`, the living handoff and `docs/full-build/SCORECARD.md`. Those source-specific receipts supersede older missing-connection/browser statements only where explicitly qualified. Existing shared edge, original workers/jobs and domain ownership are reused. No large-model installation, GPU rental, provider parity or new parent-feature closure is claimed.
 
 Baseline: 2026-10-25; current addendum 2026-10-30. This page distinguishes working code from future intent. The older counts and source summaries retained below are historical snapshots, not current head.

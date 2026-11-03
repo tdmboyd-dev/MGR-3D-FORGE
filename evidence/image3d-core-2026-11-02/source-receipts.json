@@ -1,0 +1,27 @@
+[
+  {
+    "path": "forge/marching.py",
+    "bytes": 5143,
+    "sha256": "79b689400d32f79cb240c06636626e1dde3dba9727b5e52e0fd276532797722d"
+  },
+  {
+    "path": "forge/multiview.py",
+    "bytes": 25389,
+    "sha256": "ea11d054334103394d64a7d24d81d67a4ccae8110936d31100725db165e5ba85"
+  },
+  {
+    "path": "tests/test_reconstruction_surface.py",
+    "bytes": 4912,
+    "sha256": "ae5d83919319945e2b8ff7859765736fd971bcf37cef4fb3673e88a648358748"
+  },
+  {
+    "path": "tests/test_reconstruction_preflight.py",
+    "bytes": 5139,
+    "sha256": "bbc0275725157a28aa9357e7bc9eae1ec930d623a5a3cda90da7c4647f24bb29"
+  },
+  {
+    "path": "scripts/verify_reconstruction_blender.py",
+    "bytes": 4863,
+    "sha256": "d4154482d0c056894585335b721ae0f73d25a1891fc6fbde072d7f895d8a6251"
+  }
+]

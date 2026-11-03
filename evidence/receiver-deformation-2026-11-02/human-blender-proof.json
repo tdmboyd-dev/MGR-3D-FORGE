@@ -1,0 +1,92 @@
+{
+  "actual_imported_key_samples": {
+    "first": 0.0,
+    "last": 0.25286999344825745,
+    "middle": 0.7028599977493286
+  },
+  "animation_fps": 30,
+  "animation_frames": 28,
+  "audio_alignment_verified": false,
+  "blender_version": "5.2.2 LTS",
+  "export_bytes": 230640,
+  "export_sha256": "1e77aa000d9284d003c3cce87b8612a51c38d87382af65dcd925c3428842399d",
+  "gltf_morph_target_primitives": 8,
+  "imported_animation_actions": 1,
+  "imported_mesh_with_shapes": "MGR_Human_Mouth_Lips",
+  "imported_shape_key_names": [
+    "Basis",
+    "jawOpen",
+    "lipsPress",
+    "mouthFunnel",
+    "mouthPucker",
+    "mouthShrug",
+    "mouthSmile",
+    "mouthWide",
+    "tongueOut"
+  ],
+  "input_mannequin_sha256": "90a98b906c865c64e185ea90505b2a7a67c5e5b390800436288b3aa1a0e20e1f",
+  "morph_key_count": 8,
+  "morph_shape_keys": [
+    "jawOpen",
+    "mouthWide",
+    "mouthFunnel",
+    "mouthPucker",
+    "mouthSmile",
+    "lipsPress",
+    "tongueOut",
+    "mouthShrug"
+  ],
+  "owner_visual_accepted": false,
+  "quality_notes": [
+    "original MGR generic proxy human, not a real identity",
+    "visemes driven by caller-supplied timing, not inferred from audio",
+    "facial topology is a rough 3D proxy, not film-grade"
+  ],
+  "real_human_likeness_verified": false,
+  "receiver_animation_fps": 30,
+  "receiver_evaluated_frames": 28,
+  "receiver_evaluated_geometry_verified": true,
+  "receiver_evaluated_vertices": 128,
+  "receiver_independently_reimported": true,
+  "receiver_max_shape_response_m": 0.09118684466717066,
+  "receiver_max_vertex_motion_m": 0.11638609463716154,
+  "receiver_shape_key_ranges": {
+    "jawOpen": [
+      0.0,
+      0.8199999928474426
+    ],
+    "lipsPress": [
+      0.0,
+      0.8999999761581421
+    ],
+    "mouthFunnel": [
+      0.0,
+      0.7799999713897705
+    ],
+    "mouthPucker": [
+      0.0,
+      0.0
+    ],
+    "mouthShrug": [
+      0.0,
+      0.0
+    ],
+    "mouthSmile": [
+      0.0,
+      0.0
+    ],
+    "mouthWide": [
+      0.0,
+      0.2199999988079071
+    ],
+    "tongueOut": [
+      0.0,
+      0.7300000190734863
+    ]
+  },
+  "render_sha256": "51e09ed5f45f23c78ebfd6fc9670a25226ca83ac9feaf5c8bfb5d3033277cd5e",
+  "schema": "mgr.forge.human-lipsync-blender.v1",
+  "source_mannequin_meshes": 1,
+  "status": "HUMAN_FACIAL_GLTF_REIMPORT_RENDER_PASS",
+  "timeline_source_sha256": "82a19daee272a934bbf95d11bc2e8ea287502b43a954aaf09ea6d6b852e36cba"
+}

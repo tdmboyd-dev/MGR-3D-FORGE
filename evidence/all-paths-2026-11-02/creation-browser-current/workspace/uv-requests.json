@@ -1,0 +1,13 @@
+{
+  "asset-uv-77ce33a06d09c83dade142ee4e55824e562c0dacbe42acd5f7029f60f34f7e15": {
+    "bytes": 7160,
+    "fingerprint": "fb086df72907577da8c57374fb4f6673626a6cea0860a840e54133f7d09dacdf",
+    "job_id": "e1c0feaa105af8d6ace10822",
+    "receipt_sha256": "36104393a2f0fdcf3bf491c1363017a071448864de671235b06c5b78eee41c20",
+    "sha256": "d1c4ab04a62054eeb060139165131e0ab6c55d16509bdd7a482612af4f02e858",
+    "source_sha256": {
+      "original-upload.glb": "39f88899502e70b8038cb55b586d4bf02905b3b3a88c0fb19b2fda6309d2ca90"
+    },
+    "status": "MATERIALIZED"
+  }
+}

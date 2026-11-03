@@ -1,0 +1,8 @@
+{
+  "blender_version": "5.2.2 LTS",
+  "mesh_objects": 1,
+  "schema": "mgr.forge.character-reopen.v1",
+  "source_sha256": "90a98b906c865c64e185ea90505b2a7a67c5e5b390800436288b3aa1a0e20e1f",
+  "status": "PASS",
+  "triangles": 264
+}

@@ -29,6 +29,8 @@ from .glb import export_glb, inspect_glb
 from .image_relief import MAX_SOURCE_BYTES, decode_png
 from .obj import export_obj
 from .receipt import file_receipt
+from .meshqa import analyze_mesh
+from .surface_truth import inspect_surface_edges
 
 SCHEMA = "mgr.forge.multiview-silhouette.v1"
 EVIDENCE_LEVEL = "MEASURED_SILHOUETTE_HULL"
@@ -53,6 +55,10 @@ LIMITATIONS = (
 
 
 def _axis_of(view):
+    if not isinstance(view, dict):
+        raise ValueError("silhouette view object required")
+    if not isinstance(view.get("mask"), str) or not view["mask"] or len(view["mask"]) > 4096:
+        raise ValueError("silhouette mask filename required")
     axis = view.get("axis")
     if axis not in AXES:
         raise ValueError(f"unknown silhouette axis: {axis!r}")
@@ -244,15 +250,14 @@ def _emit_surface(occupancy, bounds, grid):
     return mesh, faces
 
 
-def _reprojection(occupancy, bounds, grid, view):
-    """Fraction of supplied mask pixels the hull's voxels actually cover.
+def _reprojection_metrics(occupancy, bounds, grid, view):
+    """Mask recall and actual IoU of projected occupied voxel footprints.
 
     Voxels are splatted with their full footprint instead of point-sampled, so
-    the check is not falsified by mask/voxel grid misalignment. The hull's
-    shadow is always a subset of every supplied mask by construction, which is
-    why coverage of the mask is the honest completeness measure: 1.0 means the
-    carved geometry reaches everywhere the measured silhouette claims a
-    subject exists.
+    the completeness check tolerates mask/voxel grid misalignment. Footprints
+    can extend past the mask even when the voxel centre lies inside, so recall
+    and intersection-over-union must be reported separately. These metrics
+    measure occupied voxels, not a later rounded surface-nets triangle mesh.
     """
     width, height, depth = bounds
     mask = view["mask"]
@@ -282,15 +287,24 @@ def _reprojection(occupancy, bounds, grid, view):
                     for px in range(c0, c1 + 1):
                         line[px] = True
     cells = 0
-    hit = 0
+    hit = shadow = 0
     for py in range(rows):
         mask_row, cover_row = mask["cells"][py], covered[py]
         for px in range(columns):
+            shadow += int(cover_row[px])
             if mask_row[px]:
                 cells += 1
                 if cover_row[px]:
                     hit += 1
-    return round(hit / cells, 6) if cells else 0.0
+    union = cells + shadow - hit
+    return {"recall": round(hit / cells, 6) if cells else 0.0,
+            "iou": round(hit / union, 6) if union else 0.0,
+            "overfill_pixels": shadow - hit, "missed_pixels": cells - hit}
+
+
+def _reprojection(occupancy, bounds, grid, view):
+    """Historical completeness helper: this value is mask recall, not IoU."""
+    return _reprojection_metrics(occupancy, bounds, grid, view)["recall"]
 
 
 def _prepare(spec):
@@ -303,6 +317,8 @@ def _prepare(spec):
     views = spec.get("views")
     axes = _validate_views(views)
     bounds = _validate_bounds(spec.get("bounds"))
+    if not isinstance(spec.get("base_dir", "."), (str, Path)):
+        raise ValueError("silhouette base directory required")
     base = Path(spec.get("base_dir", "."))
     loaded = []
     for view in views:
@@ -312,25 +328,37 @@ def _prepare(spec):
     return grid, bounds, loaded, axes
 
 
-def reconstruct(spec):
+def reconstruct(spec, *, smooth=False, marching=False):
     """Carve real geometry from measured silhouettes and return mesh + manifest."""
     grid, bounds, loaded, axes = _prepare(spec)
 
     occupancy = carve(loaded, bounds, grid)
     minimum, maximum = _bbox(occupancy, bounds, grid)
     mesh, faces = _emit_surface(occupancy, bounds, grid)
+    if type(smooth) is not bool or type(marching) is not bool or (smooth and marching):
+        raise ValueError("choose flat, averaged normals, or surface nets")
+    if marching:
+        from .marching import surface_nets
+        mesh = surface_nets(occupancy, bounds, grid)
+    elif smooth:
+        from .smooth import smooth_normals
+        mesh = smooth_normals(mesh)
     volume = sum(sum(sum(row) for row in plane) for plane in occupancy) * (
         (bounds[0] / grid) * (bounds[1] / grid) * (bounds[2] / grid))
 
     per_view = []
     for view in loaded:
+        projection = _reprojection_metrics(occupancy, bounds, grid, view)
         per_view.append({
             "axis": view["axis"],
             "mask": Path(view["mask"]["path"]).name,
             "sha256": view["mask"]["sha256"],
             "pixels": [view["mask"]["width"], view["mask"]["height"]],
             "mask_coverage": view["mask"]["coverage"],
-            "hull_shadow_iou": _reprojection(occupancy, bounds, grid, view),
+            "threshold": _mask_threshold(next(item for item in spec["views"] if item["axis"] == view["axis"])),
+            "mask_interpretation": "8-bit luminance multiplied by alpha; value >= threshold is occupied",
+            "hull_shadow_iou": projection["recall"],  # legacy field retained
+            "voxel_projection": projection,
         })
     worst = min(item["hull_shadow_iou"] for item in per_view)
 
@@ -354,6 +382,7 @@ def reconstruct(spec):
         "quads": faces,
         "fit": {
             "worst_view_iou": worst,
+            "worst_view_recall": worst,
             "threshold": FIT_THRESHOLD,
             "status": "PASS" if worst >= FIT_THRESHOLD else "FAIL",
         },
@@ -364,7 +393,38 @@ def reconstruct(spec):
     }
     if manifest["fit"]["status"] != "PASS":
         raise ValueError("reconstructed hull does not reproduce the measured silhouettes")
+    manifest["surface"] = "marching-cubes-fan" if marching else "voxel-quads"
+    manifest["surface_method"] = "voxel-centre-midpoint-surface-nets" if marching else "voxel-boundary-quads"
+    manifest["smoothing"] = "area-weighted-vertex-normals" if marching else (
+        "taubin-averaged-normals" if smooth else "flat-per-quad")
+    manifest["fit"]["measures"] = "voxel-hull-mask-recall; not final smoothed-mesh silhouette IoU"
+    manifest["fit"]["legacy_iou_field_is_recall"] = True
+    manifest["surface_audit"] = _audit_reconstruction_mesh(mesh)
+    manifest["mesh_bbox_min_m"] = [min(mesh.positions[axis::3]) for axis in range(3)]
+    manifest["mesh_bbox_max_m"] = [max(mesh.positions[axis::3]) for axis in range(3)]
+    manifest["source_provenance"] = {"kind": "owner-supplied-measured-orthographic-masks",
+                                     "source_hashes": [item["sha256"] for item in per_view],
+                                     "hidden_geometry": "visual-hull bound only"}
     return mesh, manifest
+
+
+def _audit_reconstruction_mesh(mesh):
+    quality = analyze_mesh(mesh, epsilon=1e-24)
+    surface = inspect_surface_edges(mesh, precision_digits=9, max_triangles=MAX_FACES * 2)
+    if not quality["passed"] or not surface["edge_closed_candidate"]:
+        raise ValueError("reconstruction surface is empty, degenerate, open, or ambiguous; revise masks/grid")
+    return {"geometry": quality, "edges": surface,
+            "limitations": ["no hidden-surface accuracy or self-intersection proof",
+                            "surface nets rounds voxel corners; voxel volume is not final mesh volume"]}
+
+
+def prepare_reconstruction(spec, *, smooth=False, marching=False):
+    """Validate and build in memory before a persistent job/output is allocated.
+
+    The caller owns mask staging and access control. This function writes no files.
+    Returned source hashes identify the exact PNG bytes used, not later path state.
+    """
+    return reconstruct(spec, smooth=smooth, marching=marching)
 
 
 SCORE_SCHEMA = "mgr.forge.hull-vs-solid-score.v1"
@@ -464,33 +524,38 @@ def export_reconstruction(spec_path, output, *, smooth=False, marching=False):
     if spec_file.stat().st_size > 1_000_000:
         raise ValueError("reconstruction spec exceeds bounded size")
     spec = json.loads(spec_file.read_text(encoding="utf-8"))
-    spec = dict(spec)
+    if not isinstance(spec, dict):
+        raise ValueError("reconstruction spec object required")
     spec.setdefault("base_dir", str(spec_file.resolve().parent))
-    mesh, manifest = reconstruct(spec)
+    mesh, manifest = prepare_reconstruction(spec, smooth=smooth, marching=marching)
+    return export_prepared_reconstruction(mesh, manifest, target)
 
-    target.mkdir(parents=True)
-    if marching:
-        from .marching import marching_cubes
-        _grid, _bounds, _loaded, _axes = _prepare(spec)
-        _occupancy = carve(_loaded, _bounds, _grid)
-        mesh = marching_cubes(_occupancy, _bounds, _grid)
-        manifest["surface"] = "marching-cubes-fan"
-        manifest["vertices"] = len(mesh.positions) // 3
-        manifest["triangles"] = len(mesh.indices) // 3
-    elif smooth:
-        from .smooth import smooth_normals
-        mesh = smooth_normals(mesh)
-        manifest["smoothing"] = "taubin-averaged-normals"
-        manifest["vertices"] = len(mesh.positions) // 3
-    else:
-        manifest["smoothing"] = "flat-per-quad"
-        manifest["surface"] = "voxel-quads"
+
+def export_prepared_reconstruction(mesh, manifest, output):
+    """Export a prepared mesh into a fresh directory after final in-memory checks.
+
+    The stable artifact names are hull.glb, hull.obj, hull.mtl, reconstruction.json.
+    The result has manifest, manifest_path and glb_path keys. Callers must preserve
+    the supplied PNG bytes alongside the job if they need replayable provenance.
+    """
+    target = Path(output)
+    if target.exists():
+        raise FileExistsError("new reconstruction destination required")
+    if not isinstance(manifest, dict) or manifest.get("schema") != SCHEMA:
+        raise ValueError("prepared reconstruction manifest required")
+    manifest = json.loads(json.dumps(manifest, allow_nan=False))
+    manifest["surface_audit"] = _audit_reconstruction_mesh(mesh)
+    if manifest.get("vertices") != len(mesh.positions)//3 or manifest.get("triangles") != len(mesh.indices)//3:
+        raise ValueError("prepared reconstruction geometry changed")
     payload = export_glb([mesh], name="MGR Multi-View Silhouette Hull",
                          materials=HULL_MATERIALS)
     quality = inspect_glb(payload)
+    if not quality.get("valid"):
+        raise ValueError("reconstruction GLB inspection failed")
+    obj_data, mtl_data = export_obj([mesh], mtl_name="hull.mtl", materials=HULL_MATERIALS)
+    target.mkdir(parents=True)
     glb_path = target / "hull.glb"
     glb_path.write_bytes(payload)
-    obj_data, mtl_data = export_obj([mesh], mtl_name="hull.mtl", materials=HULL_MATERIALS)
     obj_path = target / "hull.obj"
     obj_path.write_text(obj_data, encoding="utf-8")
     (target / "hull.mtl").write_text(mtl_data, encoding="utf-8")

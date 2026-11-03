@@ -3,7 +3,7 @@
 No arbitrary downloaded model, voice cloning, raw-speech alignment, or premium
 skin/teeth inference. All output stays in a new directory with exact receipts.
 """
-import hashlib,json,subprocess
+import hashlib,json,subprocess,math
 from pathlib import Path
 import shutil
 from .character import build_mannequin
@@ -58,6 +58,31 @@ def build_human_lipsync(spec,out,*,blender="blender",fps=24,audio_wav=None):
             report.get("imported_animation_actions",0)<1 or
             not report.get("receiver_independently_reimported")):
             raise RuntimeError("Facial GLB lacks actual morph/animation reimport proof")
+        expected_ranges={name:[min(frame['weights'][name] for frame in timeline['frames']),
+                               max(frame['weights'][name] for frame in timeline['frames'])]
+                         for name in timeline['channels']}
+        observed=report.get('receiver_shape_key_ranges',{})
+        if (report.get('timeline_source_sha256')!=timeline['source_input_sha256'] or
+            report.get('receiver_evaluated_geometry_verified') is not True or
+            report.get('receiver_animation_fps')!=fps or
+            report.get('receiver_evaluated_frames')!=len(timeline['frames']) or
+            type(report.get('receiver_evaluated_vertices')) is not int or
+            report['receiver_evaluated_vertices']<1 or
+            set(observed)!=set(expected_ranges)):
+            raise RuntimeError('Facial receiver missing source-bound evaluated animation proof')
+        for name,expected in expected_ranges.items():
+            values=observed[name]
+            if not isinstance(values,list) or len(values)!=2 or any(
+                    type(v) not in (int,float) or not math.isfinite(v) or abs(v-e)>2e-4
+                    for v,e in zip(values,expected)):
+                raise RuntimeError('Imported facial animation differs from original authored timeline')
+        expected_motion=any(high-low>1e-4 for low,high in expected_ranges.values())
+        expected_shape=any(high>1e-4 for _,high in expected_ranges.values())
+        for key,required in [('receiver_max_vertex_motion_m',expected_motion),
+                             ('receiver_max_shape_response_m',expected_shape)]:
+            value=report.get(key)
+            if type(value) not in (int,float) or not math.isfinite(value) or value<0 or (required and value<=1e-6):
+                raise RuntimeError('Imported facial keys failed independent mesh deformation proof')
         result={"schema":"mgr.forge.human-lipsync-acceptance.v1",
                 "status":"GENERATED_AND_INDEPENDENTLY_REIMPORTED",
                 "actor_id":spec["actor_id"],
@@ -71,6 +96,9 @@ def build_human_lipsync(spec,out,*,blender="blender",fps=24,audio_wav=None):
                 "morph_target_count":report["gltf_morph_target_primitives"],
                 "animation_actions":report["imported_animation_actions"],
                 "timeline_fps":fps,"phoneme_events":len(timeline["events"]),
+                "receiver_evaluated_animation_verified":True,
+                "receiver_max_vertex_motion_m":report['receiver_max_vertex_motion_m'],
+                "receiver_max_shape_response_m":report['receiver_max_shape_response_m'],
                 "caller_supplied_timed_phonemes":audio_wav is None,
                 "source_wav_loudness_reactive":audio_wav is not None,
                 "source_audio_sha256":timeline["source_input_sha256"] if audio_wav is not None else None,

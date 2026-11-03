@@ -1,0 +1,50 @@
+test_bad_generated_mesh_never_allocates_a_job (tests.test_reconstruction_preflight.ReconstructionPreflightTests.test_bad_generated_mesh_never_allocates_a_job) ... ok
+test_export_loads_and_carves_only_once (tests.test_reconstruction_preflight.ReconstructionPreflightTests.test_export_loads_and_carves_only_once) ... ok
+test_invalid_masks_and_shapes_refuse_without_allocating_output (tests.test_reconstruction_preflight.ReconstructionPreflightTests.test_invalid_masks_and_shapes_refuse_without_allocating_output) ... ok
+test_modes_are_explicit (tests.test_reconstruction_preflight.ReconstructionPreflightTests.test_modes_are_explicit) ... ok
+test_prepare_writes_nothing_and_preserves_exact_png_provenance (tests.test_reconstruction_preflight.ReconstructionPreflightTests.test_prepare_writes_nothing_and_preserves_exact_png_provenance) ... ok
+test_serialization_refusal_never_allocates_a_job (tests.test_reconstruction_preflight.ReconstructionPreflightTests.test_serialization_refusal_never_allocates_a_job) ... ok
+test_full_frame_subject_is_capped_at_all_capture_boundaries (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_full_frame_subject_is_capped_at_all_capture_boundaries) ... ok
+test_interior_measured_box_has_no_half_voxel_translation (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_interior_measured_box_has_no_half_voxel_translation) ... ok
+test_invalid_occupancy_bounds_and_budget_refuse_before_output (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_invalid_occupancy_bounds_and_budget_refuse_before_output) ... ok
+test_only_true_sign_changing_grid_edges_emit_faces (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_only_true_sign_changing_grid_edges_emit_faces) ... ok
+test_voxel_center_translation_moves_the_mesh_exactly_one_step (tests.test_reconstruction_surface.ReconstructionSurfaceTests.test_voxel_center_translation_moves_the_mesh_exactly_one_step) ... ok
+test_back_and_right_masks_are_mirrored_before_carving (tests.test_multiview.MultiViewTests.test_back_and_right_masks_are_mirrored_before_carving)
+A back camera sees the mirrored image, so an offset bump survives carving. ... ok
+test_carving_removes_volume_the_second_view_forbids (tests.test_multiview.MultiViewTests.test_carving_removes_volume_the_second_view_forbids)
+A wide front silhouette plus a thin side silhouette must stay thin. ... ok
+test_cli_marching_flag (tests.test_multiview.MultiViewTests.test_cli_marching_flag) ... ok
+test_cli_reconstructs_real_files_end_to_end (tests.test_multiview.MultiViewTests.test_cli_reconstructs_real_files_end_to_end) ... ok
+test_cli_score_refuses_to_overwrite_a_receipt (tests.test_multiview.MultiViewTests.test_cli_score_refuses_to_overwrite_a_receipt) ... ok
+test_cli_scores_hull_against_truth_file (tests.test_multiview.MultiViewTests.test_cli_scores_hull_against_truth_file) ... ok
+test_cli_smooth_flag_produces_smoothed_manifest (tests.test_multiview.MultiViewTests.test_cli_smooth_flag_produces_smoothed_manifest) ... ok
+test_cube_phantom_recovers_measured_bounds_and_volume (tests.test_multiview.MultiViewTests.test_cube_phantom_recovers_measured_bounds_and_volume) ... ok
+test_duplicate_and_unknown_axes_are_rejected (tests.test_multiview.MultiViewTests.test_duplicate_and_unknown_axes_are_rejected) ... ok
+test_empty_and_missing_masks_are_rejected (tests.test_multiview.MultiViewTests.test_empty_and_missing_masks_are_rejected) ... ok
+test_every_supplied_silhouette_is_reproduced (tests.test_multiview.MultiViewTests.test_every_supplied_silhouette_is_reproduced) ... ok
+test_export_is_byte_deterministic (tests.test_multiview.MultiViewTests.test_export_is_byte_deterministic) ... ok
+test_export_writes_verifiable_glb_obj_and_manifest (tests.test_multiview.MultiViewTests.test_export_writes_verifiable_glb_obj_and_manifest) ... ok
+test_face_budget_cannot_be_hit_by_a_legal_solid_grid (tests.test_multiview.MultiViewTests.test_face_budget_cannot_be_hit_by_a_legal_solid_grid)
+A solid at maximum legal grid stays well under the face cap. ... ok
+test_grid_and_bounds_are_bounded (tests.test_multiview.MultiViewTests.test_grid_and_bounds_are_bounded) ... ok
+test_hull_never_invents_unseen_detail (tests.test_multiview.MultiViewTests.test_hull_never_invents_unseen_detail) ... ok
+test_humanoid_phantom_uses_depth_view_to_limit_thickness (tests.test_multiview.MultiViewTests.test_humanoid_phantom_uses_depth_view_to_limit_thickness) ... ok
+test_identical_silhouettes_give_identical_hull (tests.test_multiview.MultiViewTests.test_identical_silhouettes_give_identical_hull)
+Two different subjects with the same silhouette set are indistinguishable. ... ok
+test_invalid_threshold_and_oversized_spec_are_rejected (tests.test_multiview.MultiViewTests.test_invalid_threshold_and_oversized_spec_are_rejected) ... ok
+test_marching_cubes_produces_smooth_mesh (tests.test_multiview.MultiViewTests.test_marching_cubes_produces_smooth_mesh) ... ok
+test_missing_spec_is_rejected (tests.test_multiview.MultiViewTests.test_missing_spec_is_rejected) ... ok
+test_opposing_views_must_agree_on_scale (tests.test_multiview.MultiViewTests.test_opposing_views_must_agree_on_scale) ... ok
+test_score_against_matching_solid_is_exact (tests.test_multiview.MultiViewTests.test_score_against_matching_solid_is_exact) ... ok
+test_score_exposes_overfill_where_two_views_cannot_disagree (tests.test_multiview.MultiViewTests.test_score_exposes_overfill_where_two_views_cannot_disagree)
+Half the row is thick, half is thin: no silhouette can separate them. ... ok
+test_score_rejects_unusable_solids (tests.test_multiview.MultiViewTests.test_score_rejects_unusable_solids) ... ok
+test_smooth_normals_preserves_triangles_and_dedups_vertices (tests.test_multiview.MultiViewTests.test_smooth_normals_preserves_triangles_and_dedups_vertices) ... ok
+test_spec_paths_are_relative_to_the_spec_directory (tests.test_multiview.MultiViewTests.test_spec_paths_are_relative_to_the_spec_directory) ... ok
+test_two_view_minimum_is_enforced (tests.test_multiview.MultiViewTests.test_two_view_minimum_is_enforced) ... ok
+test_views_must_agree_on_image_size_and_height (tests.test_multiview.MultiViewTests.test_views_must_agree_on_image_size_and_height) ... ok
+
+----------------------------------------------------------------------
+Ran 40 tests in 5.131s
+
+OK
