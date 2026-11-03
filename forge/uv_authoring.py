@@ -1,6 +1,6 @@
-"""CPU-authored, fully seamed UV atlas revisions of original static GLBs.
+"""CPU-authored UV atlas revisions of original static GLBs.
 
-Each original triangle receives a padded atlas island. Seams require duplicated
+Islands contain individual triangles or pairs of adjacent planar triangles. Seams require duplicated
 vertices and remapped active indices; original bytes remain an exact BIN prefix
 and the source GLB is separately retained. No texture or generated art is claimed.
 """
@@ -30,6 +30,29 @@ def _dot(a,b):return sum(x*y for x,y in zip(a,b))
 def _sub(a,b):return tuple(x-y for x,y in zip(a,b))
 
 
+def _plan_islands(positions, indices, layout):
+    faces = [tuple(positions[i] for i in indices[start:start+3])
+             for start in range(0, len(indices), 3)]
+    pairs = {}
+    if layout == 'planar-pairs':
+        edges = {}
+        for index, face in enumerate(faces):
+            for a, b in zip(face, face[1:] + face[:1]):
+                edges.setdefault(tuple(sorted((a, b))), []).append((index, a, b))
+        normals = [_unit(_cross(_sub(b, a), _sub(c, a))) for a,b,c in faces]
+        for edge in edges.values():
+            if len(edge) != 2:
+                continue
+            (i,a,b),(j,c,d) = edge
+            if (i != j and i not in pairs and j not in pairs and a == d and b == c
+                    and _dot(normals[i], normals[j]) >= 1 - 1e-12):
+                pairs[i], pairs[j] = j, i
+    groups = {}
+    for i, face in enumerate(faces):
+        groups.setdefault(min(i, pairs.get(i, i)), []).append((i, face))
+    return list(groups.values())
+
+
 def _textured(value):
     if isinstance(value,dict):
         return any((key.endswith('Texture') and isinstance(item,dict)) or _textured(item)
@@ -53,7 +76,9 @@ def _checker(size):
             chunk(b'IDAT',zlib.compress(bytes(rows)))+chunk(b'IEND',b''))
 
 
-def _atlas_glb_bytes(blob,*,expected_sha256=None,atlas_size=2048,padding=2):
+def _atlas_glb_bytes(blob,*,expected_sha256=None,atlas_size=2048,padding=2,layout='triangles'):
+    if layout not in ('triangles', 'planar-pairs'):
+        raise ValueError('UV layout must be triangles or planar-pairs')
     if type(atlas_size) is not int or atlas_size not in (256,512,1024,2048,4096):
         raise ValueError('UV atlas size must be a power-of-two choice from 256 to 4096')
     if type(padding) is not int or not 1<=padding<=16:
@@ -67,12 +92,19 @@ def _atlas_glb_bytes(blob,*,expected_sha256=None,atlas_size=2048,padding=2):
     triangles=geometry['triangles']
     if triangles>MAX_TRIANGLES:
         raise ValueError('fully seamed UV atlas triangle budget exceeded')
-    columns=math.ceil(math.sqrt(triangles))
+    size=struct.unpack_from('<I',blob,12)[0]
+    binary=blob[28+size:]
+    plans = {}
+    for mi, mesh in enumerate(doc['meshes']):
+        for pi, primitive in enumerate(mesh['primitives']):
+            positions = _accessor(doc, binary, primitive['attributes']['POSITION'])
+            indices = list(_indices(doc, binary, primitive, len(positions)))
+            plans[mi, pi] = _plan_islands(positions, indices, layout)
+    island_count = sum(map(len, plans.values()))
+    columns=math.ceil(math.sqrt(island_count))
     cell=atlas_size//columns
     if cell<2*padding+4:
         raise ValueError('UV atlas resolution cannot fit padded triangle islands')
-    size=struct.unpack_from('<I',blob,12)[0]
-    binary=blob[28+size:]
     # A small source can alias many color attributes to one accessor while
     # reusing a short position buffer across thousands of indexed triangles.
     # Bound the expanded revision before allocating any duplicated payload.
@@ -88,7 +120,7 @@ def _atlas_glb_bytes(blob,*,expected_sha256=None,atlas_size=2048,padding=2):
                 raise ValueError('expanded UV attribute/index/metadata byte budget exceeded before allocation')
     result=bytearray(binary)
     target=copy.deepcopy(doc)
-    charts=[];vertex_count=0
+    charts=[];vertex_count=0;next_island=0
 
     def append(raw,template,*,kind=None,component=None,count=None,bounds=None,target_type=34962):
         result.extend(bytes(-len(result)%4))
@@ -125,29 +157,35 @@ def _atlas_glb_bytes(blob,*,expected_sha256=None,atlas_size=2048,padding=2):
             indices=list(_indices(doc,binary,primitive,len(positions)))
             normals=_accessor(doc,binary,attrs['NORMAL'])
             uvs=[];tangents=[]
+            frames = {}
+            for group in plans[mi, pi]:
+                a,b,c = group[0][1]
+                direction = _unit(_sub(b,a))
+                vertical = _cross(_unit(_cross(_sub(b,a),_sub(c,a))),direction)
+                projection = {point: (_dot(_sub(point,a),direction), _dot(_sub(point,a),vertical))
+                              for _,face in group for point in face}
+                projection[a] = (0., 0.)
+                projection[b] = (projection[b][0], 0.)
+                low = [min(p[i] for p in projection.values()) for i in range(2)]
+                high = [max(p[i] for p in projection.values()) for i in range(2)]
+                scale = (cell-2*padding)/max(high[i]-low[i] for i in range(2))
+                x,y = next_island%columns,next_island//columns
+                for face_index,face in group:
+                    mapped = [((x*cell+padding+(projection[p][0]-low[0])*scale)/atlas_size,
+                               (y*cell+padding+(projection[p][1]-low[1])*scale)/atlas_size) for p in face]
+                    frames[face_index] = (mapped,direction,vertical,x,y,next_island)
+                next_island += 1
             for start in range(0,len(indices),3):
                 original_indices=indices[start:start+3]
-                a,b,c=(positions[index] for index in original_indices)
-                direction=_unit(_sub(b,a))
-                face_normal=_unit(_cross(_sub(b,a),_sub(c,a)))
-                vertical=_cross(face_normal,direction)
-                projected=[(0.,0.),(_dot(_sub(b,a),direction),0.),
-                           (_dot(_sub(c,a),direction),_dot(_sub(c,a),vertical))]
-                low=[min(p[i] for p in projected) for i in range(2)]
-                high=[max(p[i] for p in projected) for i in range(2)]
-                scale=(cell-2*padding)/max(high[i]-low[i] for i in range(2))
-                chart=len(charts)
-                x,y=chart%columns,chart//columns
-                mapped=[((x*cell+padding+(p[0]-low[0])*scale)/atlas_size,
-                         (y*cell+padding+(p[1]-low[1])*scale)/atlas_size) for p in projected]
+                mapped,direction,vertical,x,y,island=frames[start//3]
                 mapped=[struct.unpack('<2f',struct.pack('<2f',*p)) for p in mapped]
-                area=abs((mapped[1][0]-mapped[0][0])*(mapped[2][1]-mapped[0][1])-
-                         (mapped[1][1]-mapped[0][1])*(mapped[2][0]-mapped[0][0]))/2
+                area=((mapped[1][0]-mapped[0][0])*(mapped[2][1]-mapped[0][1])-
+                      (mapped[1][1]-mapped[0][1])*(mapped[2][0]-mapped[0][0]))/2
                 if not math.isfinite(area) or area<=1e-12:
                     raise ValueError('triangle aspect ratio collapses a float32 UV island')
                 uvs.extend(mapped)
                 charts.append({'mesh':mi,'primitive':pi,'source_triangle':start//3,
-                               'source_indices':original_indices,'cell':[x,y],
+                               'source_indices':original_indices,'cell':[x,y],'island':island,
                                'uv_min':[min(p[i] for p in mapped) for i in range(2)],
                                'uv_max':[max(p[i] for p in mapped) for i in range(2)],'uv_area':area})
                 if 'TANGENT' in attrs:
@@ -193,12 +231,12 @@ def _atlas_glb_bytes(blob,*,expected_sha256=None,atlas_size=2048,padding=2):
     _,after=parse_character_glb(artifact)
     if after['triangles']!=triangles or after['materials']!=geometry['materials'] or after['meshes']!=geometry['meshes']:
         raise ValueError('UV revision changed original triangle/material/part inventory')
-    receipt={'schema':SCHEMA,'status':'NATIVE_FULLY_SEAMED_UV_ATLAS',
+    receipt={'schema':SCHEMA,'status':('NATIVE_FULLY_SEAMED_UV_ATLAS' if layout=='triangles' else 'NATIVE_PLANAR_PAIRS_UV_ATLAS'),
         'source_sha256':source['source_sha256'],'source_bytes':len(blob),
         'artifact_sha256':hashlib.sha256(artifact).hexdigest(),'artifact_bytes':len(artifact),
         'artifact':{'file':'uv-mapped.glb','sha256':hashlib.sha256(artifact).hexdigest(),'bytes':len(artifact)},
         'atlas_size':atlas_size,'padding_pixels':padding,'columns':columns,'cell_pixels':cell,
-        'chart_count':len(charts),'charts':charts,'geometry_before':geometry,'geometry_after':after,
+        'chart_count':island_count,'charts':charts,'layout':layout,'geometry_before':geometry,'geometry_after':after,
         'atlas_coverage_fraction':math.fsum(chart['uv_area'] for chart in charts),
         'preservation':{'original_bin_prefix_unchanged':bytes(result[:len(binary)])==binary,
                         'triangles_materials_parts_hierarchy_preserved':True,
@@ -208,7 +246,7 @@ def _atlas_glb_bytes(blob,*,expected_sha256=None,atlas_size=2048,padding=2):
                         'existing_tangents_recomputed_for_new_uvs':any('TANGENT' in p['attributes'] for m in doc['meshes'] for p in m['primitives'])},
         'checker_is_diagnostic_only':True,'texture_art_generated':False,'provider_spend_usd':0,
         'independently_blender_verified':False,'owner_art_accepted':False,
-        'limitations':['fully seamed triangle islands; not distortion-optimized semantic chart unwrapping',
+        'limitations':['single triangles or pairs of adjacent planar triangles; curved chart unwrapping is not supported',
                        'duplicates vertices and remaps active indices while preserving triangle order and exact original bytes',
                        'existing UV/textured, skinned, animated, targeted and compressed assets refuse',
                        'tiny/aspect-degenerate islands refuse; no texture painting, baking or generated material art',
@@ -216,9 +254,9 @@ def _atlas_glb_bytes(blob,*,expected_sha256=None,atlas_size=2048,padding=2):
     return artifact,receipt
 
 
-def atlas_glb_bytes(blob,*,expected_sha256=None,atlas_size=2048,padding=2):
+def atlas_glb_bytes(blob,*,expected_sha256=None,atlas_size=2048,padding=2,layout='triangles'):
     """Pure preflight plus deterministic UV revision; writes no files."""
-    try:return _atlas_glb_bytes(blob,expected_sha256=expected_sha256,atlas_size=atlas_size,padding=padding)
+    try:return _atlas_glb_bytes(blob,expected_sha256=expected_sha256,atlas_size=atlas_size,padding=padding,layout=layout)
     except (KeyError,IndexError,TypeError,AttributeError,OverflowError,struct.error) as error:
         raise ValueError('malformed or unsupported static UV atlas input') from error
 
@@ -227,13 +265,13 @@ def validate_uv_glb(blob,*,expected_sha256=None,atlas_size=2048,padding=2):
     return atlas_glb_bytes(blob,expected_sha256=expected_sha256,atlas_size=atlas_size,padding=padding)[1]
 
 
-def author_uv_atlas(source,output,*,expected_sha256=None,atlas_size=2048,padding=2):
+def author_uv_atlas(source,output,*,expected_sha256=None,atlas_size=2048,padding=2,layout='triangles'):
     path,out=Path(source),Path(output)
     if not path.is_file() or path.is_symlink() or path.suffix.lower()!='.glb' or not 28<=path.stat().st_size<=MAX_BYTES:
         raise ValueError('bounded ordinary original static GLB required')
     if out.exists():raise FileExistsError('preserve earlier UV atlas revision; choose a new output')
     original=path.read_bytes()
-    artifact,receipt=atlas_glb_bytes(original,expected_sha256=expected_sha256,atlas_size=atlas_size,padding=padding)
+    artifact,receipt=atlas_glb_bytes(original,expected_sha256=expected_sha256,atlas_size=atlas_size,padding=padding,layout=layout)
     # Pixel generation is also preflight; allocation follows all native checks.
     checker=_checker(min(atlas_size,1024))
     receipt['checker']={'file':'diagnostic-checker.png','sha256':hashlib.sha256(checker).hexdigest(),

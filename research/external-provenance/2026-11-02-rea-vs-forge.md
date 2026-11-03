@@ -1,5 +1,9 @@
 # External evidence compared with Forge
 
+Forge follow-through: `uv-atlas --layout planar-pairs` now creates connected pairs on flat surfaces. On the same two-part fixture at 256 px with 3 px padding, it reduced the layout from 24 to 12 islands and increased coverage from 20.39% to 41.06%. The export regression checks that both endpoints of each shared edge have identical stored UVs. Larger connected charts and curved surfaces remain separate work.
+
+Independent Blender 5.2.2 LTS import of the CLI output recovered both mesh parts, 12 shared UV edges and 48 boundary edges. The default GLB output matched the previous implementation byte for byte on both tested fixtures. The Forge suite ran 756 tests with three optional skips and zero failures. The final focused UV and saved-job run passed all 14 tests.
+
 | Question | External evidence | Forge evidence | Remaining gap |
 |---|---|---|---|
 | What can a user request from commercial creation tools? | REA browser record `ev_b9633c38a51f01f377eb707ba0a2918bd2ebb120269fba0ac86197528ecc6b39` captured public Meshy, Tripo, and Rodin documentation surfaces. It also recorded limited Artlist, SAM 3D, and Unreal responses. | Forge has native measured silhouette reconstruction, static GLB morphing, UV authoring, and verified replay and artifact retrieval through Studio and MCP. | Public documentation describes exposed workflows. Commercial generation quality, backend implementation, and equivalence remain unknown. |

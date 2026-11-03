@@ -40,6 +40,27 @@ def fixture(*,attributes=False):
 
 
 class UVAuthoringTests(unittest.TestCase):
+    def test_planar_pairs_share_exact_uv_edges_on_exported_mesh(self):
+        source = fixture()
+        _, baseline = atlas_glb_bytes(source, atlas_size=256, padding=3)
+        output, receipt = atlas_glb_bytes(source, atlas_size=256, padding=3, layout='planar-pairs')
+        doc, binary = unpack(output)
+        corners = []
+        for mesh in doc['meshes']:
+            for primitive in mesh['primitives']:
+                attrs = primitive['attributes']
+                corners.extend(zip(values(doc, binary, attrs['POSITION']),
+                                   values(doc, binary, attrs['TEXCOORD_0'])))
+        islands = {}
+        for i, chart in enumerate(receipt['charts']):
+            islands.setdefault(chart['island'], []).append(dict(corners[i*3:i*3+3]))
+        self.assertEqual(len(islands), 12)
+        for a,b in islands.values():
+            shared = a.keys() & b.keys()
+            self.assertEqual(len(shared), 2)
+            self.assertTrue(all(a[point] == b[point] for point in shared))
+        self.assertGreater(receipt['atlas_coverage_fraction'], baseline['atlas_coverage_fraction'])
+
     def test_shared_indices_and_aliased_colors_cannot_amplify_past_output_budget(self):
         doc,binary=unpack(fixture(attributes=True))
         primitive=doc['meshes'][0]['primitives'][0]

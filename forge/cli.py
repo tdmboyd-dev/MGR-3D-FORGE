@@ -174,11 +174,12 @@ def main(argv=None):
     imported_morph.add_argument('--out', type=Path, required=True, help='new revision directory; original source stays unchanged')
     imported_morph.add_argument('--morph', type=Path, required=True, help='bounded JSON native morph controls')
     imported_morph.add_argument('--expected-sha256', help='optional required original source identity')
-    uv_atlas = sub.add_parser('uv-atlas', help='author a native fully seamed padded UV atlas on an untextured static GLB revision')
+    uv_atlas = sub.add_parser('uv-atlas', help='author a padded UV atlas on an untextured static GLB revision')
     uv_atlas.add_argument('--source', type=Path, required=True)
     uv_atlas.add_argument('--out', type=Path, required=True)
     uv_atlas.add_argument('--atlas-size', type=int, default=2048, choices=(256, 512, 1024, 2048, 4096))
     uv_atlas.add_argument('--padding', type=int, default=2)
+    uv_atlas.add_argument('--layout', choices=('triangles', 'planar-pairs'), default='triangles')
     uv_atlas.add_argument('--expected-sha256')
     retarget = sub.add_parser('retarget-motion', help='transfer one authored clip to an explicitly mapped original skinned rig')
     retarget.add_argument('--source', type=Path, required=True, help='owned skinned GLB with one animation')
@@ -519,7 +520,7 @@ def main(argv=None):
     if args.action == 'uv-atlas':
         from .uv_authoring import author_uv_atlas
         print(json.dumps(author_uv_atlas(args.source, args.out, expected_sha256=args.expected_sha256,
-                                        atlas_size=args.atlas_size, padding=args.padding), indent=2))
+                                        atlas_size=args.atlas_size, padding=args.padding, layout=args.layout), indent=2))
         return 0
     if args.action == 'morph-model':
         from .imported_morph import morph_imported_glb
