@@ -1,0 +1,14 @@
+{
+  "candidate_density": 0.12,
+  "candidate_sha256": "7038900c1b44c1204ae4da1b147151a243363ee258a2f9e2067ed1a9900a4156",
+  "candidate_style": "uniform",
+  "control_sha256": "9af4bcc8b37b9feed64306f5a212a15225fce309c7f50a00f35e44962eaf0d5d",
+  "limitations": [
+    "fixed camera pixel measurement, not cinematic quality judgment",
+    "atmospheric brightness change does not prove smoke dynamics"
+  ],
+  "minimum_rgb_mae_8bit": 3.0,
+  "rgb_mae_8bit": 28.029504,
+  "schema": "mgr.forge.fx-atmosphere-judge.v1",
+  "status": "PASS"
+}

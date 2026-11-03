@@ -1,0 +1,57 @@
+{
+  "actual_glb_import_verified": false,
+  "actual_skinning_or_animation_verified": false,
+  "archive_sha256": "f8698d6c73d7630b37f3252bfd46046e9799446cdd5fa0d2a09b9bdd1ae39cb0",
+  "categories": {
+    "animation_candidates": 0,
+    "gltf_candidates": 1,
+    "obj_candidates": 0,
+    "other_files": 2,
+    "texture_candidates": 0
+  },
+  "code_copying_permitted_by_analysis": false,
+  "extension_counts": {
+    ".glb": 1,
+    ".txt": 2
+  },
+  "feature_build_targets": [
+    {
+      "outcome": "portable pinned asset intake with scoped rights and original-file digests",
+      "owner": "Forge Vault"
+    },
+    {
+      "outcome": "import glTF models with dependency closure and original editor-compatible source",
+      "owner": "Creation Forge"
+    },
+    {
+      "outcome": "original parametric body mesh, morph DNA, joint-aware rig and animation acceptance",
+      "owner": "Human/Creature Forge"
+    },
+    {
+      "outcome": "original scene-placement, geometry synthesis, material pairing and engine round-trip",
+      "owner": "World Forge"
+    },
+    {
+      "outcome": "repeat evidence comparison when a source archive changes",
+      "owner": "MGR Beast X-Ray"
+    }
+  ],
+  "limitations": [
+    "REA confirms recorded ZIP bytes, not third-party license clearance",
+    "Filename extensions do not prove rigged/animated/visually acceptable geometry",
+    "MGR-native implementations must use permitted methods and separately created original work",
+    "ReA analysis does not reveal inaccessible original generation source code"
+  ],
+  "rea_coverage": {
+    "scope": "container-entries",
+    "status": "complete"
+  },
+  "rea_source_record": "ev_2d8249f3bdef7d99318267434cc74471789c8ebc56199310e9d4fc28210b4ca1",
+  "rights_reviewed": false,
+  "safe_to_redistribute": false,
+  "schema": "mgr.forge.xray-kit-audit.v1",
+  "source": "https://github.com/KayKit-Game-Assets/KayKit-Prototype-Bits-1.0/tree/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "source_file_count": 3,
+  "source_file_sha256_matched": 3,
+  "status": "INDEPENDENT_BYTES_MATCH_RIGHTS_AND_ART_REVIEW_PENDING"
+}

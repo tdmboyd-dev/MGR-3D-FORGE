@@ -72,7 +72,7 @@ The Studio prints its loopback URL. It binds to 127.0.0.1, has its own session t
 
 ## 5 — Actual CLI actions from source (current implementation)
 
-**66 actual CLI actions**, extracted from current Python argparse AST on 2026-11-02. Previous 60/62/64/65 counts are historical.
+**67 actual CLI actions**, extracted from current Python argparse AST on 2026-11-02. Previous 60/62/64/65/66 counts are historical.
 
 | Real CLI action | Existing source-described effect |
 |---|---|
@@ -128,6 +128,7 @@ The Studio prints its loopback URL. It binds to 127.0.0.1, has its own session t
 | `rea-kit-audit` | crosscheck archived kit file hashes with real REA Evidence; no rights promotion |
 | `reconstruct-score` | measure a carved hull against an analytic solid at voxel resolution |
 | `reconstruct-silhouette` | carve real measured triangle geometry from multi-view silhouette masks |
+| `retarget-motion` | transfer one original skeletal animation to a different, explicitly mapped target rig; preserve both sources and independently verify the received deformation |
 | `rectify-mask` | rectify a perspective mask to orthographic using 4-point correspondences |
 | `rehearse-walk` | simulate collision-checked road-centerline traversal |
 | `rig-creature` | fit DNA skeleton, weighted skin and test real animation in independent Blender processes |

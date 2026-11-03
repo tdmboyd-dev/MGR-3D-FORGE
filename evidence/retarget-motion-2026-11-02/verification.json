@@ -1,0 +1,228 @@
+{
+  "fixture": "original two-bone animated source and differently named/angled/rolled/longer three-bone target with owned texture",
+  "native": {
+    "artifact": {
+      "bytes": 12720,
+      "file": "retargeted.glb",
+      "sha256": "a540d65cda640ef7233433bef0e49856b419c8537fe4906fed0b5d669237a715"
+    },
+    "artifact_bytes": 12720,
+    "artifact_sha256": "a540d65cda640ef7233433bef0e49856b419c8537fe4906fed0b5d669237a715",
+    "blender_witness": {
+      "artifact_sha256": "a540d65cda640ef7233433bef0e49856b419c8537fe4906fed0b5d669237a715",
+      "blender_version": "5.2.2 LTS",
+      "editable_blend_sha256": "06d7fbbfddd59d2b8ca22f3968a779aec552cf85ce3530f2e224f345e8949faf",
+      "fps": 24,
+      "frames": 16,
+      "mapped_bones": 2,
+      "max_bind_position_or_angle_error": 2.159053065842478e-07,
+      "max_bone_length_error_m": 2.980232229887747e-07,
+      "max_mapped_orientation_error_radians": 0.0006905339694324072,
+      "original_target_inventory": {
+        "embedded_images": [
+          [
+            [
+              8,
+              8
+            ],
+            4,
+            "96551b82c9f4272b1a73fdbc1046e57132fc7114178df0b6d569c44e29dee701"
+          ]
+        ],
+        "materials": {
+          "MGR material target_base": [
+            [
+              0.14,
+              0.45,
+              0.7,
+              1.0
+            ],
+            [
+              0.14,
+              0.63
+            ],
+            [
+              false,
+              false,
+              false,
+              false
+            ]
+          ],
+          "MGR material target_counterweight": [
+            [
+              0.4,
+              0.18,
+              0.6,
+              1.0
+            ],
+            [
+              0.14,
+              0.63
+            ],
+            [
+              false,
+              false,
+              false,
+              false
+            ]
+          ],
+          "MGR material target_tip": [
+            [
+              0.8,
+              0.8,
+              0.8,
+              1.0
+            ],
+            [
+              0.14,
+              0.63
+            ],
+            [
+              true,
+              false,
+              false,
+              false
+            ]
+          ]
+        },
+        "parts": [
+          "MGR original part target_base",
+          "MGR original part target_counterweight",
+          "MGR original part target_tip"
+        ],
+        "triangle_skin_uv_material_sha256": "1128cd169755d6d5742838b300ca7e3fe6cf19c07b0f8c32ddcac37b1e13b67d",
+        "triangles": 36,
+        "weighted_vertices": 72
+      },
+      "owner_art_accepted": false,
+      "received_evaluated_vertices": 72,
+      "received_max_vertex_motion_m": 0.8533836585709582,
+      "received_moving_vertices_at_peak": 72,
+      "received_target_inventory": {
+        "embedded_images": [
+          [
+            [
+              8,
+              8
+            ],
+            4,
+            "96551b82c9f4272b1a73fdbc1046e57132fc7114178df0b6d569c44e29dee701"
+          ]
+        ],
+        "materials": {
+          "MGR material target_base": [
+            [
+              0.14,
+              0.45,
+              0.7,
+              1.0
+            ],
+            [
+              0.14,
+              0.63
+            ],
+            [
+              false,
+              false,
+              false,
+              false
+            ]
+          ],
+          "MGR material target_counterweight": [
+            [
+              0.4,
+              0.18,
+              0.6,
+              1.0
+            ],
+            [
+              0.14,
+              0.63
+            ],
+            [
+              false,
+              false,
+              false,
+              false
+            ]
+          ],
+          "MGR material target_tip": [
+            [
+              0.8,
+              0.8,
+              0.8,
+              1.0
+            ],
+            [
+              0.14,
+              0.63
+            ],
+            [
+              true,
+              false,
+              false,
+              false
+            ]
+          ]
+        },
+        "parts": [
+          "MGR original part target_base",
+          "MGR original part target_counterweight",
+          "MGR original part target_tip"
+        ],
+        "triangle_skin_uv_material_sha256": "1128cd169755d6d5742838b300ca7e3fe6cf19c07b0f8c32ddcac37b1e13b67d",
+        "triangles": 36,
+        "weighted_vertices": 72
+      },
+      "root_motion_transferred": false,
+      "schema": "mgr.forge.motion-retarget-blender-witness.v1",
+      "source_sha256": "9f9d4d006c123c1c70afcae828d2901b834970928009055e0dab52032e7f4e09",
+      "status": "INDEPENDENT_RETARGET_GLTF_DEFORMATION_PASS",
+      "target_bones": 3,
+      "target_rest_skin_uv_materials_preserved": true,
+      "target_sha256": "4d5d343311c13da10ae2241a168bdacaaba361999f76bbede3492c2075bff9aa",
+      "witness_previews": {
+        "retarget-after.png": {
+          "frame": 16,
+          "sha256": "abbe6a0232be7ae471a84deeba4c9f384845388bb93ed5bdc98c980635fd6079"
+        },
+        "retarget-before.png": {
+          "frame": 1,
+          "sha256": "baa5ff21f96b337bd2a7287c20c5d98bbfe5383303d5128210ce5a2b34f80533"
+        }
+      }
+    },
+    "limitations": [
+      "explicit mapped bone rotation deltas only; no semantic recognition",
+      "in-place; no root translation, scaling, IK, foot contacts or animation merging",
+      "supported self-contained single-skin original GLBs, bounded embedded PNG textures only",
+      "verified target deformation does not establish artistic or game-engine acceptance"
+    ],
+    "map": {
+      "bone_map": {
+        "source_arm": "target_tip",
+        "source_root": "target_base"
+      },
+      "end_frame": 16,
+      "fps": 24,
+      "root_motion": "in_place",
+      "schema": "mgr.forge.motion-retarget-map.v1",
+      "start_frame": 1
+    },
+    "originals_preserved": true,
+    "owner_art_accepted": false,
+    "provider_spend_usd": 0,
+    "schema": "mgr.forge.motion-retarget-revision.v1",
+    "source_sha256": "9f9d4d006c123c1c70afcae828d2901b834970928009055e0dab52032e7f4e09",
+    "status": "NATIVE_MAPPED_MOTION_RETARGET_VERIFIED",
+    "target_sha256": "4d5d343311c13da10ae2241a168bdacaaba361999f76bbede3492c2075bff9aa"
+  },
+  "negative": {
+    "frozen_rotation_accessors": 3,
+    "independently_refused_for_wrong_mapped_rotations": true,
+    "sha256": "0c318a9d6e04aea3c87731954e75895e10a9a83292195b9bbf90f0f11244964d",
+    "skeleton_skin_action_inventories_retained": true
+  },
+  "schema": "mgr.forge.retarget-regression.v1",
+  "status": "ACTUAL_MAPPED_CROSS_SKELETON_RETARGET_PASS"
+}

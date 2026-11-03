@@ -180,6 +180,14 @@ def main(argv=None):
     uv_atlas.add_argument('--atlas-size', type=int, default=2048, choices=(256, 512, 1024, 2048, 4096))
     uv_atlas.add_argument('--padding', type=int, default=2)
     uv_atlas.add_argument('--expected-sha256')
+    retarget = sub.add_parser('retarget-motion', help='transfer one authored clip to an explicitly mapped original skinned rig')
+    retarget.add_argument('--source', type=Path, required=True, help='owned skinned GLB with one animation')
+    retarget.add_argument('--target', type=Path, required=True, help='owned skinned GLB with no earlier clips')
+    retarget.add_argument('--mapping', type=Path, required=True, help='exact named bone map and frame range JSON')
+    retarget.add_argument('--source-sha256', required=True)
+    retarget.add_argument('--target-sha256', required=True)
+    retarget.add_argument('--out', type=Path, required=True)
+    retarget.add_argument('--blender', default='blender')
     human_audio = sub.add_parser("human-audio-motion", help="animate original Human Forge jaw from approved PCM WAV loudness; NOT speech/phoneme alignment")
     human_audio.add_argument("--wav",type=Path,required=True,help="bounded caller-owned uncompressed RIFF PCM16 WAV")
     human_audio.add_argument("--actor-id",default="mgr-human-audio",help="safe generic actor label, never a claimed real identity")
@@ -494,6 +502,19 @@ def main(argv=None):
         profiles=load_engine_profiles()
         print(json.dumps({"schema":"mgr.forge.engines-status.v1",
                           "engines":profiles,"ready":sum(bool(x["runtime_ready"]) for x in profiles)},indent=2))
+        return 0
+    if args.action == 'retarget-motion':
+        from .retarget_motion import retarget_motion
+        if not args.mapping.is_file() or args.mapping.is_symlink():
+            raise ValueError('ordinary local motion retarget mapping JSON required')
+        with args.mapping.open('rb') as mapping_file:
+            data = mapping_file.read(32_769)
+        if len(data) > 32_768:
+            raise ValueError('motion retarget map exceeds 32 KiB')
+        result = retarget_motion(args.source, args.target, args.out, json.loads(data.decode('utf8')),
+                                 source_sha256=args.source_sha256, target_sha256=args.target_sha256,
+                                 blender=args.blender)
+        print(json.dumps(result, indent=2))
         return 0
     if args.action == 'uv-atlas':
         from .uv_authoring import author_uv_atlas

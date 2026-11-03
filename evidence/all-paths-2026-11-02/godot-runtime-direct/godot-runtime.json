@@ -1,0 +1,70 @@
+{
+  "schema": "mgr.forge.godot-runtime-proof.v1",
+  "status": "PASS",
+  "engine_sha256": "ab1824f85bfd8e0e4128182c000c4003a3e042245b2967848d089b2a04b22424",
+  "fixtures": [
+    {
+      "engine": "4.7.2-stable (official)",
+      "glb_sha256": "210dbf0801415c833b17484a564d3454be2b17008851e2e34f54c90c6ae1443a",
+      "headless": true,
+      "max_visual_corner_error_m": 0.0,
+      "mesh_instances": 1,
+      "physics_rays": [
+        {
+          "body": "GroundCollider",
+          "surface_y": 0.0
+        }
+      ],
+      "rendered_art": false,
+      "settled_sphere_y_m": 0.290000021457672,
+      "status": "PASS",
+      "surfaces": 2,
+      "triangles": 120,
+      "visual_corner_count": 4,
+      "world_vertices": 240,
+      "building_count": 0
+    },
+    {
+      "engine": "4.7.2-stable (official)",
+      "glb_sha256": "389377d4eacfad2e5b84379283bdd5672d7513ed3ea262921cb2cdd7d669b3e0",
+      "headless": true,
+      "max_visual_corner_error_m": 0.000567662995308638,
+      "mesh_instances": 1,
+      "physics_rays": [
+        {
+          "body": "BuildingCollider_000",
+          "surface_y": 9.33869934082031
+        },
+        {
+          "body": "BuildingCollider_001",
+          "surface_y": 9.96330070495605
+        },
+        {
+          "body": "BuildingCollider_002",
+          "surface_y": 18.1983985900879
+        },
+        {
+          "body": "BuildingCollider_003",
+          "surface_y": 11.5746002197266
+        },
+        {
+          "body": "BuildingCollider_004",
+          "surface_y": 18.983097076416
+        },
+        {
+          "body": "GroundCollider",
+          "surface_y": 0.0
+        }
+      ],
+      "rendered_art": false,
+      "settled_sphere_y_m": 0.290000021457672,
+      "status": "PASS",
+      "surfaces": 6,
+      "triangles": 240,
+      "visual_corner_count": 44,
+      "world_vertices": 480,
+      "building_count": 5
+    }
+  ],
+  "limits": "Actual local headless project import, scene geometry and basic physics. No desktop render, game controls, export templates or production acceptance."
+}

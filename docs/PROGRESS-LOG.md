@@ -1,3 +1,7 @@
+## 2026-11-02 — Completed command sweep and independent receiving
+
+Exercised the 66 checkpoint commands, including two explicit offline acquisition transports and actual REA archive inspection. Added and ran `retarget-motion` as command 67. The independent Blender receiver verified motion and target asset preservation and refused a frozen clip. Godot independently imported two exported projects and verified geometry correspondence and basic runtime physics. Retained startup/shutdown timeout evidence separately from passing reruns. Added an original-job regression for malformed journal rows and preserved them for reconciliation.
+
 ## 2026-11-02 — Active full-scope continuation
 
 Owner clarified ALL Forge paths. Expanded source/research accounting preserves every original187target and156featureID, with unresolved source identities and unexecuted commands visible. Completed a60case/21command real offline matrix including independent Blender scene composition. Repaired unsafe PNG inflation, bounded hull extraction, export inventory/declared-artifact binding, roster placement, empty/full world building, composition inventory and authored Godot collider geometry correspondence. Source-level corner checks do not establish Godot play/physics.

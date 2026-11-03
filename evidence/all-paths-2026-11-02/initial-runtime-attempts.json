@@ -1,0 +1,15 @@
+{
+  "retarget_first_run": {
+    "status": "TIMED_OUT",
+    "baked_glb_written": true,
+    "stage": "creator subprocess exit",
+    "creator_log_sha256": "c6d24f5d30927a298ada02d1e3f82fdc94d22212034b44b3811667c0afcfafb3",
+    "timeout_seconds": 180
+  },
+  "godot_first_run": {
+    "status": "TIMED_OUT",
+    "empty_world_result": "PASS",
+    "stage": "five-building import through Windows console launcher",
+    "timeout_seconds": 60
+  }
+}

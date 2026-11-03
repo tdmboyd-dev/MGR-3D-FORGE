@@ -6,6 +6,8 @@ Updated: November 2, 2026. Owning repository: MGR-3D-FORGE, `main`.
 
 ## Active all-path continuation — November 2, 2026
 
+The checkpoint is published on Forge `main` at `efcc8fa` and on the existing API repair branch at `92e6a57`. The CLI sweep exercised all 66 checkpoint commands and the new `retarget-motion` command passed its own CLI run. Godot headless import and basic physics passed on 2/2 original fixtures. The mapped retarget workflow passed its original transfer and frozen-clip refusal witnesses. The wider product acceptance set remains Unassessed.
+
 | Outcome | Current evidence | State / next proof |
 |---|---|---|
 | Preserve complete research universe | `research/external-provenance/2026-11-02-full-target-coverage.json` retains all 187 original targets, identities and unresolved locators | Indexed; deep source/runtime coverage remains open, never 187 completed company teardowns |

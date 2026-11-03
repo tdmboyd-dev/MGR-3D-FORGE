@@ -327,7 +327,7 @@ Resolve the remaining 14 placeholder identities in bounded publisher-backed batc
 
 ## Actual offline path repair evidence
 
-The scoped command matrix accounts for all 66 declarations: 51 actual positive workflows, one rejection-only path and 14 not yet executed in the completed matrices. Original world, FX/materials/cameras, composition, release, image/reference, morph/UV, character and Blender receiver workflows all have bounded receipts. Actual REA runtime and every other whole-product requirement remain separate evidence. See `evidence/all-paths-2026-11-02/REPORT.md` and `cli-command-coverage.json`. No F01–F156 feature is closed from these receipts alone.
+The completed scoped command matrix accounts for all 66 declarations: 64 actual local/receiver workflows and two original offline injected-transport contracts. No declaration remains wholly unrun in this pinned set. Original world, FX/materials/cameras, composition, release, image/reference, morph/UV, character and Blender receiver workflows all have bounded receipts. Actual REA runtime and every other whole-product requirement remain separate evidence. See `evidence/all-paths-2026-11-02/REPORT.md` and `cli-command-coverage.json`. No F01–F156 feature is closed from these receipts alone.
 
 ## Remaining identity and access work
 

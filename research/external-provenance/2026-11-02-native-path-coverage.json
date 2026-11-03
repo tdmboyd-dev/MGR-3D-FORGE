@@ -14170,7 +14170,8 @@
       "current_runtime_state": "WHOLE_FEATURE_UNASSESSED; related fixture evidence is explicitly partial",
       "related_offline_matrix_cases": [
         "actual-mannequin-skin-rig",
-        "actual-mannequin-pose-audit"
+        "actual-mannequin-pose-audit",
+        "actual-creature-rig-cli"
       ]
     },
     {
@@ -14191,7 +14192,8 @@
       "related_offline_matrix_cases": [
         "world-authored-pbr",
         "native-uv-atlas",
-        "native-world-material-sockets"
+        "native-world-material-sockets",
+        "actual-studio-material-light-hair-witness"
       ]
     },
     {
@@ -14523,7 +14525,8 @@
       "acceptance": "REGISTER_CLAIM_REQUIRES_CURRENT_SOURCE_RUNTIME_RECONCILIATION",
       "current_runtime_state": "WHOLE_FEATURE_UNASSESSED; related fixture evidence is explicitly partial",
       "related_offline_matrix_cases": [
-        "camera-clearance"
+        "camera-clearance",
+        "actual-cinematic-reel"
       ]
     },
     {
@@ -14704,7 +14707,10 @@
       "source_line": 65,
       "acceptance": "REGISTER_CLAIM_REQUIRES_CURRENT_SOURCE_RUNTIME_RECONCILIATION",
       "current_runtime_state": "WHOLE_FEATURE_UNASSESSED; related fixture evidence is explicitly partial",
-      "related_offline_matrix_cases": []
+      "related_offline_matrix_cases": [
+        "actual-cinematic-reel",
+        "actual-director-timeline-audit"
+      ]
     },
     {
       "id": "F42",
@@ -14793,7 +14799,9 @@
       "source_line": 70,
       "acceptance": "REGISTER_CLAIM_REQUIRES_CURRENT_SOURCE_RUNTIME_RECONCILIATION",
       "current_runtime_state": "WHOLE_FEATURE_UNASSESSED; related fixture evidence is explicitly partial",
-      "related_offline_matrix_cases": []
+      "related_offline_matrix_cases": [
+        "actual-director-frame-receivers"
+      ]
     },
     {
       "id": "F47",
@@ -14844,7 +14852,9 @@
       "source_line": 73,
       "acceptance": "REGISTER_CLAIM_REQUIRES_CURRENT_SOURCE_RUNTIME_RECONCILIATION",
       "current_runtime_state": "WHOLE_FEATURE_UNASSESSED; related fixture evidence is explicitly partial",
-      "related_offline_matrix_cases": []
+      "related_offline_matrix_cases": [
+        "actual-director-frame-receivers"
+      ]
     },
     {
       "id": "F50",
@@ -14878,7 +14888,9 @@
       "source_line": 75,
       "acceptance": "REGISTER_CLAIM_REQUIRES_CURRENT_SOURCE_RUNTIME_RECONCILIATION",
       "current_runtime_state": "WHOLE_FEATURE_UNASSESSED; related fixture evidence is explicitly partial",
-      "related_offline_matrix_cases": []
+      "related_offline_matrix_cases": [
+        "actual-studio-material-light-hair-witness"
+      ]
     },
     {
       "id": "F52",
@@ -14912,7 +14924,10 @@
       "source_line": 77,
       "acceptance": "REGISTER_CLAIM_REQUIRES_CURRENT_SOURCE_RUNTIME_RECONCILIATION",
       "current_runtime_state": "WHOLE_FEATURE_UNASSESSED; related fixture evidence is explicitly partial",
-      "related_offline_matrix_cases": []
+      "related_offline_matrix_cases": [
+        "actual-fx-volume",
+        "actual-matched-atmosphere-judge"
+      ]
     },
     {
       "id": "F54",
@@ -14968,7 +14983,8 @@
       "acceptance": "REGISTER_CLAIM_REQUIRES_CURRENT_SOURCE_RUNTIME_RECONCILIATION",
       "current_runtime_state": "WHOLE_FEATURE_UNASSESSED; related fixture evidence is explicitly partial",
       "related_offline_matrix_cases": [
-        "fx-portal"
+        "fx-portal",
+        "actual-fx-control"
       ]
     },
     {
@@ -15060,7 +15076,9 @@
       "source_line": 85,
       "acceptance": "REGISTER_CLAIM_REQUIRES_CURRENT_SOURCE_RUNTIME_RECONCILIATION",
       "current_runtime_state": "WHOLE_FEATURE_UNASSESSED; related fixture evidence is explicitly partial",
-      "related_offline_matrix_cases": []
+      "related_offline_matrix_cases": [
+        "actual-studio-material-light-hair-witness"
+      ]
     },
     {
       "id": "F62",
@@ -15162,7 +15180,9 @@
       "source_line": 91,
       "acceptance": "REGISTER_CLAIM_REQUIRES_CURRENT_SOURCE_RUNTIME_RECONCILIATION",
       "current_runtime_state": "WHOLE_FEATURE_UNASSESSED; related fixture evidence is explicitly partial",
-      "related_offline_matrix_cases": []
+      "related_offline_matrix_cases": [
+        "actual-matched-atmosphere-judge"
+      ]
     },
     {
       "id": "F68",
@@ -16088,7 +16108,10 @@
       "source_line": 144,
       "acceptance": "REGISTER_CLAIM_REQUIRES_CURRENT_SOURCE_RUNTIME_RECONCILIATION",
       "current_runtime_state": "WHOLE_FEATURE_UNASSESSED; related fixture evidence is explicitly partial",
-      "related_offline_matrix_cases": []
+      "related_offline_matrix_cases": [
+        "asset-acquire-fixture",
+        "kit-mirror-fixture"
+      ]
     },
     {
       "id": "F120",
@@ -16248,7 +16271,9 @@
       "source_line": 156,
       "acceptance": "REGISTER_CLAIM_REQUIRES_CURRENT_SOURCE_RUNTIME_RECONCILIATION",
       "current_runtime_state": "WHOLE_FEATURE_UNASSESSED; related fixture evidence is explicitly partial",
-      "related_offline_matrix_cases": []
+      "related_offline_matrix_cases": [
+        "rea-kit-audit own fixture"
+      ]
     },
     {
       "id": "F129",
@@ -16550,7 +16575,9 @@
       "source_line": 176,
       "acceptance": "REGISTER_CLAIM_REQUIRES_CURRENT_SOURCE_RUNTIME_RECONCILIATION",
       "current_runtime_state": "WHOLE_FEATURE_UNASSESSED; related fixture evidence is explicitly partial",
-      "related_offline_matrix_cases": []
+      "related_offline_matrix_cases": [
+        "actual-human-timed-cli"
+      ]
     },
     {
       "id": "F146",
@@ -16674,7 +16701,9 @@
       "source_line": 184,
       "acceptance": "REGISTER_CLAIM_REQUIRES_CURRENT_SOURCE_RUNTIME_RECONCILIATION",
       "current_runtime_state": "WHOLE_FEATURE_UNASSESSED; related fixture evidence is explicitly partial",
-      "related_offline_matrix_cases": []
+      "related_offline_matrix_cases": [
+        "actual-human-audio-cli"
+      ]
     },
     {
       "id": "F153",
@@ -16997,11 +17026,10 @@
   "related_runtime_matrix": {
     "path": "evidence/all-paths-2026-11-02/cli-command-coverage.json",
     "counts": {
-      "SCOPED_POSITIVE_EXECUTION": 51,
-      "REJECTION_ONLY": 1,
-      "NOT_RUN_IN_COMPLETED_MATRICES": 14
+      "SCOPED_POSITIVE_EXECUTION": 64,
+      "SCOPED_SYNTHETIC_TRANSPORT_EXECUTION": 2
     },
-    "scope": "Current scoped command and related feature receipts; no feature closure"
+    "scope": "64 scoped actual local/receiver executions + two explicitly synthetic transport CLI contracts; whole features remain open"
   },
   "summary_counts": {
     "python_files": 241,

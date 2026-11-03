@@ -1,0 +1,4 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+MGR_GODOT_WITNESS={"engine":"4.7.2-stable (official)","glb_sha256":"210dbf0801415c833b17484a564d3454be2b17008851e2e34f54c90c6ae1443a","headless":true,"max_visual_corner_error_m":0.0,"mesh_instances":1,"physics_rays":[{"body":"GroundCollider","surface_y":0.0}],"rendered_art":false,"settled_sphere_y_m":0.290000021457672,"status":"PASS","surfaces":2,"triangles":120,"visual_corner_count":4,"world_vertices":240}
+

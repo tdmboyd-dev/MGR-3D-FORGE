@@ -1,0 +1,24 @@
+{
+  "archive_bytes": 2150,
+  "archive_sha256": "f8698d6c73d7630b37f3252bfd46046e9799446cdd5fa0d2a09b9bdd1ae39cb0",
+  "cli_args": [
+    "kit-mirror",
+    "--repo",
+    "KayKit-Prototype-Bits-1.0",
+    "--commit",
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "--store",
+    "C:\\Users\\cool\\Documents\\Codex\\Projects\\MGR-3D-FORGE\\artifacts\\all-paths-2026-11-02-cli-tail\\vault",
+    "--sha256",
+    "f8698d6c73d7630b37f3252bfd46046e9799446cdd5fa0d2a09b9bdd1ae39cb0"
+  ],
+  "exit_code": 0,
+  "files": 3,
+  "license_scope_file_count": 2,
+  "original_bytes_preserved": true,
+  "outside_license_scope_count": 1,
+  "production_accepted": false,
+  "publisher_network_request": false,
+  "rights_reviewed": false,
+  "status": "PASS_SYNTHETIC_TRANSPORT"
+}

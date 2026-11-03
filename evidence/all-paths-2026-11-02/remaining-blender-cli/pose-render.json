@@ -1,0 +1,20 @@
+{
+  "blender_version": "5.2.2 LTS",
+  "frames": [
+    {
+      "bytes": 253150,
+      "file": "pose-a.png",
+      "frame": 1
+    },
+    {
+      "bytes": 250298,
+      "file": "pose-b.png",
+      "frame": 12
+    }
+  ],
+  "part_count": 20,
+  "rig_count": 1,
+  "schema": "mgr.forge.pose-render.v1",
+  "source": "rig.blend",
+  "status": "PASS"
+}

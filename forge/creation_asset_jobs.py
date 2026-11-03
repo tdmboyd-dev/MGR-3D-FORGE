@@ -102,11 +102,11 @@ def asset_job_status(studio, kind, request_id):
     with studio.world_job_lock:
         ledger, directory, model, manifest = KINDS[kind]
         rows, _ = _index(studio, ledger)
-        row = rows.get(request_id)
-        if row is None:
+        if request_id not in rows:
             return {'status': 'NOT_FOUND', 'request_id': request_id}
+        row = rows[request_id]
         if not isinstance(row, dict):
-            raise ValueError('invalid stored asset journal')
+            raise RuntimeError('invalid stored asset journal; reconciliation required')
         if row.get('status') != 'MATERIALIZED':
             return {'status': 'NEEDS_RECONCILIATION', 'request_id': request_id,
                     'job_id': row.get('job_id'), 'replayed': True}
@@ -165,7 +165,10 @@ def create_asset_job(studio, kind, request):
         ledger, directory, model, manifest = KINDS[kind]
         rows, journal = _index(studio, ledger)
         if rid in rows:
-            if rows[rid].get('fingerprint') != fingerprint:
+            existing = rows[rid]
+            if not isinstance(existing, dict):
+                raise RuntimeError('invalid stored asset journal; reconciliation required')
+            if existing.get('fingerprint') != fingerprint:
                 raise ValueError('asset request ID reused with changed original input')
             return asset_job_status(studio, kind, rid)
         if len(rows) >= 1000:
@@ -239,6 +242,8 @@ def verify_asset_request(studio, kind, request):
         if rid not in rows:
             return {'status': 'NOT_FOUND', 'request_id': rid, 'input_verified': False, 'request_kind': kind}
         row = rows[rid]
+        if not isinstance(row, dict):
+            raise RuntimeError('invalid stored asset journal; reconciliation required')
         if row.get('fingerprint') != fingerprint:
             raise ValueError('stored asset job does not match original input')
         path = studio.valid_job(row.get('job_id')) / 'asset-request.json'

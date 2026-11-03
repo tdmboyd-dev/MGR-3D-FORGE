@@ -1,0 +1,4 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+MGR_GODOT_WITNESS={"engine":"4.7.2-stable (official)","glb_sha256":"389377d4eacfad2e5b84379283bdd5672d7513ed3ea262921cb2cdd7d669b3e0","headless":true,"max_visual_corner_error_m":0.000567662995308638,"mesh_instances":1,"physics_rays":[{"body":"BuildingCollider_000","surface_y":9.33869934082031},{"body":"BuildingCollider_001","surface_y":9.96330070495605},{"body":"BuildingCollider_002","surface_y":18.1983985900879},{"body":"BuildingCollider_003","surface_y":11.5746002197266},{"body":"BuildingCollider_004","surface_y":18.983097076416},{"body":"GroundCollider","surface_y":0.0}],"rendered_art":false,"settled_sphere_y_m":0.290000021457672,"status":"PASS","surfaces":6,"triangles":240,"visual_corner_count":44,"world_vertices":480}
+

@@ -1,0 +1,11 @@
+{
+  "bone_map": {
+    "source_arm": "target_tip",
+    "source_root": "target_base"
+  },
+  "end_frame": 16,
+  "fps": 24,
+  "root_motion": "in_place",
+  "schema": "mgr.forge.motion-retarget-map.v1",
+  "start_frame": 1
+}

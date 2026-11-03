@@ -185,5 +185,23 @@ class CreationAssetJobsTests(unittest.TestCase):
         self.assertEqual(len(list(self.studio.jobs.iterdir())), 2)
 
 
+    def test_corrupt_saved_row_requires_reconciliation_without_allocating(self):
+        request = self.requests['morph']
+        request_id = request['request_id']
+        journal = self.studio.workspace / KINDS['morph'][0]
+        damaged = json.dumps({request_id: None})
+        journal.write_text(damaged, encoding='utf8')
+        for route, body in (
+            ('/api/morph-create', request),
+            ('/api/morph-status', {'request_id': request_id}),
+            ('/api/request-verify', {'kind': 'morph', 'request': request}),
+        ):
+            with self.subTest(route=route), self.assertRaisesRegex(RuntimeError, 'reconciliation required'):
+                self.studio.command(route, body)
+        self.assertEqual(journal.read_text(encoding='utf8'), damaged)
+        self.assertEqual(list(self.studio.jobs.iterdir()), [])
+
+
 if __name__ == '__main__':
     unittest.main()
+

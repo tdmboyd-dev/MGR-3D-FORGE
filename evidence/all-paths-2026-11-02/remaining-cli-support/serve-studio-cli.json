@@ -1,0 +1,15 @@
+{
+  "authenticated_create_status": 200,
+  "authenticated_studio_status": 200,
+  "graceful_owned_stop": true,
+  "native_exact_request_verified": true,
+  "native_jobs": 1,
+  "process_exit_code": 0,
+  "saved_job_read_status": 200,
+  "schema": "mgr.forge.serve-studio-cli-fixture.v1",
+  "startup_entrypoint": "forge.cli __main__ in owned subprocess, test-only stdin graceful stop shim",
+  "status": "PASS",
+  "token_logged": false,
+  "token_written_to_receipt": false,
+  "unauthenticated_saved_status": 403
+}

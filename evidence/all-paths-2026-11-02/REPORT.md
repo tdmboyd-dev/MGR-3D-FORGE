@@ -1,6 +1,8 @@
 # All-path offline qualification and repairs — 2026-11-02
 
-The completed matrices exercised 52 of 66 current CLI declarations: 51 positive workflows, one rejection-only workflow and 14 not yet run in these matrices. This is related-path qualification, not completion of Forge or all F01–F156 requirements.
+The follow-through added `retarget-motion` as CLI command 67. The positive CLI retry is in `retarget-cli-receipt.json`, and the independent positive and frozen-clip negative runs are in `../retarget-motion-2026-11-02/REPORT.md`. Godot imported two exported projects with its official 4.7.2 binary and verified actual imported geometry and basic runtime physics. See `godot-runtime-direct/godot-runtime.json`. The first console-wrapper run completed the empty-world fixture and timed out on the second import. The first retarget CLI run wrote its baked GLB and logged Blender shutdown, then hit the subprocess timeout. Those outcomes remain separate from the passing retries.
+
+At the initial publication checkpoint, the completed matrices exercised 52 of 66 CLI declarations: 51 positive workflows, one rejection-only workflow and 14 then unrun. The completion pass below now covers all 66 declarations at scoped local/fixture level. This is related-path qualification, not completion of Forge or all F01–F156 requirements.
 
 Reproduce from the repository:
 
@@ -40,7 +42,7 @@ The earlier extended matrix preserved two actual failures. `rectify-mask` sliced
 
 `blender-cli-inspections-final/matrix.json` passed 16 actual commands including independent Blender GLB import/facts/material sockets, editable candidate reopen, material separation, skinned mannequin pose measurements, deforming motion GLB export/reimport and editable-world Blender-to-native round trip. The initial trial used the wrong expected reopen SHA (.blend bytes instead of admitted original GLB); the receiver correctly rejected the harness mismatch. Original failure and corrected run are retained. No repeated Cycles render was part of this receiver matrix.
 
-The JSON `cli-command-coverage.json` merges only the completed scoped receipts. Asset acquisition is rejection-only: undiscovered slug refused, no asset downloaded. Remaining cases are separated by actual prerequisite below; there is no blanket missing-hardware or missing-credential claim. Full provider generation, real Godot import/play, arbitrary scene reconstruction, production authoring and all feature-level acceptance remain open.
+The checkpoint originally recorded asset acquisition rejection-only and 14 wrappers pending; the following table preserves that checkpoint. The completion pass below now records positive scoped evidence for those wrappers. The current JSON merges the finished receipts, and there is no blanket missing-hardware or missing-credential claim. Full provider generation, real Godot import/play, arbitrary scene reconstruction, production authoring and all feature-level acceptance remain open.
 
 | Current CLI wrapper not run in these completed matrices | Next exact evidence |
 |---|---|
@@ -58,3 +60,17 @@ The JSON `cli-command-coverage.json` merges only the completed scoped receipts. 
 | `rea-kit-audit` | Needs exact matching archive/pack receipt and actual REA file evidence. Targeted own fixture run pending; historical publisher REA remains separate. |
 | `rig-creature` | Separate current rig receiver evidence exists. CLI wrapper requires new original creature fixture and real Blender; no model download needed. |
 | `serve-studio` | Current authenticated browser/HTTP proof separate. Actual CLI process startup/termination not in completed matrix. |
+
+## Completion pass: all 66 current CLI declarations exercised
+
+The updated `cli-command-coverage.json` records **64 actual local/receiver/REA workflows and two explicitly synthetic transport CLI contracts**. No command in this pinned set is wholly unrun. This supersedes the earlier 52-command checkpoint, while keeping its actual failures and bounds. It does not close every parameter branch, every client, or any whole F01–F156 requirement.
+
+- `remaining-blender-cli/matrix.json`: all 17 actual command cases passed, including bounded World WorkBench rendering, cinematic camera .blend, independently audited timeline and four rendered frames, two actual matched portal/volume renders, measured atmosphere comparison, CPU light/material/hair witness, mannequin pose renders, timed and audio-driven Human CLI, and original creature rig CLI. Source before/after fingerprints are retained; separate newly added files are outside the captured original source list. The Blender bridge's existing fixed resolution/sample limits were used.
+- `remaining-cli-support/serve-studio-cli.json`: original CLI `__main__` served on loopback in its own process, denied anonymous saved reads, authenticated the Studio UI, created exactly one original fixture creature, reopened saved status and verified exact native input, then exited zero with a test-only stdin graceful-stop shim. The ephemeral token was captured only in process memory and is not in evidence.
+- `remaining-cli-support/kit-mirror-fixture.json`: actual CLI parser and original owner preserved the exact 2,150-byte original fixture ZIP through injected offline transport, retained two license-scope claims and one outside-scope file, and kept rights review false. This is not a live publisher acquisition or a rights determination.
+- `remaining-cli-support/rea-kit-audit.json`: actual REA safe inventory record `ev_2d8249f3bdef7d99318267434cc74471789c8ebc56199310e9d4fc28210b4ca1` inspected the same own ZIP, and Forge CLI independently matched all 3 child SHA/size identities. The opened target was closed. This is ZIP-entry evidence only, not algorithm or provider inspection.
+- `asset-acquire-cli-fixture/asset-acquire-fixture.json`: actual CLI parser and original catalog/acquisition owner inspected, quarantined and reopened an exact original 1,656-byte GLB through injected offline transport. The original undiscovered-slug rejection remains retained. No provider network transfer or rights/production acceptance occurred.
+
+Reproduce the CPU/render phases with `scripts/verify_forge_path_matrix.py --extended`, `--blender-inspections-only`, or `--remaining-blender-only` as applicable, using a new output directory and the installed Blender binary for Blender phases. `scripts/verify_forge_kit_studio_cli.py` supplies `serve`, `asset`, and `kit` modes; kit mode emits the own ZIP/pack receipt in an ignored local fixture folder for independent REA `inventory_artifact` and subsequent `rea-kit-audit`.
+
+The actual matched atmosphere run measured RGB MAE 28.029504 against threshold 3.0; that is a fixed-camera pixel difference, not smoke dynamics or artistic acceptance. Real Godot engine import/play, hosted OAuth/Tevin/mobile, live asset-provider transfer and neural generation remain separate open acceptance.

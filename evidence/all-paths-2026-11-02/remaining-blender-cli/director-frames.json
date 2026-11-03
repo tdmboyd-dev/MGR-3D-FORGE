@@ -1,0 +1,39 @@
+{
+  "blender_version": "5.2.2 LTS",
+  "engine": "CYCLES",
+  "frames": [
+    {
+      "bytes": 71693,
+      "camera": "MGR_Shot_Camera_0000",
+      "filename": "director-frame-0001.png",
+      "frame": 1
+    },
+    {
+      "bytes": 69355,
+      "camera": "MGR_Shot_Camera_0001",
+      "filename": "director-frame-0049.png",
+      "frame": 49
+    },
+    {
+      "bytes": 69630,
+      "camera": "MGR_Shot_Camera_0001",
+      "filename": "director-frame-0096.png",
+      "frame": 96
+    },
+    {
+      "bytes": 64713,
+      "camera": "MGR_Shot_Camera_0002",
+      "filename": "director-frame-0097.png",
+      "frame": 97
+    }
+  ],
+  "moving_shot_rgb_mae": 7.883154,
+  "render_device": "CPU",
+  "resolution": [
+    320,
+    180
+  ],
+  "samples": 4,
+  "schema": "mgr.forge.director-timeline-frames.v1",
+  "status": "PASS"
+}

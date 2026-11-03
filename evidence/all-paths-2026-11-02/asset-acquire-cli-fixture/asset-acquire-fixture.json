@@ -1,0 +1,19 @@
+{
+  "bytes": 1656,
+  "cli_args": [
+    "asset-acquire",
+    "--catalog",
+    "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-asset-cli-oy_ruz4a\\catalog",
+    "--slug",
+    "synthetic-fixture",
+    "--store",
+    "C:\\Users\\cool\\AppData\\Local\\Temp\\mgr-forge-asset-cli-oy_ruz4a\\vault"
+  ],
+  "exit_code": 0,
+  "geometry_status": "STRUCTURE_INSPECTED",
+  "production_accepted": false,
+  "provider_network_request": false,
+  "rights_reviewed": false,
+  "sha256": "474f9dacfb9784c144e2b7ca5df166e94dd9e90c036ef434ff926fa74bb334f0",
+  "status": "PASS_SYNTHETIC_TRANSPORT"
+}

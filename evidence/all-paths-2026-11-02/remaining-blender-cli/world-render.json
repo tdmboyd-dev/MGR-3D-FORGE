@@ -1,0 +1,13 @@
+{
+  "bbox_extent": [
+    102.0,
+    102.0,
+    18.447399
+  ],
+  "blender_version": "5.2.2 LTS",
+  "bytes": 270250,
+  "image": "world-render.png",
+  "object_count": 1,
+  "source": "world.glb",
+  "status": "PASS"
+}

@@ -35,6 +35,33 @@ The current method gives each triangle its own padded island. It keeps the origi
 
 Use atlas sizes 256, 512, 1024, 2048 or 4096 and padding from one to sixteen pixels. The native cap is 16,384 triangles, with additional checks that the resolution fits the padded cells and that float32 UV islands do not collapse. Existing UVs, textures, skinning, animation, blend shapes, compressed geometry and external dependencies refuse. This is a fully seamed starting layout, with visible triangle seams. It does not paint texture art, bake materials, merge semantic charts, optimize texel density or establish artistic/engine acceptance. An [actual separate Blender import and checker render](../evidence/uv-authoring-2026-11-02/REPORT.md) verifies the tested original fixture.
 
+## Transfer one original animation to a different rig
+
+Use a source GLB with one original skeletal animation and a target GLB with a single skinned rig in its neutral bind pose and no earlier animation. Both must be owned or authorized for this use. Align the rigs' up and forward directions first. Make a `motion-map.json` naming the source and corresponding target bones. The bone names can differ; mapped parent relationships must agree.
+
+```json
+{
+  "schema": "mgr.forge.motion-retarget-map.v1",
+  "bone_map": { "source_root": "target_base", "source_arm": "target_tip" },
+  "start_frame": 1,
+  "end_frame": 16,
+  "fps": 24,
+  "root_motion": "in_place"
+}
+```
+
+Use the actual bone names from your originals and a frame range present in the source clip at your chosen FPS. Then run the local CLI with both original identities and a new output folder:
+
+```powershell
+$sourceSha = (Get-FileHash -LiteralPath artifacts/source-rig.glb -Algorithm SHA256).Hash.ToLowerInvariant()
+$targetSha = (Get-FileHash -LiteralPath artifacts/target-rig.glb -Algorithm SHA256).Hash.ToLowerInvariant()
+python -m forge.cli retarget-motion --source artifacts/source-rig.glb --target artifacts/target-rig.glb --mapping artifacts/motion-map.json --source-sha256 $sourceSha --target-sha256 $targetSha --blender 'C:\Program Files\Blender Foundation\Blender 5.2\blender.exe' --out artifacts/target-motion-revision-01
+```
+
+Open `retargeted.blend` to edit the baked clip or `retargeted.glb` to use the new interchange model. The folder keeps `source-original.glb` and `target-original.glb` as exact copies and includes `retarget-receipt.json`, a separate `retarget-blender-proof.json` and before/after rendered images. A second Blender process must measure actual deformation after import before the native command returns success.
+
+The current local path transfers explicit mapped rotations in place. It accepts 2–240 sampled frames at 12–60 FPS, bounded single-skin GLBs and bounded embedded PNG textures. It refuses existing target clips, shape keys, external/compressed assets, incompatible maps and unsupported translation/scale motion. It does not guess anatomy, transfer root travel, solve foot contacts or certify game-engine playback. See the [actual local retarget proof](../evidence/retarget-motion-2026-11-02/REPORT.md) for tested bounds and original fixture details.
+
 ## Start Forge Studio on this computer
 
 Open PowerShell in the repository. Use new output names for each example run; many Forge commands deliberately refuse to overwrite existing results.

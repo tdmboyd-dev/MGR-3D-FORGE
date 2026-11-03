@@ -1,5 +1,11 @@
 # Native Capability and Build Register
 
+## November 2, 2026 — Command coverage, mapped retargeting and Godot receiving
+
+The all-path ledger records scoped positive evidence for each of the 66 commands in the published checkpoint. Two acquisition paths use offline fixture transport. `retarget-motion` is command 67 and transfers an authored clip in place using an explicit bone map and original input hashes. Blender independently measured actual received movement on a different rig. Automatic mapping, root motion, foot contact and interactive Studio access remain open for this feature.
+
+Godot headless import and physics passed for empty and five-building fixtures. Actual imported mesh vertices align with the tested collider corners, raycasts hit the expected surfaces, and a dynamic sphere settles on the ground. Interactive rendering and gameplay remain open. Original F01–F156 requirements retain their own acceptance evidence.
+
 ## November 2, 2026 — ACTIVE all-path audit and native repair
 
 Owner scope is every Forge path; image-to-3D and morphing are examples. Original F01–F156 requirements remain open according to their own acceptance evidence. The current checkpoint has 66 CLI declarations (new `morph-model` and `uv-atlas`), 29 Studio API path literals, eight journal families and 21 configured shared Forge MCP tools. Parsed/static counts are not end-to-end completion.

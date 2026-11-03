@@ -1,5 +1,15 @@
 # MGR 3D Forge - Full Living Handoff
 
+## All-path runtime follow-through — November 2, 2026
+
+Forge checkpoint `efcc8fad4c95c0653e94d6f5eec96f5e203f02eb` was fetched back from `origin/main` with tree `a25a29c6591b76b0b4102d797879f232ed3162af`. The continued audit exercised all 66 commands at that checkpoint, including two acquisition commands with explicit offline transports. The 67th command, `retarget-motion`, adds a verified transfer between explicitly mapped original rigs. Separate Blender import checked actual target skin motion and preserved the tested target geometry, weights, materials, UVs and embedded image. The CLI retry succeeded after the first Blender process timed out during shutdown. The original timeout and successful receipt are retained.
+
+Godot 4.7.2 independently imported empty and five-building Forge projects, checked mesh counts and collider corners, and ran actual headless physics. The portable official release ran from disposable Forge artifacts. The console launcher timed out on the second import in the first trial. The direct executable completed both fixtures. See `evidence/all-paths-2026-11-02/godot-runtime-direct/godot-runtime.json`. Interactive play and rendering remain separate acceptance checks.
+
+Native job replay and status now preserve a malformed saved journal row and return a reconciliation error. All 187 original research targets remain in scope. Fourteen placeholder locators remain unresolved, and selected runtime and source evidence is recorded separately from publisher identity. The next open product work includes richer UV charts and texture authoring, rig-aware morphing, root travel and foot contact, and broader image reconstruction.
+
+Final local regression ran 755 tests with 752 passes and three optional SAM skips. The suite fingerprint and syntax results are in `evidence/all-paths-2026-11-02/qualification-retarget-godot/qualification.json`.
+
 ## ACTIVE all-path continuation — November 2, 2026
 
 Owner correction: **ALL Forge paths** are in scope. Image-to-3D and morphing were examples. Continue the original F01–F156 requirements, CLI, Studio, shared API/MCP, imports/exports, human/rig/animation, materials/UV, worlds/scenes/streaming, packaging and the full original research universe. Do not treat the previous finite delivery below as completion of this task.

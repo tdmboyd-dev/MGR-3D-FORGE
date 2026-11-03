@@ -1,0 +1,10 @@
+test_corrupt_skin_weights_nodes_or_animation_accessors_do_not_reach_blender (tests.test_retarget_motion.RetargetMotionTests.test_corrupt_skin_weights_nodes_or_animation_accessors_do_not_reach_blender) ... ok
+test_exact_map_rejects_ambiguous_or_unsupported_rotation_transfer (tests.test_retarget_motion.RetargetMotionTests.test_exact_map_rejects_ambiguous_or_unsupported_rotation_transfer) ... ok
+test_missing_blender_and_existing_revision_cannot_overwrite_originals (tests.test_retarget_motion.RetargetMotionTests.test_missing_blender_and_existing_revision_cannot_overwrite_originals) ... ok
+test_native_preflight_binds_exact_owned_rig_bytes_and_bone_names_without_allocating (tests.test_retarget_motion.RetargetMotionTests.test_native_preflight_binds_exact_owned_rig_bytes_and_bone_names_without_allocating) ... ok
+test_source_hash_change_and_target_already_animated_refuse_before_output (tests.test_retarget_motion.RetargetMotionTests.test_source_hash_change_and_target_already_animated_refuse_before_output) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.184s
+
+OK

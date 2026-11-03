@@ -1,11 +1,10 @@
 {
   "schema": "mgr.forge.all-cli-coverage.v1",
-  "scope": "Current declaration scan and completed matrix receipts at publication checkpoint; no whole-feature acceptance",
+  "scope": "All 66 current CLI declarations have scoped positive local/fixture evidence; no whole-feature acceptance",
   "declared": 66,
   "states": {
-    "SCOPED_POSITIVE_EXECUTION": 51,
-    "REJECTION_ONLY": 1,
-    "NOT_RUN_IN_COMPLETED_MATRICES": 14
+    "SCOPED_POSITIVE_EXECUTION": 64,
+    "SCOPED_SYNTHETIC_TRANSPORT_EXECUTION": 2
   },
   "commands": [
     {
@@ -69,7 +68,7 @@
       "source": "forge/cli.py",
       "line": 145,
       "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
-      "state": "REJECTION_ONLY",
+      "state": "SCOPED_SYNTHETIC_TRANSPORT_EXECUTION",
       "execution_cases": [
         {
           "receipt": "evidence/all-paths-2026-11-02/offline-matrix-final/matrix.json",
@@ -82,27 +81,47 @@
           "case": "asset-acquire-unknown-no-network",
           "status": "EXPECTED_REJECTION",
           "exit_code": 1
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/asset-acquire-cli-fixture/asset-acquire-fixture.json",
+          "status": "PASS_SYNTHETIC_TRANSPORT",
+          "exit_code": 0,
+          "case": "Original CLI/parser/owner; injected offline GLB transport, quarantine/reopen; no publisher acquisition"
         }
       ],
-      "remaining": "Only undiscovered-slug rejection run; no live acquisition"
+      "remaining": null
     },
     {
       "command": "kit-mirror",
       "source": "forge/cli.py",
       "line": 149,
       "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
-      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
-      "execution_cases": [],
-      "remaining": "Network archive transfer excluded from CPU matrix. Offline synthetic transport can exercise original handler without claiming live publisher archive or license."
+      "state": "SCOPED_SYNTHETIC_TRANSPORT_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/remaining-cli-support/kit-mirror-fixture.json",
+          "status": "PASS_SYNTHETIC_TRANSPORT",
+          "exit_code": 0,
+          "case": "Original CLI/parser/owner; injected offline ZIP transport, no publisher acquisition"
+        }
+      ],
+      "remaining": null
     },
     {
       "command": "rea-kit-audit",
       "source": "forge/cli.py",
       "line": 154,
       "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
-      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
-      "execution_cases": [],
-      "remaining": "Needs exact matching archive/pack receipt and actual REA file evidence. Targeted own fixture run pending; historical publisher REA remains separate."
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/remaining-cli-support/rea-kit-audit.json",
+          "status": "INDEPENDENT_BYTES_MATCH_RIGHTS_AND_ART_REVIEW_PENDING",
+          "exit_code": 0,
+          "case": "Actual REA ZIP-entry inventory on own fixture, then real CLI byte crosscheck"
+        }
+      ],
+      "remaining": null
     },
     {
       "command": "rambler-seal",
@@ -218,6 +237,12 @@
           "case": "native-creature",
           "status": "PASS",
           "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/remaining-blender-cli/matrix.json",
+          "case": "native-creature-rig-fixture",
+          "status": "PASS",
+          "exit_code": 0
         }
       ],
       "remaining": null
@@ -259,18 +284,32 @@
       "source": "forge/cli.py",
       "line": 183,
       "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
-      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
-      "execution_cases": [],
-      "remaining": "Separate current native/Blender receiver proof exists. CLI wrapper still not run in completed matrix; use original PCM fixture."
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/remaining-blender-cli/matrix.json",
+          "case": "actual-human-audio-cli",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
     },
     {
       "command": "human-lipsync",
       "source": "forge/cli.py",
       "line": 189,
       "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
-      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
-      "execution_cases": [],
-      "remaining": "Separate current native/Blender receiver proof exists. CLI wrapper still not run in completed matrix; use original timed cues."
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/remaining-blender-cli/matrix.json",
+          "case": "actual-human-timed-cli",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
     },
     {
       "command": "world-compose",
@@ -315,9 +354,16 @@
       "source": "forge/cli.py",
       "line": 206,
       "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
-      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
-      "execution_cases": [],
-      "remaining": "Separate current rig receiver evidence exists. CLI wrapper requires new original creature fixture and real Blender; no model download needed."
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/remaining-blender-cli/matrix.json",
+          "case": "actual-creature-rig-cli",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
     },
     {
       "command": "build",
@@ -403,6 +449,12 @@
           "case": "fresh-native-world",
           "status": "PASS",
           "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/remaining-blender-cli/matrix.json",
+          "case": "build-render-fixture",
+          "status": "PASS",
+          "exit_code": 0
         }
       ],
       "remaining": null
@@ -445,6 +497,12 @@
         {
           "receipt": "evidence/all-paths-2026-11-02/blender-cli-inspections-final/matrix.json",
           "case": "fresh-native-mannequin",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/remaining-blender-cli/matrix.json",
+          "case": "native-pose-fixture",
           "status": "PASS",
           "exit_code": 0
         }
@@ -505,6 +563,12 @@
           "case": "fx-invalid-radius",
           "status": "EXPECTED_REJECTION",
           "exit_code": 1
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/remaining-blender-cli/matrix.json",
+          "case": "native-portal-render-fixture",
+          "status": "PASS",
+          "exit_code": 0
         }
       ],
       "remaining": null
@@ -1038,9 +1102,16 @@
       "source": "forge/cli.py",
       "line": 342,
       "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
-      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
-      "execution_cases": [],
-      "remaining": "Current authenticated browser/HTTP proof separate. Actual CLI process startup/termination not in completed matrix."
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/remaining-cli-support/serve-studio-cli.json",
+          "status": "PASS",
+          "exit_code": 0,
+          "case": "Real CLI subprocess and loopback auth/save with test-only graceful-stop shim"
+        }
+      ],
+      "remaining": null
     },
     {
       "command": "blender-verify",
@@ -1063,9 +1134,16 @@
       "source": "forge/cli.py",
       "line": 351,
       "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
-      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
-      "execution_cases": [],
-      "remaining": "WorkBench receiver invocation not run in completed matrix; separate Blender composition render is a different command."
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/remaining-blender-cli/matrix.json",
+          "case": "actual-workbench-world-render",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
     },
     {
       "command": "blender-facts",
@@ -1095,6 +1173,12 @@
           "case": "actual-mannequin-skin-rig",
           "status": "PASS",
           "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/remaining-blender-cli/matrix.json",
+          "case": "actual-skin-pose-fixture",
+          "status": "PASS",
+          "exit_code": 0
         }
       ],
       "remaining": null
@@ -1104,9 +1188,16 @@
       "source": "forge/cli.py",
       "line": 366,
       "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
-      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
-      "execution_cases": [],
-      "remaining": "Requires rig .blend and independent renders; current matrix separately verified actual rig and motion without rendering pose pair."
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/remaining-blender-cli/matrix.json",
+          "case": "actual-pose-frames",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
     },
     {
       "command": "blender-pose-audit",
@@ -1129,9 +1220,16 @@
       "source": "forge/cli.py",
       "line": 376,
       "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
-      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
-      "execution_cases": [],
-      "remaining": "Existing Blender installed. Actual bounded multi-shot render invocation not yet in completed matrix."
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/remaining-blender-cli/matrix.json",
+          "case": "actual-cinematic-reel",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
     },
     {
       "command": "blender-material-audit",
@@ -1154,45 +1252,86 @@
       "source": "forge/cli.py",
       "line": 388,
       "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
-      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
-      "execution_cases": [],
-      "remaining": "Requires the saved cinematic .blend with real authored cuts. Not blocked by credentials or hardware."
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/remaining-blender-cli/matrix.json",
+          "case": "actual-director-timeline-audit",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
     },
     {
       "command": "blender-director-frames",
       "source": "forge/cli.py",
       "line": 392,
       "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
-      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
-      "execution_cases": [],
-      "remaining": "Requires the saved director .blend and actual four-frame rendering; next bounded receiver run."
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/remaining-blender-cli/matrix.json",
+          "case": "actual-director-frame-receivers",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
     },
     {
       "command": "blender-fx-render",
       "source": "forge/cli.py",
       "line": 397,
       "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
-      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
-      "execution_cases": [],
-      "remaining": "Requires actual paired CPU renders for atmosphere comparison; not a missing provider."
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/remaining-blender-cli/matrix.json",
+          "case": "actual-fx-control",
+          "status": "PASS",
+          "exit_code": 0
+        },
+        {
+          "receipt": "evidence/all-paths-2026-11-02/remaining-blender-cli/matrix.json",
+          "case": "actual-fx-volume",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
     },
     {
       "command": "blender-studio-witness",
       "source": "forge/cli.py",
       "line": 405,
       "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
-      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
-      "execution_cases": [],
-      "remaining": "Actual bounded CPU materials/light/strand/volume witness not run by completed CLI matrix."
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/remaining-blender-cli/matrix.json",
+          "case": "actual-studio-material-light-hair-witness",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
     },
     {
       "command": "judge-atmosphere",
       "source": "forge/cli.py",
       "line": 410,
       "acceptance": "DECLARED_ONLY_SEE_ORIGINAL_REGISTER_AND_SPECIFIC_RUNTIME_RECEIPTS",
-      "state": "NOT_RUN_IN_COMPLETED_MATRICES",
-      "execution_cases": [],
-      "remaining": "Needs matched real control/candidate render and source receipts; no synthetic image may qualify a real render."
+      "state": "SCOPED_POSITIVE_EXECUTION",
+      "execution_cases": [
+        {
+          "receipt": "evidence/all-paths-2026-11-02/remaining-blender-cli/matrix.json",
+          "case": "actual-matched-atmosphere-judge",
+          "status": "PASS",
+          "exit_code": 0
+        }
+      ],
+      "remaining": null
     },
     {
       "command": "verify-bundle",
@@ -1365,8 +1504,19 @@
   ],
   "source_sha256": "d5b8744c1db341c7cf960deef532f04d34aa8bf16e08e3d79ca3611dc886cbd4",
   "notes": [
-    "52 distinct commands touched, 51 positive + one rejection-only. 14 not yet run in these matrices.",
-    "Separate current browser, human/rig and MCP receipts do not silently count as CLI command invocations.",
-    "No provider generation, paid calls, weights or production acceptance."
-  ]
+    "64 actual local commands including subprocess/Blender/REA receivers; 2 original CLI/owner successes use explicitly injected offline transport.",
+    "No wholly unrun CLI declaration remains in this pinned 66-command set. Not all parameter branches or client integrations were exercised.",
+    "No live asset-provider acquisition, model generation, paid calls, weights or production acceptance.",
+    "Original 51-positive/1-rejection/14-unrun publication checkpoint remains recoverable in repository history."
+  ],
+  "current_cli_sha256": "d5b8744c1db341c7cf960deef532f04d34aa8bf16e08e3d79ca3611dc886cbd4",
+  "remaining_blender_source_changes_during_run": [],
+  "follow_through": {
+    "declared": 67,
+    "scoped_positive_execution": 65,
+    "scoped_synthetic_transport_execution": 2,
+    "new_command": "retarget-motion",
+    "receipt": "evidence/all-paths-2026-11-02/retarget-cli-receipt.json",
+    "exit_code": 0
+  }
 }
