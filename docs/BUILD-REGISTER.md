@@ -1,6 +1,6 @@
 # Native Capability and Build Register
 
-Studio UV jobs now accept an optional exact layout, including planar-pairs, through the existing uploaded-source hash and job journal. Prior requests retain the triangle default and their original fingerprints. Targeted UV authoring and job checks passed, including planar-pairs restart readback and refusal of changed layout under a saved request ID. Tevin transport and owner-session execution remain open.
+Studio UV jobs now accept an optional exact layout, including planar-pairs, through the existing uploaded-source hash and job journal. Prior requests retain the triangle default and their original fingerprints. Targeted UV authoring and job checks passed, including planar-pairs restart readback and refusal of changed layout under a saved request ID. Local Tevin transport is verified through MGR-API-MCP 5cfb5d9 and MGR-ONE 88ba309. The conversation fixture required exact owner approval, dispatched to the real local Forge worker, and reopened the same verified GLB after restarting the HTTP server, SQLite and Forge. The model was injected and the owner credential was disposable. Everyday browser/live-model use, downstream import of this specific artifact and hosted acceptance remain open.
 
 ## November 2, 2026 — Command coverage, mapped retargeting and Godot receiving
 
