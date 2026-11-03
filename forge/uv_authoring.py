@@ -261,8 +261,8 @@ def atlas_glb_bytes(blob,*,expected_sha256=None,atlas_size=2048,padding=2,layout
         raise ValueError('malformed or unsupported static UV atlas input') from error
 
 
-def validate_uv_glb(blob,*,expected_sha256=None,atlas_size=2048,padding=2):
-    return atlas_glb_bytes(blob,expected_sha256=expected_sha256,atlas_size=atlas_size,padding=padding)[1]
+def validate_uv_glb(blob,*,expected_sha256=None,atlas_size=2048,padding=2,layout='triangles'):
+    return atlas_glb_bytes(blob,expected_sha256=expected_sha256,atlas_size=atlas_size,padding=padding,layout=layout)[1]
 
 
 def author_uv_atlas(source,output,*,expected_sha256=None,atlas_size=2048,padding=2,layout='triangles'):

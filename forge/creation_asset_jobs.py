@@ -44,6 +44,10 @@ def _binding(kind, request):
     fields = ({'request_id', 'glb_base64', 'expected_sha256', 'morph'} if kind == 'morph' else
               {'request_id', 'glb_base64', 'expected_sha256', 'atlas_size', 'padding'} if kind == 'uv' else
               {'request_id', 'front_png_base64', 'side_png_base64', 'bounds', 'grid', 'surface'})
+    if kind == 'uv' and 'layout' in request:
+        fields.add('layout')
+        if request['layout'] not in ('triangles', 'planar-pairs'):
+            raise ValueError('UV layout must be triangles or planar-pairs')
     if set(request) != fields or not isinstance(request.get('request_id'), str) or not _ID.fullmatch(request['request_id']):
         raise ValueError('asset request fields or stable request identity invalid')
     if kind in ('morph', 'uv'):
@@ -78,7 +82,7 @@ def _prepared(kind, request, sources, scratch):
     if kind == 'uv':
         from .uv_authoring import validate_uv_glb
         receipt = validate_uv_glb(sources['original-upload.glb'], expected_sha256=request['expected_sha256'],
-                                  atlas_size=request['atlas_size'], padding=request['padding'])
+                                  atlas_size=request['atlas_size'], padding=request['padding'], layout=request.get('layout', 'triangles'))
         # Atlas charts are per-triangle; their receipt can legitimately exceed
         # other jobs' 1 MB cap. Reserve the bounded writer's checker metadata.
         if len(json.dumps(receipt, sort_keys=True, indent=2).encode('utf8')) > MAX_UV_RECEIPT - 1024:
@@ -139,13 +143,15 @@ def asset_job_status(studio, kind, request_id):
             raise RuntimeError('saved asset SHA-256 changed; reconciliation required')
         diagnostic = {}
         if kind == 'uv':
-            checker = json.loads(receipt.read_text(encoding='utf8')).get('checker', {})
+            uv_receipt = json.loads(receipt.read_text(encoding='utf8'))
+            layout = uv_receipt.get('layout', 'triangles')
+            checker = uv_receipt.get('checker', {})
             path = target.parent / 'diagnostic-checker.png'
             if (not isinstance(checker, dict) or checker.get('file') != path.name or path.is_symlink() or
                     not path.is_file() or path.stat().st_size > 5_000_000 or
                     path.stat().st_size != checker.get('bytes') or hashlib.sha256(path.read_bytes()).hexdigest() != checker.get('sha256')):
                 raise RuntimeError('saved UV diagnostic changed; reconciliation required')
-            diagnostic = {'diagnostic_url': f'/files/{row["job_id"]}/uv/{path.name}',
+            diagnostic = {'layout': layout, 'diagnostic_url': f'/files/{row["job_id"]}/uv/{path.name}',
                           'diagnostic_sha256': checker['sha256'], 'diagnostic_bytes': checker['bytes']}
         inspect_glb(raw)
         return {'status': 'MATERIALIZED', 'request_id': request_id, 'job_id': row['job_id'],
@@ -155,7 +161,8 @@ def asset_job_status(studio, kind, request_id):
                 'source_sha256': row['source_sha256'], 'replayed': True,
                 'kind': kind, 'model_inference_used': False, 'owner_art_accepted': False,
                 **diagnostic, 'method': {'reconstruction': 'measured-silhouette-hull', 'morph': 'static-original-mesh-morph',
-                           'uv': 'fully-seamed-padded-triangle-uv-atlas'}[kind]}
+                           'uv': ('padded-planar-pairs-uv-atlas' if diagnostic.get('layout') == 'planar-pairs'
+                                  else 'fully-seamed-padded-triangle-uv-atlas')}[kind]}
 
 
 def create_asset_job(studio, kind, request):
@@ -211,7 +218,7 @@ def create_asset_job(studio, kind, request):
             if kind == 'uv':
                 from .uv_authoring import author_uv_atlas
                 author_uv_atlas(job / 'original-upload.glb', job / directory,
-                                expected_sha256=request['expected_sha256'], atlas_size=request['atlas_size'], padding=request['padding'])
+                                expected_sha256=request['expected_sha256'], atlas_size=request['atlas_size'], padding=request['padding'], layout=request.get('layout', 'triangles'))
             elif kind == 'morph':
                 from .imported_morph import morph_imported_glb
                 morph_imported_glb(job / 'original-upload.glb', job / directory, request['morph'],

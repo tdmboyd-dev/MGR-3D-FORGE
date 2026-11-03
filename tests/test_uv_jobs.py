@@ -33,6 +33,17 @@ class UVJobsTests(unittest.TestCase):
     def create(self,payload=None):return self.studio.command('/api/uv-create',payload or self.request)
     def status(self):return self.studio.command('/api/uv-status',{'request_id':self.request['request_id']})
 
+    def test_planar_pairs_layout_is_saved_and_bound_to_request(self):
+        payload = {**self.request, 'layout': 'planar-pairs'}
+        first = self.create(payload)
+        self.assertEqual(first['layout'], 'planar-pairs')
+        self.assertEqual(first['method'], 'padded-planar-pairs-uv-atlas')
+        self.studio = ForgeWorkstation(self.world, self.root/'workspace')
+        self.assertEqual(self.status()['asset_sha256'], first['asset_sha256'])
+        self.assertTrue(self.create(payload)['replayed'])
+        with self.assertRaises(ValueError):
+            self.create()
+
     def test_actual_uv_job_replays_after_restart_and_reopens_with_source_verification(self):
         first=self.create();self.assertEqual(first['status'],'MATERIALIZED');self.assertFalse(first['replayed'])
         job=self.studio.valid_job(first['job_id'])

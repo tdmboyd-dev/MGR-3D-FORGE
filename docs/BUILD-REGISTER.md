@@ -1,5 +1,7 @@
 # Native Capability and Build Register
 
+Studio UV jobs now accept an optional exact layout, including planar-pairs, through the existing uploaded-source hash and job journal. Prior requests retain the triangle default and their original fingerprints. Targeted UV authoring and job checks passed, including planar-pairs restart readback and refusal of changed layout under a saved request ID. Tevin transport and owner-session execution remain open.
+
 ## November 2, 2026 — Command coverage, mapped retargeting and Godot receiving
 
 The all-path ledger records scoped positive evidence for each of the 66 commands in the published checkpoint. Two acquisition paths use offline fixture transport. `retarget-motion` is command 67 and transfers an authored clip in place using an explicit bone map and original input hashes. Blender independently measured actual received movement on a different rig. Automatic mapping, root motion, foot contact and interactive Studio access remain open for this feature.
