@@ -101,7 +101,8 @@ def main():
     scene=bpy.context.scene
     scene.frame_start=1
     scene.frame_end=16
-    chosen=[b for b in ["tail_01","tail_02","left_wing_01","right_wing_01"]
+    chosen=[b for b in recipe.get("preview_animation_bones",
+                               ["tail_01","tail_02","left_wing_01","right_wing_01"])
             if b in rig.pose.bones]
     if not chosen:
         raise ValueError("no supported articulated appendage")
@@ -110,7 +111,7 @@ def main():
         bone.rotation_mode="XYZ"
         bone.rotation_euler=(0,0,0)
         bone.keyframe_insert(data_path="rotation_euler",frame=1)
-        sign=-1 if "right_wing" in bone_name else 1
+        sign=-1 if "right_wing" in bone_name or bone_name=="leg_02_upper" else 1
         bone.rotation_euler[2]=math.radians(24*sign)
         bone.keyframe_insert(data_path="rotation_euler",frame=16)
     first=deform_coords(obj,1)

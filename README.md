@@ -1,5 +1,11 @@
 # MGR 3D FORGE
 
+## Current native build — November 2, 2026
+
+Start with the [Owner Handbook](docs/FORGE-OWNER-HANDBOOK.md) for the completed-product destination and [How to Use Forge](docs/FORGE-HOW-TO.md) for actual Studio/CLI/Tevin workflows. The single [living handoff](docs/HANDOFF.md), [acceptance scorecard](docs/full-build/SCORECARD.md) and [current build evidence](evidence/native-creation-2026-11-02/REPORT.md) track the new CPU-native anatomy/rig-surface and saved-creation recovery work. The original feature scope and64CLI remain; older checkpoint banners below are dated history. No huge-model hosting or rental GPU was added.
+
+The existing shared MGR-API-MCP connects to Forge-owned jobs; MGR-ONE retains reasoning/approvals, and Creation OS is optional for projects spanning factories. Follow the current handoff for exact source-specific runtime and publication status.
+
 ## CURRENT SOURCE CHECKPOINT — November 1, 2026
 
 The ONE latest resume authority is docs/HANDOFF.md. It now covers original PCM WAV jaw-reactive Human Forge, the new composed city-and-biome Blender/Godot source workflow, glTF 16-bit index repair, REA's bounded inspected source set and all open production gates. Current CLI is 64 commands; historical 60/62 numbers belong to earlier source checkouts. The neural/hosted Tevin/ChatGPT portions are not yet accepted.

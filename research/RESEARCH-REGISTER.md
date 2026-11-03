@@ -1,5 +1,7 @@
 # MGR Forge Research Register — 2026-10-25
 
+November 2 update: the owner-directed creation-system comparison and native adaptation decisions live in `external-provenance/2026-11-02-creation-systems-comparison.md`. Actual bounded public-browser REA identities/restrictions are in `../evidence/native-creation-2026-11-02/rea-public-methods.json`. Official documentation/visible claims, source-observed native gaps, implemented changes and real artifact acceptance are kept separate. No weights/model hosting or paid provider trial was added. The dated candidate matrix below remains historical research, not current execution proof.
+
 This is a **sourced strategic survey**, not an exhaustive source audit or benchmark. Public paper or code appearance does not prove installation, integration, rights, speed or quality. Status abbreviations: S=SOURCED, R=README/docs inspected, E=end-to-end code read, T=executed tests. Currently none E/T.
 
 ## Candidate matrix

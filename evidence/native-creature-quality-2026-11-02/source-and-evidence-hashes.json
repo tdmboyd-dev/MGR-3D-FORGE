@@ -1,0 +1,105 @@
+{
+  "schema": "mgr.forge.native-creature-quality-source-evidence.v1",
+  "source": [
+    {
+      "path": "forge/imagination.py",
+      "bytes": 16950,
+      "sha256": "6417b5e6ff5683e64333df9cabd3ed4eb78ec233b1e15950b9678549bbed8a51"
+    },
+    {
+      "path": "forge/creature_rig_recipe.py",
+      "bytes": 7355,
+      "sha256": "cf1d4164d1df577ffa55060efa370fb177e4fbf42ebeb4e8f90378f0eb957ef2"
+    },
+    {
+      "path": "forge/smooth.py",
+      "bytes": 2494,
+      "sha256": "e731847c3d91fee0d87debaf480b12c5ac87f2e71da1085c1c7935873f38ef9e"
+    },
+    {
+      "path": "forge/morph_engine.py",
+      "bytes": 4554,
+      "sha256": "71dcdcbf747297acbecc89f25047429fa3cbed337a62cd4faa43858c63aacfce"
+    },
+    {
+      "path": "forge/geometry.py",
+      "bytes": 5863,
+      "sha256": "4ea3675f54f18a58d738c574ce0b3b32783568c99ab7c8d3f47c07366b1cae94"
+    },
+    {
+      "path": "forge/glb.py",
+      "bytes": 12352,
+      "sha256": "14c7aa53e0d2ac6b9c21404ae9927a89a96e79e796b1ac001f533c97ba7f8069"
+    },
+    {
+      "path": "bridge/blender_creature_skin.py",
+      "bytes": 7112,
+      "sha256": "4694145f5b69b664581cf7112c17a0375e6a10a2d6bda76d2052a3c267980823"
+    },
+    {
+      "path": "bridge/blender_creature_reimport.py",
+      "bytes": 3627,
+      "sha256": "f9475873054815c4a2d22f8eb45b70727b6cc8913c63ff04c6313f678f53dba0"
+    },
+    {
+      "path": "scripts/verify_creature_surface_blender.py",
+      "bytes": 5297,
+      "sha256": "795da53529b80f1c49be078382084d65630b68f87320ece1702de4cb7261c1ed"
+    },
+    {
+      "path": "tests/test_creature_appendages.py",
+      "bytes": 7361,
+      "sha256": "2712e7601bcd7b4b1a1ba61f29bc39d6ad777fa9b9f17b207cc92bba95627371"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "failed-relative-reimport.log",
+      "bytes": 1123,
+      "sha256": "d43d6256bad4321e6d87c00106d57cb11f3d09602d373ea3e8cf66d7cdab597d"
+    },
+    {
+      "path": "focused-tests.log",
+      "bytes": 3805,
+      "sha256": "b81f675a511d245555921eeb758393453a9ab3daba2eea83d93c85479932811e"
+    },
+    {
+      "path": "refused-changed-anatomy.log",
+      "bytes": 932,
+      "sha256": "34076fc03683d53e7aed9ce9c729e0abbc8cad836b3cb4650220aa803a2fd274"
+    },
+    {
+      "path": "render-after.png",
+      "bytes": 629121,
+      "sha256": "760a84f226648c1a94548245e92f34317925b785fdc69444291b9f430b6a3eaf"
+    },
+    {
+      "path": "render-before.png",
+      "bytes": 627376,
+      "sha256": "f0875a6eadd601b476879ae8920e1137942c9c3a53af5f25bd1d390b0956ab92"
+    },
+    {
+      "path": "REPORT.md",
+      "bytes": 6103,
+      "sha256": "c646dbeddd581d73b4c943e84bd40de65b6d97b44a454ee4ec7b08f2813fd6b1"
+    },
+    {
+      "path": "surface-proof.json",
+      "bytes": 1750,
+      "sha256": "f28b6b9fdb7aac8577c1d2645fc521b7033f93fd613bdad2cb956a1ea07fadcc"
+    },
+    {
+      "path": "tailless-rig-proof.json",
+      "bytes": 1089,
+      "sha256": "f399e5c0d0f100489255bd84e9c6f003eefd4fbd08965b0ce3a023a66ffcd51a"
+    },
+    {
+      "path": "winged-rig-proof.json",
+      "bytes": 1123,
+      "sha256": "709b9e96a04bb284c303b2f6ff7c3634e2186438780990cdbf310faea6a6cf2a"
+    }
+  ],
+  "real_blender_verified": true,
+  "owner_art_accepted": false,
+  "production_accepted": false
+}

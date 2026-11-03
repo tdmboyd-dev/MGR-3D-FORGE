@@ -1,0 +1,64 @@
+{
+  "actual_browser": "installed Chrome, headless",
+  "durable_world_clicks": 2,
+  "durable_world_native_jobs": 1,
+  "fixture_limits": "HTTP outage, read cancellation and altered download are browser route fixtures; native artifacts and restart are real.",
+  "fresh_token": true,
+  "fresh_workstation_restart": true,
+  "hosted_mobile_or_owner_art_acceptance": false,
+  "model_provider_calls": 0,
+  "native_jobs_after": 3,
+  "native_jobs_before": 2,
+  "original_journals_unchanged": true,
+  "phases": [
+    {
+      "anonymous_denied": true,
+      "desktop_and_mobile_captured": true,
+      "downloads": [],
+      "durable_world_repeat_same_job": false,
+      "listed": 0,
+      "page_errors": [],
+      "phase": "empty",
+      "status": "PASS",
+      "synthetic_download_tamper_rejected": false,
+      "synthetic_failure_and_cancellation": false
+    },
+    {
+      "anonymous_denied": true,
+      "desktop_and_mobile_captured": true,
+      "downloads": [
+        {
+          "bytes": 50704,
+          "kind": "creature",
+          "sha256": "626e9d74b58637138bcfd738900f539df2ccff219c4095d6eeab2adca3c4f84e"
+        },
+        {
+          "bytes": 11732,
+          "kind": "biome",
+          "sha256": "1acdd60438fb9ac1c7867162185e1400a11397907419ae6a549ef946ae01d409"
+        },
+        {
+          "bytes": 11512,
+          "kind": "world",
+          "sha256": "34c050c2502ce19e14856659ef92069e573cb9c06d070e47b39a27d34f70a036"
+        }
+      ],
+      "durable_world_repeat_same_job": true,
+      "listed": 3,
+      "page_errors": [],
+      "phase": "restarted",
+      "status": "PASS",
+      "synthetic_download_tamper_rejected": true,
+      "synthetic_failure_and_cancellation": true
+    }
+  ],
+  "schema": "mgr.forge.history-browser-verification.v1",
+  "status": "PASS",
+  "source_sha256": {
+    "forge/job_history.py": "00de6e2be2c276e654972c49eae622070c96da0ab4415638fd2c65af43c00d1b",
+    "viewer/runtime.js": "b476db7d548165197dbb83574ee4d4dbbc1ddcc74b4da1ed2a4988178600e4b6",
+    "viewer/template.html": "827addd1fab4ed7bbca2894ab70b80db74bab76d8749d4684b5eda9c45444830"
+  },
+  "source_unchanged_before_after": true,
+  "visual_inspection": "Desktop1440x900 and viewport390x844 inspected; history text stays within its scrolling panel after overflow-wrap fix."
+}

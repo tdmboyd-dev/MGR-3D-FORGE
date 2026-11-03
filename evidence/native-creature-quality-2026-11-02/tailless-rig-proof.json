@@ -1,0 +1,28 @@
+{
+  "animation_bones": [
+    "leg_01_upper",
+    "leg_02_upper"
+  ],
+  "blender_version": "5.2.2 LTS",
+  "bones": 12,
+  "max_evaluated_vertex_motion_m": 0.80888,
+  "mesh_objects": 1,
+  "mesh_source_sha256": "d0df81c6e5ae4783589025fa6d131a6990da3f64798569d75ea9b49ba3c56d2e",
+  "owner_visual_acceptance": false,
+  "preview_png_sha256": "19fc24b9843a6aba3475a3fa9474b001918956ee6cb101592ee98960415bdfa4",
+  "production_rig_accepted": false,
+  "quality_limitations": [
+    "nearest-segment weights only; no joint-aware anatomical skin",
+    "no locomotion, cloth, facial controls or game-performance acceptance",
+    "fixed skeleton family derived from generated creature DNA"
+  ],
+  "reimported_animation_actions": 1,
+  "reimported_armature_bones": 12,
+  "reopened_in_second_process": true,
+  "rigged_glb_bytes": 82676,
+  "rigged_glb_sha256": "b901733e592b92880b6f7fb24c143b70bc342cbaeafa962583ac09a35cd8228d",
+  "schema": "mgr.forge.creature-skin-smoke.v1",
+  "status": "LOCAL_BLENDER_REIMPORT_AND_RENDER_PASS",
+  "vertices": 1056,
+  "weighted_vertices": 1056
+}

@@ -1,0 +1,100 @@
+{
+  "schema": "mgr.forge.creation-methods-rea.v1",
+  "date": "2026-11-02",
+  "evidence_id": "ev_b9633c38a51f01f377eb707ba0a2918bd2ebb120269fba0ac86197528ecc6b39",
+  "method": "Declared public browser navigation with accessibility snapshots; no generation, credentials or private backend inspection",
+  "browser": {
+    "mode": "launch",
+    "process_ownership": "provider-owned",
+    "cleanup": "terminated-owned-process",
+    "product": "Chromium",
+    "version": "156.0.8078.47"
+  },
+  "steps": [
+    {
+      "step_id": "scenario_start",
+      "status": "completed",
+      "url": "https://docs.meshy.ai/en/api/text-to-3d",
+      "artifact_state": "captured",
+      "accessibility_sha256": "fef593c637f44fb6d0370339f49a85ee6f9f54a9b470ae9a5e272fdd4f4a6ba1",
+      "bytes": 73644
+    },
+    {
+      "step_id": "meshy-public-doc",
+      "status": "completed",
+      "url": "https://docs.meshy.ai/en/api/text-to-3d",
+      "artifact_state": "captured",
+      "accessibility_sha256": "418ad111bc8fd1444fd8f07f7c02ab7e71a86dad64fceeef1cdfb12287f70281",
+      "bytes": 73494
+    },
+    {
+      "step_id": "tripo-public-doc",
+      "status": "completed",
+      "url": "https://developers.tripo3d.ai/en/models/v3-1",
+      "artifact_state": "captured",
+      "accessibility_sha256": "4f3bca03b2a1184862627cfd3f991c90e74f11d62974ff4b8d10efbc9dee77fd",
+      "bytes": 7624
+    },
+    {
+      "step_id": "hyper3d-public-doc",
+      "status": "completed",
+      "url": "https://docs.hyper3d.ai/en/api-specification/rodin-gen2-5",
+      "artifact_state": "captured",
+      "accessibility_sha256": "e2543bfa2999e17654fb6607d4ec7c1ac2a729f5cceb5387c7d48bbf8190f3ee",
+      "bytes": 32461
+    },
+    {
+      "step_id": "hi3d-public-release",
+      "status": "completed",
+      "url": "https://www.hi3d.ai/hi3d-1-0-open-source",
+      "artifact_state": "captured",
+      "accessibility_sha256": "9453bb80698f5ac8b03cfc57076ba9ba24c91c53a48ddfab8a271f2379ac117e",
+      "bytes": 7968
+    },
+    {
+      "step_id": "artlist-public-howto",
+      "status": "completed",
+      "url": "https://help.artlist.io/hc/en-us/articles/39755194637597-Artlist-AI-Tools-Generating-3D-Models",
+      "artifact_state": "captured",
+      "accessibility_sha256": "2cfd70c1a6e1f100df40f18f5de55b123742d7d4e764ae6cdf13b5f5a29efe52",
+      "bytes": 20
+    },
+    {
+      "step_id": "sam3d-public-overview",
+      "status": "completed",
+      "url": "https://ai.meta.com/research/sam3d/",
+      "artifact_state": "captured",
+      "accessibility_sha256": "56866acd9b713f351889ef2731ef171bade4c16f48aa1cda8687f17a1a21be2a",
+      "bytes": 10
+    },
+    {
+      "step_id": "unreal-public-pcg",
+      "status": "completed",
+      "url": "https://dev.epicgames.com/documentation/403",
+      "artifact_state": "captured",
+      "accessibility_sha256": "77f5f13c15c36d23653bccec8610bfa60a3a87ed126fc3636c9e1915ed55b380",
+      "bytes": 423
+    },
+    {
+      "step_id": "higgsfield-public-method",
+      "status": "completed",
+      "url": "https://higgsfield.ai/blog/how-we-built-cinema-studio",
+      "artifact_state": "captured",
+      "accessibility_sha256": "40af0dfddc55a01ddecc2797cf244e1ae22babc196bb9fca4e581a416718e4ab",
+      "bytes": 20374
+    }
+  ],
+  "limitations": [
+    "Artifact identity is unavailable for this observation.",
+    "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+    "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+    "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+    "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+    "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+    "Storage values are hashed only after declared-secret redaction.",
+    "Browser host platform and architecture were not observed.",
+    "Complete requested capture is not complete application analysis. Artlist showed challenge/empty main; SAM3D overview was empty at capture; Unreal returned403. Those service internals and generation outputs are unobserved.",
+    "Public documentation content establishes rendered claims, not actual paid model performance or recovered server algorithms.",
+    "Full raw observation bundle retained in task work, not vendored in public source."
+  ]
+}

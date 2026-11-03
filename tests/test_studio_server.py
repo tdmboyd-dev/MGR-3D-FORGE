@@ -71,6 +71,14 @@ class StudioServerTests(unittest.TestCase):
     def test_studio_binds_only_localhost(self):
         self.assertEqual(self.server.server_address[0], "127.0.0.1")
 
+    def test_saved_navigation_requires_same_owner_token_and_origin(self):
+        for route, payload in (('/api/saved-jobs', {}), ('/api/saved-job-reopen', {
+                'kind': 'creature', 'request_id': 'http-saved-job-0001'})):
+            self.assertEqual(self.fetch(route, payload, token=False)[0], 403)
+            self.assertEqual(self.fetch(route, payload, origin='https://foreign.invalid')[0], 403)
+            self.assertEqual(self.fetch(route, payload)[0], 200)
+        self.assertEqual(len(list(self.studio.jobs.iterdir())), 0)
+
     def test_request_verification_is_authenticated_read_only_and_denies_changed_input(self):
         request={'request_id':'http-bound-creature-001','prompt':'Original winged blue creature','seed':7,'variants':1,'morph':{}}
         payload={'kind':'creature','request':request}

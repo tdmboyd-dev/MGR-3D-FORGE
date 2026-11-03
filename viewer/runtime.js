@@ -467,7 +467,7 @@
     }catch(error){directorMessage.textContent=`Live model search failed: ${error.message}`;}
     finally{assetSearchButton.disabled=false;}
   });
-  const studioLink=(url,label)=>{
+  const studioLink=(url,label,expectedSha=null)=>{
     // Studio-created worlds, models, reports and engine exports are private.
     // Direct anchor navigation cannot attach the owner token, so fetch into
     // a temporary local Blob only after an authenticated same-origin request.
@@ -492,6 +492,12 @@
         if(!Number.isFinite(claimed)||claimed>256_000_000)throw new Error("File exceeds supported size.");
         const file=await response.blob();
         if(file.size>256_000_000)throw new Error("File exceeds supported size.");
+        if(expectedSha){
+          const raw=await file.arrayBuffer();
+          if(!/^[a-f0-9]{64}$/.test(expectedSha)||raw.byteLength<28||
+             new TextDecoder().decode(raw.slice(0,4))!=="glTF"||
+             await creatureDigest(raw)!==expectedSha)throw new Error("Saved GLB changed; reconciliation required.");
+        }
         const blobUrl=URL.createObjectURL(file);
         if(url.endsWith(".html")){
           // The authored HTML world is a self-contained local viewer. Open it
@@ -519,6 +525,68 @@
     });
     downloadLinks.prepend(anchor);
   };
+  const historyRefresh=document.getElementById('director-history-refresh');
+  const historyNext=document.getElementById('director-history-next');
+  const historyCancel=document.getElementById('director-history-cancel');
+  const historyKind=document.getElementById('director-history-kind');
+  const historyStatus=document.getElementById('director-history-status');
+  const historyResults=document.getElementById('director-history-results');
+  let historyCursor=null,historyController=null;
+  historyRefresh.disabled=!studioEnabled;
+  async function historyRead(route,payload,receive){
+    if(!studioEnabled||historyController)return;
+    const controller=new AbortController();historyController=controller;
+    historyRefresh.disabled=true;historyNext.disabled=true;historyKind.disabled=true;
+    historyCancel.hidden=false;
+    for(const button of historyResults.querySelectorAll('button'))button.disabled=true;
+    historyStatus.textContent='Reading saved Forge jobs…';
+    const timer=setTimeout(()=>controller.abort(),15000);
+    try{
+      const response=await fetch(route,{method:'POST',headers:{'Content-Type':'application/json',
+        'X-MGR-Forge-Token':forgeToken},body:JSON.stringify(payload),signal:controller.signal,redirect:'error'});
+      const result=await response.json();controller.signal.throwIfAborted();
+      if(!response.ok)throw new Error(result.error||'Saved creation lookup failed.');
+      receive(result);
+    }catch(error){historyStatus.textContent=controller.signal.aborted?
+      'Lookup interrupted. No creation was started. You can refresh or reopen again.':String(error.message);}
+    finally{clearTimeout(timer);historyController=null;historyRefresh.disabled=false;
+      historyKind.disabled=false;historyCancel.hidden=true;historyNext.disabled=!historyCursor;
+      for(const button of historyResults.querySelectorAll('button'))button.disabled=false;}
+  }
+  const savedLabels={world:'Edited world',creature:'Creature',biome:'Terrain',human:'Human animation',composed:'Combined world'};
+  function reopenHistory(item){
+    void historyRead('/api/saved-job-reopen',{kind:item.kind,request_id:item.request_id},result=>{
+      if(result.status!=='MATERIALIZED'){
+        historyStatus.textContent=`${savedLabels[item.kind]}: ${result.status}. No new job started. Interrupted jobs need review before retrying.`;return;
+      }
+      const sha=result[{world:'world_sha256',creature:'creature_sha256',biome:'biome_sha256',human:'human_sha256',composed:'combined_world_sha256'}[item.kind]];
+      if(result.request_id!==item.request_id||result.job_id!==item.job_id||!/^[a-f0-9]{64}$/.test(sha))throw new Error('Saved creation identity changed; refresh and review.');
+      studioLink(result.glb_url,`Download reopened ${savedLabels[item.kind]} · ${item.request_id}`,sha);
+      // Secondary files retain their original receipt's proof boundary.
+      for(const [field,label] of [['blend_url','Blender project'],['receipt_url','Job receipt'],['manifest_url','Manifest']]){
+        if(result[field])studioLink(result[field],`${label} · ${item.request_id}`);
+      }
+      historyStatus.textContent=`Reopened ${savedLabels[item.kind]} · ${item.request_id}. Original GLB verified; download checks the same SHA-256 again. No creation started.`;
+    });
+  }
+  function loadHistory(next=false){
+    if(!next){historyCursor=null;historyResults.replaceChildren();}
+    void historyRead('/api/saved-jobs',{kind:historyKind.value,limit:20,...(next&&historyCursor?{cursor:historyCursor}:{})},result=>{
+      historyResults.replaceChildren();historyCursor=result.next_cursor;
+      historyStatus.textContent=`${result.total} saved creations. ${result.items.length} on this page. Reopen verifies files.`+
+        (result.unavailable_kinds.length?` Journals need review: ${result.unavailable_kinds.join(', ')}.`:'');
+      for(const item of result.items){
+        const entry=document.createElement('div'),description=document.createElement('p'),button=document.createElement('button');
+        description.textContent=`${savedLabels[item.kind]} · ${item.request_id} · ${item.status} (journal state)`;
+        button.type='button';button.textContent='Reopen';button.addEventListener('click',()=>reopenHistory(item));
+        entry.append(description,button);historyResults.append(entry);
+      }
+    });
+  }
+  historyRefresh.addEventListener('click',()=>loadHistory());
+  historyNext.addEventListener('click',()=>loadHistory(true));
+  historyKind.addEventListener('change',()=>loadHistory());
+  historyCancel.addEventListener('click',()=>historyController?.abort());
   // This UI reuses the SAME Forge creature jobs as the shared MGR API/MCP bridge.
   const creatureCreateButton=document.getElementById("director-creature-create");
   const creatureStatusButton=document.getElementById("director-creature-status");
@@ -741,11 +809,16 @@
     if(!studioEnabled)return;
     worldButton.disabled=true;
     try{
-      const result=await studioPost("/api/world",{edits:projectDocument()});
+      const edits=projectDocument();
+      // Same authored source + edits means the same recoverable native action,
+      // including a retry after a lost response or a browser/server restart.
+      const request_id='studio-world-'+await creatureDigest(new TextEncoder().encode(JSON.stringify(edits)));
+      const result=await studioPost("/api/world-job",{request_id,edits});
+      if(result.status!=="MATERIALIZED")throw new Error(`${result.status}: preserve this request and reconcile it before creating again.`);
       activeStudioJob=result.job_id;blenderButton.disabled=false;godotButton.disabled=false;
-      studioLink(result.glb_url,"Download edited 3D world (GLB)");
-      studioLink(result.html_url,"Open rebuilt editable 3D world");
-      directorMessage.textContent=`Saved actual ${result.buildings}-building world in local Forge workspace.`;
+      studioLink(result.glb_url,"Download edited 3D world (GLB)",result.world_sha256);
+      studioLink(`/files/${result.job_id}/edited/world-editor.html`,"Open rebuilt editable 3D world");
+      directorMessage.textContent=`Saved actual ${result.buildings}-building world in local Forge workspace. Find it again in Saved Creations. Request: ${request_id}`;
     }catch(error){directorMessage.textContent=`World build failed: ${error.message}`;}
     finally{worldButton.disabled=false;}
   });

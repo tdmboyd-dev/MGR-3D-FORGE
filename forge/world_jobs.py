@@ -85,6 +85,8 @@ def create_world_job(studio, request_id, edits):
             if previous.get("input_hash") != input_hash or previous.get("base_hash") != base:
                 raise ValueError("request id reused with different input/world")
             return _read_materialized(studio, previous, request_id, replay=True)
+        if len(entries) >= 1000:
+            raise ValueError("world request ledger full; preserve existing jobs")
         job_id, folder = studio.create_job()
         entries[request_id] = {"status": "STARTED", "job_id": job_id,
                                "input_hash": input_hash, "base_hash": base}

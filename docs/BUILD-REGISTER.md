@@ -1,5 +1,13 @@
 # Native Capability and Build Register
 
+## November 2, 2026 — Native creation and recoverable result access
+
+This additive qualification extends original intent/creature/MorphRig/export/Studio/shared-consumer requirements. No F01–F156 parent is closed and64CLI are retained. Explicit negative/count constraints now survive all candidate mutations and refuse unsupported/conflicting anatomy before allocation. Radial tapered surfaces share authored knee/foot landmarks with the original rig, preserve common morphs and use organic normals. A one-line original Blender reimport path repair resolves relative preview output before Blender changes its file context.
+
+Studio Saved Creations reads the existing five journals, reports observed/unverified states, paginates and reopens through original status verifiers. Native world builds now use stable content-derived IDs through the existing durable route; identical edits replay rather than duplicate. Authenticated GLB downloads verify the original receipt hash again. Owner handbook/how-to and the finite [acceptance scorecard](full-build/SCORECARD.md) accompany the same living handoff.
+
+Current actual Chrome restart/three-download/world-replay/desktop/mobile and negative-fixture proof is `evidence/native-creation-2026-11-02/browser-history.json`; REA public-method observation, affected37/37, earlier679run676pass3optionalSAMskips, fresh shared-MCP and final Blender/full-source qualifications remain separately source-scoped in that packet's REPORT.md. Do not add overlapping test scopes or interpret public docs as measured provider quality. UV/image texture production, rich anatomy, arbitrary reconstruction, broader delivery/cancellation and original production acceptance remain open.
+
 Baseline 2026-10-25. Status sequence: DISCOVERED > QUEUED > SOURCED > READ > RESEARCHED > SPECIFIED > IMPLEMENTED > RUNNING > TESTED > VERIFIED > INTEGRATED > OWNER-ACCEPTED. Do not skip. Research state and actual product state are independent.
 
 | ID | MGR-owned capability | Research state | Code state | Priority | Dependencies | Next evidence |

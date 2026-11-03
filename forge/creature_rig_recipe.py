@@ -10,6 +10,45 @@ from pathlib import Path
 from .morph_engine import morph_point, normalize_morph
 
 
+def creature_leg_landmarks(genome):
+    """Share original rest-space attachment/knee/foot points with the mesh.
+
+    These authored landmarks are a prototype anatomy convention, not inferred
+    animal anatomy. Both mesh and bones apply the same later morph field.
+    """
+    legs=genome["legs"]
+    length,width,high=(genome[k] for k in ("body_length","body_width","standing_height"))
+    if type(legs) is not int or legs not in (0,2,4,8) or any(
+            type(v) not in (int,float) or not math.isfinite(v) or v<=0
+            for v in (length,width,high)):
+        raise ValueError("invalid creature leg anatomy")
+    points=[]
+    for index in range(legs):
+        count=max(legs//2,1)
+        row=index//2
+        sign=-1 if index%2==0 else 1
+        x=-0.38*length+0.76*length*(row/max(count-1,1))
+        # At x=+/-.38*length and y=standing_height, .5*width is
+        # inside the original torso ellipsoid. The older .79*width root
+        # could float outside the body, especially with narrow limb radii.
+        points.append(((x,high,width*sign*0.5),
+                       (x,high*0.47,width*sign*1.22),
+                       (x+(-0.05 if row%2==0 else 0.06),0.04,width*sign*1.46)))
+    return points
+
+
+def creature_preview_bones(skeleton):
+    """Choose existing authored bones for a bounded deformation witness."""
+    names={bone["name"] for bone in skeleton}
+    chosen=[name for name in ("tail_01","tail_02","left_wing_01","right_wing_01") if name in names]
+    if not chosen:
+        chosen=[bone["name"] for bone in skeleton
+                if bone["role"]=="leg" and bone["name"].endswith("_upper")][:2]
+    if not chosen and "head" in names:chosen=["head"]
+    if not chosen:raise ValueError("no authored bone available for deformation witness")
+    return chosen
+
+
 def creature_bones(genome, *, morph=None, axis_extent=None):
     if not isinstance(genome,dict):
         raise ValueError("genome document required")
@@ -21,8 +60,10 @@ def creature_bones(genome, *, morph=None, axis_extent=None):
                               ("body_length","body_width","body_height","standing_height"))
     if any(type(v) not in (int,float) or not math.isfinite(v) or v<=0
            for v in (length,width,bodyh,high,genome["head_scale"],
-                     genome["tail_length"],genome["wing_span"])):
+                     genome["wing_span"])):
         raise ValueError("invalid genome anatomy dimensions")
+    if type(genome["tail_length"]) not in (int,float) or not math.isfinite(genome["tail_length"]) or genome["tail_length"]<0:
+        raise ValueError("invalid genome tail dimension")
     legs,wings=genome["legs"],genome["wing_pairs"]
     if type(legs) is not int or legs not in (0,2,4,8) or type(wings) is not int or wings not in (0,1):
         raise ValueError("unsupported anatomy family")
@@ -41,7 +82,7 @@ def creature_bones(genome, *, morph=None, axis_extent=None):
     add("head","neck",(hx-0.1,hy,0),(hx+0.32*genome["head_scale"],hy,0),"head")
     tail_base=(-length*0.48,cy,0)
     tail_previous=tail_base
-    tail_count=3
+    tail_count=3 if genome["tail_length"]>0 else 0
     for i in range(tail_count):
         ratio=(i+1)/tail_count
         end=(-length*0.48-genome["tail_length"]*ratio,
@@ -50,14 +91,7 @@ def creature_bones(genome, *, morph=None, axis_extent=None):
         add(f"tail_{i+1:02}", "body" if i==0 else f"tail_{i:02}",
             tail_previous,end,"tail")
         tail_previous=end
-    for index in range(legs):
-        count=max(legs//2,1)
-        row=index//2
-        sign=-1 if index%2==0 else 1
-        x=-0.38*length+0.76*length*(row/max(count-1,1))
-        upper=(x,high,width*sign*0.79)
-        knee=(x,high*0.47,width*sign*1.22)
-        foot=(x+(-0.05 if row%2==0 else 0.06),0.04,width*sign*1.46)
+    for index,(upper,knee,foot) in enumerate(creature_leg_landmarks(genome)):
         add(f"leg_{index+1:02}_upper","body",upper,knee,"leg")
         add(f"leg_{index+1:02}_lower",f"leg_{index+1:02}_upper",knee,foot,"leg")
     if wings:
@@ -85,6 +119,7 @@ def creature_bones(genome, *, morph=None, axis_extent=None):
             raise ValueError("bone collapsed after morph")
     return {"schema":"mgr.forge.creature-rig-blueprint.v1",
             "skeleton":items, "bones":len(items),
+            "preview_animation_bones":creature_preview_bones(items),
             "applied_morph":settings, "axis_extent":extent,
             "status":"BLUEPRINT_NOT_SKINNED",
             "deforming_skin_verified":False,

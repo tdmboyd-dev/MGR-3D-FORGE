@@ -14,6 +14,9 @@ from .geometry import Mesh
 from .glb import export_glb, inspect_glb
 from .meshqa import analyze_mesh
 from .morph_engine import morph_mesh,normalize_morph
+from .anatomy_constraints import parse_anatomy_constraints
+from .creature_rig_recipe import creature_leg_landmarks
+from .smooth import smooth_normals
 
 PALETTES = (
     ((0.13, 0.20, 0.31, 1), (0.37, 0.55, 0.59, 1)),
@@ -30,9 +33,9 @@ FEATURE_TOKENS={
     "long_tailed": ("tail", "tailed", "serpent", "dragon", "reptile"),
     "aquatic": ("water", "aquatic", "ocean", "sea", "fish", "underwater"),
     "armored": ("armor", "armored", "crystal", "stone", "rock", "metal", "robot"),
-    "spider": ("spider", "arachnid", "eight"),
+    "spider": ("spider", "arachnid"),
     "serpent": ("snake", "serpent", "worm"),
-    "biped": ("two", "biped", "humanoid", "person", "bird", "human"),
+    "biped": ("biped", "humanoid", "person", "bird", "human"),
     "colossal": ("giant", "colossal", "massive", "huge"),
 }
 
@@ -49,7 +52,12 @@ def _validate(prompt, seed, variants):
 
 def _meaning(prompt):
     tokens=set(re.findall(r"[a-z]+",prompt.lower()))
-    return {key for key, words in FEATURE_TOKENS.items() if tokens.intersection(words)}
+    features={key for key, words in FEATURE_TOKENS.items() if tokens.intersection(words)}
+    constraints=parse_anatomy_constraints(prompt)
+    for field, feature in (("wing_pairs","winged"),("horn_count","horned"),("tail","long_tailed"),("armor","armored")):
+        if field in constraints and not constraints[field]:
+            features.discard(feature)
+    return features
 
 
 def _triangle(mesh, p, q, r):
@@ -88,7 +96,60 @@ def _ellipsoid(mesh, center, radii, *, steps=12, rings=8):
 
 
 def _append_beam(mesh, start, finish, thickness):
-    mesh.beam(start,finish,thickness)
+    _append_tapered_tube(mesh,(start,finish),(thickness/2,thickness*.12))
+
+
+def _append_tapered_tube(mesh, points, radii, *, steps=12):
+    """Append a capped radial tube around an authored bounded centerline.
+
+    Parallel-transported radial frames avoid arbitrary ring rotation at a knee.
+    Closed individual tubes can overlap other body pieces; this is not a
+    boolean union or a guarantee of watertight whole-creature anatomy.
+    """
+    if (not isinstance(points,(list,tuple)) or not 2<=len(points)<=64 or
+            not isinstance(radii,(list,tuple)) or len(radii)!=len(points) or
+            type(steps) is not int or not 6<=steps<=32):
+        raise ValueError("invalid bounded appendage centerline")
+    if any(not isinstance(p,(list,tuple)) or len(p)!=3 or any(
+            type(v) not in (int,float) or not math.isfinite(v) for v in p) for p in points) or any(
+            type(r) not in (int,float) or not math.isfinite(r) or r<=0 for r in radii):
+        raise ValueError("invalid appendage points or radii")
+    def unit(v):
+        length=math.sqrt(sum(x*x for x in v))
+        if length<=1e-8:raise ValueError("appendage centerline collapsed or reversed")
+        return tuple(x/length for x in v)
+    def cross(a,b):
+        return (a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0])
+    for a,b in zip(points,points[1:]):
+        unit(tuple(b[i]-a[i] for i in range(3)))
+    rings=[]
+    radial=None
+    for index,(center,radius) in enumerate(zip(points,radii)):
+        before=points[max(0,index-1)]
+        after=points[min(len(points)-1,index+1)]
+        tangent=unit(tuple(after[i]-before[i] for i in range(3)))
+        if radial is None:
+            guide=(0,1,0) if abs(tangent[1])<.9 else (1,0,0)
+            radial=unit(cross(tangent,guide))
+        else:
+            along=sum(radial[i]*tangent[i] for i in range(3))
+            projected=tuple(radial[i]-along*tangent[i] for i in range(3))
+            if sum(v*v for v in projected)<=1e-12:
+                guide=(0,1,0) if abs(tangent[1])<.9 else (1,0,0)
+                projected=cross(tangent,guide)
+            radial=unit(projected)
+        other=cross(tangent,radial)
+        rings.append([tuple(center[i]+radius*(math.cos(2*math.pi*j/steps)*radial[i]+
+                              math.sin(2*math.pi*j/steps)*other[i]) for i in range(3))
+                      for j in range(steps)])
+    for lower,upper in zip(rings,rings[1:]):
+        for j in range(steps):
+            nxt=(j+1)%steps
+            mesh.quad(lower[j],lower[nxt],upper[nxt],upper[j])
+    for j in range(steps):
+        nxt=(j+1)%steps
+        _triangle(mesh,points[0],rings[0][nxt],rings[0][j])
+        _triangle(mesh,points[-1],rings[-1][j],rings[-1][nxt])
 
 
 def _wing(mesh, root, length, sign, span):
@@ -105,22 +166,30 @@ def _wing(mesh, root, length, sign, span):
 def genome_candidates(prompt, seed=42, variants=6):
     """Invent parametrized anatomy using prompt traits + reproducible mutations."""
     _validate(prompt,seed,variants)
+    constraints=parse_anatomy_constraints(prompt)
     features=_meaning(prompt)
     choices=[]
     for i in range(variants):
         digest=hashlib.sha256(f"{seed}|{i}|{prompt.strip().casefold()}".encode()).digest()
         rng=random.Random(int.from_bytes(digest[:8],"big"))
         legs=8 if "spider" in features else 0 if "serpent" in features else 2 if "biped" in features else 4
+        legs=constraints.get("legs",legs)
         has_wings=("winged" in features or (i>0 and rng.random()<0.22))
+        if "wing_pairs" in constraints:has_wings=bool(constraints["wing_pairs"])
         horn_count=(rng.choice([2,4,6]) if "horned" in features else rng.choice([0,0,2,2,4]))
+        if "horn_count" in constraints:
+            if constraints["horn_count"]!="present":horn_count=constraints["horn_count"]
+            elif not horn_count:horn_count=2
         length=round(rng.uniform(1.7,3.1),3)
         body_width=round(rng.uniform(0.30,0.60),3)
         body_height=round(rng.uniform(0.44,0.85),3)
         height=round(rng.uniform(1.4,2.15)*(1.65 if "colossal" in features else 1),3)
         tail=round(length*rng.uniform(0.45,1.20),3) if "long_tailed" in features else round(length*rng.uniform(0.25,0.9),3)
+        if constraints.get("tail") is False:tail=0
         palette=rng.randrange(len(PALETTES))
         genome={"id":f"variant-{i+1:02d}", "seed":int.from_bytes(digest[:8],"big"),
                 "legs":legs,"wing_pairs":int(has_wings),"horn_count":horn_count,
+                "eye_count":constraints.get("eye_count",2),
                 "body_length":length,"body_width":body_width,"body_height":body_height,
                 "standing_height":height,"tail_length":tail,
                 "wing_span":round(rng.uniform(1.2,2.6),3),
@@ -129,6 +198,8 @@ def genome_candidates(prompt, seed=42, variants=6):
                 "armor_ridges":rng.randint(3,10) if "armored" in features else rng.randint(0,4),
                 "palette_index":palette, "meaning_tags":sorted(features)}
         choices.append(genome)
+        if constraints.get("armor") is False:genome["armor_ridges"]=0
+        elif constraints.get("armor") is True:genome["armor_ridges"]=max(1,genome["armor_ridges"])
     return choices
 
 
@@ -147,36 +218,40 @@ def creature_meshes(genome):
     _ellipsoid(materials[0],(hx,hy,0),(0.36*head,0.42*head,0.33*head))
     _ellipsoid(materials[1],(length*0.22,cy-body_h*0.45,0),
                (length*0.26,body_h*0.24,width*0.85))
-    legs=genome["legs"]
-    for j in range(legs):
-        # Body attachment is morph-derived, not a library part.
-        count=max(legs//2,1)
-        row=j//2
-        side=-1 if j%2==0 else 1
-        x=(-0.38*length+(0.76*length*(row/max(count-1,1))))
-        root=(x,high,width*side*0.79)
-        foot=(x+(-0.05 if row%2==0 else 0.06),0.04,width*side*1.46)
-        _append_beam(materials[0],root,foot,0.14*head)
+    for root,knee,foot in creature_leg_landmarks(genome):
+        _append_tapered_tube(materials[0],(root,knee,foot),
+                             (.15*head,.095*head,.055*head))
         _ellipsoid(materials[2],foot,(0.23,0.08,0.17))
-    tail_steps=max(2,int(genome["tail_length"]*2))
-    previous=(-0.48*length,cy,0)
-    for j in range(tail_steps):
-        ratio=(j+1)/tail_steps
-        point=(-length*0.48-genome["tail_length"]*ratio,
-               cy+0.18*math.sin(ratio*math.pi*1.35),
-               0.25*math.sin(ratio*math.pi*1.5))
-        _append_beam(materials[0],previous,point,
-                     max(0.07,0.23*(1-ratio*0.7)))
-        previous=point
+    if genome["tail_length"]>0:
+        tail_steps=max(2,int(genome["tail_length"]*2))
+        tail_points=[(-0.48*length,cy,0)]
+        tail_radii=[.15]
+        for j in range(tail_steps):
+            ratio=(j+1)/tail_steps
+            point=(-length*0.48-genome["tail_length"]*ratio,
+                   cy+0.18*math.sin(ratio*math.pi*1.35),
+                   0.25*math.sin(ratio*math.pi*1.5))
+            tail_points.append(point)
+            tail_radii.append(.15*(1-ratio)+.025*ratio)
+        _append_tapered_tube(materials[0],tail_points,tail_radii)
     for i in range(genome["horn_count"]):
         side=-1 if i%2==0 else 1
         row=i//2
         root=(hx-0.08-row*0.12,hy+0.29*head,side*0.18*head)
         tip=(root[0]-0.13,root[1]+0.24+row*0.10,root[2]+side*0.17)
         _append_beam(materials[2],root,tip,0.07)
+    eyes=genome.get("eye_count",2)
+    if type(eyes) is not int or not 0<=eyes<=8:
+        raise ValueError("unsupported bounded creature eye count")
+    for pair in range(eyes//2):
+        y=hy+(.04+(pair-(eyes//2-1)/2)*.14)*head
+        for side in (-1,1):
+            _ellipsoid(materials[3],(hx+0.24*head,y,side*0.27*head),
+                       (0.045*genome["eye_scale"],0.055*genome["eye_scale"],0.029))
+    if eyes%2:
+        _ellipsoid(materials[3],(hx+0.36*head,hy+0.18*head,0),
+                   (0.029,0.055*genome["eye_scale"],0.045*genome["eye_scale"]))
     for side in (-1,1):
-        _ellipsoid(materials[3],(hx+0.24*head,hy+0.04,side*0.27*head),
-                   (0.045*genome["eye_scale"],0.07*genome["eye_scale"],0.029))
         if genome["wing_pairs"]:
             _wing(materials[4],(-length*0.10,cy+0.2,width*side*0.86),
                   genome["wing_span"],side,genome["wing_span"])
@@ -223,6 +298,10 @@ def create_original_creature(prompt, output, *, seed=42, variants=6, morph=None)
         raise ValueError("creature vertical extent must be positive")
     morphed=[morph_mesh(mesh,applied_morph,axis_extent=shared_extent)[0]
              if mesh.indices else Mesh() for mesh in selected["meshes"]]
+    # Organic material groups share surface normals after deformation. Preserve
+    # wing membranes' explicit opposite faces: averaging them cancels normals.
+    morphed=[smooth_normals(mesh) if mesh.indices and index!=4 else mesh
+             for index,mesh in enumerate(morphed)]
     palette=PALETTES[selected["genome"]["palette_index"]]
     mats=[
         ("body",list(palette[0])),
@@ -241,8 +320,12 @@ def create_original_creature(prompt, output, *, seed=42, variants=6, morph=None)
     manifest={
         "schema":"mgr.forge.imagination-creature.v1","status":"NATIVE_PROCEDURAL_GEOMETRY",
         "prompt":prompt.strip(),"seed":seed,"requested_variants":variants,
+        "explicit_anatomy_constraints":parse_anatomy_constraints(prompt),
         "selected_genome":selected["genome"],"applied_morph":applied_morph,
         "morph_axis_extent":shared_extent,
+        "native_surface_method":"closed-tapered-radial-appendages-v1",
+        "organic_smooth_normals":True,"hard_opposite_wing_faces_preserved":True,
+        "shared_mesh_rig_leg_landmarks":True,
         "candidates":[{"genome":x["genome"],"audit":x["audit"]} for x in options],
         "artifact":{"file":"creature.glb","sha256":digest,"bytes":len(payload)},
         "glb_quality":quality,"model_inference_used":False,"preset_kit_used":False,

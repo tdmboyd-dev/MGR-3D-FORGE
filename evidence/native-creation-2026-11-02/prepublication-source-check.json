@@ -1,0 +1,17 @@
+{
+  "schema": "mgr.forge.prepublication-source-check.v1",
+  "status": "PASS",
+  "scopes": [
+    {
+      "scope": "Forge final full suite",
+      "inputs": 238,
+      "changed": []
+    },
+    {
+      "scope": "API final full verify",
+      "inputs": 119,
+      "changed": []
+    }
+  ],
+  "note": "Only source/test/script manifests in their original qualification scope; later documentation and receipts are separate."
+}

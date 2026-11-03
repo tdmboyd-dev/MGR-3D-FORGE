@@ -9,6 +9,7 @@ from .imagination import create_original_creature
 from .morph_engine import normalize_morph
 from .glb import inspect_glb
 from .world_jobs import _atomic_json, _index, _ID
+from .anatomy_constraints import parse_anatomy_constraints
 
 LEDGER="creature-requests.json"
 MAX_REQUEST_BYTES=2000
@@ -27,6 +28,7 @@ def _validate(request):
     if type(variants) is not int or not 1<=variants<=12:
         raise ValueError("variants outside 1..12")
     morph=normalize_morph(request["morph"])
+    parse_anatomy_constraints(prompt)
     data={"request_id":rid,"prompt":prompt.strip(),"seed":seed,"variants":variants,"morph":morph}
     canonical=json.dumps(data,sort_keys=True,separators=(",",":"),allow_nan=False).encode("utf8")
     if len(canonical)>MAX_REQUEST_BYTES:

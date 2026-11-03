@@ -1,0 +1,1 @@
+MGR_FULL_MCP_LOCAL_ACCEPTANCE_PASS={"creature_sha256": "9b9c8f211edaec508bba068272d973066b25f73edbc72f776948421539730a8d", "biome_sha256": "1b0b1f6b09155e07d8cd9a25ac62a5c316e85d5ac3c252870024458a37e8110e", "same_protocol_client": true, "cross_tenant_denied": true}

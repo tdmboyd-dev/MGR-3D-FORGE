@@ -13,7 +13,9 @@ def main():
     args=sys.argv[sys.argv.index("--")+1:]
     if len(args)!=1:
         raise ValueError("output dir argument required")
-    root=Path(args[0])
+    # Blender interprets relative render paths against its own base path,
+    # which can be the drive root even while Python reads from the caller cwd.
+    root=Path(args[0]).resolve()
     proof=json.loads((root/"skin-proof.json").read_text(encoding="utf-8"))
     target=root/"creature-rigged.glb"
     if hashlib.sha256(target.read_bytes()).hexdigest()!=proof["rigged_glb_sha256"]:

@@ -100,9 +100,11 @@ validation make it a usable 3D result.
    shape packs, then species templates, face/skin/fur/wardrobe, anatomy and rig.
 4. **AI creation:** install optional approved model+weights behind Model Dock,
    benchmark output and cost, maintain a procedural/asset-reuse fallback.
-5. **MCP + Tevin:** the shared MGR-API-MCP edge performs verified auth and
-   read access; Creation OS routes creation-domain effects into Forge-owned
-   jobs. Tevin consumes receipts/previews, with no duplicate policy engine.
+5. **MCP + Tevin:** the existing shared MGR-API-MCP edge enforces scoped
+   authentication and connects callers to Forge-owned creation jobs and files.
+   Tevin retains its reasoning/approval and saved-result authority. Direct Forge
+   creation does not require Creation OS; Creation OS is an optional coordinator
+   when several factories contribute to one project. Reuse existing domain owners.
 6. **Runtime acceptance:** real browser, Blender, Godot and future engine
    interoperability with source SHA, scene preview, rights and recovery proof.
 
@@ -130,6 +132,13 @@ its acceptance gate merely because another lane's tests passed.
 Use only authorized photos/video; estimate cameras/depth/scene; convert into editable source components where feasible. Measured reconstruction is not proof that unseen geometry is true.
 
 ## What it is NOT (yet)
+
+**Owner direction, November 2, 2026:** prioritize original native CPU creation
+methods and usable production stages. Better shape constraints, procedural
+surfaces, authored fitting, rigs and editable scenes must not depend on hosting
+huge neural models or renting GPUs. Optional learned adapters remain a separate
+rights/resource/acceptance lane. A native bounded method must describe its actual
+limits rather than promise arbitrary learned reconstruction fidelity.
 
 - Not a trained proprietary frontier foundation model.
 - Not guaranteed superior to any commercial model in photorealism.

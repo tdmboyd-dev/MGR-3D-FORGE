@@ -65,6 +65,22 @@ class DurableWorldJobs(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.studio.command("/api/world-job", {"request_id": "bad", "edits": self.edits})
         self.assertEqual(len(list(self.studio.jobs.iterdir())), 0)
+
+    def test_full_journal_preserves_existing_replay_and_refuses_before_allocation(self):
+        saved = self.studio.command('/api/world-job', {'request_id': self.request_id, 'edits': self.edits})
+        ledger = self.studio.workspace / 'world-requests.json'
+        rows = json.loads(ledger.read_text(encoding='utf8'))
+        rows.update({f'capacity-world-{i:04}': {'status': 'STARTED', 'job_id': 'a' * 24}
+                     for i in range(999)})
+        ledger.write_text(json.dumps(rows), encoding='utf8')
+        before = ledger.read_bytes()
+        with self.assertRaisesRegex(ValueError, 'ledger full'):
+            self.studio.command('/api/world-job', {'request_id': 'over-capacity-world-001', 'edits': self.edits})
+        self.assertEqual(before, ledger.read_bytes())
+        self.assertEqual(len(list(self.studio.jobs.iterdir())), 1)
+        replay = self.studio.command('/api/world-job', {'request_id': self.request_id, 'edits': self.edits})
+        self.assertEqual(replay['world_sha256'], saved['world_sha256'])
+        self.assertTrue(replay['replayed'])
     def test_invalid_source_does_not_allocate_or_burn_an_original_world_request(self):
         bad={**self.edits,'asset_sha256':'0'*64}
         with self.assertRaises(ValueError):self.studio.command('/api/world-job',{'request_id':self.request_id,'edits':bad})

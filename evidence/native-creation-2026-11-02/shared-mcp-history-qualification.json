@@ -1,0 +1,29 @@
+{
+  "schema": "mgr.forge.shared-history-qualification.v1",
+  "status": "BOUNDED_LOCAL_ACCEPTANCE_PASS",
+  "new_history_tests": {"run": 10, "passed": 10, "failed": 0, "skipped": 0},
+  "all_forge_focused_tests": {"run": 108, "passed": 108, "failed": 0, "skipped": 0},
+  "typecheck_exit_code": 0,
+  "commands": [
+    "npm run typecheck",
+    "node --import tsx --test test/forge-history.test.ts test/forge-catalog.test.ts test/forge-request-binding.test.ts test/forge-artifact-transfer.test.ts test/forge-authority-lifecycle.test.ts",
+    "node --import tsx --test test/forge-*.test.ts",
+    "python scripts/verify-forge-creator-mcp.py --receipt <Forge>/evidence/native-creation-2026-11-02/shared-mcp-history.json"
+  ],
+  "initial_failure": {
+    "command": "npm run typecheck",
+    "result": "TS2379 at forge-mcp-tools.ts list/registration boundary: parsed optional cursor string|undefined incompatible with exact optional property cursor string",
+    "repair": "New typed saved-jobs input explicitly permits undefined optional fields, matching Zod and existing JSON omission behavior; no runtime or authorization guard weakened",
+    "after": "Typecheck exit0, focused39 and full Forge-focused108 pass; new history10 are included, not added to totals"
+  },
+  "protocol_receipt": "shared-mcp-history.json",
+  "source_custody": "shared-mcp-history-source-custody.json",
+  "executed_logs": ["shared-mcp-history.txt", "shared-mcp-history-tests.txt", "shared-mcp-history-typecheck.txt"],
+  "limits": [
+    "Fixture identity and actual local SDK/HTTP/native files, not deployed OAuth/JWKS or production",
+    "No permanent owner activation, live model, paid provider, GPU model, hosted/mobile acceptance",
+    "Human/composition schema routing supported, but no new Blender human/composition runtime trial in this default three-kind run",
+    "Source stability covers selected owning source/package/harness/test/viewer files; installed node_modules not individually hashed",
+    "Changes remain uncommitted in API until owning build coordinates final verification and publication"
+  ]
+}

@@ -1,0 +1,16 @@
+18:36:21 | INFO: Data are loaded, start creating Blender stuff
+18:36:21 | INFO: Blender create Mesh node MGR Native Invented Creature
+18:36:21 | INFO: glTF import finished in 0.02s
+18:36:21 | INFO: Data are loaded, start creating Blender stuff
+18:36:21 | INFO: Blender create Mesh node MGR Native Invented Creature
+18:36:21 | INFO: glTF import finished in 0.01s
+Traceback (most recent call last):
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\scripts\verify_creature_surface_blender.py", line 108, in <module>
+    if __name__=="__main__":main()
+                            ~~~~^^
+  File "C:\Users\cool\Documents\Codex\Projects\MGR-3D-FORGE\scripts\verify_creature_surface_blender.py", line 50, in main
+    raise ValueError("comparison changed original chosen anatomy")
+ValueError: comparison changed original chosen anatomy
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:37:04)
+
+Blender quit

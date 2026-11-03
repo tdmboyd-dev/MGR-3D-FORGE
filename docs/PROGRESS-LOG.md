@@ -1,3 +1,11 @@
+## 2026-11-02 — Native anatomy/surface and saved creation recovery
+
+Recovered clean/fetched mainf6914ae. Added bounded original prompt anatomy constraints, exact supported counts, preallocation refusal, capped tapered appendages, shared mesh/rig joints, common-morph normals and a no-tail/wing preview-animation fallback. Real render comparison caught extra RNG consumption changing original positive-brief anatomy; repaired it and added a pinned pre-change DNA regression. Independent reimport caught relative Blender preview paths; original receiver now resolves the output directory before scene operations. Failed/predecessor witnesses stay recorded.
+
+Added paginated/filterable Studio Saved Creations over original journals, original native reopen/hash verification and download rehashing. Studio world building uses its existing durable native request route, so identical edits replay and saved history can find them. Real Chrome passed actual restart/fresh token/creature+biome+world downloads, one world from two clicks, filter/pagination/auth denial, desktop/390viewport and synthetic outage/cancel/tamper denial. Final receipt `evidence/native-creation-2026-11-02/browser-history.json`.
+
+Owner completion handbook/how-to, explicit CPU-native product direction and current external method decisions added. Actual REA navigated eight declared public sources: five substantive rendered captures, three challenge/empty/403, exact evidence/limits retained without cloud-model claims. Native affected37/37 and earlier full679run676pass3SAMskips passed; final combined runtime, Blender, shared history-MCP and publication status is in the same packet REPORT.md and living handoff. Whole-product Unassessed and original requirements retained.
+
 ## 2026-11-01 — Recovered audio/world composition and bounded REA
 
 ### 2026-11-01 — Secured native Studio entry and real browser recovery

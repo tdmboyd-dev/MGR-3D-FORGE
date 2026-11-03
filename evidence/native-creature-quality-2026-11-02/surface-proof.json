@@ -1,0 +1,49 @@
+{
+  "blender_version": "5.2.2 LTS",
+  "camera_location": [
+    3.362422466278076,
+    -8.064809799194336,
+    5.231078147888184
+  ],
+  "camera_rotation": [
+    1.1801890134811401,
+    6.413415576389525e-08,
+    0.4899573028087616
+  ],
+  "limitations": [
+    "fixed-camera stylized surface witness, not aesthetic benchmark",
+    "separate overlapping body components are not boolean-unioned",
+    "rig deformation/import proof is separate from this render"
+  ],
+  "observations": [
+    {
+      "blend_sha256": "72f3c359a33f475c7c37f2e99a7939e6cea8537bed23c22ada132fe27249e1db",
+      "input_glb_bytes": 112640,
+      "input_glb_sha256": "a464e2285623ff5c5c775fb8cd92dc5c59ea770a2c10d1dbcae7dc95dccbb320",
+      "material_slots": 5,
+      "name": "before",
+      "polygons": 1724,
+      "preview_png_sha256": "f0875a6eadd601b476879ae8920e1137942c9c3a53af5f25bd1d390b0956ab92",
+      "smooth_polygons": 82,
+      "vertices": 3672
+    },
+    {
+      "blend_sha256": "75484feb7d4486ec028acb09f4643b14c891c00d21dd6e1170dea57ba150c666",
+      "input_glb_bytes": 61424,
+      "input_glb_sha256": "42f764db69b88a359fb0e3705ff358defe57b5fd33af1bcd8f06ddb4ac9a4b4d",
+      "material_slots": 5,
+      "name": "after",
+      "polygons": 2336,
+      "preview_png_sha256": "760a84f226648c1a94548245e92f34317925b785fdc69444291b9f430b6a3eaf",
+      "smooth_polygons": 2328,
+      "vertices": 1232
+    }
+  ],
+  "orthographic_scale": 7.258329391479492,
+  "owner_art_accepted": false,
+  "production_rig_accepted": false,
+  "renderer": "BLENDER_WORKBENCH",
+  "same_original_anatomy_and_intent": true,
+  "schema": "mgr.forge.native-creature-surface-witness.v1",
+  "status": "REAL_BLENDER_FIXED_CAMERA_IMPORT_RENDER_PASS"
+}

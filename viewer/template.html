@@ -17,6 +17,7 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opaci
 #director[hidden]{display:none}#director h2{font-size:16px;margin:0 0 7px}#director textarea{box-sizing:border-box;width:100%;min-height:74px;resize:vertical;background:#29364a;border:1px solid #64778f;border-radius:7px;padding:9px;color:#fff;font:inherit}
 #director button{background:#126f66;border:0;border-radius:6px;padding:9px 12px;color:#fff;margin:8px 4px 8px 0;cursor:pointer}#director button:disabled{opacity:.42;cursor:not-allowed}
 #director input{display:block;max-width:100%;font-size:12px;margin:7px 0}#director img{max-width:100%;max-height:150px;object-fit:contain;border-radius:8px}#director-msg{font-size:12px;color:#9af4cd;white-space:pre-wrap}
+#director-history-results p,#director-history-status{overflow-wrap:anywhere}
 #editor button:disabled{opacity:.4;cursor:not-allowed}
 @media(max-width:650px){#editor{top:auto;bottom:48px;right:8px;left:8px;width:auto;max-height:32vh;padding:10px}#editor .split{grid-template-columns:repeat(3,1fr)}#director{left:8px;top:114px;width:calc(100vw - 48px);max-height:30vh}#director-toggle{left:8px;top:72px}#help{font-size:10px;left:8px;bottom:4px}#overlay{top:8px;left:8px}h1{font-size:16px}}
 </style></head><body>
@@ -87,6 +88,15 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:.09em}small{font-size:12px;opaci
   <button id="director-source-search" type="button" disabled>Find Source Libraries</button>
   <button id="director-asset-search" type="button" disabled>Search Free 3D Models</button>
   <div id="director-asset-results" aria-live="polite"></div>
+  <hr><h2>SAVED CREATIONS</h2>
+  <small>Find creations in this Studio workspace after a restart. Reopen checks the original job and its saved GLB. Listings alone do not verify files. Ordered by type and request ID.</small>
+  <label for="director-history-kind">Creation type</label>
+  <select id="director-history-kind"><option value="all">All creation types</option><option value="world">Edited worlds</option><option value="creature">Creatures</option><option value="biome">Terrain</option><option value="human">Human animations</option><option value="composed">Combined worlds</option></select>
+  <button id="director-history-refresh" type="button" disabled>Find Saved Creations</button>
+  <button id="director-history-next" type="button" disabled>Next Page</button>
+  <button id="director-history-cancel" type="button" hidden>Cancel Lookup</button>
+  <p id="director-history-status" role="status" aria-live="polite">Open your authenticated Studio to browse its saved jobs.</p>
+  <div id="director-history-results" aria-live="polite"></div>
   <div id="director-downloads" aria-live="polite"></div>
   <p id="director-msg" role="status" aria-live="polite">Ready. No external AI call or GPU required for supported commands.</p>
 </aside>

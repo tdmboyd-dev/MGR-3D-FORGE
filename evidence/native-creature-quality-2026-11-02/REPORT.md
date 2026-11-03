@@ -1,0 +1,30 @@
+# Native creature surface and rig quality — November 2, 2026
+
+The original native creator now uses capped tapered radial limbs, tails, horns and ridges in place of rectangular appendage beams. Both surface geometry and the original rig use one shared root/knee/foot helper; roots intersect the authored torso, and both apply the existing common morph field. Organic material groups receive shared smooth normals after deformation; explicit opposite wing faces remain separate. The existing generic rig preview also animates leg bones, or the head, when an explicitly tailless/wingless creature has no tail/wing bones.
+
+This remains original CPU procedural geometry with overlapping components. It is not a boolean-unioned anatomical sculpture, learned auto-rigging, neural generation or accepted professional artwork. Request schemas, rights and approval ownership remain unchanged. Existing manifests gain descriptive surface-method fields and rig recipes gain the selected existing preview bone names.
+
+## Actual verification
+
+- `python -m unittest tests.test_creature_appendages tests.test_creature_rig_recipe tests.test_imagination tests.test_morph_engine -v`: **21 passed**, zero failures/skips. Tests measure paired oriented closed-surface edges, outward signed volume, radial taper, invalid/collapsed input refusal before mutation, preserved triangle coordinates under smoothing, common mesh/rig joints under morph, bounded eye counts, no-tail bones, existing preview targets and limb-root intersection with the actual torso ellipsoid.
+- Baseline source `f6914ae`: original prompt `Invent a horned winged forest creature with a long tail`, seed `21`, one variant, default morph. Preserved baseline GLB SHA-256 `a464e2285623ff5c5c775fb8cd92dc5c59ea770a2c10d1dbcae7dc95dccbb320`. Its committed generator was independently replayed during the investigation and reproduced the same hash.
+- Final **normal CLI**, same prompt/seed/variant/morph, GLB SHA-256 `42f764db69b88a359fb0e3705ff358defe57b5fd33af1bcd8f06ddb4ac9a4b4d`. The final fixed-camera harness compares all original saved DNA fields and refuses changed anatomy. Final acceptance uses the normal creator, without genome injection.
+- Actual Blender **5.2.2 LTS** imported both final comparison inputs, saved editable `.blend` files and rendered **900 × 650** PNGs with the same camera, projection, material colors and Studio lighting. `surface-proof.json` records the input/scene/image hashes, camera and material/geometry facts. Before: **112,640 bytes, 3,672 imported vertices, 1,724 triangles**. After: **61,424 bytes, 1,232 imported vertices, 2,336 triangles**. These are facts for this one design, not a general performance/quality benchmark.
+- Final normal `rig-creature` on that winged final source completed original skin/animation export and a separate Blender import/render process: **19 bones, one received action, 1.71925 m maximum evaluated vertex motion**. Rigged GLB SHA-256 `09cd99df42b7f2433466cd8f7d749a4d23b29ba5975d05f96f2c23243f3ed052`. See `winged-rig-proof.json`.
+- Final normal CLI on `Invent a tailless wingless four legged forest creature`, same seed/variant, produced source SHA-256 `d0df81c6e5ae4783589025fa6d131a6990da3f64798569d75ea9b49ba3c56d2e`. Original rig pipeline and independent receiving process passed **12 bones, one action, 0.80888 m maximum motion**, using actual `leg_01_upper` and `leg_02_upper` preview targets. Rigged GLB SHA-256 `b901733e592b92880b6f7fb24c143b70bc342cbaeafa962583ac09a35cd8228d`. See `tailless-rig-proof.json`.
+
+Actual before/after PNGs were visually inspected. They show smoother original surfaces and rounded tapered appendages; they remain a simple stylized prototype with visible component intersections, simple membranes and limited anatomy. No owner art acceptance or target-engine runtime acceptance is inferred.
+
+## Failures preserved and corrected
+
+The existing independent reimport script initially rendered its relative image path under `C:\artifacts` while Python expected the caller's repository directory. Blender exited zero despite a Python `FileNotFoundError`. `failed-relative-reimport.log` retains that failure. Resolving the reimport root to an absolute path before Blender operations repaired the real CLI route. The exact accidental preview was removed after identification; unrelated Blender MCP processes were not touched.
+
+The first same-seed render comparison refused because the concurrent explicit-anatomy parser consumed an extra random horn choice and shifted later dimensions. `refused-changed-anatomy.log` retains that refusal. The parser's owning repair preserves the original random draw; final normal same-input DNA comparison passed. Earlier drifted/synthetic-isolation and pre-contact outputs remain private diagnostic history and are not the accepted final comparison.
+
+An execution-host replacement lost earlier process handles. Files and live process ownership were inspected before continuing preserved writer outputs. Writer-only skin receipts were never counted as independent reimports. The final two rig receipts explicitly record `reopened_in_second_process:true` and `LOCAL_BLENDER_REIMPORT_AND_RENDER_PASS`.
+
+## Reproduce or continue
+
+Private full GLB/Blender projects and logs live in the owning checkout's ignored `artifacts/appendage-quality-2026-11-02/`. Accepted inputs are `before/`, `after-contact/` and `tailless-contact/`; accepted rig folders end in `-contact-rig`; accepted fixed-camera render is `surface-contact-witness/`. Preserve these before rerunning. Fresh output names are required.
+
+The checked-in `scripts/verify_creature_surface_blender.py` runs in Blender with `-- BEFORE_DIRECTORY AFTER_DIRECTORY NEW_OUTPUT_DIRECTORY`. It verifies actual input hashes and unchanged original anatomy, imports and renders both inputs, and saves a safe receipt. It is a verification harness, not a new generator or quality authority. Current source hashes and safe evidence hashes are in `source-and-evidence-hashes.json`. The living handoff/register/scorecard own combined source qualification and wider remaining work.
