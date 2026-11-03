@@ -93,6 +93,7 @@ class UVAuthoringTests(unittest.TestCase):
         uvs=[uv for mesh in doc['meshes'] for primitive in mesh['primitives']
              for uv in values(doc,binary,primitive['attributes']['TEXCOORD_0'])]
         cells=set()
+        total_uv_area = 0.0
         for i,chart in enumerate(receipt['charts']):
             cell=tuple(chart['cell'])
             self.assertNotIn(cell,cells);cells.add(cell)
@@ -100,12 +101,15 @@ class UVAuthoringTests(unittest.TestCase):
             a,b,c=points
             area=abs((b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]))/2
             self.assertGreater(area,1e-12)
+            total_uv_area += area
             for uv in points:
                 for axis in range(2):
                     pixel=uv[axis]*256
                     self.assertGreaterEqual(pixel+1e-5,cell[axis]*receipt['cell_pixels']+3)
                     self.assertLessEqual(pixel-1e-5,(cell[axis]+1)*receipt['cell_pixels']-3)
                     self.assertTrue(0<uv[axis]<1)
+        self.assertAlmostEqual(receipt['atlas_coverage_fraction'], total_uv_area, places=12)
+        self.assertLess(receipt['atlas_coverage_fraction'], 1)
         for i,first in enumerate(receipt['charts']):
             for last in receipt['charts'][i+1:]:
                 self.assertTrue(any(first['uv_max'][axis]<last['uv_min'][axis] or

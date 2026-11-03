@@ -199,6 +199,7 @@ def _atlas_glb_bytes(blob,*,expected_sha256=None,atlas_size=2048,padding=2):
         'artifact':{'file':'uv-mapped.glb','sha256':hashlib.sha256(artifact).hexdigest(),'bytes':len(artifact)},
         'atlas_size':atlas_size,'padding_pixels':padding,'columns':columns,'cell_pixels':cell,
         'chart_count':len(charts),'charts':charts,'geometry_before':geometry,'geometry_after':after,
+        'atlas_coverage_fraction':math.fsum(chart['uv_area'] for chart in charts),
         'preservation':{'original_bin_prefix_unchanged':bytes(result[:len(binary)])==binary,
                         'triangles_materials_parts_hierarchy_preserved':True,
                         'source_overwritten':False,'active_indices_remapped':True,

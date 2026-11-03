@@ -1,5 +1,7 @@
 # MGR 3D Forge - Full Living Handoff
 
+The [REA versus Forge comparison](../research/external-provenance/2026-11-02-rea-vs-forge.md) links external observations to the corresponding Forge implementation and gaps. UV authoring receipts now report occupied atlas area as `atlas_coverage_fraction`, giving connected-chart work a measured baseline.
+
 ## All-path runtime follow-through — November 2, 2026
 
 Forge checkpoint `efcc8fad4c95c0653e94d6f5eec96f5e203f02eb` was fetched back from `origin/main` with tree `a25a29c6591b76b0b4102d797879f232ed3162af`. The continued audit exercised all 66 commands at that checkpoint, including two acquisition commands with explicit offline transports. The 67th command, `retarget-motion`, adds a verified transfer between explicitly mapped original rigs. Separate Blender import checked actual target skin motion and preserved the tested target geometry, weights, materials, UVs and embedded image. The CLI retry succeeded after the first Blender process timed out during shutdown. The original timeout and successful receipt are retained.
