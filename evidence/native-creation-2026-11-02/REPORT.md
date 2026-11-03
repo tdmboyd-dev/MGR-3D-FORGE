@@ -2,6 +2,12 @@
 
 Baseline `f6914ae9f83e8f5cd0fb3ce314e2bfbca0e2db0c` was clean, fetched and equal to origin/main. This cycle extends the existing original creature engine and Studio rather than introducing another generator, vault or permission service.
 
+## Source publication and cycle closure
+
+`publication.json` records exact source publication/readback: Forge9516bed / APId18d89e with matching fetched commits and trees, clean source checkouts before the receipt, and all238 Forge +119 API tested file contents matching their committed Git bytes after CRLF/LF normalization. Source commits retain the complete tested implementation; this receipt and closure text are later metadata only. The finite C01–C15 cycle passed all35 defined technical/documentation/recovery checks and closes no original parent feature. Whole-product, owner art, deployed/managed activation and production acceptance remain open.
+
+Final API document integrity passed1,094checks/0fail. Its receiving packet preserves an initial harness self-read failure: shell redirection created an empty JSON file inside the verifier's input tree. Writing the result outside that tree and copying the complete validated result resolved the harness error without changing the verifier. Source/runtime tests were unaffected. Forge's ordinary checkout lacked local Git author configuration; the source commit reused the existing prior source/API no-reply identity for that command only, without a global configuration change.
+
 ## Delivered source under qualification
 
 - A bounded explicit anatomy parser prevents negated features and unrelated counts from overriding a brief. All candidate variants retain the constraints. Unsupported/conflicting requests refuse before native job allocation. Supported counts: 0/2/4/8 legs, 0–8 eyes, 0–6 horns and 0/2 wings. Native English syntax is limited; arbitrary prose understanding is not claimed.

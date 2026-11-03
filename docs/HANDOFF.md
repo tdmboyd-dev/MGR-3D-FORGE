@@ -2,6 +2,8 @@
 
 ## Current native creation and saved-result cycle — November 2, 2026
 
+Published and exactly fetched source: Forge `main` **9516bed47777af8814cdd01bcbe7e6fde71d5a5f**, API `repair/completion-2026-10-28` **d18d89e5d6decfc5260be67286be0f72efaac169**. Both source trees match their fetched remotes; all357 tested input contents match committed bytes with ordinary Windows/Git line endings accounted for. `../evidence/native-creation-2026-11-02/publication.json` retains the full readback. All35 selected cycle checks passed; whole-product/owner-art/production remain separate and open. This final receipt/closure update is metadata only, not a new runtime qualification.
+
 Recovered clean `main`/origin at `f6914ae`. The owner selected original CPU-native improvement informed by creation-system methods, without huge-model hosting as a prerequisite. Existing Forge/ONE/API ownership and F01–F156 / 64 CLI actions are retained. Two owner documents explain the completion target and practical workflows: `FORGE-OWNER-HANDBOOK.md` and `FORGE-HOW-TO.md`. The API repository has matching owner documentation.
 
 Bounded anatomy constraints now preserve exclusions/counts through variants and reject unsupported/conflicting briefs before allocation. Tapered radial appendages, shared mesh/rig knee landmarks, organic normals and absent-tail fallback motion extend the original creature engine. Studio Saved Creations navigates existing journals, explicitly reports interrupted/corrupt state, reopens through original native verifiers and rechecks downloaded GLB hashes. Studio world builds now use existing durable IDs so identical edits replay and appear in history. No separate generator, asset store or approval engine.
