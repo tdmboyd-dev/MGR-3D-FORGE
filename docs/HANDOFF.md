@@ -303,3 +303,7 @@ The following baseline metadata is superseded by current source/receipts at the 
 - **Owner:** tdmboyd-dev; no private weights/images/credentials committed
 
 Historical details archived under `docs/history/` for audit provenance; current decisions and evidence remain above.
+
+## Complete Tevin manual readback
+
+Authenticated local Tevin readback verified all 27 indexed operating documents and 99 pages against Git revision 5382067baa269e9b010e40163bb6374eb8fb46a5, with zero jobs. [Pinned verification evidence](https://github.com/tdmboyd-dev/MGR-ONE/blob/fc84130c57c2781afd98e5bdfd05cf7a7ebe6970/evidence/tool-manual-transport-20261103/FORGE-FULL-TEXT.json). This covers manual delivery. Runtime and production acceptance remain tracked separately.
