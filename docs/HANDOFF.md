@@ -307,3 +307,38 @@ Historical details archived under `docs/history/` for audit provenance; current 
 ## Complete Tevin manual readback
 
 Authenticated local Tevin readback verified all 27 indexed operating documents and 99 pages against Git revision 5382067baa269e9b010e40163bb6374eb8fb46a5, with zero jobs. [Pinned verification evidence](https://github.com/tdmboyd-dev/MGR-ONE/blob/fc84130c57c2781afd98e5bdfd05cf7a7ebe6970/evidence/tool-manual-transport-20261103/FORGE-FULL-TEXT.json). This covers manual delivery. Runtime and production acceptance remain tracked separately.
+
+
+## Shared API/MCP connector resume update — 2026-11-08
+
+Documentation-only integration plan. Source baseline: `b1bf0675a52d42234c75c3e0e46908dd515429e1`. Review branch: `docs/mgr-connector-handoff-2026-11-08`. Existing content above is preserved. This update does not deploy, enable a connector, change credentials or certify live connectivity.
+
+### Verified inspection and existing ownership
+
+The existing handoff and integration guide already document local shared API/MCP, protected artifacts and newer native worker/context proofs. Preserve these as their named local scopes, not missing components. Hosted OAuth/remote consumer and full product/neural/art acceptance remain separate gates. Forge owns geometry, editable assets, durable jobs and authoritative artifact evidence.
+
+### Work on this application's side
+
+1. Reuse forge/studio_server.py and existing domain job/status/artifact contracts. Preserve exact X-MGR-Forge-Token, Host/Origin/path-containment/size guards and immutable job/result hashes; never expose tokenless files or put credentials in URLs.
+2. For the approved remotely reachable worker path, verify owner/tenant/workspace isolation, restart/replay custody and bounded cancellation. Keep protected artifacts in Forge storage rather than duplicating the vault.
+3. Return authoritative job IDs, source/input hashes, result hashes and verification evidence; reconcile interrupted state before rerun. A job ID or HTTP 200 alone is not valid geometry or accepted art.
+4. Direct standalone generation stays shared gateway -> Forge. Creation OS is optional cross-factory coordination, not a mandatory hop. Provider/model license, spend and GPU acceptance remain independent.
+
+### Work on the shared MGR-API-MCP side
+
+1. Preserve and extend the existing Forge client/tools instead of a parallel bridge. Match current source schemas and authenticated worker connection; a newly registered tool is not live connectivity.
+2. Read-only discovery/artifact access and execute-scoped creation need separate checks. Keep operator-owned endpoint configuration, exact approvals where required, source-drift rejection and bounded private artifact delivery.
+
+Use one versioned capability contract: capability ID/schema version, authenticated actor/tenant/resource scope, request/trace ID, bounded deadline, typed domain payload and authoritative result/evidence. Mutation lanes additionally need exact approval where required, stable idempotency key plus canonical input digest, and status/readback before retrying an unknown outcome. Capability discovery is not permission. Endpoint/secret configuration is operator-controlled, never an arbitrary caller-supplied proxy destination.
+
+### Next acceptance gate and limits
+
+Run the current local verification scripts from the integration guide on the final source, then separately prove actual deployed OAuth client -> gateway -> protected worker -> job/status -> SHA-verified artifact retrieval/reopen. Deny wrong tenant, missing execute scope, tokenless artifact, changed-payload replay and stale source. No deployment or test rerun occurred in this documentation batch.
+
+This pass inspected committed source/documents and checks preservation/readback of the documentation change only. It did not execute product tests, contact live domain services, deploy, or promote any existing completion-ledger status. At resume, reconcile fresh HEAD, active implementation branches and local work before coding; preserve unrelated concurrent changes. Historical proofs remain valid only for their recorded source/runtime scope. Readiness must distinguish source implementation, local test, real integration and live/owner acceptance.
+
+### Source pointers at the inspected baseline
+
+- [docs/HANDOFF.md](https://github.com/tdmboyd-dev/MGR-3D-FORGE/blob/b1bf0675a52d42234c75c3e0e46908dd515429e1/docs/HANDOFF.md)
+- [docs/HOW-TO-INTEGRATION-VERIFY-RECOVER.md](https://github.com/tdmboyd-dev/MGR-3D-FORGE/blob/b1bf0675a52d42234c75c3e0e46908dd515429e1/docs/HOW-TO-INTEGRATION-VERIFY-RECOVER.md)
+- [forge/studio_server.py](https://github.com/tdmboyd-dev/MGR-3D-FORGE/blob/b1bf0675a52d42234c75c3e0e46908dd515429e1/forge/studio_server.py)
